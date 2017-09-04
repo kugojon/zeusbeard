@@ -9,17 +9,17 @@
  * http://opensource.org/licenses/afl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
  * @category    Mage
  * @package     Mage_Adminhtml
- * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 
@@ -399,7 +399,7 @@ Product.Configurable.prototype = {
                 li.id = this.idPrefix + '_attribute_' + index;
                 attribute.html_id = li.id;
                 if (attribute && attribute.label && attribute.label.blank()) {
-                    attribute.label = '&nbsp;'
+                    attribute.label = '&nbsp;';
                 }
                 var label_readonly = '';
                 var use_default_checked = '';
@@ -477,7 +477,7 @@ Product.Configurable.prototype = {
         this.grid.reload(null);
     },
     createEmptyProduct : function() {
-        this.createPopup(this.createEmptyUrl)
+        this.createPopup(this.createEmptyUrl);
     },
     createNewProduct : function() {
         this.createPopup(this.createNormalUrl);
@@ -990,7 +990,7 @@ Product.Configurable.prototype = {
     showNoticeMessage : function() {
         $('assign_product_warrning').show();
     }
-}
+};
 
 var onInitDisableFieldsList = [];
 

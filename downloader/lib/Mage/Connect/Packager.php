@@ -10,18 +10,18 @@
  * http://opensource.org/licenses/osl-3.0.php
  * If you did not receive a copy of the license and are unable to
  * obtain it through the world-wide-web, please send an email
- * to license@magentocommerce.com so we can send you a copy immediately.
+ * to license@magento.com so we can send you a copy immediately.
  *
  * DISCLAIMER
  *
  * Do not edit or add to this file if you wish to upgrade Magento to newer
  * versions in the future. If you wish to customize Magento for your
- * needs please refer to http://www.magentocommerce.com for more information.
+ * needs please refer to http://www.magento.com for more information.
  *
  * @category    Mage
  * @package     Mage_Connect
- * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
- * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @copyright  Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 
 /**
@@ -247,7 +247,8 @@ class Mage_Connect_Packager
                 if (@rmdir($dir)) {
                     $this->removeEmptyDirectory(dirname($dir), $ftp);
                 } else {
-                    throw new RuntimeException('Failed to delete dir ' . $dir . "\r\n Check permissions");
+                    throw new RuntimeException('Failed to delete dir ' . Mage_System_Dirs::getFilteredPath($dir)
+                        . "\r\n Check permissions");
                 }
             }
         }
@@ -275,7 +276,7 @@ class Mage_Connect_Packager
             $dest = $targetPath . DIRECTORY_SEPARATOR . $filePath . DIRECTORY_SEPARATOR . $fileName;
             if(@file_exists($dest)) {
                 if (!@unlink($dest)) {
-                    $failedFiles[] = $dest;
+                    $failedFiles[] = Mage_System_Dirs::getFilteredPath($dest);
                 }
             }
             $this->removeEmptyDirectory(dirname($dest));
@@ -308,7 +309,7 @@ class Mage_Connect_Packager
         foreach ($contents as $file) {
             $ftp->delete($file);
             if ($ftp->fileExists($file)) {
-                $failedFiles[] = $file;
+                $failedFiles[] = Mage_System_Dirs::getFilteredPath($file);
                 continue;
             }
             $this->removeEmptyDirectory(dirname($file), $ftp);
@@ -402,14 +403,14 @@ class Mage_Connect_Packager
         $failedFiles = array();
         foreach ($contents as $file) {
             $source = $tar . DS . $file;
-            if (file_exists($source) && is_file($source)) {
+            if (file_exists($source) && is_file($source) && $file != '.htaccess') {
                 $args = array(ltrim($file,"/"), $source);
                 if($modeDir||$modeFile) {
                     $args[] = $modeDir;
                     $args[] = $modeFile;
                 }
                 if (call_user_func_array(array($ftp,'upload'), $args) === false) {
-                    $failedFiles[] = $source;
+                    $failedFiles[] = Mage_System_Dirs::getFilteredPath($source);
                 }
             }
         }
@@ -448,7 +449,7 @@ class Mage_Connect_Packager
         $modeDir = $this->_getDirMode($configObj);
         $targetPath = rtrim($configObj->magento_root, "\\/");
         $packageXmlDir = $targetPath . DS . Mage_Connect_Package::PACKAGE_XML_DIR;
-        if (!is_dir_writeable($packageXmlDir)) {
+        if (!$this->isDirWritable($packageXmlDir)) {
             throw new RuntimeException('Directory ' . $packageXmlDir . ' is not writable. Check permission');
         }
         $this->_makeDirectories($contents, $targetPath, $modeDir);
@@ -456,9 +457,8 @@ class Mage_Connect_Packager
             $fileName = basename($file);
             $filePath = dirname($file);
             $source = $tar . DS . $file;
-            $source = $tar . DS . $file;
             $dest = $targetPath . DS . $filePath . DS . $fileName;
-            if (is_file($source)) {
+            if (is_file($source) && ($fileName != '.htaccess' || !is_file($dest))) {
                 @copy($source, $dest);
                 if($modeFile) {
                     @chmod($dest, $modeFile);
@@ -482,6 +482,8 @@ class Mage_Connect_Packager
     }
 
     /**
+     * Make directories
+     *
      * @param array $content
      * @param string $targetPath
      * @param int $modeDir
@@ -493,11 +495,11 @@ class Mage_Connect_Packager
         $createdDirs = array();
         foreach ($content as $file) {
             $dirPath = dirname($file);
-            if (is_dir($dirPath) && is_dir_writeable($dirPath)) {
+            if (is_dir($dirPath) && $this->isDirWritable($dirPath)) {
                 continue;
             }
             if (!mkdir($targetPath . DS . $dirPath, $modeDir, true)) {
-                $failedDirs[] = $targetPath . DS .  $dirPath;
+                $failedDirs[] = Mage_System_Dirs::getFilteredPath($targetPath . DS .  $dirPath);
             } else {
                 $createdDirs[] = $targetPath . DS . $dirPath;
             }
@@ -578,7 +580,7 @@ class Mage_Connect_Packager
         }
 
         if(!$restObj) {
-            $restObj = new Mage_Connect_Rest($configObj->protocol);
+            $restObj = Mage_Connect_Rest_Builder::getAdapter($configObj->protocol);
         }
 
         $updates = array();
@@ -785,7 +787,7 @@ class Mage_Connect_Packager
             $chanName = $cache->chanName($chanName);
 
             if (!$rest) {
-                $rest = new Mage_Connect_Rest($config->protocol);
+                $rest = Mage_Connect_Rest_Builder::getAdapter($config->protocol);
             }
             $rest->setChannel($cache->chanUrl($chanName));
             $releases = $rest->getReleases($package);
@@ -1020,5 +1022,32 @@ class Mage_Connect_Packager
         }
         unset($graph, $nodes);
         return $out;
+    }
+
+    /**
+     * Check if directory writable
+     *
+     * @param string $dir
+     * @return boolean
+     */
+    protected function isDirWritable($dir)
+    {
+        if (is_dir($dir) && is_writable($dir)) {
+            if (stripos(PHP_OS, 'win') === 0) {
+                $dir    = ltrim($dir, DIRECTORY_SEPARATOR);
+                $file   = $dir . DIRECTORY_SEPARATOR . uniqid(mt_rand()).'.tmp';
+                $exist  = file_exists($file);
+                $fp     = @fopen($file, 'a');
+                if ($fp === false) {
+                    return false;
+                }
+                fclose($fp);
+                if (!$exist) {
+                    unlink($file);
+                }
+            }
+            return true;
+        }
+        return false;
     }
 }

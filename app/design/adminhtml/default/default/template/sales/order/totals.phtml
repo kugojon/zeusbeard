@@ -20,7 +20,7 @@
  *
  * @category    design
  * @package     default_default
- * @copyright   Copyright (c) 2006-2016 X.commerce, Inc. and affiliates (http://www.magento.com)
+ * @copyright   Copyright (c) 2006-2017 X.commerce, Inc. and affiliates (http://www.magento.com)
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 ?>
@@ -67,18 +67,7 @@
                 <?php if ($_total->getStrong()):?>
                 <strong><?php echo $this->escapeHtml($_total->getLabel()); ?></strong>
                 <?php else:?>
-                    <?php 
-                        $shippingArrivalCarrier = $this->getOrder()->getShippingArrivalCarrier();
-                        $shippingArrivalAccountNumber=$this->getOrder()->getShippingArrivalAccountNumber(); 
-                    ?>
-                    <?php if($_total->getLabel() == 'Shipping & Handling'): ?>
-                        <?php echo $this->escapeHtml($_total->getLabel()); ?>
-                        <?php if($shippingArrivalCarrier): ?>
-                            <?php echo "<p style='margin-top:10px;'>"."Use your own shipping account( ".$shippingArrivalCarrier." , ".$shippingArrivalAccountNumber." )"."</p>"; ?>
-                        <?php endif; ?>
-                    <?php else: ?>
-                        <?php echo $this->escapeHtml($_total->getLabel()); ?>
-                    <?php endif; ?>
+                <?php echo $this->escapeHtml($_total->getLabel()); ?>
                 <?php endif?>
             </td>
             <?php if ($_total->getStrong()):?>
