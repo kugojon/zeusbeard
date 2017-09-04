@@ -1,0 +1,38 @@
+div.aw-gc-form-enterprise div.aw-gc-send-form {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border-top: 1px solid #DDDDDD;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 2;
+}
+
+#product-options-wrapper .required {
+    display: none;
+}
+
+#aw-gc-amount-box .v-fix {
+    float: none;
+}
+
+div.aw-gc-form-enterprise #aw-gc-amount-box .input-text {
+    width: 365px !important;
+}
+
+div.aw-gc-form-enterprise .form-list select {
+    width: 365px !important;
+}
+
+div.aw-gc-form-enterprise #aw-gc-amount-box {
+    margin-right: 9px;
+    padding-right: 20px;
+    width: 100%;
+}
+
+div.aw-gc-form-enterprise #aw-gc-amount-box p.notice  {
+    float: none;
+}
+
+div.aw-gc-form-enterprise .form-list input.input-text {
+    width: 365px !important;
+}

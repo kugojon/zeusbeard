@@ -1,0 +1,14 @@
+/**
+*
+* Feel free to add your own css rules here.
+*
+*/
+.product-options{border-bottom:none!important;margin-bottom:0!important;padding-bottom:0!important;}
+.product-options-bottom{border-bottom:none!important;padding-bottom:0!important;}
+.product-view .add-to-links-box{border-top:1px dotted #ddd;border-bottom:1px solid #ddd;padding-top: 10px;}
+.product-view .add-to-box{border-bottom:none!important}
+.opc .form-list .input-box select{color:#000!important;}
+.header-text-banners .item .text p{color:#222;}
+.product-view .product-shop .short-description{margin-bottom:0!important;}
+/*.product-view .short-description ul, .product-view .short-description ol{padding:0!important;margin: 0!important} */
+.product-options p.required{display: none;}

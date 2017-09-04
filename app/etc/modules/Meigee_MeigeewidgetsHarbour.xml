@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+   <modules>
+	  <Meigee_MeigeewidgetsHarbour>
+		 <active>true</active>
+		 <codePool>local</codePool>
+		 <depends>
+            <Mage_Cms />
+            <Meigee_ThemeOptionsHarbour />
+         </depends>
+	  </Meigee_MeigeewidgetsHarbour>
+   </modules>
+</config>

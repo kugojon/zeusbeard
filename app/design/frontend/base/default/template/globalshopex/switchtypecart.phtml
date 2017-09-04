@@ -1,0 +1,13 @@
+<?php
+	if ($this->isEnabledComponent()) {
+		if ($this->getTypeIntegration()=="0") {
+			echo $this->getChildHtml('formcartocart');
+		}else{
+			echo $this->getChildHtml('buttoniframe');
+		}
+	}
+?>
+
+
+
+

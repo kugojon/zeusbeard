@@ -1,0 +1,85 @@
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.bsscommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.bsscommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/* ============================================ *
+ * General Styles
+ * ============================================ */
+
+.bss-multicart-index-index .pages li{list-style: outside none none;margin-left: 0;}
+.bss-multicart-index-index .products-list > li .product-image{width: 100%;}
+.bss-multicart-index-index .image-pro {float: left;margin-right: 15px;width: 23%;margin-bottom: 5px;}
+.bss-multicart-index-index .infopro {width: 50%;float: left;}
+.name-sku .name,.name-sku .sku {float: left;width: 100%; color: #666;}
+.name-sku {float: left;width: 73%;}
+.name-sku .name {text-transform: uppercase;}
+.topheader {min-height: 36px!important;border-bottom: 1px solid #ededed;}
+.topheader > span{font-size: 21px;}
+.headerbuttonaddcart > div {border-bottom: 1px solid #ededed;min-height: 60px;}
+.buttonaddmulticart {float: left;width: 100%;margin-top: 10px;}
+.buttonaddmulticart > button {font-size: 11px;font-weight: bold;float: right;background: #4cb1f1 none repeat scroll 0 0;border: medium none;border-radius: 2px;color: #fff;padding: 9px 10px;text-transform: uppercase;cursor: pointer;}
+.headerbuttonaddcart .buttoncart{margin-bottom: 20px;}
+.viewcart span {background: #000 none repeat scroll 0 0;border-radius: 4px;color: #fff;padding: 5px 44px;text-transform: uppercase;}
+.viewcart > a:hover {text-decoration: none;}
+.action {float: left;width: 50%;}
+.bss-multicart-index-index .price1 ,.bss-multicart-index-index .price2{float: left;margin-right: 18px;}
+.bss-multicart-index-index .prices {float: left;width: 80%;}
+.action .qty > input {float: right;height: 32px;width: 53px;text-align: center;}
+.action .qty {float: left;width: 20%;}
+.optionpro {float: left;}
+.action .price {color: #000;font-weight: bold;}
+.action .retail {font-style: italic;}
+.widget-products {float: left;width: 100%;}
+.headeritem {border-bottom: 1px solid #000;float: left;font-size: 13px;font-weight: bold;margin-bottom: 20px;width: 100%;padding-bottom: 6px;}
+.headeritem .titlecate {float: left;width: 50%;}
+.headeritem .titleattribute {float: left;width: 50%;}
+.headeritem .titleattribute .inleft {float: left;width: 80%;}
+.headeritem .titleattribute .inright {float: right;padding-right: 12px;}
+.titlecate > span {font-size: 17px;}
+.spacetext {padding: 0 5px;}
+.spacetextinaction{padding: 0 10px;float:left;}
+.prices div {float: left;text-align: center;}
+.caseqty {width: 16%;color: #000;font-weight: bold;}
+.costperunit {width: 22%;}
+.caseprice {width: 17%;}
+.optionpro > dd {float: left;margin-right: 8px;}
+#bss_option155 > input {float: left;height: 24px;text-align: center;}
+.optionpro > input {height: 24px;text-align: center;width: 2.2em !important;}
+.products-listmulticart .item{border-bottom: 1px solid;margin-bottom: 14px;}
+.outofstock {color: red;position: relative;top: 59px;}
+
+@media screen and (max-width: 1280px){
+	.outofstock {top: 0px;}
+}
+
+@media screen and (max-width: 979px){
+	.spacetextinaction{padding: 0 7px;}
+}
+
+@media screen and (max-width: 768px){
+	.spacetext {display: none;}
+	.inleft > span {float: left;width: 100%;}
+	.headeritem .titleattribute .inleft{width: 70%;text-align: center;}
+	.prices div{width: 100%;}
+	.spacetextinaction{display: none;}
+}

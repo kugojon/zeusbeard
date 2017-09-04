@@ -1,0 +1,106 @@
+<style>
+#Gsframe {
+height: 2600px;
+}
+@media only screen and (min-width: 630px) and (max-width:1026px) {
+#Gsframe {
+height: 2900px;
+}
+}
+@media only screen and (min-width: 600px) and (max-width: 797px) {
+#Gsframe {
+height: 3250px;
+}
+}
+@media only screen and (min-width: 510px) and (max-width: 629px) {
+#Gsframe {
+height: 3250px;
+}
+
+}
+@media only screen and (max-width: 509px){
+#Gsframe {
+height: 3450px;
+}
+
+}
+</style>
+<iframe id="Gsframe" name="Gsframe" style="width: 100%; min-width: 310px;" frameborder="0" scrolling="auto" allowtransparency="true">
+</iframe>
+<form name="frmPP" id="frmPP" method="post" action="https://globalshopex.com/iframe/InternationalCheckout.aspx" target="Gsframe"  >	
+	<input type="hidden" name="MerchantID" value="<?php echo $this->getMerchantID(); ?>" />   
+	<?php
+		$imgWidth = 75;
+		$imgHeight = 75;
+
+		$session = Mage::getSingleton('checkout/session');
+		$inputsGsxCart = "";
+		$i = 1;				
+		foreach ($session->getQuote()->getAllVisibleItems() as $item) {
+			$item_ID = $item->getProductId();
+			$_Product = Mage::getModel('catalog/product')->load($item_ID);
+			$ProductPrice=$item->getPrice();
+			$ProductPrice  =  substr ( $ProductPrice   , 0,strrpos($ProductPrice, ".") +3 ) ;
+			$ProductWeight=$_Product->getWeight();
+			$ProductWeight  =  substr ( $ProductWeight   , 0,strrpos($ProductWeight, ".") +3 ) ;
+			
+			if($ProductWeight=="") $ProductWeight="0";
+			
+			$inputsGsxCart .= "<input type=\"hidden\" name=\"ProductSKU$i\" value=\"".$_Product->getSku()."\"/>\n";
+			$inputsGsxCart .= "<input type=\"hidden\" name=\"ProductDesc$i\" value=\"".$this->buildItemDescription($item)."\"/>\n";
+			$inputsGsxCart .= "<input type=\"hidden\" name=\"ProductLink$i\" value=\"".$this->getProductUrl($item)."\"/>\n";
+			$inputsGsxCart .= "<input type=\"hidden\" name=\"ProductQty$i\" value=\"".$item->getQty()."\"/>\n";
+			$inputsGsxCart .= "<input type=\"hidden\" name=\"ProductPrice$i\" value=\"".$ProductPrice ."\"/>\n";
+			$inputsGsxCart .= "<input type=\"hidden\" name=\"ProductSize$i\" value=\"".$this->getSize($item)."\"/>\n";
+			$inputsGsxCart .= "<input type=\"hidden\" name=\"ProductColor$i\" value=\"".$this->getColor($item)."\"/>\n";
+			$inputsGsxCart .= "<input type=\"hidden\" name=\"ProductWeight$i\" value=\"".$ProductWeight."\"/>\n";
+			
+			if($item->getCountry()!="")
+			$inputsGsxCart .= "<input type=\"hidden\" name=\"ProductCountry$i\" value=\"".$item->getCountry()."\"/>\n";
+			if($item->getBrand($item)!="")
+			$inputsGsxCart .= "<input type=\"hidden\" name=\"ProductBrand$i\" value=\"".$this->getBrand($item)."\"/>\n";
+			
+			$attributes = Mage::getResourceModel('eav/entity_attribute_collection')
+			->setEntityTypeFilter($_Product->getResource()->getTypeId())
+			->addFieldToFilter('attribute_code', $GSX_restriction_attribute) 
+			->load(false);
+			
+			$attribute = $attributes->getFirstItem()->setEntity($_Product->getResource());
+			$manufac = $attribute->getSource()->getAllOptions(false);
+			foreach ($manufac as $man) {
+				$intshiping[$man['value']] = $man['label'];
+			}
+
+			
+			if($_Product->getData($GSX_restriction_attribute) == '1')
+				$inputsGsxCart .= "<input type=\"hidden\" name=\"Restricted$i\" value='1'/>\n";
+			
+			$inputsGsxCart .= "<input type=\"hidden\" name=\"ProductImage$i\" value=\"".$this->getProductThumbnail($item)->resize($imgWidth)."\"/>\n";
+			$i++;
+		}
+		echo $inputsGsxCart;
+		$GSX_totals = $session->getQuote()->getData();
+		$coupon_code = $GSX_totals['coupon_code'];
+		$discount = $GSX_totals['subtotal'] - $GSX_totals['subtotal_with_discount'];
+		$perc = ($discount * 100) / $GSX_totals['subtotal'];
+		$perc = round($perc , 2);
+	?>
+
+	<?php
+		if($coupon_code!=""){
+	?>
+			<input type="hidden" name="ODiscount" value="<?php echo $perc; ?>" /> 
+			<input type="hidden" name="ODiscCode" value="<?php echo $coupon_code; ?>" /> 
+			<input type="hidden" name="ODiscPerc" value="1" /> 
+	<?php
+	    }
+	?>
+	<?php
+		echo $this->getLocalshipping_EXP();
+		echo $this->getLocalshipping();	
+	?>
+</form> 
+
+<script language="javascript" type="text/javascript">
+	 document.getElementById('frmPP').submit();
+</script>

@@ -1,0 +1,121 @@
+/**
+*
+* Feel free to add your own css rules here.
+*
+*/
+.product-options{border-bottom:none!important;margin-bottom:0!important;padding-bottom:0!important;}
+.product-options-bottom{border-bottom:none!important;padding-bottom:0!important;}
+.product-view .add-to-links-box{border-top:1px dotted #ddd;border-bottom:1px solid #ddd;padding-top: 10px;}
+.product-view .add-to-box{border-bottom:none!important}
+.opc .form-list .input-box select{color:#000!important;}
+.header-text-banners .item .text p{color:#222;}
+@media only screen and (max-width: 767px) {
+    header#header.header-2 .header-text-banners.hiden-alow-768{display:none;}
+}
+.window-overlay {
+    display: none;
+}
+.cart-table {
+    margin-bottom: 1em !important;
+}
+.left.bold {
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 2em;
+}
+header#header.header-2 .header-text-banners .item {
+    margin-right: 55px;
+    margin-left: 1px;
+}
+.catalog-product-view .rating-title h2 {
+    margin: 0 16px 1px !important;
+}
+.click-submit a span {
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    height: auto;
+    line-height: 26px;
+    padding:13px;
+    text-transform: uppercase;
+    background:#4cb1f1;
+    cursor: pointer;
+}
+.rating-top , .click-submit{
+    margin-bottom: 30px;
+}
+.rating-top .ratings-table {
+    width: 3%;
+    margin-top: 0;
+}
+.rating-top th {
+    display: none;
+}
+.catalog-product-view .box-reviews .review-txt {
+    color: #888;
+    font-size: 1em !important;
+    line-height: 1.5em;
+}
+.catalog-product-view .box-reviews .actions {
+    text-align: center !important;
+     margin-bottom: 30px
+}
+.catalog-product-view .box-reviews .form-add {
+    left: 25%;
+}
+.box.visible li {
+    border-bottom: 1px solid #dfdfdf;
+    padding-bottom: 1.98em;
+}
+.ratings-table .rating-box .rating {
+    background: url("../images/bkg_rating.gif") repeat-x scroll 0 100% rgba(0, 0, 0, 0);
+    float: left;
+    height: 11px;
+}
+.ratings-table .rating-box{
+    background: url("../images/bkg_rating.gif") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    font-size: 0;
+    height: 11px;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 72px;
+}
+.rating-box-small .rating {
+    background: url("../images/bkg_rating_2.gif") repeat-x scroll 0 100% rgba(0, 0, 0, 0);
+    height: 6px;
+}
+.rating-box-small {
+    background: url("../images/bkg_rating_2.gif") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    height: 6px;
+    margin-top: 5px;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 45px;
+}
+.totals-box::before {
+    clear: both;
+    content: "";
+    display: block;
+}
+span.review-title {
+    float: left;
+    font-size: 1em;
+    margin-bottom: 0.75em;
+    margin-right: 1em;
+    padding: 0;
+}
+#customer-reviews .nobr {
+    color: #222;
+    margin-top: 3px;
+}
+
+.catalog-product-view .box-reviews.full-table .indent .review-fields {
+    float: none !important;
+}
+.catalog-product-view .box-reviews.full-table .indent fieldset, .catalog-product-view .box-reviews.full-table .indent .review-fields {
+    width: 100% !important;
+}
+.ratings-table th {
+    font-size: 1em;
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Bss_Robots>
+      <version>0.1.0</version>
+    </Bss_Robots>
+  </modules>
+  <global>
+    <helpers>
+      <robots>
+        <class>Bss_Robots_Helper</class>
+      </robots>
+    </helpers>
+	<models>
+	  <robots>
+		<class>Bss_Robots_Model</class>
+		<resourceModel>robots_mysql4</resourceModel>
+	  </robots>
+	</models>
+  </global>
+  <frontend>
+        <events>
+          <controller_action_layout_generate_blocks_after> 
+            <observers>
+              <bss_robots> 
+                <type>singleton</type> 
+                <class>Bss_Robots_Model_Observer</class>
+                <method>addMetaCategory</method>
+              </bss_robots>
+            </observers>
+          </controller_action_layout_generate_blocks_after>
+        </events>
+    </frontend>
+</config> 

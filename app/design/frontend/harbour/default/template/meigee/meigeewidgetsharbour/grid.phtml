@@ -1,0 +1,148 @@
+<?php
+    $_productCollection = $this->getMyCollection();
+    $category = $this->catName();
+    $_helper = $this->helper('catalog/output');
+    $_collectionSize = $this->getProductsAmount();
+    $_columnCount = 4; //$this->getColumnCount();
+	$_addToCart = $this->getAddToCart('add_to_cart_grid');
+	$_price = $this->getProductPrice('price_grid');
+	$_productName = $this->getProductName('product_name_grid');
+	$wishlist = $this->getWishlist('wishlist_grid');
+	$compareproducts = $this->getCompareProducts('compare_grid');
+	$ratingStars = $this->getRatingStars('rating_stars_grid');
+	$ratingCustomerLink = $this->getRatingCustLink('rating_cust_link_grid');
+	$ratingReviewLink = $this->getRatingAddReviewLink('rating_add_review_link_grid');
+	$productsPerRow = $this->getProductsPerRow();
+    $random = rand(5,1500);
+	$randId = $this->getWidgetId();
+    $meigee_harbour_general = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('meigee_harbour_general');
+	$fancybox = $meigee_harbour_general['fancybox'];
+    $helpImg = $this->helper('ThemeOptionsHarbour/images');
+	$labelsoptions = $meigee_harbour_general['productlabels'];
+	$productOnlyXleft = $meigee_harbour_general['productlabels']['labelonlyxleft'];
+	$labelsType = $meigee_harbour_general['productlabels']['labelview'];
+	$labelsPosition = $meigee_harbour_general['productlabels']['labelsposition'];
+	switch ($productsPerRow) {
+		case 2:
+			$productsPerRow = 'two-products';
+			$imgSize = 814;
+		break;
+		case 3:
+			$productsPerRow = 'three-products';
+			$imgSize = 543;
+		break;
+		case 4:
+			$productsPerRow = 'four-products';
+			$imgSize = 424;
+		break;
+		case 5:
+			$productsPerRow = 'five-products';
+			$imgSize = 325;
+		break;
+		case 6:
+			$productsPerRow = 'six-products';
+			$imgSize = 271;
+		break;
+		case 7:
+			$productsPerRow = 'seven-products';
+			$imgSize = 233;
+		break;
+		case 8:
+			$productsPerRow = 'eight-products';
+			$imgSize = 203;
+		break;
+	}
+?>
+<?php // Grid Mode ?>
+<div class="home-container grid">
+    <div class="meigee-widget">
+        <ul class="products-grid<?php echo ' '.$labelsType.' '.$labelsPosition. ' ' . $productsPerRow; ?> widget-grid">
+        <?php $i=0; foreach ($_productCollection as $_product): ?>
+			<?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
+            <li class="item<?php if($labelsoptions['labelsorder'] == 'new_sale'):?> labels-new-sale<?php endif; ?>">
+                <div class="product-container">
+					<div class="product-img-box">
+						<?php echo MAGE::helper('ThemeOptionsHarbour')->getProductLabels($_product, 'new'); ?>
+						<?php if($productOnlyXleft and MAGE::helper('ThemeOptionsHarbour')->getProductOnlyXleft($_product)): ?>
+							<?php echo MAGE::helper('ThemeOptionsHarbour')->getProductOnlyXleft($_product); ?>
+						<?php else: ?>
+							<?php echo MAGE::helper('ThemeOptionsHarbour')->getProductLabels($_product, 'sale'); ?>
+						<?php endif; ?>
+						<?php if ($this->displayProductStockStatus()): ?>
+							<?php if (!$_product->isAvailable()): ?>
+								<p class="availability out-of-stock listing"><span><?php echo $this->__('Out of stock') ?></span></p>
+							<?php endif; ?>
+						<?php endif; ?>
+						<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><?php /* Hover Image */ echo $helpImg->getHoverImage($_product, 'small_image', $imgSize, null); ?><img <?php echo $helpImg->getImgSources($_product, 'small_image', $imgSize, null); ?> alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+						<?php  // Fancybox
+						if ($this->displayProductStockStatus()):
+							if ($_product->isAvailable()):
+								if ($fancybox['fancybox_status'] && $fancybox['fancybox_home'] == 1): ?>
+									<a class="fancybox category-gallery" title="<?php echo $_productNameStripped; ?>" href="<?php echo $this->helper('catalog/image')->init($_product, 'small_image'); ?>"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('fancybox'); ?></a>
+						<?php
+								endif;
+							endif;
+						endif; 
+						// End Fancybox ?>
+					</div>
+					<div class="product-info">
+						<?php if($_productName): ?>
+							<h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+						<?php endif; ?>
+						<?php $storeId = Mage::app()->getStore()->getId();
+							$summaryData = Mage::getModel('review/review_summary')->setStoreId($storeId)->load($_product->getId());
+							if ($summaryData['rating_summary']): ?>
+							<?php if ($ratingCustomerLink || $ratingReviewLink || $ratingStars) : ?>
+								<div class="ratings">
+									<?php if ($ratingStars) : ?>
+										<div class="rating-box">
+											<div class="rating" style="width: <?php echo $summaryData['rating_summary']; ?>%"></div> 
+										</div>
+									<?php endif; ?>
+									<p class="rating-links">
+										<?php if ($ratingCustomerLink) : ?>
+											<a href="<?php echo $_product->getProductUrl() ?>#review-point"><?php echo $this->__('%d Review(s)', $summaryData['reviews_count']) ?></a>
+										<?php endif; ?>
+										<?php if ($ratingCustomerLink && $ratingReviewLink) : ?>
+											<span class="separator">|</span>
+										<?php endif; ?>
+										<?php if ($ratingReviewLink) : ?>
+											<a href="<?php echo $_product->getProductUrl() ?>#review-point"><?php echo $this->__('Add Your Review') ?></a>
+										<?php endif; ?>
+									</p>
+								</div>
+							<?php endif; ?>
+						<?php endif; ?>
+						<?php if($_price): ?>
+							<?php echo $this->getPriceHtml($_product, true) ?>
+						<?php endif; ?>
+					</div>
+					<?php if($_product->isSaleable() and $_addToCart): ?>
+						<div class="button-holder"><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></div>
+					<?php endif; ?>
+					<?php if ($wishlist || $compareproducts) { ?>
+						<div class="product-buttons">
+							<ul class="add-to-links">
+								<?php if ($this->helper('wishlist')->isAllow() and $wishlist) : ?>
+									<li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('wishlist'); ?></a></li>
+								<?php endif; ?>
+								<?php if($_compareUrl=$this->getAddToCompareUrl($_product) and $compareproducts): ?>
+									<li><a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('compare'); ?></a></li>
+								<?php endif; ?>
+							</ul>
+						</div>
+					<?php } ?>
+				</div>
+            </li>
+        <?php if ($i+1 == $_collectionSize ) break; $i++; endforeach ?>        
+        </ul> 
+		<?php
+			if(get_class($this) == "Meigee_MeigeewidgetsHarbour_Block_Featuredcategory"):
+			$cat = $_product->getCategoryIds();
+			$cat_name = Mage::getModel('catalog/category')->load($cat[0])->getName();
+			$cat_url = Mage::getModel('catalog/category')->load($cat[0])->getUrl();
+		?>
+		<div class="category-button"><a href="<?php echo $cat_url; ?>" title="<?php echo $cat_name; ?>"><?php echo $this->__('View Category'); ?></a></div>
+		<?php endif; ?>
+    </div>
+</div>

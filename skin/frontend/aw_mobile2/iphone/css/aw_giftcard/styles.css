@@ -1,0 +1,14 @@
+a.giftcard-btn-remove img {
+    vertical-align:middle;
+    display: inline;
+}
+div.customer-giftcard {
+    padding:15px;
+}
+#aw-giftcard-info-block td {
+    padding:2px;
+}
+
+#aw-giftcard-info-block .price {
+    font-weight: bold;
+}

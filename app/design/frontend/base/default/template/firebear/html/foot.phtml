@@ -1,0 +1,21 @@
+<?php
+$_product = Mage::registry('current_product');
+$_helper = Mage::helper('firebear_configurl');
+?>
+<?php if($_product): ?>
+    <script type="text/javascript">
+        var priceConfig = <?php echo $_helper->getSimpleJsonConfig($_product) ?>;
+    </script>
+<?php endif ?>
+
+<script type="text/javascript">
+    if (typeof jQuery == 'undefined') {
+        document.write("<script src='//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js' type='text/javascript'><\/script>");
+
+    }
+    document.write("<script type='text/javascript'>$jq = jQuery.noConflict();<\/script>");
+    
+    
+    var mage_base_url = '<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>';
+</script>
+<?php echo $this->getCssJsHtml() ?>

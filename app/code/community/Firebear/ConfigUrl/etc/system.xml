@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+<config>
+
+    <tabs>
+        <Firebear translate="label">
+            <label>Firebear</label>
+            <sort_order>220</sort_order>
+        </Firebear>
+    </tabs>
+
+    <sections>
+        <firebear_configurl translate="label" module="firebear_configurl">
+            <label>Improved Configurable Product</label>
+            <tab>Firebear</tab>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <sort_order>1000</sort_order>
+            <groups>
+                <general translate="label">
+                    <label>General</label>
+                    <frontend_type>text</frontend_type>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>0</show_in_store>
+                    <sort_order>1</sort_order>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enable Improved Configurable Product</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Enable load configurable product with pre-set options by associated simple product URL. Before enable and use extension please read carefully <b><a href="https://firebearstudio.com/blog/improved-configurable-product-innovative-way-to-work-with-configurable-products-in-magento.html" target="_blank">Improved configurable product extension manual</a></b>]]></comment>
+                        </enabled>
+                        <image_enabled translate="label">
+                            <label>Enable image change</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Enable change configurable product image to option image from associated simple product.]]></comment>
+                        </image_enabled>
+                        <image_id translate="label">
+                            <label>Product image block css class or id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[CSS class (.some-class) or id (#some-id) for product image block. <ul><li>Default values for theme packages</li><li>rwd , base  - <b>.product-img-box</b> </li> <li> Ultimo - <b>.img-box</b></li></ul> ]]></comment>
+                        </image_id>
+                        <short_description_enabled translate="label">
+                            <label>Enable product short description change</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Enable change configurable product short description to short description from associated simple product.]]></comment>
+                        </short_description_enabled>
+                        <short_description_id translate="label">
+                            <label>Product short description block css class or id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[CSS class (.some-class) or id (#some-id) for product short description block. <ul><li>Default values for theme packages</li><li>rwd , base , Ultimo  - <b>.short-description</b> </li> </ul>]]></comment>
+                        </short_description_id>
+                        <description_enabled translate="label">
+                            <label>Enable product description change</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Enable change configurable product description to description from associated simple product.]]></comment>
+                        </description_enabled>
+                        <description_id translate="label">
+                            <label>Product description block css class or id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[CSS class (.some-class) or id (#some-id) for product description block. <ul><li>Default values for theme packages</li><li>rwd - <b>.tab-content</b> </li> <li> base/default - <b>.box-description .std </b></li><li> Ultimo - <b>.panel .std</b></li></ul> ]]></comment>
+                        </description_id>
+                        <title_enabled translate="label">
+                            <label>Enable product title change</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Enable change configurable product title to title from associated simple product.]]></comment>
+                        </title_enabled>
+                        <title_id translate="label">
+                            <label>Product title/name block css class or id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[CSS class (.some-class) or id (#some-id) for product title/name block, title will be wrapped in h1 tag .<ul><li>Default values for theme packages</li><li>rwd , base , Ultimo  - <b>.product-name</b> </li> </ul> ]]></comment>
+                        </title_id>
+                        <price_id translate="label">
+                            <label>Product Prices block css class or id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>90</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[CSS class (.some-class) or id (#some-id) for product price block.<ul><li>Default values for theme packages</li><li>rwd , base , Ultimo  - <b>.price-info .price-box</b> </li> </ul> ]]></comment>
+                        </price_id>
+                        <tier_price_id translate="label">
+                            <label>Product Tier Prices block css class or id</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[CSS class (.some-class) or id (#some-id) for product tier prices block.<ul><li>Default values for theme packages</li><li>rwd , base , Ultimo  - <b>.price-info .tier-prices</b> </li> </ul> ]]></comment>
+                        </tier_price_id>
+                    </fields>
+                </general>
+            </groups>
+        </firebear_configurl>
+    </sections>
+</config>

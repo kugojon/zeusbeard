@@ -1,0 +1,876 @@
+<?xml version="1.0"?>
+<root>
+    <cms>
+        <pages>
+            <item>
+                <title>Home Page</title>
+                <identifier>home</identifier>
+                <content><![CDATA[<hr class="indent-40 white-space" />
+<div class="text-banners">
+	<div class="grid_6 alpha">
+		<div class="text-banner">
+			<a href="#" title="Text Banner"><img src="{{media url="wysiwyg/harbour_banner_1.jpg"}}" data-srcX2="{{media url="wysiwyg/harbour_banner_1@x2.jpg"}}" alt="" /></a>
+			<div class="text-banner-content skin-1">
+				<h4>incredible</h4>
+				<h2>zara collection</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue sapien vitae mauris malesuada fermentum. Cras adipiscing diam nec sollicitudin pharetra. Suspendisse nec metus nec diam rhoncus faucibus.</p>
+			</div>
+		</div>
+		<hr class="indent-18 white-space mobile" />
+	</div>
+	<div class="grid_6 omega">
+		<div class="text-banner">
+			<a href="#" title="Text Banner"><img src="{{media url="wysiwyg/harbour_banner_2.jpg"}}" data-srcX2="{{media url="wysiwyg/harbour_banner_2@x2.jpg"}}" alt="" /></a>
+			<div class="text-banner-content skin-2">
+				<h4>extravagant</h4>
+				<h2>city cloth</h2>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue sapien vitae mauris malesuada fermentum. Cras adipiscing diam.</p>
+			</div>
+		</div>
+		<hr class="indent-18 white-space" />
+		<div class="grid_3 alpha">
+			<div class="text-banner">
+				<a href="#" title="Text Banner"><img src="{{media url="wysiwyg/harbour_banner_3.jpg"}}" data-srcX2="{{media url="wysiwyg/harbour_banner_3@x2.jpg"}}" alt="" /></a>
+				<div class="text-banner-content skin-3">
+					<h4>stylish</h4>
+					<h3>accessories</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue sapien.</p>
+				</div>
+			</div>
+			<hr class="indent-18 white-space mobile" />
+		</div>
+		<div class="grid_3 omega">
+			<div class="text-banner">
+				<a href="#" title="Text Banner"><img src="{{media url="wysiwyg/harbour_banner_4.jpg"}}" data-srcX2="{{media url="wysiwyg/harbour_banner_4@x2.jpg"}}" alt="" /></a>
+				<div class="text-banner-content skin-4">
+					<h4>season</h4>
+					<h3>-20% sale</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed congue sapien.</p>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<hr class="indent-36 white-space" />
+{{widget type="meigeewidgetsharbour/tabs" static_blocks="new_arrivals,bags,hoodies" template="meigee/meigeewidgetsharbour/tabs.phtml"}}
+<div class="widget-wrapper" style="padding: 3em 0 2em;">
+	<div class="background-wrapper" style="background-color: #f5f5f5;"></div>
+	<header class="widget-title">
+		<h2>Shoes</h2>
+	</header>
+	{{widget type="meigeewidgetsharbour/saleproducts" template="meigee/meigeewidgetsharbour/grid.phtml" products_amount="6" products_per_row="6" product_name_grid="1" price_grid="1" quickview_grid="1" widget_id="6906"}}
+</div>]]></content>
+                <is_active>1</is_active>
+                <sort_order>0</sort_order>
+                <stores>
+                    <item>0</item>
+                </stores>
+                <root_template>one_column</root_template>
+            </item>
+			<item>
+                <title>Home Page 2</title>
+                <identifier>home2</identifier>
+                <content><![CDATA[<div class="home2-content">
+	<div class="slider-wrapper">
+		<div class="grid_8 alpha">
+			{{widget type="revslider/slider_preview" id="2"}}
+		</div>
+		<hr class="indent-18 white-space mobile" />
+		<div class="grid_4 omega">
+		    {{widget type="revslider/slider_preview" id="3"}}
+		</div>
+		<div class="clear"></div>
+	</div>
+	<hr class="indent-36 white-space" />
+	<header class="widget-title">
+		<h2>We are Blue Harbour</h2>
+	</header>
+	<div class="text-blocks">
+		<div class="grid_6 alpha">
+			<div class="grid_3 alpha">
+				<ul>
+					<li class="item">
+						<i class="fa fa-truck"></i>
+						<div>
+							<h3>Free delivery</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut diam at dui vestibulum vestibulum eget in eros.</p>
+						</div>
+					</li>
+					<li class="item">
+						<i class="fa fa-support"></i>
+						<div>
+							<h3>24/7 support</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut diam at dui vestibulum vestibulum eget in eros.</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<hr class="indent-18 white-space mobile" />
+			<div class="grid_3 omega">
+				<ul>
+					<li class="item">
+						<i class="fa fa-paper-plane"></i>
+						<div>
+							<h3>Air delifery</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut diam at dui vestibulum vestibulum eget in eros.</p>
+						</div>
+					</li>
+					<li class="item">
+						<i class="fa fa-money"></i>
+						<div>
+							<h3>Money back guarantee</h3>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut diam at dui vestibulum vestibulum eget in eros.</p>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<hr class="indent-18 white-space mobile" />
+		<div class="grid_6 omega">
+				<div class="grid_3 alpha">
+					<a href="#" title="Banner"><img src="{{media url="wysiwyg/harbour_banner_5.jpg"}}" data-srcX2="{{media url="wysiwyg/harbour_banner_5@x2.jpg"}}" alt="" /></a>
+				</div>
+				<hr class="indent-18 white-space mobile" />
+				<div class="grid_3 omega">
+					<h3>Our history</h3>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut diam at dui vestibulum vestibulum eget in eros. Aliquam vestibulum, massa vel sodales elementum, orci lorem accumsan leo, quis malesuada turpis mauris eget leo. Pellentesque sollicitudin nulla sed velit blandit consequat. Curabitur vestibulum urna.</p>
+					<a href="#">Read more <i class="fa fa-long-arrow-right"></i></a>
+				</div>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<hr class="indent-64 white-space" />
+	<header class="widget-title">
+		<h2>New arrivals</h2>
+	</header>
+	{{widget type="meigeewidgetsharbour/saleproducts" template="meigee/meigeewidgetsharbour/grid.phtml" products_amount="8" products_per_row="4" product_name_grid="1" price_grid="1" quickview_grid="1" widget_id="6906"}}
+	<div class="second-text-block">
+		<div class="text">
+			<h3>Do you like this template?</h3>
+			<p>Blue Harbour is extremely customisable premium magento theme suitable for any kind of store. It’s equipped with powerful theme options module to allow you change near to everything just from the admin panel.</p>
+		</div>
+		<hr class="indent-18 white-space mobile" />
+		<div class="button-wrapper">
+			<button class="button text-block-button"><span><span>buy this template</span></span></button>
+		</div>
+	</div>
+	<hr class="indent-18 white-space" />
+</div>]]></content>
+                <is_active>1</is_active>
+                <sort_order>0</sort_order>
+                <stores>
+                    <item>0</item>
+                </stores>
+                <root_template>one_column</root_template>
+            </item>
+			<item>
+                <title>Home Page 3</title>
+                <identifier>home3</identifier>
+                <content><![CDATA[<div class="home3-content">
+	<div class="third-text-block">
+		<h3>Welcome to the <span>Harbour</span> store. Let’s go shipping!</h3>
+		<p>Blue Harbour is extremely customisable premium magento theme suitable for any kind of store. It’s equipped with powerful theme options module to allow you change near to everything just from the admin panel.</p>
+	</div>
+	<hr class="indent-36 white-space" />
+	<div class="slider-wrapper">
+		<div class="grid_8 alpha">
+			{{widget type="revslider/slider_preview" id="4"}}
+		</div>
+		<hr class="indent-18 white-space mobile" />
+		<div class="grid_4 omega">
+			<div class="text-banner">
+				<a href="#" title="Text Banner"><img src="{{media url="wysiwyg/harbour_banner_6.jpg"}}" data-srcX2="{{media url="wysiwyg/harbour_banner_6@x2.jpg"}}" alt="" /></a>
+				<div class="text-banner-content skin-5">
+					<h4>stylish</h4>
+					<h3>Jackets & Blazers</h3>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<hr class="indent-18 white-space" />
+	<div class="banners-wrapper">
+		<div class="grid_4 alpha">
+			<div class="text-banner">
+				<a href="#" title="Text Banner"><img src="{{media url="wysiwyg/harbour_banner_7.jpg"}}" data-srcX2="{{media url="wysiwyg/harbour_banner_6@x2.jpg"}}" alt="" /></a>
+				<div class="text-banner-content skin-6">
+					<h4>hats</h4>
+					<h3>-25% sale</h3>
+				</div>
+			</div>
+		</div>
+		<hr class="indent-18 white-space mobile" />
+		<div class="grid_4">
+			<div class="text-banner">
+				<a href="#" title="Text Banner"><img src="{{media url="wysiwyg/harbour_banner_8.jpg"}}" data-srcX2="{{media url="wysiwyg/harbour_banner_6@x2.jpg"}}" alt="" /></a>
+				<div class="text-banner-content skin-6">
+					<h4>Bags</h4>
+					<h3>-30% sale</h3>
+				</div>
+			</div>
+		</div>
+		<hr class="indent-18 white-space mobile" />
+		<div class="grid_4 omega">
+			<div class="text-banner">
+				<a href="#" title="Text Banner"><img src="{{media url="wysiwyg/harbour_banner_9.jpg"}}" data-srcX2="{{media url="wysiwyg/harbour_banner_6@x2.jpg"}}" alt="" /></a>
+				<div class="text-banner-content skin-7">
+					<h4>watches</h4>
+					<h3>-10% sale</h3>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<hr class="indent-36 white-space" />
+	<header class="widget-title">
+		<h2>New arrivals</h2>
+	</header>
+	{{widget type="meigeewidgetsharbour/newproducts" template="meigee/meigeewidgetsharbour/slider.phtml" products_amount="10" visible_products="4" product_name_slider="1" price_slider="1" quickview_slider="1" autoSlide="1" autoSlideTimer="5000" autoSlideTransTimer="5000" widget_id="2030"}}
+</div>]]></content>
+                <is_active>1</is_active>
+                <sort_order>0</sort_order>
+                <stores>
+                    <item>0</item>
+                </stores>
+                <root_template>one_column</root_template>
+            </item>
+			<item>
+                <title>Home Page 4</title>
+                <identifier>home4</identifier>
+                <content><![CDATA[<div class="parallax-banners-wrapper" data-fullscreen="1">
+	<div class="background-wrapper">
+		<div class="text-banner" id="parallax-banner-1">
+			<div class="background" style="background-image: url({{media url="wysiwyg/harbour_parallax_banner_1.jpg"}});"></div>
+			<div class="banner-content skin-1" data-top="43%" data-colors="colors-1">
+				<h4>Lose yourself</h4>
+				<h2>in the sensation</h2>
+				<button class="button parallax-btn"><span><span>explore</span></span></button>
+				<button class="button parallax-btn-2"><span><span>let’s shopping</span></span></button>
+			</div>
+		</div>
+		<div class="text-banner" id="parallax-banner-2">
+			<div class="background" style="background-image: url({{media url="wysiwyg/harbour_parallax_banner_2.jpg"}});"></div>
+			<div class="banner-content skin-2" data-top="43%" data-colors="colors-1">
+				<h4>explore</h4>
+				<h2>perfect quality</h2>
+				<button class="button parallax-btn"><span><span>explore</span></span></button>
+				<button class="button parallax-btn-2"><span><span>let’s shopping</span></span></button>
+			</div>
+		</div>
+		<div class="text-banner" id="parallax-banner-3">
+			<div class="background" style="background-image: url({{media url="wysiwyg/harbour_parallax_banner_3.jpg"}});"></div>
+			<div class="banner-content skin-3" data-top="43.5%" data-colors="colors-1">
+				<h4>open new</h4>
+				<h2>level of shops</h2>
+				<span class="divider"></span>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec velit vel massa dictum laoreet in id nisl. Ut eget sapien et nibh rhoncus tincidunt id eget enim. Mauris dictum bibendum leo sed porta. Phasellus sit amet tempus augue. Aliquam felis ante, rutrum in tristique vitae, vehicula ut orci. Duis viverra sodales pretium.</p>
+				<button class="button parallax-btn-2"><span><span>let’s shopping</span></span></button>
+			</div>
+		</div>
+		<div class="text-banner" id="parallax-banner-4">
+			<div class="background" style="background-image: url({{media url="wysiwyg/harbour_parallax_banner_4.jpg"}});"></div>
+			<div class="banner-content skin-4" data-top="43%" data-colors="colors-2">
+				<h4>choose from</h4>
+				<h2>thousand items</h2>
+				<span class="divider"></span>
+				<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut nec velit vel massa dictum laoreet in id nisl. Ut eget sapien et nibh rhoncus tincidunt id eget enim. Mauris dictum bibendum leo sed porta. Phasellus sit amet tempus augue. Aliquam felis ante, rutrum in tristique vitae, vehicula ut orci. Duis viverra sodales pretium.</p>
+				<button class="button parallax-btn"><span><span>let’s shopping</span></span></button>
+			</div>
+		</div>
+		<div class="text-banner" id="parallax-banner-5">
+			<div class="background" style="background-image: url({{media url="wysiwyg/harbour_parallax_banner_5.jpg"}});"></div>
+			<div class="banner-content skin-5" data-top="43%" data-colors="colors-1">
+				<h4>take</h4>
+				<h2>maximum of life</h2>
+				<button class="button parallax-btn"><span><span>explore</span></span></button>
+				<button class="button parallax-btn-2"><span><span>let’s shopping</span></span></button>
+			</div>
+		</div>
+	</div>
+</div>]]></content>
+                <is_active>1</is_active>
+                <sort_order>0</sort_order>
+				<layout_update_xml><![CDATA[
+					<reference name="head">
+						<action method="addItem"><type>skin_js</type><name>js/jquery.parallax-1.1.3.js</name></action>
+						<action method="addItem"><type>skin_js</type><name>js/jquery.localscroll-1.2.7-min.js</name><params/></action>
+					</reference>]]>
+				</layout_update_xml>
+                <stores>
+                    <item>0</item>
+                </stores>
+                <root_template>one_column</root_template>
+            </item>
+			<item>
+                <title>Home Page 5</title>
+                <identifier>home5</identifier>
+                <content><![CDATA[<hr class="indent-36 white-space" />
+{{widget type="meigeewidgetsharbour/tabs" static_blocks="new_arrivals,bags,hoodies" template="meigee/meigeewidgetsharbour/tabs.phtml"}}
+<div class="widget-wrapper" style="padding: 3em 0 2em;">
+	<div class="background-wrapper" style="background-color: #f5f5f5;"></div>
+	<header class="widget-title">
+		<h2>Shoes</h2>
+	</header>
+	{{widget type="meigeewidgetsharbour/saleproducts" template="meigee/meigeewidgetsharbour/grid.phtml" products_amount="6" products_per_row="6" product_name_grid="1" price_grid="1" quickview_grid="1" widget_id="6906"}}
+</div>]]></content>
+                <is_active>1</is_active>
+                <sort_order>0</sort_order>
+                <stores>
+                    <item>0</item>
+                </stores>
+                <root_template>one_column</root_template>
+            </item>
+			<item>
+                <title>Page Not Found</title>
+                <identifier>no-route</identifier>
+                <content><![CDATA[<div class="page-not-found">
+    <div class="not-found-bg" data-bgimg="background-image: url({{media url="wysiwyg/harbour_404_bg.jpg"}})"></div>
+    <h2>404</h2>
+    <h3>Whoops, our bad...</h3>
+    <p>The page you requested was not found, and we have a fine guess why.</p>
+	<p>If you typed the URL directly, please make sure the spelling is correct.</p>
+	<p>If you clicked on a link to get here, the link is outdated.</p>
+	<button class="button btn-home" type="button" onclick="setLocation('{{store url=""}}')"><span><span>go to home page</span></span></button>
+	<div class="search">{{block type="core/template" block_id="topSearch" template="catalogsearch/form.mini.phtml"}}</div>
+</div>
+<footer id="not-found-footer">
+	<div class="background-wrapper" style="border-top: solid 1px rgba(255,255,255,.2);"></div>
+	<div class="container_12">
+		<div class="grid_12">
+			<div class="left">
+				<div class="footer-links">
+					<ul>
+						<li><a href="{{store direct_url="about-magento-demo-store"}}">About Us</a></li>
+						<li><a href="{{store direct_url="customer-service"}}">Customer Service</a></li>
+						<li class="privacy"><a href="{{store direct_url="privacy-policy-cookie-restriction-mode"}}">Privacy Policy</a></li>
+						<li><a href="{{store direct_url="catalog/seo_sitemap/category"}}">Site Map </a></li>
+						<li><a href="{{store direct_url="catalogsearch/term/popular"}}">Search Terms</a></li>
+						<li><a href="{{store direct_url="catalogsearch/advanced/"}}">Advanced Search</a></li>
+						<li><a href="{{store direct_url="sales/guest/form/"}}">Orders and Returns</a></li>
+						<li class="last"><a href="{{store direct_url="contacts"}}">Contact Us</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="right">
+				<div class="copyright">
+					<address>{{config path="design/footer/copyright"}}</address>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</footer>]]></content>
+                <is_active>1</is_active>
+                <sort_order>0</sort_order>
+                <stores>
+                    <item>0</item>
+                </stores>
+                <root_template>one_column</root_template>
+            </item>
+        </pages>
+        <blocks>
+            <item>
+                <title>Harbour Footer</title>
+                <identifier>harbour_footer</identifier>
+                <content><![CDATA[<div class="footer-top">
+	<div class="container_12">
+		<div class="grid_12">
+			<div class="grid_3 alpha">
+				<div class="footer-logo-wrapper">
+					<a class="footer-logo" href="#"><img src="{{media url="wysiwyg/footer_logo.png"}}" alt="" data-srcx2="{{media url="wysiwyg/footer_logo@x2.png"}}"></a>
+				</div>
+				<div class="footer-info">
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed fringilla nibh, ut vehicula turpis. In hac habitasse platea dictumst. Cras mollis faucibus.</p>
+					<button class="button footer-button"><span><span>Get theme!</span></span></button>
+				</div>
+				<hr class="indent-18 white-space mobile" />
+			</div>
+			<div class="grid_3">
+				<div class="footer-block-title">
+					<h2>Quicklinks</h2>
+				</div>
+				<div class="custom-footer-content">
+					<ul class="links">
+						<li><a href="#">Careers</a></li>
+						<li><a href="#">Investor Relations</a></li>
+						<li><a href="#">Press Releases</a></li>
+						<li><a href="#">Shop with Points</a></li>
+						<li><a href="#">Credit Card Marketplace</a></li>
+						<li><a href="#">Currency Converter</a></li>
+					</ul>
+				</div>
+				<hr class="indent-18 white-space mobile" />
+			</div>
+			<div class="grid_3">
+				<div class="footer-block-title">
+					<h2>Latest Tweets</h2>
+				</div>
+				{{widget type="meigeewidgetsharbour/tweets" template="meigee/meigeewidgetsharbour/tweets.phtml" twitter_username="meigeeteam" twitter_widget_id="349107793481043968" tweet_limit="1"}}
+				<hr class="indent-18 white-space mobile" />
+			</div>
+			<div class="grid_3 omega">
+				<div class="footer-block-title">
+					<h2>Newsletter</h2>
+				</div>
+				{{block type="newsletter/subscribe" name="footer.newsletter" template="newsletter/subscribe.phtml"}}
+				<hr class="indent-18 white-space mobile" />
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="footer-links-block">
+		<div class="container_12">
+			<div class="grid_12">
+				<div class="left">
+					<div class="footer-links">
+						<ul>
+							<li><a href="{{store direct_url="about-magento-demo-store"}}">About Us</a></li>
+							<li><a href="{{store direct_url="customer-service"}}">Customer Service</a></li>
+							<li class="privacy"><a href="{{store direct_url="privacy-policy-cookie-restriction-mode"}}">Privacy Policy</a></li>
+							<li><a href="{{store direct_url="catalog/seo_sitemap/category"}}">Site Map </a></li>
+							<li><a href="{{store direct_url="catalogsearch/term/popular"}}">Search Terms</a></li>
+							<li><a href="{{store direct_url="catalogsearch/advanced/"}}">Advanced Search</a></li>
+							<li><a href="{{store direct_url="sales/guest/form/"}}">Orders and Returns</a></li>
+							<li class="last"><a href="{{store direct_url="contacts"}}">Contact Us</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="right">
+					{{widget type="meigeewidgetsharbour/sociallinks" twitter="http://twitter.com" rss="http://rss.com" facebook="http://facebook.com" googleplus="https://plus.google.com/" linkedin="http://linkedin.com" pinterest="http://pinterest.com/" template="meigee/meigeewidgetsharbour/sociallinks.phtml"}}
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+            </item>
+			 <item>
+                <title>Harbour Footer 2</title>
+                <identifier>harbour_footer2</identifier>
+                <content><![CDATA[<div class="footer-top">
+	<div class="container_12">
+		<div class="grid_12">
+			<div class="grid_3 alpha">
+				<div class="footer-logo-wrapper">
+					<a class="footer-logo" href="#"><img src="{{media url="wysiwyg/footer_logo.png"}}" alt="" data-srcx2="{{media url="wysiwyg/footer_logo@x2.png"}}"></a>
+				</div>
+				<div class="footer-info">
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi sed fringilla nibh, ut vehicula turpis. In hac habitasse platea dictumst. Cras mollis faucibus.</p>
+					<button class="button footer-button"><span><span>Get theme!</span></span></button>
+				</div>
+				<hr class="indent-18 white-space mobile" />
+			</div>
+			<div class="grid_3">
+				<div class="footer-block-title">
+					<h2>Quicklinks</h2>
+				</div>
+				<div class="custom-footer-content">
+					<ul class="links">
+						<li><a href="#">Careers</a></li>
+						<li><a href="#">Investor Relations</a></li>
+						<li><a href="#">Press Releases</a></li>
+						<li><a href="#">Shop with Points</a></li>
+						<li><a href="#">Credit Card Marketplace</a></li>
+						<li><a href="#">Currency Converter</a></li>
+					</ul>
+				</div>
+				<hr class="indent-18 white-space mobile" />
+			</div>
+			<div class="grid_3">
+				<div class="footer-block-title">
+					<h2>Latest Tweets</h2>
+				</div>
+				{{widget type="meigeewidgetsharbour/tweets" template="meigee/meigeewidgetsharbour/tweets.phtml" twitter_username="meigeeteam" twitter_widget_id="349107793481043968" tweet_limit="1"}}
+				<hr class="indent-18 white-space mobile" />
+			</div>
+			<div class="grid_3 omega">
+				<div class="footer-block-title">
+					<h2>Newsletter</h2>
+				</div>
+				{{block type="newsletter/subscribe" name="footer.newsletter" template="newsletter/subscribe.phtml"}}
+				<hr class="indent-18 white-space mobile" />
+			</div>
+			<div class="clear"></div>
+			<hr class="indent-24" />
+			<div class="grid_9 alpha">
+				<div class="grid_3 alpha">
+					<div class="footer-block-title">
+						<h2>T-Shirts</h2>
+					</div>
+					<div class="custom-footer-content">
+						<ul class="links">
+							<li><a href="#">Careers</a></li>
+							<li><a href="#">Investor Relations</a></li>
+							<li><a href="#">Press Releases</a></li>
+							<li><a href="#">Shop with Points</a></li>
+							<li><a href="#">Credit Card Marketplace</a></li>
+						</ul>
+					</div>
+					<hr class="indent-18 white-space mobile" />
+				</div>
+				<div class="grid_3">
+					<div class="footer-block-title">
+						<h2>Accessories</h2>
+					</div>
+					<div class="custom-footer-content">
+						<ul class="links">
+							<li><a href="#">Careers</a></li>
+							<li><a href="#">Investor Relations</a></li>
+							<li><a href="#">Press Releases</a></li>
+							<li><a href="#">Shop with Points</a></li>
+							<li><a href="#">Credit Card Marketplace</a></li>
+						</ul>
+					</div>
+					<hr class="indent-18 white-space mobile" />
+				</div>
+				<div class="grid_3 omega">
+					<div class="footer-block-title">
+						<h2>Jackets</h2>
+					</div>
+					<div class="custom-footer-content">
+						<ul class="links">
+							<li><a href="#">Careers</a></li>
+							<li><a href="#">Investor Relations</a></li>
+							<li><a href="#">Press Releases</a></li>
+							<li><a href="#">Shop with Points</a></li>
+							<li><a href="#">Credit Card Marketplace</a></li>
+						</ul>
+					</div>
+					<hr class="indent-18 white-space mobile" />
+				</div>
+				<div class="clear"></div>
+				<hr class="indent-24" />
+				<div class="grid_3 alpha">
+					<div class="footer-block-title">
+						<h2>Blazers</h2>
+					</div>
+					<div class="custom-footer-content">
+						<ul class="links">
+							<li><a href="#">Careers</a></li>
+							<li><a href="#">Investor Relations</a></li>
+							<li><a href="#">Press Releases</a></li>
+							<li><a href="#">Shop with Points</a></li>
+							<li><a href="#">Credit Card Marketplace</a></li>
+						</ul>
+					</div>
+					<hr class="indent-18 white-space mobile" />
+				</div>
+				<div class="grid_3">
+					<div class="footer-block-title">
+						<h2>Shoes</h2>
+					</div>
+					<div class="custom-footer-content">
+						<ul class="links">
+							<li><a href="#">Careers</a></li>
+							<li><a href="#">Investor Relations</a></li>
+							<li><a href="#">Press Releases</a></li>
+							<li><a href="#">Shop with Points</a></li>
+							<li><a href="#">Credit Card Marketplace</a></li>
+						</ul>
+					</div>
+					<hr class="indent-18 white-space mobile" />
+				</div>
+				<div class="grid_3 omega">
+					<div class="footer-block-title">
+						<h2>Dresses</h2>
+					</div>
+					<div class="custom-footer-content">
+						<ul class="links">
+							<li><a href="#">Careers</a></li>
+							<li><a href="#">Investor Relations</a></li>
+							<li><a href="#">Press Releases</a></li>
+							<li><a href="#">Shop with Points</a></li>
+							<li><a href="#">Credit Card Marketplace</a></li>
+						</ul>
+					</div>
+					<hr class="indent-18 white-space mobile" />
+				</div>
+			</div>
+			<div class="grid_3 omega">
+				<div class="footer-block-title">
+					<h2>Facebook</h2>
+				</div>
+				{{widget type="meigeewidgetsharbour/fblikebox" href="http://www.facebook.com/meigeeteam" height="335" colorscheme="light" faces="1" header="1" border="1" template="meigee/meigeewidgetsharbour/fblikebox.phtml"}}
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+	<div class="footer-links-block">
+		<div class="container_12">
+			<div class="grid_12">
+				<div class="left">
+					<div class="footer-links">
+						<ul>
+							<li><a href="{{store direct_url="about-magento-demo-store"}}">About Us</a></li>
+							<li><a href="{{store direct_url="customer-service"}}">Customer Service</a></li>
+							<li class="privacy"><a href="{{store direct_url="privacy-policy-cookie-restriction-mode"}}">Privacy Policy</a></li>
+							<li><a href="{{store direct_url="catalog/seo_sitemap/category"}}">Site Map </a></li>
+							<li><a href="{{store direct_url="catalogsearch/term/popular"}}">Search Terms</a></li>
+							<li><a href="{{store direct_url="catalogsearch/advanced/"}}">Advanced Search</a></li>
+							<li><a href="{{store direct_url="sales/guest/form/"}}">Orders and Returns</a></li>
+							<li class="last"><a href="{{store direct_url="contacts"}}">Contact Us</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="right">
+					{{widget type="meigeewidgetsharbour/sociallinks" twitter="http://twitter.com" rss="http://rss.com" facebook="http://facebook.com" googleplus="https://plus.google.com/" linkedin="http://linkedin.com" pinterest="http://pinterest.com/" template="meigee/meigeewidgetsharbour/sociallinks.phtml"}}
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+            </item>
+			
+			<item>
+                <title>Harbour Footer 3</title>
+                <identifier>harbour_footer3</identifier>
+                <content><![CDATA[<div class="footer-top footer-3">
+	<div class="footer-links-block">
+		<div class="container_12">
+			<div class="grid_12">
+				<div class="left">
+					<div class="footer-links">
+						<ul>
+							<li><a href="{{store direct_url="about-magento-demo-store"}}">About Us</a></li>
+							<li><a href="{{store direct_url="customer-service"}}">Customer Service</a></li>
+							<li class="privacy"><a href="{{store direct_url="privacy-policy-cookie-restriction-mode"}}">Privacy Policy</a></li>
+							<li><a href="{{store direct_url="catalog/seo_sitemap/category"}}">Site Map </a></li>
+							<li><a href="{{store direct_url="catalogsearch/term/popular"}}">Search Terms</a></li>
+							<li><a href="{{store direct_url="catalogsearch/advanced/"}}">Advanced Search</a></li>
+							<li><a href="{{store direct_url="sales/guest/form/"}}">Orders and Returns</a></li>
+							<li class="last"><a href="{{store direct_url="contacts"}}">Contact Us</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="right">
+					{{widget type="meigeewidgetsharbour/sociallinks" twitter="http://twitter.com" rss="http://rss.com" facebook="http://facebook.com" googleplus="https://plus.google.com/" linkedin="http://linkedin.com" pinterest="http://pinterest.com/" template="meigee/meigeewidgetsharbour/sociallinks.phtml"}}
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+            </item>
+			
+			<item>
+                <title>Harbour Product Custom</title>
+                <identifier>harbour_product_custom</identifier>
+                <content><![CDATA[<div id="fb-root"></div>
+<script>
+(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
+<div class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false"></div>
+<a href="https://twitter.com/share" class="twitter-share-button" data-via="meigeeteam">Tweet</a>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<div class="g-plusone" data-size="medium"></div>
+<script type="text/javascript">
+  (function() {
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+    po.src = 'https://apis.google.com/js/platform.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+  })();
+</script>]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+            </item>
+			<item>
+                <title>Harbour Product Banner</title>
+                <identifier>harbour_product_banner</identifier>
+                <content><![CDATA[<div class="sidebar-banner block">
+	<div class="text-banner">
+		<a href="#" title="Text Banner"><img src="{{media url="wysiwyg/harbour_product_banner.jpg"}}" data-srcX2="{{media url="wysiwyg/harbour_product_banner@x2.jpg"}}" alt="" /></a>
+		<div class="text-banner-content">
+			<h4>season</h4>
+			<h3>-20% sale</h3>
+		</div>
+	</div>
+</div>]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+            </item>
+			<item>
+                <title>Harbour Sidebar Banner</title>
+                <identifier>harbour_sidebar_banner</identifier>
+                <content><![CDATA[<div class="sidebar-banner block">
+	<div class="text-banner">
+		<a href="#" title="Text Banner"><img src="{{media url="wysiwyg/harbour_product_banner.jpg"}}" data-srcX2="{{media url="wysiwyg/harbour_product_banner@x2.jpg"}}" alt="" /></a>
+		<div class="text-banner-content">
+			<h4>season</h4>
+			<h3>-20% sale</h3>
+		</div>
+	</div>
+</div>]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+            </item>
+			
+			<item>
+				<title>Harbour Popup Content</title>
+                <identifier>harbour_popup_content</identifier>
+                <content><![CDATA[<div class="popup-content-wrapper" data-bgimg="background-image: url({{media url="wysiwyg/harbour_popup_block_bg.jpg"}});" data-srcX2="background-image: url({{media url="wysiwyg/harbour_popup_block_bg@x2.jpg"}});" data-bgcolor="background-color: #f9f9f9;">
+	{{block type="newsletter/subscribe" block_id="popup.newsletter" template="newsletter/subscribe.phtml"}}
+	<div class="clear"></div>
+</div>]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+			</item>
+			
+			<item>
+				<title>Harbour Contact Map Block</title>
+                <identifier>harbour_contact_map_block</identifier>
+                <content><![CDATA[<div class="block-title"><h2>Our address</h2></div>
+<p>No. 315, Jersey City, New York, USA<br/>
+Call Us : (555) 723-649-4920<br/>
+Email : <a href="mailto:harbour@info.com">harbour@info.com</a></p>]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+			</item>
+			<item>
+				<title>Harbour Header2 Text Banners</title>
+                <identifier>harbour_header2_text_banners</identifier>
+                <content><![CDATA[<div class="header-text-banners">
+	<div class="item">
+		<span class="icon icon-1"><span></span></span>
+		<div class="text">
+			<h3>Free Shipping</h3>
+			<p>on order over $200</p>
+		</div>
+	</div>
+	<div class="item">
+		<span class="icon icon-2"><span></span></span>
+		<div class="text">
+			<h3>Transaction Save</h3>
+			<p>100% money back</p>
+		</div>
+	</div>
+</div>]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+			</item>
+			<item>
+				<title>New Arrivals</title>
+                <identifier>new_arrivals</identifier>
+                <content><![CDATA[{{widget type="meigeewidgetsharbour/newproducts" template="meigee/meigeewidgetsharbour/grid.phtml" products_amount="8" products_per_row="4" product_name_grid="1" price_grid="1" quickview_grid="1" widget_id="4489"}}]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+			</item>
+			<item>
+				<title>Bags</title>
+                <identifier>bags</identifier>
+                <content><![CDATA[{{widget type="meigeewidgetsharbour/saleproducts" template="meigee/meigeewidgetsharbour/grid.phtml" products_amount="8" products_per_row="4" product_name_grid="1" price_grid="1" quickview_grid="1" widget_id="4566"}}]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+			</item>
+			<item>
+				<title>Hoodies</title>
+                <identifier>hoodies</identifier>
+                <content><![CDATA[{{widget type="meigeewidgetsharbour/newproducts" template="meigee/meigeewidgetsharbour/grid.phtml" products_amount="8" products_per_row="4" product_name_grid="1" price_grid="1" quickview_grid="1" widget_id="4900"}}]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+			</item>
+			<item>
+				<title>Harbour Header Phone</title>
+                <identifier>harbour_header_phone</identifier>
+                <content><![CDATA[<div class="header-phone">
+	Contact us: (555) 732-253-8714, (555) 732-253-8715
+</div>]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+			</item>
+			<item>
+				<title>Harbour Right Menu</title>
+                <identifier>harbour_right_menu</identifier>
+                <content><![CDATA[<div class="right-menu">
+	<div class="btn-close">
+		<i class="fa fa-times"></i>
+	</div>
+    <h3>Additional links</h3>
+    <ul>
+        <li><a href="#">Careers</a></li>
+		<li><a href="#">Investor Relations</a></li>
+		<li><a href="#">Press Releases</a></li>
+		<li><a href="#">Shop with Points</a></li>
+		<li><a href="#">Credit Card Marketplace</a></li>
+		<li><a href="#">Currency Converter</a></li>
+    </ul>
+	<h3>Additional links</h3>
+    <ul>
+        <li><a href="#">Careers</a></li>
+		<li><a href="#">Investor Relations</a></li>
+		<li><a href="#">Press Releases</a></li>
+		<li><a href="#">Shop with Points</a></li>
+		<li><a href="#">Credit Card Marketplace</a></li>
+		<li><a href="#">Currency Converter</a></li>
+    </ul>
+</div>]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+			</item>
+			<item>
+				<title>Harbour Header5 Text Banner</title>
+                <identifier>harbour_header5_text_banner</identifier>
+                <content><![CDATA[<div class="grid_4 alpha omega text-banner">
+	<a href="#" title="Text Banner"><img src="{{media url="wysiwyg/header5_text_banner.jpg"}}" data-srcX2="{{media url="wysiwyg/header5_text_banner@x2.jpg"}}" alt="" /></a>
+	<div class="text-banner-content">
+		<h2>Ultrafast <span>worldwide</span> <strong>delivery</strong></h2>
+	</div>
+</div>]]></content>
+                <is_active>1</is_active>
+                <stores>
+                    <item>0</item>
+                </stores>
+			</item>
+		</blocks>
+    </cms>
+</root>

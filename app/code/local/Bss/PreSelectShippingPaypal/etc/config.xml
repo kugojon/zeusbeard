@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Bss_PreSelectShippingPaypal>
+      <version>1.0.0</version>
+    </Bss_PreSelectShippingPaypal>
+  </modules>
+  <global>
+    <helpers>
+      <preselectshippingpaypal>
+        <class>Bss_PreSelectShippingPaypal_Helper</class>
+      </preselectshippingpaypal>
+    </helpers>
+    <models>
+      <preselectshippingpaypal>
+        <class>Bss_PreSelectShippingPaypal_Model</class>
+      </preselectshippingpaypal>
+    </models>
+  </global>
+
+  <frontend>
+    <events>
+      <controller_action_predispatch_paypal_express_review>
+        <observers>
+          <preselectshippingpaypal_controller_action_predispatch_paypal_express_review>
+              <class>preselectshippingpaypal/observer</class>
+              <method>predispatchPaypalExpressReview</method>
+          </preselectshippingpaypal_controller_action_predispatch_paypal_express_review>
+        </observers>
+      </controller_action_predispatch_paypal_express_review>
+    </events>
+  </frontend>
+</config> 

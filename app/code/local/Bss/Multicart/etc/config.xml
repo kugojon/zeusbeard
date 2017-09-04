@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Bss_Multicart>
+      <version>0.1.0</version>
+    </Bss_Multicart>
+  </modules>
+  <global>
+   
+ <helpers>
+  <multicart>
+    <class>Bss_Multicart_Helper</class>
+  </multicart>
+</helpers>
+<blocks>
+  <multicart>
+    <class>Bss_Multicart_Block</class>
+  </multicart>
+</blocks>
+ <models>
+      <multicart>
+        <class>Bss_Muticart_Model</class>
+      </multicart>
+  </models>
+</global>
+<frontend>
+  <layout>
+    <updates>
+      <multicart>
+        <file>bss/multicart.xml</file>
+      </multicart>
+    </updates>
+  </layout>
+  <routers>
+    <bss_multicart>
+      <use>standard</use>
+      <args>
+        <module>Bss_Multicart</module>
+        <frontName>quick-order</frontName>
+      </args>
+    </bss_multicart>
+  </routers>
+</frontend>
+</config> 

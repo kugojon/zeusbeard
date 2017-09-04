@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+ * @category    Ms
+ * @package     Ms_AddressVerification
+ * @license     https://markshust.com/eula/
+-->
+<config>
+    <modules>
+        <Ms_AddressVerification>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Ms_AddressVerification>
+    </modules>
+</config>

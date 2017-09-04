@@ -1,0 +1,91 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2013 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+ 
+    $_helper = $this->helper('catalog/output');
+	$meigee_harbour_general = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('meigee_harbour_general');
+	$fancybox = $meigee_harbour_general['fancybox'];
+    $helpImg = $this->helper('ThemeOptionsHarbour/images');
+	$labelsoptions = $meigee_harbour_general['productlabels'];
+	$productOnlyXleft = $meigee_harbour_general['productlabels']['labelonlyxleft'];
+	$labelsType = $meigee_harbour_general['productlabels']['labelview'];
+	$labelsPosition = $meigee_harbour_general['productlabels']['labelsposition'];
+	$random = rand(5,1500);
+?>
+<?php if (($_products = $this->getProductCollection()) && $_products->getSize()): ?>
+<div class="widget widget-new-products">
+    <div class="widget-title">
+        <h2><?php echo $this->__('New Products') ?></h2>
+    </div>
+    <div class="widget-products">
+    <?php echo $this->getPagerHtml() ?>
+    <?php $_columnCount = $this->getColumnCount(); ?>
+        <ul class="products-grid<?php echo ' '.$labelsType.' '.$labelsPosition; ?> widget-grid">
+			<?php $i=0; foreach ($_products->getItems() as $_product): ?>
+				<li class="grid_3 item<?php if($labelsoptions['labelsorder'] == 'new_sale'):?> labels-new-sale<?php endif; ?>">
+					<div class="product-container">
+						<div class="product-img-box">
+							<?php echo MAGE::helper('ThemeOptionsHarbour')->getProductLabels($_product, 'new'); ?>
+							<?php if($productOnlyXleft and MAGE::helper('ThemeOptionsHarbour')->getProductOnlyXleft($_product)): ?>
+								<?php echo MAGE::helper('ThemeOptionsHarbour')->getProductOnlyXleft($_product); ?>
+							<?php else: ?>
+								<?php echo MAGE::helper('ThemeOptionsHarbour')->getProductLabels($_product, 'sale'); ?>
+							<?php endif; ?>
+							<?php if ($this->displayProductStockStatus()): ?>
+								<?php if (!$_product->isAvailable()): ?>
+									<p class="availability out-of-stock listing"><span><?php echo $this->__('Out of stock') ?></span></p>
+								<?php endif; ?>
+							<?php endif; ?>
+							<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><?php /* Hover Image */ echo $helpImg->getHoverImage($_product, 'small_image', 300, null); ?><img <?php echo $helpImg->getImgSources($_product, 'small_image', 300, null); ?> alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+							<?php  // Fancybox
+							if ($fancybox['fancybox_status'] && $fancybox['fancybox_home'] == 1): ?>
+								<a class="fancybox category-gallery" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>" href="<?php echo $this->helper('catalog/image')->init($_product, 'small_image'); ?>"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('fancybox'); ?></a>
+							<?php endif;
+							// End Fancybox ?>
+						</div>
+						<div class="product-info">
+							<h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+							<?php echo $this->getPriceHtml($_product, true, '-widget-new-grid') ?>
+						</div>
+						<?php if($_product->isSaleable()): ?>
+							<div class="button-holder"><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></div>
+						<?php endif; ?>
+						<div class="product-buttons">
+							<ul class="add-to-links">
+								<?php if ($this->helper('wishlist')->isAllow()) : ?>
+									<li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('wishlist'); ?></a></li>
+								<?php endif; ?>
+								<?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+									<li><a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('compare'); ?></a></li>
+								<?php endif; ?>
+							</ul>
+						</div>
+					</div>
+				</li>
+			<?php endforeach; ?>
+        </ul>
+    </div>
+</div>
+<?php endif; ?>

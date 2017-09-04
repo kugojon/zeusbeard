@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<layout>
+    <default>
+        <reference name="head">
+            <action method="addJs"><script>firebear/configurl/adminhtml/product.js</script></action>
+        </reference>
+    </default>
+
+    <adminhtml_catalog_product_configurable>
+        <reference name="product_tabs">
+            <block type="adminhtml/catalog_product_edit_tab_super_config" name="product_configurable" as="product_configurable" template="firebear/catalog/product/edit/super/config.phtml" />
+            <action method="addTab"><name>configurable</name><block>product_configurable</block></action>
+        </reference>
+    </adminhtml_catalog_product_configurable>
+</layout>

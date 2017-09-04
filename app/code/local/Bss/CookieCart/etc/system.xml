@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config>
+  <tabs>
+    <bss translate="label">
+      <label><![CDATA[BSS Commerce]]></label>
+      <sort_order>200</sort_order>
+    </bss>
+  </tabs>
+  <sections>
+   <cookiecart>
+     <label>Cookie Cart</label>
+     <tab>bss</tab> 
+     <frontend_type>text</frontend_type>
+     <sort_order>104</sort_order>
+     <show_in_default>1</show_in_default>
+     <show_in_website>1</show_in_website>
+     <show_in_store>1</show_in_store>
+     <expanded>1</expanded>
+     <groups>
+       <general>
+         <label>General Configuration</label>
+         <frontend_type>text</frontend_type>
+         <sort_order>1</sort_order>
+         <show_in_default>1</show_in_default>
+         <show_in_website>1</show_in_website>
+         <show_in_store>1</show_in_store>
+         <expanded>1</expanded>
+         <fields>
+           <time>
+             <label>Time</label>
+             <frontend_type>text</frontend_type>   
+             <sort_order>1</sort_order>
+             <show_in_default>1</show_in_default>
+             <show_in_website>1</show_in_website>
+             <show_in_store>1</show_in_store>  
+			 <comment><![CDATA[Days.]]></comment>
+           </time>           
+       </fields>
+     </general> 
+   </groups>
+ </cookiecart> 
+</sections>
+</config>

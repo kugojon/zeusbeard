@@ -1,0 +1,222 @@
+<?php
+/**
+ * Magento
+ *
+ * @category    design
+ * @package     meigeetheme_default
+ * @copyright   Copyright (c) 2012 MeigeeTeam. (http://www.meigeeteam.com)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<?php
+	$meigee_harbour_general = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('meigee_harbour_general');
+	$meigee_harbour_appearance = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('meigee_harbour_appearance');
+    $logo = $meigee_harbour_appearance['logo'];
+    $mediaurl = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('mediaurl');
+	$header_home_bg = $meigee_harbour_appearance['header']['transparent_header_home_bg'];
+	$header_bg = $meigee_harbour_appearance['header']['transparent_header_all'];
+	$customer = Mage::getSingleton('customer/session');
+	$toplinks = $meigee_harbour_appearance['toplinks'];
+	$stickyStatus = $meigee_harbour_appearance['header']['floatingheader'];
+	$stickyLogo = $meigee_harbour_appearance['header']['floatingheader_logo'];
+	switch ($stickyLogo) {
+		case 0:
+			$stickyLogo = '';
+		break;
+		case 1:
+			$stickyLogo = 'sticky-logo';
+		break;
+	}
+	$stickyNav = $meigee_harbour_appearance['header']['floatingheader_menu'];
+	switch ($stickyNav) {
+		case 0:
+			$stickyNav = '';
+		break;
+		case 1:
+			$stickyNav = 'sticky-nav';
+		break;
+	}
+	$stickySearch = $meigee_harbour_appearance['header']['floatingheader_search'];
+	switch ($stickySearch) {
+		case 0:
+			$stickySearch = '';
+		break;
+		case 1:
+			$stickySearch = 'sticky-search';
+		break;
+	}
+	$stickyCart = $meigee_harbour_appearance['header']['floatingheader_cart'];
+	switch ($stickyCart) {
+		case 0:
+			$stickyCart = '';
+		break;
+		case 1:
+			$stickyCart = 'sticky-cart';
+		break;
+	}	
+	
+	if($header_bg == 1){
+		$bgOption = $meigee_harbour_appearance['header']['transparent_header_all_bg_pos'];
+		switch($bgOption){
+			case 0:
+				$bgOption = "background-position: left bottom;";
+			break;
+			case 1:
+				$bgOption = "background-position: right bottom;";
+			break;
+			case 2:
+				$bgOption = "background-position: center bottom;";
+			break;
+			case 3:
+				$bgOption = "background-size: cover;";
+			break;
+		}
+		if($meigee_harbour_appearance['header']['transparent_header_all_img']){
+			$background_img = 'style="background-image: url(' .Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'images/'.$meigee_harbour_appearance['header']['transparent_header_all_img'] . ');' .$bgOption.'"';
+		} else {
+			$background_img = '';
+		}
+		if($meigee_harbour_appearance['header']['transparent_header_all_retina_img']){
+			$background_imgX2 = ' data-srcx2="background-image: url(' . Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'images/'.$meigee_harbour_appearance['header']['transparent_header_all_retina_img'] . ');' .$bgOption.'"';
+		} else {
+			$background_imgX2 = '';
+		}
+	}
+	
+	if($header_home_bg == 2){
+		$homeBgOption = $meigee_harbour_appearance['header']['transparent_header_home_bg_pos'];
+		switch($homeBgOption){
+			case 0:
+				$homeBgOption = "background-position: left bottom;";
+			break;
+			case 1:
+				$homeBgOption = "background-position: right bottom;";
+			break;
+			case 2:
+				$homeBgOption = "background-position: center bottom;";
+			break;
+			case 3:
+				$homeBgOption = "background-size: cover;";
+			break;
+		}
+		if($meigee_harbour_appearance['header']['transparent_header_home_img']){
+			$home_background_img = 'style="background-image: url(' .Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'images/'.$meigee_harbour_appearance['header']['transparent_header_home_img'] . ');' .$homeBgOption.'"';
+		} else {
+			$home_background_img = '';
+		}
+		if($meigee_harbour_appearance['header']['transparent_header_home_retina_img']){
+			$home_background_imgX2 = ' data-srcx2="background-image: url(' . Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'images/'.$meigee_harbour_appearance['header']['transparent_header_home_retina_img'] . ');' .$homeBgOption.'"';
+		} else {
+			$home_background_imgX2 = '';
+		}
+	}
+	
+	$blockSwitch = $this->getLayout()->getBlockSingleton('Mage_Page_Block_Switch');
+	$blockCurrency = $this->getLayout()->getBlockSingleton('Mage_Directory_Block_Currency');
+	$isHome = strpos($this->getLayout()->getBlock('root')->getBodyClass(), "cms-index-index");
+	$isDefaultHome = strpos($this->getLayout()->getBlock('root')->getBodyClass(), "cms-index-defaultindex");
+?>
+<div class="header-wrapper <?php if($stickyStatus){echo $stickyLogo .' '. $stickyNav .' '. $stickySearch .' '. $stickyCart;} if($header_bg != 0 && !$isHome && !$isDefaultHome){echo ' transparent-header';} ?>">
+	<header id="header" class="header header-2">
+		<?php if($header_home_bg == 2 && ($isHome || $isDefaultHome)) : ?>
+			<div class="header-background home" <?php echo $home_background_img.' '.$home_background_imgX2; ?>></div>
+		<?php endif; ?>
+		<?php if($header_bg == 1 && !$isHome && !$isDefaultHome) : ?>
+			<div class="header-background" <?php echo $background_img.' '.$background_imgX2; ?>></div>
+		<?php endif; ?>
+
+		<div class="header-top">
+			<div class="container_12">
+				<div class="grid_12">
+					<div class="left">
+						<?php if((count($blockSwitch->getStores())) > 1 || $blockCurrency->getCurrencyCount() > 1) : ?>
+							<div class="language-currency-wrapper<?php if((count($blockSwitch->getStores())) > 1 && $blockCurrency->getCurrencyCount() > 1){echo ' with-border';} ?>">
+								<div class="language-currency-block">
+									<?php if((count($blockSwitch->getStores())) > 1) :?>
+										<span class="language">
+											<?php $currentLang = Mage::app()->getStore()->getName(); ?>
+											<img src="<?php echo $this->getSkinUrl('images/lang/'.$this->escapeHtml($currentLang).'.png') ?>" <?php echo MAGE::helper('ThemeOptionsHarbour/Retina')->getRetinaData('languages', $currentLang); ?> alt="<?php echo $currentLang; ?>" />
+										</span>
+									<?php endif; ?>
+									<?php if($blockCurrency->getCurrencyCount() > 1): ?>
+										<span class="currency">
+											<?php echo '<span class="icon">' . Mage::app()->getLocale()->currency(Mage::app()->getStore()->getCurrentCurrencyCode())->getSymbol() . '</span>' . $currency_code = Mage::app()->getStore()->getCurrentCurrencyCode() .'<i class="fa fa-caret-down"></i>'; ?>
+										</span>
+									<?php endif; ?>
+								</div>
+								<div class="language-currency-dropdown">
+									<?php echo $this->getChildHtml('currency') ?>
+									<?php echo $this->getChildHtml('store_language') ?>
+								</div>
+								<div class="clear"></div>
+							</div>
+						<?php endif; ?>
+					</div>
+                    <div class="left">
+						<?php if ($this->getLayout()->createBlock('cms/block')->setBlockId('harbour_header_social')->toHtml()): ?>
+							<div class="left"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('harbour_header_social')->toHtml() ?> </div>	
+						<?php endif; ?>
+						
+					</div>
+					<div class="right">
+						<?php if ($this->getLayout()->createBlock('cms/block')->setBlockId('harbour_header_phone')->toHtml()): ?>
+							<div class="left"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('harbour_header_phone')->toHtml() ?> </div>	
+						<?php endif; ?>
+						<p class="welcome-msg"><span><?php echo $this->getWelcome() ?><?php echo $this->getAdditionalHtml() ?></span></p>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+
+		<div class="container_12">
+			<div class="grid_12">
+				<?php if(!$isHome && !$isDefaultHome && isset($logo['second_logo'])): ?>
+					<h2 class="logo"><strong><?php echo $logo['logo_alt']; ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $logo['logo_alt']; ?>" class="logo"><img src="<?php echo $mediaurl.$logo['second_logo']; ?>" <?php echo MAGE::helper('ThemeOptionsHarbour/Retina')->getRetinaData('second_logo'); ?> alt="<?php echo $logo['logo_alt']; ?>" /></a></h2>
+				<?php elseif(isset($logo['logo'])): ?>
+					<h2 class="logo"><strong><?php echo $logo['logo_alt']; ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $logo['logo_alt']; ?>" class="logo"><img src="<?php echo $mediaurl.$logo['logo']; ?>" <?php echo MAGE::helper('ThemeOptionsHarbour/Retina')->getRetinaData('logo'); ?> alt="<?php echo $logo['logo_alt']; ?>" /></a></h2>
+				<?php else : ?>
+					<h2 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getSkinUrl('images/logo.png') ?>" <?php echo MAGE::helper('ThemeOptionsHarbour/Retina')->getRetinaData('default_logo'); ?> alt="<?php echo $this->getLogoAlt() ?>" /></a></h2>
+				<?php endif; ?>
+				<div class="left">
+					<?php if ($this->getLayout()->createBlock('cms/block')->setBlockId('harbour_header2_text_banners')->toHtml()): ?>
+							<div class="header2-text"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('harbour_header2_text_banners')->toHtml() ?> </div>	 
+					<?php endif; ?>
+					<?php echo $this->getChildHtml('topSearch') ?>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="menu-line">
+			<div class="container_12">
+				<div class="grid_12">
+					<?php echo $this->getChildHtml('topMenu') ?>
+					
+					<div class="top-block<?php if($toplinks['displayas'] == 1){echo ' simple-list';} if(Mage::getSingleton('customer/session')->isLoggedIn()==1){echo ' logged-in';} if($toplinks['accountlink'] == 1){echo ' accountlink';} if($toplinks['wishlistlink'] == 1){echo ' wishlistlink';} if($toplinks['cartlink'] == 1){echo ' cartlink';} if($toplinks['checkoutlink'] == 1){echo ' checkoutlink';} if($toplinks['loginlink'] == 1){echo ' loginlink';} ?>">
+						<?php if($toplinks['displayas'] == 1){echo '<span class="simple">';}
+						if (Mage::getSingleton('customer/session')->isLoggedIn()==1): 
+							echo '<span class="customer-name"><strong>' . $customer->getCustomer()->getName() . '</strong></span>';
+						 endif;
+						if($toplinks['displayas'] == 1){echo '</span>';} ?>
+						<?php echo $this->getChildHtml('topLinks') ?>
+					</div>
+					<?php if($toplinks['displayas'] == 0){
+						echo $this->getChildHtml('cart_sidebar');
+					} ?>
+					<div class="menu-button"><span><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('mobilemenu'); ?><?php echo $this->__('Menu'); ?></span></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</header>
+	<?php 
+		if ($stickyStatus) { 
+			echo $this->getChildHtml('sticky_header') ;
+		}
+	?>
+</div>
+<?php echo $this->getChildHtml('topContainer'); ?>
+<?php echo $this->getChildHtml('header_slider_container') ?>

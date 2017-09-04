@@ -1,0 +1,162 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magento.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magento.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2006-2015 X.commerce, Inc. (http://www.magento.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php 
+    $_arrayCate = $this->getCateIds();
+?>
+<?php if(count($_arrayCate) <= 0): ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+<div class="category-products">
+    <form action="<?php echo Mage::helper('multicart')->getAddToCartUrl() ?>" method="post" id="product_multicart_form">
+        <?php echo $this->getBlockHtml('formkey'); ?>
+        <div class="headerbuttonaddcart">
+            <div class="topheader">
+                <span>Quick Order</span>
+            </div>
+            <div class="buttoncart">
+               <!--  <div class="viewcart">
+                    <a href="<?php //echo Mage::getBaseUrl().'checkout/cart'; ?>">
+                        <span>View All Items</span>
+                    </a>
+                </div> -->
+                <div class="buttonaddmulticart">
+                    <button type="submit">Add Items to Cart</button>
+                </div>
+            </div>
+        </div>
+        <div class="widget-products">
+            <?php foreach ($_arrayCate as $cateid): ?>
+                <div class="headeritem">
+                    <div class="titlecate"><span><?php echo $this->getTitleCate($cateid); ?></span></div>
+                    <div class="titleattribute">
+                        <div class="inleft">
+                            <span>Case QTY</span>
+                            <span class="spacetext">|</span>
+                            <span>Cost Per Unit</span>
+                            <span class="spacetext">|</span>
+                            <span>Case Price</span>
+                            <span class="spacetext">|</span>
+                            <span>MAP</span>
+                        </div>
+                        <div class="inright">
+                            <span>QTY</span>
+                        </div>
+                    </div>
+                </div>
+                <?php 
+                    $collectionPro = $this->getCollectionPro($cateid);
+                    $count = count($collectionPro);
+                    $i = 0;
+                ?>
+                <ol class="products-list products-listmulticart" id="products-list">
+                <?php foreach ($collectionPro as $_product): ?>
+                    <?php $stock = $_product->getStockItem(); ?>
+                    <li class="item <?php if($i == $count-1) echo "last"?>">
+                        <div class="infopro">
+                            <div class="image-pro">
+                                <a target="_blank" href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+                                <img class="defaultImage" src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize(150,150);?>
+                                "alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>"/>
+                               </a>
+                            </div>
+                            <div class="name-sku">
+                                <a target="_blank" href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_product->getName() ?>" class="product-name">
+                                    <span class="name"><?php echo $_product->getName(); ?></span>
+                                </a>
+                                <span class="sku"><?php echo $_product->getSku(); ?></span>
+                                
+                                <?php if(!$stock->getIsInStock()): ?>
+                                    <span class="outofstock"><?php echo $this->__("This product is currently out of stock."); ?></span>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <div class="action">
+                            <div class="prices">
+                                <div class="caseqty">
+                                    <span><?php echo $_product->getCaseQty()?$_product->getCaseQty():"0"; ?></span>
+                                </div>
+                                <span class="spacetextinaction">|</span>
+                                <div class="costperunit">
+                                    <span class="price"><?php echo Mage::helper('core')->currency($_product->getCostPerUnit(), true, false); ?></span>
+                                </div>
+                                <span class="spacetextinaction">|</span>
+                                <div class="caseprice">
+                                    <span class="price"><?php echo Mage::helper('core')->currency($_product->getPrice(), true, false); ?></span>
+                                </div>
+                                <span class="spacetextinaction">|</span>
+                                <div class="map">
+                                    <span class="price"><?php echo Mage::helper('core')->currency($_product->getMap(), true, false); ?></span>
+                                </div>
+                            </div>
+
+                            <div class="qty">
+                                <input type="hidden" value="<?php echo $_product->getId() ?>" name="products[]">
+                                <input  <?php if(!$stock->getIsInStock()) echo "disabled" ?> type="text" class="quantity" idpro="<?php echo $_product->getId() ?>" name="qty_<?php echo $_product->getId() ?>" id="qty-<?php echo $_product->getId() ?>" value="0" style="width: 3.2em;">
+                            </div>
+                        </div>
+                        <div class="optionpro" id="bss_option<?php echo $_product->getId() ?>" style="display:none;">
+                            <?php echo Mage::helper("multicart")->getProductOptionsHtml(Mage::getModel('catalog/product')->load($_product->getId()));?>
+                        </div>
+                    </li>
+                    <?php $i++; ?>
+                <?php endforeach; ?>
+                </ol>
+            <?php endforeach; ?>
+        </div>
+        <div class="buttoncart">
+           <!--  <div class="viewcart">
+                <a href="<?php //echo Mage::getBaseUrl().'checkout/cart'; ?>">
+                    <span>View All Items</span>
+                </a>
+            </div> -->
+            <div class="buttonaddmulticart">
+                <button type="submit">Add Items to Cart</button>
+            </div>
+        </div>
+    </form>
+    <?php //echo $this->getPagerHtml(); ?>
+</div>
+<?php endif; ?>
+<script type="text/javascript">
+    //< ![CDATA[
+        var customForm = new VarienForm('product_multicart_form');
+    //]]>
+</script>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        jQuery('.quantity').change(function(){
+            var idpro = jQuery(this).attr('idpro');
+            var value = jQuery(this).val();
+            if(value > 0){
+                jQuery('#bss_option'+idpro).show();        
+            }else{
+                jQuery('#bss_option'+idpro).hide();
+            }
+        });
+    });
+</script>

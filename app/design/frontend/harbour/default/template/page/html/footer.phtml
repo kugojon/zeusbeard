@@ -1,0 +1,27 @@
+<?php
+/**
+ * Magento
+ *
+ * @category    design
+ * @package     meigeetheme_default
+ * @copyright   Copyright (c) 2012 MeigeeTeam. (http://www.meigeeteam.com)
+ */
+ $meigee_harbour_appearance = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('meigee_harbour_appearance');
+ $footer_status = $meigee_harbour_appearance['footer']['footer_status'];
+ $footer_static = $meigee_harbour_appearance['footer']['footer_static'];
+?>
+<footer id="footer">
+	<?php if($footer_status == 1): ?>
+		<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId($footer_static)->toHtml() ?>
+	 <?php endif; ?>
+	<div class="footer-bottom">
+		<div class="container_12">
+				<div class="grid_12">
+					<?php echo $this->getChildHtml('store_switcher'); ?>
+					<address><?php echo $this->getCopyright(); ?></address>
+				</div>
+				<div class="clear"></div>
+		</div>
+	</div>
+	<?php echo $this->getLayout()->createBlock("snippets/products")->toHtml(); ?>
+</footer>

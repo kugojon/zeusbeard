@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Bss_Shippings>
+      <version>0.1.0</version>
+    </Bss_Shippings>
+  </modules>
+  <global>
+    <fieldsets>
+      <sales_convert_quote>
+        <shipping_arrival_carrier>
+          <to_order>*</to_order>
+        </shipping_arrival_carrier>
+        <shipping_arrival_account_number>
+          <to_order>*</to_order>
+        </shipping_arrival_account_number>
+      </sales_convert_quote>
+    </fieldsets>
+    <helpers>
+      <shippings>
+        <class>Bss_Shippings_Helper</class>
+      </shippings>
+    </helpers>
+    <resources>
+      <shippings_setup>
+      <setup>
+        <module>Bss_Shippings</module>
+      </setup>
+      <connection>
+        <use>core_setup</use>
+      </connection>
+      </shippings_setup>
+      <shippings_write>
+      <connection>
+        <use>core_write</use>
+      </connection>
+      </shippings_write>
+      <shippings_read>
+      <connection>
+        <use>core_read</use>
+      </connection>
+    </shippings_read>
+  </resources>
+    <models>
+            <shippings>
+                <class>Bss_Shippings_Model</class>
+                <resourceModel>shippings_mysql4</resourceModel>
+            </shippings>
+    </models>
+    <events>
+      <checkout_controller_onepage_save_shipping_method> <!-- identifier of the event we want to catch -->
+        <observers>
+          <checkout_controller_onepage_save_shipping_method_handler> <!-- identifier of the event handler -->
+            <type>model</type> <!-- class method call type; valid are model, object and singleton -->
+            <class>shippings/observer</class> <!-- observers class alias -->
+            <method>saveShipping</method>  <!-- observer's method to be called -->
+            <args></args> <!-- additional arguments passed to observer -->
+          </checkout_controller_onepage_save_shipping_method_handler>
+        </observers>
+      </checkout_controller_onepage_save_shipping_method>
+    </events>
+  </global>
+</config> 

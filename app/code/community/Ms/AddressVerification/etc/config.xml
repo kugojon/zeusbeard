@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<!--
+ * @category    Ms
+ * @package     Ms_AddressVerification
+ * @license     https://markshust.com/eula/
+-->
+<config>
+    <modules>
+        <Ms_AddressVerification>
+            <version>2.1.0</version>
+        </Ms_AddressVerification>
+    </modules>
+    <global>
+        <helpers>
+            <ms_addressverification>
+                <class>Ms_AddressVerification_Helper</class>
+            </ms_addressverification>
+        </helpers>
+        <blocks>
+            <ms_addressverification>
+                <class>Ms_AddressVerification_Block</class>
+            </ms_addressverification>
+        </blocks>
+        <models>
+            <ms_addressverification>
+                <class>Ms_AddressVerification_Model</class>
+            </ms_addressverification>
+        </models>
+    </global>
+    <frontend>
+        <routers>
+            <checkout>
+                <args>
+                    <modules>
+                        <Ms_AddressVerification before="Mage_Checkout">Ms_AddressVerification_Checkout</Ms_AddressVerification>
+                    </modules>
+                </args>
+            </checkout>
+            <customer>
+                <args>
+                    <modules>
+                        <Ms_AddressVerification before="Mage_Customer">Ms_AddressVerification_Customer</Ms_AddressVerification>
+                    </modules>
+                </args>
+            </customer>
+        </routers>
+        <layout>
+            <updates>
+                <ms_addressverification>
+                    <file>ms/addressverification.xml</file>
+                </ms_addressverification>
+            </updates>
+        </layout>
+    </frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Ms_AddressVerification before="Mage_Adminhtml">Ms_AddressVerification_Adminhtml</Ms_AddressVerification>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <ms_addressverification>
+                    <file>ms/addressverification.xml</file>
+                </ms_addressverification>
+            </updates>
+        </layout>
+    </adminhtml>
+    <default>
+        <ms_addressverification>
+            <general>
+                <allow_bypass>1</allow_bypass>
+                <primary_api>1</primary_api>
+            </general>
+            <usps>
+                <gateway_url>http://production.shippingapis.com/ShippingAPI.dll</gateway_url>
+            </usps>
+            <smartystreets>
+                <us_street_address_api_url>https://api.smartystreets.com/street-address</us_street_address_api_url>
+            </smartystreets>
+        </ms_addressverification>
+    </default>
+</config>

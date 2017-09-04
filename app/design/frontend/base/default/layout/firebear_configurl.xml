@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2014 Firebear Studio. (http://www.firebearstudio.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0) @TODO add license info
+ */
+
+-->
+<layout version="0.1.0">
+
+    <catalog_product_view>
+        <reference name="before_body_end">
+            <block type="page/html_head" name="fbfoot" as="fbfoot" template="firebear/html/foot.phtml">
+                <action ifconfig="firebear_configurl/general/enabled" method="addItem"><type>skin_js</type><name>js/firebear/configurl.js</name></action>
+                <action ifconfig="firebear_configurl/general/enabled" method="addItem"><type>skin_js</type><name>js/firebear/jquery.history.min.js</name></action>
+            </block>
+        </reference>
+    </catalog_product_view>
+
+</layout>

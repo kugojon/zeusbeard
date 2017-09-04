@@ -1,0 +1,102 @@
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_blank
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+ 
+.fancybox-overlay{
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#4D000000,endColorstr=#4D000000);
+	zoom: 1;
+}
+
+span.label-sale strong,
+span.label-new strong {filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#7Fffffff,endColorstr=#7Fffffff); zoom: 1;}
+.footer-links span:hover,
+.footer-links li a:hover,
+ul.social-links li a:hover{filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#19ffffff,endColorstr=#19ffffff); zoom: 1;}
+
+/* .footer-links ul i, */
+#footer .footer-second-line .block-tags li a {filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#33ffffff,endColorstr=#33ffffff); zoom: 1;}
+#footer .footer-second-line .links li:after {filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#Affffff,endColorstr=#Affffff); zoom: 1;}
+#footer .sbSelector {background-color: #323232}
+
+/* Grids */
+body .category-products .products-grid.grid-2-columns li.item,
+body .category-products .products-grid.grid-3-columns li.item,
+body .category-products .products-grid.grid-4-columns li.item,
+body .category-products .products-grid.grid-5-columns li.item,
+body .category-products .products-grid.grid-6-columns li.item,
+body .category-products .products-grid.grid-7-columns li.item,
+body .category-products .products-grid.grid-8-columns li.item{clear:none;}
+
+
+
+
+.transparent-header header#header .header-top,
+.transparent-header.boxed-layout header#header .header-top .container_12 {
+	background: rgba(255,255,255,.1);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#19ffffff,endColorstr=#19ffffff);
+	zoom: 1;
+}
+.transparent-header header#header .form-search input,
+.transparent-header header#header .form-search button > span,
+.transparent-header header#header .language-currency-block:hover,
+.transparent-header header#header .language-currency-block.open,
+.transparent-header header#header .header-top .language-currency-block:hover,
+.transparent-header header#header .header-top .language-currency-block.open,
+.transparent-header header#header .right-menu-button:hover,
+.transparent-header header#header .right-menu-button.active,
+.transparent-header header#header .search-button:hover,
+.transparent-header header#header .search-button.open,
+.transparent-header header#header.header-2 .header-text-banners .item .icon,
+.transparent-header header#header .top-cart .block-title .title-cart:hover,
+.transparent-header header#header .top-cart .block-title.active .title-cart,
+.transparent-header header#header .links li a:hover,
+.transparent-header header#header .links li a.top-link-login:hover,
+.transparent-header header#header .customer-name:hover,
+.transparent-header header#header .customer-name.open {
+	background: none;
+} 
+#header .search_mini_form {display: block;}
+header#header .form-search input {line-height: 26px;}
+.transparent-header header#header .form-search input,
+.transparent-header header#header .form-search button > span {background-color: #999!important;}
+.transparent-header header#header .form-search input,
+.transparent-header header#header .form-search button > span,
+.transparent-header header#header .language-currency-block:hover,
+.transparent-header header#header .language-currency-block.open,
+.transparent-header header#header .header-top .language-currency-block:hover,
+.transparent-header header#header .header-top .language-currency-block.open,
+.transparent-header header#header .right-menu-button:hover,
+.transparent-header header#header .right-menu-button.active,
+.transparent-header header#header .search-button:hover,
+.transparent-header header#header .search-button.open,
+.transparent-header header#header.header-2 .header-text-banners .item .icon,
+.transparent-header header#header .top-cart .block-title .title-cart:hover,
+.transparent-header header#header .top-cart .block-title.active .title-cart,
+.transparent-header header#header .links li a:hover,
+.transparent-header header#header .links li a.top-link-login:hover,
+.transparent-header header#header .customer-name:hover,
+.transparent-header header#header .customer-name.open {background: none;}
+header#sticky-header .header-right {width: 82%!important;}
+header#sticky-header .header-right .nav-container {width: 80%!important;}
+.product-name a {display: block!important;}

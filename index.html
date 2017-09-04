@@ -1,0 +1,535 @@
+<!doctype html>
+
+<html lang="en-US">    
+
+    <head>
+
+        <meta charset="UTF-8" />
+
+        <meta name="description" content="The default index page for your new Nexcess hosting account." />
+
+        <link href="https://static.nexcess.net/vten/css/bootstrap.min.css" rel="stylesheet">
+
+		<link href="https://static.nexcess.net/vten/css/responsive.min.css" rel="stylesheet">
+
+		<link href="http://smhttp.nex.nexcesscdn.net/803313/static/vten/css/nexcess.min-1400848438.css" rel="stylesheet">
+
+        <title>Nexcess</title>		
+
+        <style type="text/css">
+
+           html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+
+                margin:0;
+
+                padding:0;
+
+                border:0;
+
+                outline:0;
+
+                font-size:100%;
+
+                vertical-align:baseline;
+
+                background:transparent;
+
+            }
+
+            html, body {
+
+                margin:0;
+
+                padding:0;
+
+                height:100%;
+
+            }
+
+            html {
+
+                width:100%;
+
+                font-family:"Open Sans", Arial, sans-serif;
+
+            }
+
+            body {
+
+                line-height:1.0em;
+
+                background: #fff url('http://lghttp.nex.nexcesscdn.net/803313/static/vten/style/bg.png') repeat;
+
+                height:100%;
+
+                display:block;
+
+            }
+
+            #whole_content {
+
+                min-height:100%;
+
+                position:relative;
+
+            }
+
+			.main {
+
+				margin: 30px 0;
+
+				position: relative;
+
+				padding: 17px 17px 35px 17px;
+
+				font-size: 1em;
+
+				border-radius: 10px;
+
+				/* border: 2px solid rgba(12,130,173,0.5); */
+
+				background-color: #eee;
+
+				background: rgba(255,255,255,0.7);
+
+				box-shadow: 0 2px 2px rgba(0,0,0,0.2);
+
+			}
+
+			#wrap {
+
+				background:rgba(0,0,0,0.05);
+
+				height:100%!important;
+
+			}			
+
+			ol, ul {
+
+                list-style:none;
+
+                margin:0 0 10px 0;
+
+            }
+
+            sup {
+
+                font-size:0.83em;
+
+                vertical-align:super;
+
+            }
+
+            :focus {
+
+                outline:0;
+
+            }
+
+            ins {
+
+                text-decoration:none;
+
+            }
+
+            del {
+
+                text-decoration:line-through;
+
+            }
+
+            .group:after {
+
+                content:".";
+
+                display:block;
+
+                height:0;
+
+                clear:both;
+
+                visibility:hidden;
+
+            }
+
+            p, li, dd, dt, address, q {
+
+                font-size:0.875em;
+
+            }
+
+            h1, h2 {
+
+                line-height:1.0em;
+
+                padding:0.4em 0;
+
+                font-weight:700;
+
+                background: none;
+
+                border: none;
+
+            }
+
+            h1 {
+
+                font-size:1.875em;
+
+            }
+
+            h2 {
+
+                font-size: 1.5em;
+
+                margin-bottom:0.4em;
+
+            }			
+
+            .title-divider {
+
+                text-align: left;
+
+                margin-bottom: 1em;
+
+                background: url('http://lghttp.nex.nexcesscdn.net/803313/static/vten/style/bg_divider.png') left center repeat-x;
+
+                padding: 0;
+
+            }
+
+            .title-divider span {
+
+                background: url('http://lghttp.nex.nexcesscdn.net/803313/static/vten/style/bg.png') left center repeat;
+
+            }
+
+            .de-em {
+
+                font-weight: normal;
+
+                padding-right: 0.5em;
+
+            }
+
+            #logo a {
+
+                float: left;
+
+                margin-top:14px;
+
+                position:absolute;
+
+                display:block;
+
+                height:40px;
+
+                width:229px;
+
+                background:url(http://lghttp.nex.nexcesscdn.net/803313/static/vten/brand/Nexcess_logo.png) no-repeat 0 0;
+
+                z-index:100;
+
+            }           
+
+            div.social {
+
+                float:right;
+
+				margin-top:11px;
+
+            }               
+
+			div.social a i {
+
+				font-size: 16px;
+
+				color: #747474;
+
+				padding: 0;
+
+				line-height: 30px;
+
+				width: 30px;
+
+				height: 30px;
+
+				text-align: center;
+
+				display: inline-block;
+
+			}
+
+			div.social a {
+
+				text-decoration: none;
+
+				color: #d0d0d0;
+
+				color: rgba(116,116,116,0.8);
+
+				display: inline-block;
+
+				line-height: 30px;
+
+				margin-right: 0.3em;
+
+				width: 30px;
+
+				height: 30px;
+
+				-webkit-border-radius: 200px;
+
+				-moz-border-radius: 200px;
+
+				border-radius: 200px;
+
+				border: 1px solid rgba(116,116,116,0.6);
+
+			}	
+
+			.no_margin_left {
+
+				margin-left:0!important;
+
+			}
+
+			.no_margin_bottom {
+
+				margin-bottom:0!important;
+
+			}
+
+			.new_margin_bottom {
+
+				margin-bottom:8px;
+
+			}
+
+			.header_margin {
+
+				margin-top:100px;
+
+			}
+
+			.margin_space {
+
+				margin-top: 20px;
+
+			}
+
+			.btn {
+
+				margin-top: 5px;
+
+				padding:3px;
+
+				font-size:11px;
+
+			}
+
+			@media (max-width:1199px) {
+
+				.btn{
+
+					font-size:13px;
+
+				}
+
+			}
+
+			@media (max-width:979px) {
+
+				.btn{
+
+					font-size:11px;
+
+				}				
+
+			}
+
+			@media (max-width:767px) {
+
+				.btn{
+
+					font-size:15px;					
+
+				}
+
+				.leftalign {
+
+					float:left!important;
+
+				}				
+
+			}						
+
+        </style>
+
+    </head>    
+
+    <body>
+
+		<div id="fb-root"></div>
+
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+		<div id="wrap">
+
+			<div class="container">
+
+				<div class="row-fluid">
+
+					<div class="span8 offset2 header_margin">
+
+						<div id="logo">	
+
+							<a href="http://www.nexcess.net/"></a>
+
+						</div>
+
+						<div class="social">
+
+							<a href="https://twitter.com/nexcess" onclick='window.open(this.href);return false;'><i class="icon-twitter"></i></a>
+
+							<a href="https://www.facebook.com/nexcess" onclick='window.open(this.href);return false;'><i class="icon-facebook"></i></a>
+
+							<a href="http://www.linkedin.com/company/nexcess" onclick='window.open(this.href);return false;'><i class="icon-linkedin"></i></a>
+
+							<a href="https://plus.google.com/107971784894043504000/" onclick='window.open(this.href);return false;'><i class="icon-google-plus"></i></a>
+
+							<a href="https://www.youtube.com/user/nexcessnet" onclick='window.open(this.href);return false;'><i class="icon-youtube"></i></a>
+
+						</div>
+
+					</div>
+
+				</div>				
+
+				<div class="row-fluid">
+
+					<div class="span8 offset2 main">
+
+						<h1>Welcome To Nexcess!</h1>
+
+						<p>This is the default homepage for your new Nexcess hosting account. To replace it with your own content just replace this index.php file with yours. Don't hesitate to contact <a href="http://www.nexcess.net/support">Nexcess support</a> if you run into any problems or have any questions!</p>
+
+						<div class="row-fluid margin_space">
+
+							<div class="span12"><p style="float:left;margin-right:3px;margin-top:2px;">Congrats on launching your new Website! Spread the good news: </p><a href="https://twitter.com/share" class="twitter-share-button" data-text="Just launched my new website with @Nexcess!" data-count="none">Tweet</a></div>
+
+							<div class="row-fluid">
+
+								<h2 class="title-divider no_margin_bottom margin_space"><span>Getting <span class="de-em">Started</span></span></h2>							
+
+								<div class="span5 no_margin_left">
+
+									<h3><a href="http://docs.nexcess.net/article/pointing-your-domain-name-to-nexcess-nameservers.html"> Pointing Your Domain Name</a></h3>
+
+									<p>This article provides information on what you need to do to point your domain name to the Nexcess nameservers.</p>
+
+								</div>
+
+								<div class="span5 offset2">	
+
+									<h3><a href="http://docs.nexcess.net/article/obtaining-ssh-access.html"> Obtaining SSH Access</a></h3>
+
+									<p>SSH (Secure Shell) is a method of connecting to another computer over a network.</p>
+
+								</div>
+
+							</div>
+
+							<div class="row-fluid">
+
+								<div class="span5 no_margin_left">
+
+									<h3><a href="http://docs.nexcess.net/article/using-ftp-sftp-to-transfer-files.html"> Using FTP/SFTP</a></h3>
+
+									<p>FTP (File Transfer Protocol) is a method for transferring files from one host to another over the Internet.</p>
+
+								</div>
+
+								<div class="span5 offset2">	
+
+									<h3><a href="http://docs.nexcess.net/article/adding-a-secondary-domain.html"> Adding a Secondary Domain</a></h3>
+
+									<p>A secondary domain functions as an independent entity, having its own email boxes, websites, directory structure, statistics pages, bandwidth recording, etc.</p> 
+
+								</div>
+
+							</div>
+
+							<div class="fluid-row">
+
+								<h2 class="title-divider new_margin_bottom margin_space"><span>Available <span class="de-em">Services</span></span></h2>
+
+								<div class="span4 no_margin_left">
+
+									<div class="row-fluid">
+
+										<a href="http://www.nexcess.net/magento/hosting" class="span6 btn btn_small btn-default" target="_blank">Magento Hosting</a>
+
+										<a href="http://www.nexcess.net/wordpress/hosting" class=" span6 btn btn_small btn-default" target="_blank">Wordpress Hosting</a>
+
+									</div>
+
+									<div class="row-fluid">
+
+										<a href="http://www.nexcess.net/expressionengine/hosting" class="span12 btn btn_large btn-default" target="_blank">ExpressionEngine Hosting</a>
+
+									</div>
+
+								</div >					
+
+								<div class="span4">	
+
+									<div class="row-fluid">
+
+										<a href="http://www.nexcess.net/hosting/shared" class="span6 btn btn_small btn-default" target="_blank">Shared Hosting</a>
+
+										<a href="http://www.nexcess.net/hosting/dedicated-servers" class="span6 btn btn_small btn-default" target="_blank">Dedicated Hosting</a>
+
+									</div>
+
+									<div class="row-fluid">
+
+										<a href="http://www.nexcess.net/hosting/michigan-colocation" class="span12 btn btn_large btn-default" target="_blank">Michigan Colocation</a> 
+
+									</div>
+
+								</div>					
+
+								<div class="span4">	
+
+									<div class="row-fluid">
+
+										<a href="http://www.nexcess.net/services/ssl-certificates" class="span6 btn btn_small btn-default" target="_blank">SSL Certificates</a>
+
+										<a href="http://www.nexcess.net/services/domains" class="span6 btn btn_small btn-default" target="_blank">Register A Domain</a>
+
+									</div>
+
+									<div class="row-fluid">
+
+										<a href="http://www.nexcess.net/services/content-delivery-network" class="span12 btn btn_large btn-default" target="_blank">Contend Delivery Network</a>
+
+									</div>
+
+								</div>
+
+							</div>
+
+						</div>					
+
+					</div>
+
+				</div>
+
+			</div>
+
+		</div>
+
+    </body>
+
+</html>

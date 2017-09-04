@@ -1,0 +1,170 @@
+/**
+*
+* Feel free to add your own css rules here.
+*
+*/
+.product-options{border-bottom:none!important;margin-bottom:0!important;padding-bottom:0!important;}
+.product-options-bottom{border-bottom:none!important;padding-bottom:0!important;}
+.product-view .add-to-links-box{border-top:1px dotted #ddd;border-bottom:1px solid #ddd;padding-top: 10px;}
+.product-view .add-to-box{border-bottom:none!important}
+.opc .form-list .input-box select{color:#000!important;}
+.header-text-banners .item .text p{color:#222;}
+
+.window-overlay {
+    display: none;
+}
+.cart-table {
+    margin-bottom: 1em !important;
+}
+.left.bold {
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 2em;
+}
+header#header.header-2 .header-text-banners .item {
+    margin-right: 55px;
+    margin-left: 1px;
+}
+.catalog-product-view .rating-title h2 {
+    margin: 0 16px 1px !important;
+}
+.click-submit a span {
+    color: #fff;
+    font-size: 10px;
+    font-weight: bold;
+    height: auto;
+    line-height: 26px;
+    padding:13px;
+    text-transform: uppercase;
+    background:#4cb1f1;
+    cursor: pointer;
+}
+.rating-top , .click-submit{
+    margin-bottom: 30px;
+}
+.rating-top .ratings-table {
+    width: 3%;
+    margin-top: 0;
+}
+.rating-top th {
+    display: none;
+}
+.catalog-product-view .box-reviews .review-txt {
+    color: #888;
+    font-size: 1em !important;
+    line-height: 1.5em;
+}
+.catalog-product-view .box-reviews .actions {
+    text-align: center !important;
+     margin-bottom: 30px
+}
+.catalog-product-view .box-reviews .form-add {
+    left: 25%;
+}
+.box.visible li {
+    border-bottom: 1px solid #dfdfdf;
+    padding-bottom: 1.98em;
+}
+.ratings-table .rating-box .rating {
+    background: url("../images/bkg_rating.gif") repeat-x scroll 0 100% rgba(0, 0, 0, 0);
+    float: left;
+    height: 11px;
+}
+.ratings-table .rating-box{
+    background: url("../images/bkg_rating.gif") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    font-size: 0;
+    height: 11px;
+    line-height: 0;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 72px;
+}
+.rating-box-small .rating {
+    background: url("../images/bkg_rating_2.gif") repeat-x scroll 0 100% rgba(0, 0, 0, 0);
+    height: 6px;
+}
+.rating-box-small {
+    background: url("../images/bkg_rating_2.gif") repeat-x scroll 0 0 rgba(0, 0, 0, 0);
+    height: 6px;
+    margin-top: 5px;
+    overflow: hidden;
+    text-indent: -999em;
+    width: 45px;
+}
+.totals-box::before {
+    clear: both;
+    content: "";
+    display: block;
+}
+span.review-title {
+    float: left;
+    font-size: 1em;
+    margin-bottom: 0.75em;
+    margin-right: 1em;
+    padding: 0;
+}
+#customer-reviews .nobr {
+    color: #222;
+    margin-top: 3px;
+}
+
+.catalog-product-view .box-reviews.full-table .indent .review-fields {
+    float: none !important;
+}
+.catalog-product-view .box-reviews.full-table .indent fieldset, .catalog-product-view .box-reviews.full-table .indent .review-fields {
+    width: 100% !important;
+}
+.ratings-table th {
+    font-size: 1em;
+}
+.checkbox-wrapper {
+    display: inline-block;
+    float: left;
+    padding-right: 15px;
+}
+
+.couponandgifcart {
+    border: 1px solid #ddd;
+    float: left;
+    margin: 0;
+}
+.giftcart,.counpon { width: 48%;float: left;}
+.counpon {border-left: 1px solid #ddd;}
+.cart .discount .buttons-set button.button span span, .cart .shipping .buttons-set button.button span span{ background-color: #4cb1f1!important;}
+.cart.cart-2  .couponandgifcart .discount label{margin-bottom: 3px;}
+.cart .couponandgifcart .discount .buttons-set{ margin: 4px 0 0;}
+.cart div.aw_giftcard form#aw_giftcard-form button{width: 48%;margin: 0 3px 5px 0 !important}
+.checkout-cart-index .aw_giftcard{width: 74%!important;padding: 10px 10px 10px 25px;}
+#giftcard_code{width: 93%!important;background: #ddd none repeat scroll 0 0;height: 20px;}
+.coupon { padding: 10px 0 21px 31px;}
+.cart .couponandgifcart header{border-bottom: medium none transparent;}
+.cart .couponandgifcart input{height: 20px;}
+.cart .couponandgifcart header h2{ margin: 0;color: #666;font-family: Arial,sans-serif;}
+.cart.cart-2 .couponandgifcart header {margin-bottom: 3px;}
+.couponandgifcart .counpon .discount-form{ width: 75%;}
+.couponandgifcart .counpon .discount-form .button{ width: 42%;margin-right: 5px;}
+.cart .couponandgifcart .discount .buttons-set button.button span{font-size: 11px;height: 28px;line-height: 30px!important;}
+.shipping-mess {border: 1px solid #ddd;margin-bottom: 11px;padding: 13px 0 13px 26px;}
+.shipping-mess .messchamthan {color: red;font-size: 15px;}
+.shipping-total {font-size: 14px;}
+.col-shipping-carrier, .col-account-number {margin: 10px 0 10px 20px;}
+.col-shipping-carrier > label, .col-account-number > label {display: block;}
+@media screen and (max-width: 1281px) {
+    .cart .couponandgifcart .discount .buttons-set button.button span{font-size: 9px;}
+}
+@media only screen and (min-width: 1281px) {
+    .form-list textarea, .form-list input.input-text.fix-input {width: 766px;} 
+}
+@media only screen and (max-width: 1280px) and (min-width: 978px) {
+    .form-list textarea, .form-list input.input-text.fix-input {width: 590px;}
+}
+@media only screen and (max-width: 977px) and (min-width: 768px) {
+    .form-list textarea, .form-list input.input-text.fix-input {width: 478px;}
+}
+@media only screen and (max-width: 767px) {
+    header#header.header-2 .header-text-banners.hiden-alow-768{display:none;}
+    .giftcart,.counpon { width: 100%;float: left;}
+    .counpon {border-left: transparent;border-top: 1px solid #ddd;}
+    .cart div.aw_giftcard form#aw_giftcard-form button{ width: 100%;margin-right: 5px;}
+    .couponandgifcart .counpon .discount-form .button{width: 42%;}
+}

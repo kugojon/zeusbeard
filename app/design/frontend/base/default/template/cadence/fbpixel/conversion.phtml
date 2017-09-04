@@ -1,0 +1,24 @@
+<?php
+$helper = Mage::helper("cadence_fbpixel");
+if (!$helper->isConversionPixelEnabled()) {
+    return;
+}
+$id = $helper->getVisitorPixelId();
+?>
+<!-- Facebook Conversion Code for Conversions -->
+<script>
+<?php
+$orderData = $helper->getOrderData();
+if ($orderData !== null) :?>
+fbq('track', 'Purchase', {
+<?php if (array_key_exists('content_name', $orderData) && array_key_exists('content_category', $orderData) ) : ?>
+    content_name: '<?php echo $this->escapeHtml($orderData['content_name'])?>',
+    content_category: '<?php echo $this->escapeHtml($orderData['content_category'])?>',
+<?php endif; ?>
+    content_ids: [<?php echo $this->escapeHtml($orderData['content_ids']) ?>],
+    content_type: 'product',
+    value: <?php echo $this->escapeHtml($orderData['value']) ?>,
+    currency: '<?php echo $this->escapeHtml($orderData['currency']) ?>'
+});
+<?php endif; ?>
+</script>

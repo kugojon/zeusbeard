@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<layout version="0.0.1">
+   <checkout_cart_index> 
+       <reference name="content">
+            <reference name="checkout.cart">
+            	<reference name="checkout.cart.methods">  
+					<block type="globalshopex/internationallogic" name="globalshopex.internationallogic" template="globalshopex/switchtypecart.phtml">
+						<block type="globalshopex/internationallogic" name="formiframe"  template="globalshopex/formiframe.phtml" />
+						<block type="globalshopex/internationallogic" name="buttoniframe"  template="globalshopex/buttoniframe.phtml" />
+						<block type="globalshopex/internationallogic" name="formcartocart"  template="globalshopex/formcarttocart.phtml" />
+					</block>
+				</reference>	
+            </reference>
+        </reference>
+	</checkout_cart_index>
+	<customer_account_login translate="label">
+		<reference name="content">
+			<block type="customer/account_forgotpassword" name="forgotPassword" template="globalshopex/login.phtml" />
+		</reference>
+	</customer_account_login>
+</layout>

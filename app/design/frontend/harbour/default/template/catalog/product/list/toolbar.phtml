@@ -1,0 +1,89 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @see Mage_Catalog_Block_Product_List_Toolbar
+ */
+ 
+ function check_grid($grid_mode){
+	switch ($grid_mode) {
+		case 'grid': 
+			return '<i class="fa fa-th-large"></i>';
+		break;
+		case 'list':
+			return '<i class="fa fa-th-list"></i>';
+		break;
+	}
+}
+?>
+<?php if($this->getCollection()->getSize()): ?>
+<nav class="toolbar">
+    <div class="pager">
+		<?php echo $this->getPagerHtml() ?>
+	</div>
+	<?php if( $this->isExpanded() ): ?>
+		<div class="sorter">
+			<?php if( $this->isEnabledViewSwitcher() ): ?>
+				<p class="view-mode">
+					<?php $_modes = $this->getModes(); ?>
+					<?php if($_modes && count($_modes)>1): ?>
+					<label><?php echo $this->__('View as') ?>:</label>
+					<?php foreach ($this->getModes() as $_code=>$_label): ?>
+						<?php if($this->isModeActive($_code)): ?>
+							<strong title="<?php echo $_label ?>" class="<?php echo strtolower($_code); ?>"><?php echo check_grid(strtolower($_code)) ?></strong>
+						<?php else: ?>
+							<a href="<?php echo $this->getModeUrl($_code) ?>" title="<?php echo $_label ?>" class="<?php echo strtolower($_code); ?>"><?php echo check_grid(strtolower($_code)) ?></a>
+						<?php endif; ?>
+					<?php endforeach; ?>
+					<?php endif; ?>
+				</p>
+			<?php endif; ?>
+			 <p class="amount alpha">
+				<?php if($this->getLastPageNum()>1): ?>
+					<?php echo $this->__('Items %s to %s of %s total', $this->getFirstNum(), $this->getLastNum(), $this->getTotalNum()) ?>
+				<?php else: ?>
+					<strong><?php echo $this->__('%s Item(s)', $this->getTotalNum()) ?></strong>
+				<?php endif; ?>
+			</p>
+			<div class="limiter">
+
+           
+    <?php endif; ?>
+</nav>
+<script type="text/javascript">
+	if(!jQuery(".toolbar .sbHolder").length){
+		jQuery(".toolbar select").selectbox();
+		jQuery('.toolbar .sbSelector').each(function(){
+			if(!jQuery(this).find('span.text').length){
+				jQuery(this).wrapInner('<span class="text" />').append('<span />').find('span:last').wrapInner('<span />');
+			}
+		});
+	}
+</script>
+<?php endif ?>

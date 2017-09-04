@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Meigee_MeigeewidgetsHarbour>
+			<version>0.0.1</version>
+		</Meigee_MeigeewidgetsHarbour>
+	</modules>
+	<global>
+		<helpers>
+			<meigeewidgetsharbour>
+				<class>Meigee_MeigeewidgetsHarbour_Helper</class>
+			</meigeewidgetsharbour>
+		</helpers>
+		<blocks>
+			 <meigeewidgetsharbour>
+				<class>Meigee_MeigeewidgetsHarbour_Block</class>
+			 </meigeewidgetsharbour>
+		</blocks>
+		<models>
+			<!-- ... -->
+			<meigeewidgetsharbour>
+				<class>Meigee_MeigeewidgetsHarbour_Model</class>
+			</meigeewidgetsharbour>   
+			<!-- ... -->
+		</models>
+	</global>
+	<!---->
+	<frontend>
+		<layout>
+			<updates>
+				<meigeewidgetsharbour>
+					<file>meigee/widgetoptions.xml</file>
+				</meigeewidgetsharbour>
+			</updates>
+		</layout>
+	</frontend>
+</config>

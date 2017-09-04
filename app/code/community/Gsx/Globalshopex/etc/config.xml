@@ -1,0 +1,48 @@
+<config>
+	<modules>
+		<Gsx_Globalshopex>
+			<version>1.0.4</version>
+		</Gsx_Globalshopex>
+	</modules>
+	
+	<global>
+        <blocks>
+            <globalshopex>
+                <class>Gsx_Globalshopex_Block</class>
+            </globalshopex>
+        </blocks>
+    </global>
+	
+	<frontend>		
+		<routers>
+			<GSX_InternationalCheckout>
+				<use>standard</use>
+				<args>
+					<module>Gsx_Globalshopex</module>
+					<frontName>GSXInternationalCheckout</frontName>
+				</args>
+			</GSX_InternationalCheckout> 
+		</routers>
+		<layout>
+			<updates>
+                  <globalshopex>
+                        <file>globalshopex.xml</file>
+                  </globalshopex>
+             </updates>
+		</layout>
+	</frontend>
+
+	<default>
+		<checkout>
+			<globalshopex>				
+				<gsx_active>0</gsx_active>
+				<typeintegration>0</typeintegration>
+				<gsx_is_live>0</gsx_is_live>
+				<gsx_enablehttps>0</gsx_enablehttps>
+				<gsx_local_shipping>0</gsx_local_shipping>
+				<gsx_local_shippingexp>0</gsx_local_shippingexp>
+				<typeintegration>1</typeintegration>
+			</globalshopex>
+		</checkout>
+	</default>
+</config>

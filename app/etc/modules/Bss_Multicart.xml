@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Bss_Multicart>
+      <active>true</active>
+      <codePool>local</codePool>
+      <version>0.1.0</version>
+    </Bss_Multicart>
+  </modules>
+</config>

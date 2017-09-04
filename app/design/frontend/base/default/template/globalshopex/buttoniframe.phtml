@@ -1,0 +1,32 @@
+<?php
+$checkParamExist = strrpos(strtolower($_SERVER['QUERY_STRING']),'gsx') ;
+if ($checkParamExist===false) {
+	$checkParamExist=false;
+}else{
+	$checkParamExist=true;
+}
+if( $checkParamExist  ||  $this->isLiveComponent()){
+?>
+	<form name="gcForm" id="gcForm" method="post" action="<?php echo $this->urlToIframePage();?>">
+	<?php
+		if ($this->getPathToImageButton()=="") {
+	?>
+		<button title="<?php echo $this->__('International Checkout') ?>"  class="<?php echo $this->getNamebuttonCssClassName(); ?>"  type="submit" style="<?php echo $this->getStyleExtend(); ?>">
+			<span>
+				<span><?php echo $this->buttonTextInternationalCustomer(); ?></span>
+			</span>
+		</button>	
+
+	<?php
+		}else{
+	?>
+		<button title="<?php echo $this->__('International Checkout') ?>"  <?php echo $this->getCssForButtonImage(); ?>  type="submit"  style="<?php echo $this->getStyleExtend(); ?>">
+			<img src="<?php echo $this->getPathToImageButton(); ?>">
+		</button>
+	<?php
+		}
+	?>
+	</form>
+<?php
+}
+?>

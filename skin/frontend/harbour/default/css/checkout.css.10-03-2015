@@ -1,0 +1,138 @@
+/* One Page Checkout */
+aside.sidebar .block.block-progress dt .marker{
+	width:21px;
+	height:21px;
+	float:right;
+	background-color:#aaa;
+	background-position:0 -2600px;
+	position:absolute;
+	top:9px;
+	right:9px;
+}
+aside.sidebar .block.block-progress dt.complete .marker{display:none;}
+aside.sidebar .block.block-progress .block-title{border:none; position:relative; overflow:hidden;}
+aside.sidebar .block.block-progress .block-title strong span{position:relative; z-index: 9;}
+aside.sidebar .block.block-progress .block-content{padding-left:0; padding-top:0;}
+aside.sidebar .block.block-progress dt{padding:0.75em 0px; margin:0; color:#605d5d;border-bottom:solid 1px #ddd}
+aside.sidebar .block.block-progress div:first-child dt {border-top:solid 1px #ddd}
+aside.sidebar .block.block-progress dt i {color:#fff;background-color:#ccc;padding:4px 3px 6px 5px;line-height:10px;margin-right:10px;}
+aside.sidebar .block.block-progress dt.complete i {background-color:#71bf79;}
+aside.sidebar .block.block-progress dt a:hover{text-decoration:underline;}
+aside.sidebar .block.block-progress dd{padding:1.5em 0px; font-size:0.91em; border-bottom:solid 1px #ddd;}
+aside.sidebar .block.block-progress dt,
+aside.sidebar .block.block-progress dd{border-top:none;}
+.opc { border-bottom:1px solid #ddd; position:relative; }
+.opc li.section { border:1px solid #ddd; border-bottom:0; }
+.opc .field{width:345px;}
+.opc .field input.input-text{width:303px;}
+.opc .field-2, 
+.opc .name-lastname{width:331px; float:left;}
+.opc .field-2 input.input-text,
+.opc .name-lastname input.input-text{width:325px;}
+.opc .form-list .name-middlename{width:146px;}
+.opc .form-list .field.name-middlename input.input-text{width: 110px;}
+.opc .form-list .field select, 
+.opc .form-list .field-2 select{width:330px;}
+.opc .form-list li.wide input.input-text{width:669px;}
+.opc input.radio{margin-top:-1px;}
+.opc .gift-messages-form input.input-text {width:254px;}
+.opc .buttons-set.disabled button.button { display:none; }
+.opc .buttons-set .please-wait { height:21px; line-height:21px; }
+.opc .step-title {padding:0.58em 11px; text-align:right; position:relative;color:#888;}
+.opc .step-title h2 {float:  left; margin-bottom:0; font-size: 1.16em; line-height: 35px; color: #222;}
+.opc .step-title a { display:none; float:right; }
+.opc .step-title .number {
+    float:left;
+	margin-right:7px;
+    background-color:#f5f5f5;
+    padding:9px 11px 8px;
+    border-radius:35px;
+    -moz-border-radius:35px;
+}
+.opc .step-title .title-box{z-index:9; position:relative;}
+.opc .allow .step-title { cursor:pointer; }
+.opc .active .step-title {cursor:default; }
+.opc .active .step-title h2{text-transform:uppercase;font-weight:bold;}
+.opc .step {border-top: 1px solid #ddd; padding: 1.5em 25px; position:relative; }
+.opc .step .tool-tip { right:10px; }
+.opc h3 {
+	text-transform: uppercase;
+	font-size: 1.16em;
+	border-bottom: solid 1px #ddd;
+	padding-bottom: .333em;
+	margin-bottom: 1.5em;
+	line-height: 1.583em;
+	font-weight: 700;
+	color: #222;
+	letter-spacing: -.5px;
+}
+.opc h3.product-name {float: none!important; display: block; border: none;}
+.opc .form-list .input-box {width: 100%;}
+.opc .form-list .input-box li.wide select {width: 100%;}
+.opc .form-list .input-box select {font-size: .91em; line-height: 1.583em; color: #aaa;}
+.opc .grid_4 h4 {color: #ef2626; font-weight: normal; font-size: 1em; margin-bottom: .67em; padding-left: 10px;}
+.opc .grid_4 p {color: #777; padding-left: 10px;}
+.opc .grid_4 .form-list {margin:1.5em 0;padding-left:10px;}
+.opc .grid_4 .form-list li {padding-bottom:5px;color:#999;margin:0;}
+.opc .grid_4 .form-list label {font-size: 1em ;color: #999;line-height: 1.7em;}
+.opc .grid_4 .form-list + h4 {border-top: solid 1px #ddd; padding-top: 2em;}
+.opc .grid_4 .ul {padding:1.03em 15px .75em}
+.opc .grid_4 .ul li {color: #999;}
+.opc .grid_4 .ul li:before {content: "\00B7"; font-size: 2.5em; padding-left: 5px; padding-right: 10px; float: left;}
+.opc #login-form li {padding-bottom:1em;}
+.opc #login-form li label {font-size:.91em;color:#666;font-weight:bold;}
+.opc #login-form input {padding: 5px 11px; width: 94%;}
+.opc #login-form .form-list {margin-bottom:.5em;}
+.opc .grid_4 p.required {color: #ef2626; font-size: .91em; line-height: 1.583em;}
+.opc .grid_4 .buttons-set button {margin-bottom: .75em;}
+.opc .grid_4 a {color:#aaa;font-size:.91em;}
+.opc .form-list .fields .field {width: 50%;}
+.opc .form-list .fields .field input,
+.opc .form-list .fields .field-2 input {width: 90%;}
+.opc .form-list .fields .field .dob-month input,
+.opc .form-list .fields .field .dob-day input,
+.opc .form-list .fields .field .dob-year input {width: 54%;}
+.opc .form-list .customer-name-suffix .name-lastname,
+.opc .form-list .customer-name-middlename .name-firstname,
+.opc .form-list .customer-name-middlename-suffix .name-firstname,
+.opc .form-list .customer-name-middlename-suffix .name-lastname {width: 290px;}
+.opc .form-list li.wide .input-box {width: 100%;}
+.opc .form-list li.wide input.input-text{width: 93%;}
+.opc .form-list .field select,
+.opc .form-list .field-2 select {width: 94%;}
+.opc .form-list li.wide select {width: 96%;}
+.opc .sp-methods dd label span.price {display: inline-block; margin-top: -2px;}
+.opc .gift-messages-form .form-list .fields .field {width: 35%;}
+.opc .gift-messages-form .form-list li.wide textarea {width: 64.5%;}
+.opc .gift-messages-form .f-fix .form-list .fields .field {width: 35%;}
+.opc .gift-messages-form .f-fix .form-list .fields .field input {width: 93%;}
+.opc .gift-messages-form .f-fix .form-list li.wide textarea {width: 64.5%;}
+.opc .sp-methods dd select {width: 42%;}
+.opc .sp-methods dd .v-fix select {width: 100%;}
+.opc .sp-methods dd .v-fix + .v-fix {margin-left: 15px;}
+
+/* Multiple Addresses Checkout */
+.multiple-checkout .title-buttons h1 {margin-left: 0; margin-right: 0;}
+.checkout-progress { padding:0 50px; margin:10px 0 30px; }
+.checkout-progress li { float:left; width:20%; border-top:5px solid #ccc; text-align:center; color:#ccc; }
+.checkout-progress li.active { border-top-color:#000; color:#000; }
+.multiple-checkout {position: relative;}
+.multiple-checkout .title-buttons h1 {display: inline-block; vertical-align: middle;}
+.multiple-checkout .title-buttons button {display: inline-block; vertical-align: middle; margin-top: 1em;}
+.multiple-checkout h2 {color: #222; font-weight: 400; font-size: 1.16em; line-height: 1.583em;}
+.multiple-checkout .data-table .product-name {float: none; display: block;}
+.multiple-checkout .tool-tip { top:50%; margin-top:-120px; right:10px; }
+.multiple-checkout .grand-total { text-align:right; margin-bottom:1em;}
+.multiple-checkout .grand-total big {margin-bottom:10px; display:block; font-size:1.5em; line-height:1.44em;}
+.multiple-checkout .grand-total .price {font-size:1em; line-height:1.44em;}
+.multiple-checkout .gift-messages-form .form-list .field{width: 220px;}
+.multiple-checkout .gift-messages-form .form-list .field input{width: 185px;}
+.multiple-checkout .gift-messages-form .form-list li.wide textarea{width:76%;}
+.multiple-checkout .gift-messages-form .details .form-list .field{width: 170px;}
+.multiple-checkout .gift-messages-form .details .form-list .field input{width: 134px;}
+.multiple-checkout .gift-messages-form .details .form-list li.wide textarea{width:305px;}
+.multiple-checkout .form-list select {width: 330px;}
+.multiple-checkout .form-list .v-fix select {width: 100%;}
+.multiple-checkout .form-list .v-fix + .v-fix {margin-left: 15px;}
+.multiple-checkout .sp-methods .form-list .input-box > select {width: 328px;}
+#multiship-addresses-table .btn-remove2 {padding: 3px;}

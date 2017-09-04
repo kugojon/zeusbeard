@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<config>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <firebear_configurl translate="title" module="firebear_configurl">
+                                        <title>Configurable products URL</title>
+                                    </firebear_configurl>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

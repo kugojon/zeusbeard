@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <ALogic_GridWrap>
+            <active>true</active>
+            <codePool>local</codePool>
+            <depends>
+                <AW_Giftwrap />
+            </depends>
+        </ALogic_GridWrap>
+    </modules>
+</config>

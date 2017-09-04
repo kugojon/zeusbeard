@@ -1,0 +1,22 @@
+<?php
+$meigee_harbour_bgslider = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('meigee_harbour_bgslider');
+$slider = $meigee_harbour_bgslider;
+$mediaUrl = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('mediaurl');
+if ($slider['slideroptions']['enabled']) {
+    $html = "";
+    $i = 0;
+    foreach ($slider['slides'] as $slide) {
+        if ($i > 0) {
+            $html .= ', ';
+        }
+        $html .= '"' . $mediaUrl . $slide . '"';
+        $i++;
+    }
+?>
+<script>
+        jQuery(window).load(function() {
+            jQuery.backstretch([<?php echo $html;?>], {duration: <?php echo $slider['slideroptions']['duration']; ?>, fade: <?php echo $slider['slideroptions']['fade']; ?>});
+        });
+</script>
+<?php 
+}

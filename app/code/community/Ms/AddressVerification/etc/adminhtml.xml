@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+ * @category    Ms
+ * @package     Ms_AddressVerification
+ * @license     https://markshust.com/eula/
+-->
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <ms_addressverification>
+                                        <title>Address Verification</title>
+                                    </ms_addressverification>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+</config>

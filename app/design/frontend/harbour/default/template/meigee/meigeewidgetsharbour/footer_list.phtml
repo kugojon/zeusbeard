@@ -1,0 +1,52 @@
+<?php
+    $_productCollection = $this->getMyCollection();
+    $category = $this->catName();
+    $_helper = $this->helper('catalog/output');
+    $_collectionSize = $this->getProductsAmount();
+    $helpImg = $this->helper('ThemeOptionsHarbour/images');
+	$random = rand(5, 1500);
+	$_addToCart = $this->getAddToCart('add_to_cart_footer_list');
+	$_price = $this->getProductPrice('price_footer_list');
+	$_productName = $this->getProductName('product_name_footer_list');
+	$wishlist = $this->getWishlist('wishlist_footer_list');
+	$randId = $this->getWidgetId();
+	$compareproducts = $this->getCompareProducts('compare_footer_list');
+?>
+<?php // List Mode ?>
+<ol class="footer-products-list meigee-widget" id="products-list">
+	<?php $i=0; foreach ($_productCollection as $_product): ?>
+		<?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
+		<li class="item<?php $_iterator=0; if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
+			<?php // Product Image ?>
+			<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><img <?php echo $helpImg->getImgSources($_product, 'small_image', 420, null); ?> alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /></a>
+			<?php // Product description ?>
+			<div class="product-shop">
+				<?php if($_productName): ?>
+					<h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></a></h2>
+				<?php endif; ?>
+				<?php if(!$_product->isSaleable()): ?>
+					<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+				<?php endif; ?>
+				<?php if($_price): ?>
+					<?php echo $this->getPriceHtml($_product, true) ?>
+				<?php endif; ?>
+				<div class="list-small-buttons">
+					<?php if($_product->isSaleable() and $_addToCart): ?>
+						<div class="button-holder"><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></div>
+					<?php endif; ?>
+					<?php if ($wishlist || $compareproducts) : ?>
+						<ul class="add-to-links">
+							<?php if ($this->helper('wishlist')->isAllow() and $wishlist) : ?>
+								<li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('wishlist'); ?></a></li>
+							<?php endif; ?>
+							<?php if($_compareUrl=$this->getAddToCompareUrl($_product) and $compareproducts): ?>
+								<li><a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('compare'); ?></a></li>
+							<?php endif; ?>
+						</ul>
+					<?php endif; ?>
+				</div>
+			</div>
+		</li>
+	<?php if (++$i == $_collectionSize ) break; endforeach; ?>
+</ol>
+<script type="text/javascript">decorateList('products-list', 'none-recursive')</script>

@@ -1,0 +1,101 @@
+<?php
+/**
+ * Magmodules.eu - http://www.magmodules.eu.
+ *
+ * NOTICE OF LICENSE
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * https://www.magmodules.eu/MM-LICENSE.txt
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@magmodules.eu so we can send you a copy immediately.
+ *
+ * @category      Magmodules
+ * @package       Magmodules_Richsnippets
+ * @author        Magmodules <info@magmodules.eu>
+ * @copyright     Copyright (c) 2017 (http://www.magmodules.eu)
+ * @license       https://www.magmodules.eu/terms.html  Single Service License
+ */
+?>
+<?php if ($snippets = $this->getSnippets()) { ?>
+    <!--BEGIN: MM Rich Snippets-->
+    <div class="std">
+        <div class="snippets">
+            <div itemscope itemtype="http://schema.org/Product">
+                <?php if (isset($snippets['thumbnail'])) { ?>
+                    <div class="prod-thumb">
+                        <img itemprop="image" src="<?php echo $snippets['thumbnail']; ?>" alt="<?php echo $snippets['name']; ?>">
+                    </div>
+                <?php } ?>
+                <div class="content">
+                    <p>
+                        <span itemprop="name" class="product-name"><?php echo $snippets['name']; ?></span>.
+                        <?php if (isset($snippets['description'])) { ?>
+                            <span itemprop="description"><?php echo $snippets['description']; ?></span>
+                        <?php } ?>
+                    </p>
+                    <?php if ((isset($snippets['rating']['count'])) && ($snippets['rating']['percentage'] > 0)) { ?>
+                        <div itemprop="aggregateRating" itemscope itemtype="http://schema.org/AggregateRating">
+                            <div class="rating-box">
+                                <div class="rating" style="width: <?php echo $snippets['rating']['percentage']; ?>%"></div>
+                            </div>
+                            <?php echo '<i>' . Mage::helper('snippets')->__(
+                                'Rating: %s based on %s review(s)',
+                                '<span itemprop="ratingValue">' . $snippets['rating']['avg'] . '</span>/<span itemprop="bestRating">' . $snippets['rating']['best'] . '</span>',
+                                '<span itemprop="' . $snippets['rating']['type'] . '">' . $snippets['rating']['count'] . '</span>'
+                            ) . '</i>'; ?>
+                        </div>
+                    <?php } ?>
+                    <ul class="snippets-fields">
+                        <li>
+                            <span itemprop="offers" itemscope itemtype="<?php echo $snippets['offers']['type']; ?>">
+                                <?php if (isset($snippets['offers']['price_low'])) { ?>
+                                    <?php echo Mage::helper('snippets')->__('Starting at:'); ?>
+                                    <span itemprop="lowprice" content="<?php echo $snippets['offers']['clean_low']; ?>"><?php echo $snippets['offers']['price_low']; ?></span>
+                                <?php } else { ?>
+                                    <?php echo Mage::helper('snippets')->__('Price:'); ?>
+                                    <span itemprop="price" content="<?php echo $snippets['offers']['clean']; ?>"><?php echo $snippets['offers']['price']; ?></span>
+                                <?php } ?>
+                                <meta itemprop="priceCurrency" content="<?php echo $snippets['offers']['currency']; ?>"/>
+                                <?php if (isset($snippets['availability']['url'])) { ?>
+                                    <link itemprop="availability" href="<?php echo $snippets['availability']['url']; ?>"/> - <?php echo $snippets['availability']['text']; ?>
+                                <?php } ?>
+                                <?php if (isset($snippets['condition']['url'])) { ?>
+                                    <link itemprop="itemCondition" href="<?php echo $snippets['condition']['url']; ?>"/>
+                                <?php } ?>
+                                <?php if (!empty($snippets['offers']['seller'])) { ?>
+                                    <span property="seller" typeof="Organization">
+                                        <br>Sold by<span property="name"> <?php echo $snippets['offers']['seller']; ?></span><br>
+                                    </span>
+                                <?php } ?>
+                            </span>
+                        </li>
+                        <?php if (isset($snippets['offers']['extra_offer'])) { ?>
+                            <?php $i = 0;
+                            foreach ($snippets['offers']['extra_offer'] as $offer) { ?>
+                                <?php if ($offer['currency'] != $snippets['offers']['currency']) { ?>
+                                    <li>
+                                        <span itemprop="offers" itemscope itemtype="<?php echo $snippets['offers']['type']; ?>">
+                                            <?php if ($i == 0) {
+                                                echo Mage::helper('snippets')->__('Price:');
+                                            } ?>
+                                            <span itemprop="price" content="<?php echo $offer['price']; ?>"><?php echo Mage::app()->getLocale()->currency($offer['currency'])->toCurrency($offer['price']); ?></span>                        
+                                            <meta itemprop="priceCurrency" content="<?php echo $offer['currency']; ?>"/>
+                                        </span>
+                                    </li>
+                                <?php } ?>
+                            <?php } ?>
+                        <?php } ?>
+                        <?php if (isset($snippets['extra'])) { ?>
+                            <?php foreach ($snippets['extra'] as $field) { ?>
+                                <li><?php echo Mage::helper('snippets')->__($field['label']) . ': ' . $field['value']; ?></li>
+                            <?php } ?>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END: MM Rich Snippets-->
+<?php } ?>    

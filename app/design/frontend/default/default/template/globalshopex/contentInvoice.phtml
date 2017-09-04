@@ -1,0 +1,17 @@
+<?php
+ Mage::getSingleton('checkout/session')->clear();
+?>
+
+<div class="col-main">
+	<div class="page-title">
+		<h1>International Checkout</h1>
+	</div>
+	<table id="shopping-cart-table" class="data-table cart-table" style="width: 710px">
+		<tr>
+			<td>
+				<iframe id="Gsframe" name="Gsframe" frameborder="0" scrolling="auto" style="width: 100%;height: 1600px;min-width: 710px;" allowtransparency="true" src="https://globalshopex.com/iframe/InternationalCheckout.aspx?Order=<?php echo $_GET['Order']?>">
+				</iframe>
+			</td>
+		</tr>
+	</table>
+</div>

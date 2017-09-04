@@ -1,0 +1,19 @@
+<?php
+	$merchant_id = trim(Mage::getStoreConfig('shipping/internationalcheckout/name_of_company'));
+?>
+	
+<div class="col-main">
+	<table id="shopping-cart-table" class="data-table cart-table" style="width: 710px">
+		<tr>
+			<td>
+				
+				<iframe id="Gsframe" name="Gsframe" frameborder="0" scrolling="auto" height="800px" width="100%" allowtransparency="true" onload="hideProgress()">GlobalShopex International checkout Order Tracking</iframe>
+				<form name="frmPP" id="frmPP" method="post" action="https://globalshopex.com/iframe/OrderTracking.aspx" target="Gsframe">
+					<div runat="server" id="itemInfo">
+							<input type="hidden" name="MerchantID" value="<?php echo $merchant_id; ?>" />  
+					</form>
+					<script type="text/javascript">document.getElementById('frmPP').submit();</script>
+				</td>
+			</tr>
+		</table>
+	</div>	

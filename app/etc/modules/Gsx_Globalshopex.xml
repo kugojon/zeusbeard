@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Gsx_Globalshopex>
+            <active>true</active>
+            <codePool>community</codePool>			
+        </Gsx_Globalshopex>
+		<depends>
+				<Mage_Checkout />
+		</depends>
+    </modules>
+</config>
