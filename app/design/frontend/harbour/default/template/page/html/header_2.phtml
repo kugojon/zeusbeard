@@ -211,6 +211,7 @@
 				<div class="clear"></div>
 			</div>
 		</div>
+		<div id="nav-cover"></div>
 	</header>
 	<?php 
 		if ($stickyStatus) { 
@@ -220,3 +221,22 @@
 </div>
 <?php echo $this->getChildHtml('topContainer'); ?>
 <?php echo $this->getChildHtml('header_slider_container') ?>
+<script type="text/javascript">
+	jQuery( document ).ready(function() {
+	    var pageHeight = jQuery('body').height();
+	    var headerHeight = jQuery('#header').height();
+	    var coverHeight = pageHeight - headerHeight;
+	    jQuery("#nav-cover").css({'height': coverHeight+'px', 'top': headerHeight+'px'});
+	});
+	jQuery(".nav-wide li.level-top.parent").mouseover(function() {
+	   jQuery("#nav-cover").css('display', 'block');
+	});
+
+	jQuery(".nav-wide li.level-top.parent").mouseout(function() {
+	  jQuery("#nav-cover").css('display', 'none');
+	});
+
+	jQuery('.header .top-cart .block-title').click(function() {
+		jQuery("#nav-cover").toggleClass('active'); 
+	});
+</script>

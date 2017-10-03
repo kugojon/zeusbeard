@@ -1536,6 +1536,7 @@ jQuery(document).ready(function(){
 /* Messages button */
 	if(jQuery('ul.messages').length){
 		jQuery('ul.messages > li').each(function(){
+			var messageIcon  = '';
 			switch (jQuery(this).attr('class')){
 				case 'success-msg':
 				messageIcon = '<i class="fa fa-check" />';
