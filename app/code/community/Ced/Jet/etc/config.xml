@@ -1,0 +1,481 @@
+<?xml version="1.0"?>
+<!--
+/**
+  * CedCommerce
+  *
+  * NOTICE OF LICENSE
+  *
+  * This source file is subject to the End User License Agreement (EULA)
+  * that is bundled with this package in the file LICENSE.txt.
+  * It is also available through the world-wide-web at this URL:
+  * http://cedcommerce.com/license-agreement.txt
+  *
+  * @category    Ced
+  * @package     Ced_Jet
+  * @author      CedCommerce Core Team <connect@cedcommerce.com >
+  * @copyright   Copyright CEDCOMMERCE (http://cedcommerce.com/)
+  * @license      http://cedcommerce.com/license-agreement.txt
+  */
+ -->
+<config>
+    <modules>
+        <Ced_Jet>
+            <version>0.3.5</version>
+            <release_version>0.3.5</release_version>
+            <parent_product_name>Jet Magento Integration</parent_product_name>
+            <author>CedCommerce Magento Core Team (magentocoreteam@cedcommerce.com)</author>
+        </Ced_Jet>
+    </modules>
+     <frontend>
+        <routers>
+            <jet>
+                <use>standard</use>
+                <args>
+                    <module>Ced_Jet</module>
+                    <frontName>jet</frontName>
+                </args>
+            </jet>
+        </routers>
+
+    </frontend>
+    <global>
+        <models>
+             <jet>
+                <class>Ced_Jet_Model</class>
+                 <resourceModel>jet_mysql4</resourceModel>
+            </jet>
+            <jet_mysql4>
+                <class>Ced_Jet_Model_Mysql4</class>
+                <entities>
+                    <jetcron>
+                        <table>jet_cron</table>
+                    </jetcron>
+                    <jetattribute>
+                        <table>jet_attributes_table</table>
+                    </jetattribute>
+                    <jetcategory>
+                        <table>jet_catgory_attribute</table>
+                    </jetcategory>
+                    <errorfile>
+                        <table>jet_errorfile_info</table>
+                    </errorfile>
+                    <fileinfo>
+                        <table>jet_file_info</table>
+                    </fileinfo>
+                    <jetorder>
+                        <table>jet_order_detail</table>
+                    </jetorder>
+                     <jetrefund>
+                        <table>jet_refund_table</table>
+                    </jetrefund>
+                    <jetreturn>
+                        <table>jet_return_table</table>
+                    </jetreturn>
+                    <jetshippingexcep>
+                        <table>jet_shipping_exception</table>
+                    </jetshippingexcep>
+                     <orderimport>
+                        <table>jet_order_import_error</table>
+                    </orderimport>
+                    <batcherror>
+                        <table>jet_batch_upload_errors</table>
+                    </batcherror>
+                    <catlist>
+                        <table>jet_category_list</table>
+                    </catlist>
+                    <autoship>
+                        <table>jet_autoship_error</table>
+                    </autoship>
+                    <profile>
+                        <table>jet_profile</table>
+                    </profile>
+                    <profileproducts>
+                        <table>jet_profile_products</table>
+                    </profileproducts>
+                    <productchange>
+                        <table>jet_product_change</table>
+                    </productchange>
+                </entities>
+            </jet_mysql4>
+            <auctaneapi>
+                <rewrite>
+                    <action_shipnotify>Ced_Jet_Model_Ship</action_shipnotify>
+                </rewrite>
+            </auctaneapi>
+        </models>
+       <resources>
+            <jet_setup>
+                <setup>
+                    <module>Ced_Jet</module>
+                </setup>
+            </jet_setup>
+            <connection>
+                <use>core_setup</use>
+            </connection>
+            <jet_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </jet_write>
+            <jet_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </jet_read>
+        </resources>
+
+        <sales>
+          <order>
+            <statuses>
+              <jet_rejected translate="label">
+                <label>Jet.com Rejected</label>
+              </jet_rejected>
+            </statuses>
+            <states>
+              <jet_rejected translate="label">
+                <label>Jet.com Rejected</label>
+                <statuses>
+                  <jet_rejected default="1"/>
+                </statuses>
+              </jet_rejected>
+            </states>
+          </order>
+        </sales>
+
+        <blocks>
+            <jet>
+                <class>Ced_Jet_Block</class>
+            </jet>
+            <adminhtml>
+                <!-- <rewrite>
+                    <sales_order_view_tabs>Ced_Jet_Block_Adminhtml_Sales_Order_View_Tabs</sales_order_view_tabs>
+                </rewrite> -->
+                <rewrite>
+                    <catalog_product_edit>Ced_Jet_Block_Adminhtml_Catalog_Product_Edit</catalog_product_edit>
+                </rewrite>
+                 <rewrite>
+                    <catalog_product_edit_tabs>Ced_Jet_Block_Adminhtml_Catalog_Product_Edit_Tabs</catalog_product_edit_tabs>
+                </rewrite> 
+               
+            </adminhtml>
+        </blocks>
+        <helpers>
+            <jet>
+                <class>Ced_Jet_Helper</class>
+            </jet>
+        </helpers>
+         <events>
+             <cataloginventory_stock_item_save_after>
+                 <observers>
+                     <inventory_observer>
+                         <type>singleton</type>
+                         <class>Ced_Jet_Model_Observer</class>
+                         <method>catalogInventoryStockItemSaveAfter</method>
+                     </inventory_observer>
+                 </observers>
+             </cataloginventory_stock_item_save_after>
+             <sales_model_service_quote_submit_after>
+                 <observers>
+                     <inventory_observer>
+                         <type>singleton</type>
+                         <class>Ced_Jet_Model_Observer</class>
+                         <method>catalogInventoryStockItemSaveAfterOrder</method>
+                     </inventory_observer>
+                 </observers>
+             </sales_model_service_quote_submit_after>
+             <sales_order_creditmemo_save_after>
+                 <observers>
+                     <inventory>
+                         <type>singleton</type>
+                         <class>Ced_Jet_Model_Observer</class>
+                         <method>catalogInventoryStockItemSaveAfterCreditmemo</method>
+                     </inventory>
+                 </observers>
+             </sales_order_creditmemo_save_after>
+            <controller_action_predispatch_jet>
+                <observers>
+                    <jet_controller_action_predispatch>
+                        <class>Ced_Jet_Model_Observer</class>
+                        <method>checkEnabled</method>
+                    </jet_controller_action_predispatch>
+                </observers>
+            </controller_action_predispatch_jet>
+            <adminhtml_widget_container_html_before>
+                <observers>
+                    <ced>
+                        <class>Ced_Jet_Model_Observer</class>
+                        <method>addButton</method>
+                    </ced>
+                </observers>
+            </adminhtml_widget_container_html_before>
+        <catalog_product_save_before>
+            <observers>
+                <jet_product_save_before>
+                    <type>singleton</type>
+                    <class>Ced_Jet_Model_Observer</class>
+                    <method>jetProductSaveBefore</method>
+                </jet_product_save_before>
+            </observers>
+        </catalog_product_save_before>
+        <catalog_product_delete_before>
+            <observers>
+                <jet_catalog_product_delete_before>
+                    <type>singleton</type>
+                    <class>Ced_Jet_Model_Observer</class>
+                    <method>jetProductDelete</method>
+                </jet_catalog_product_delete_before>
+            </observers>
+        </catalog_product_delete_before>
+        <sales_order_shipment_save_before>
+            <observers>
+                <jet_sales_order_shipment_save_before>
+                    <type>singleton</type>
+                    <class>Ced_Jet_Model_Observer</class>
+                    <method>shipbyjet</method>
+                </jet_sales_order_shipment_save_before>
+            </observers>
+        </sales_order_shipment_save_before>
+     </events>
+    </global>
+    <default>
+        <system>
+            <csmarketplace>
+                <feed_url>cedcommerce.com/licensing/log/post</feed_url>
+                <popup_url>widgets.magentocommerce.com/notificationPopup</popup_url>
+                <severity_icons_url>widgets.magentocommerce.com/%s/%s.gif</severity_icons_url>
+                <frequency>72</frequency>
+                <last_update>0</last_update>
+            </csmarketplace>
+        </system>
+        <cedcore>
+           <feeds_group>
+                <feeds>INFO,PROMO,UPDATE_RELEASE,NEW_RELEASE,INSTALLED_UPDATE</feeds>
+           </feeds_group>
+        </cedcore>
+
+        <jet_options>
+            <ced_jet>
+                <jet_apiurl>https://merchant-api.jet.com/api</jet_apiurl>
+                <active>1</active>
+            </ced_jet>
+            <ced_jetproductedit>
+                    <show_jetupload_on_productedit>1</show_jetupload_on_productedit>
+            </ced_jetproductedit>
+            <jet_order>
+
+                <active>1</active>
+            </jet_order>
+            <acknowledge_options>
+                <jet_order_acknowledge>1</jet_order_acknowledge>
+                <exist>1</exist>
+                <outofstock>1</outofstock>
+                <pdisabled>1</pdisabled>
+            </acknowledge_options>
+            <productinfo_map>
+                <jtitle>name</jtitle>
+                <jdescription>description</jdescription>
+                <jbrand>jet_brand</jbrand>
+                <!--<jupc>upc</jupc>
+                <jean>ean</jean>
+                <jisbn_13>isbn-13</jisbn_13>
+                <jisbn_10>isbn-10</jisbn_10>
+                <jgtin_14>gtin-14</jgtin_14>
+                <jasin>asin</jasin>
+                --><jmanufacturer_part_number>mfr_part_number</jmanufacturer_part_number>
+                <jmanufacture>country_of_manufacture</jmanufacture>
+                <jbullets>bullets</jbullets>
+                <jshipping_weight_pounds>shipping_weight_pounds</jshipping_weight_pounds>
+                <jmap_price>map_price</jmap_price>
+            </productinfo_map>
+            <productextra_infomap>
+                <amazon_item_type_keyword>amazon_item_type_keyword</amazon_item_type_keyword>
+                <number_units_for_ppu>number_units_for_ppu</number_units_for_ppu>
+                <type_of_unit_for_ppu>type_of_unit_for_ppu</type_of_unit_for_ppu>
+                <package_length_inches>package_length_inches</package_length_inches>
+                <package_width_inches>package_width_inches</package_width_inches>
+                <package_height_inches>package_height_inches</package_height_inches>
+                <display_length_inches>display_length_inches</display_length_inches>
+                <display_width_inches>display_width_inches</display_width_inches>
+                <display_height_inches>display_height_inches</display_height_inches>
+                <legal_disclaimer_description>legal_disclaimer_description</legal_disclaimer_description>
+                <safety_warning>safety_warning</safety_warning>
+                <country_of_origin>country_of_manufacture</country_of_origin>
+                <msrp>msrp</msrp>
+                <fullfillment_time>fulfillment_time</fullfillment_time>
+                <noreturnfee_adjustment>no_return_fee_adjustment</noreturnfee_adjustment>
+            </productextra_infomap>
+        </jet_options>
+
+        <carriers>
+            <shipjetcom>
+                <active>1</active>
+                <sallowspecific>0</sallowspecific>
+                <name>Jet.com Shipping</name>
+                <title>Jet.com Shipping</title>
+                <model>jet/carrier_shipjetcom</model>
+            </shipjetcom>
+        </carriers>
+        <payment>
+            <payjetcom>
+                <active>1</active>
+                <model>jet/payment_payjetcom</model>
+                <order_status>processing</order_status>
+                <title>Jet.com</title>
+                <payment_action>sale</payment_action>
+                <allowspecific>0</allowspecific>
+            </payjetcom>
+        </payment>
+    </default>
+      <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <jet after="Mage_Adminhtml">Ced_Jet</jet>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+     <adminhtml>
+
+        <layout>
+            <updates>
+                <jet>
+                    <file>ced/jet/jet.xml</file>
+                </jet>
+            </updates>
+        </layout>
+        <events>
+           <core_block_abstract_to_html_before>
+                <observers>
+                    <package_test_adminhtml_widget_container_html_before>
+                        <class>jet/observer</class>
+                        <method>adminhtmlWidgetContainerHtmlBefore</method>
+                    </package_test_adminhtml_widget_container_html_before>
+                </observers>
+            </core_block_abstract_to_html_before>
+           <!-- <controller_action_predispatch>
+                <observers>
+                    <jet_feed_start>
+                        <class>jet/observer</class>
+                        <method>preDispatch</method>
+                    </jet_feed_start>
+                </observers>
+            </controller_action_predispatch> -->
+
+            <admin_system_config_changed_section_jet_options>
+                <observers>
+                    <mage_catalog>
+                        <class>jet/observer</class>
+                        <method>clearToken</method>
+                    </mage_catalog>
+                </observers>
+            </admin_system_config_changed_section_jet_options>
+            <adminhtml_catalog_product_edit_prepare_form>
+                <observers>
+                    <bundle_observer>
+                        <class>jet/observer</class>
+                        <method>setStandardIdentifireElement</method>
+                    </bundle_observer>
+                </observers>
+            </adminhtml_catalog_product_edit_prepare_form>
+        </events>
+    </adminhtml>
+        <crontab>
+        <jobs>
+           <jetfilesdelete_cron>
+                 <schedule>
+                    <cron_expr>0 */12 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>jet/observer::jetfilesDelete</model>
+                </run>
+            </jetfilesdelete_cron>
+             <jetorder_cron>
+                <schedule>
+                    <!-- in 10 mins -->
+                    <cron_expr>*/10 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>jet/observer::createOrder</model>
+                </run>
+            </jetorder_cron>
+             <jetrefund_cron>
+                <schedule>
+                    <!-- in  every 12 hours -->
+                    <cron_expr>0 */12 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>jet/observer::updaterefund</model>
+                </run>
+            </jetrefund_cron>
+            <jetfiles_cron>
+                <schedule>
+                    <!-- in  every 30 mins to 1 day-->
+                    <!--<cron_expr>*/30 * * * *</cron_expr>-->
+                    <cron_expr>0 0 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>jet/observer::updateProduct</model>
+                </run>
+            </jetfiles_cron>
+            <jet_return_cron>
+                <schedule>
+                    <!-- in  every 12 hours -->
+                    <cron_expr>0 */12 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>jet/observer::jetreturn</model>
+                </run>
+            </jet_return_cron>
+            <!-- <jet_product_active>
+                <schedule>
+                   
+                    <cron_expr>0 0 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>jet/observer::updateActive_status</model>
+                </run>
+            </jet_product_active>
+            <jet_product_review>
+                <schedule>
+                    
+                    <cron_expr>0 0 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>jet/observer::updateReview_status</model>
+                </run>
+            </jet_product_review>
+            <jet_product_passive>
+                <schedule>
+                   
+                    <cron_expr>0 0 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>jet/observer::updatePassive_status</model>
+                </run>
+            </jet_product_passive> -->
+
+            <jet_invupdate>
+                <schedule>
+                    <!-- in  every 30 mins -->
+                   <cron_expr>*/30 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>jet/observer::updateInvcron</model>
+                </run>
+            </jet_invupdate>
+            <jet_priceupdate>
+                <schedule>
+                    <!-- in  every 30 mins to 1 day -->
+                   <!--<cron_expr>*/30 * * * *</cron_expr>-->
+                    <cron_expr>0 0 * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>jet/observer::updatePricecron</model>
+                </run>
+            </jet_priceupdate>
+        </jobs>
+    </crontab>
+</config>

@@ -1,0 +1,114 @@
+<?php
+/**
+  * CedCommerce
+  *
+  * NOTICE OF LICENSE
+  *
+  * This source file is subject to the End User License Agreement (EULA)
+  * that is bundled with this package in the file LICENSE.txt.
+  * It is also available through the world-wide-web at this URL:
+  * http://cedcommerce.com/license-agreement.txt
+  *
+  * @category    Ced
+  * @package     Ced_Jet
+  * @author      CedCommerce Core Team <connect@cedcommerce.com >
+  * @copyright   Copyright CEDCOMMERCE (http://cedcommerce.com/)
+  * @license      http://cedcommerce.com/license-agreement.txt
+  */
+?>
+<?php $_htmlId      = 'standardIdentifier' ?>
+<?php $_htmlClass   = 'standardIdentifierClass' ?>
+<?php $_htmlName    = 'product[standard_identifier]' ?>
+<?php $_readonly    = false ?>
+
+<tr>
+    <td class="label"><?php echo  Mage::helper('jet')->__('Standard Identifier') ?></td>
+    <td colspan="10" class="grid tier">
+        <table cellspacing="0" class="data border" id="tiers_table" style="width: 50%;">
+            <col width="120" />
+            <col width="95" />
+            <col />
+            <col width="1" />
+            <thead>
+            <tr class="headings">
+                <th><?php echo Mage::helper('jet')->__('Standard Identifier') ?></th>
+                <th><?php echo Mage::helper('jet')->__('Value') ?></th>
+                <th class="last"><?php echo Mage::helper('jet')->__('Action'); ?></th>
+            </tr>
+            </thead>
+            <tbody id="<?php echo $_htmlId ?>_container"></tbody>
+            <tfoot>
+            <tr>
+                <td style="display: none;"></td>
+                <td colspan="3" class="a-right"><?php echo $this->getAddButtonHtml(); ?></td>
+            </tr>
+            </tfoot>
+        </table>
+        <script type="text/javascript">
+            //<![CDATA[
+            var standardIdentifierRowTemplate = '<tr>'
+                + '<td> <select class="<?php echo $_htmlClass ?> required_magento_attr" name="<?php echo $_htmlName ?>[{{index}}][identifier]" id="standard_identifier_{{index}}_code">'
+                <?php  foreach ($this->getStandardIdentifiers() as $code=>$value){ ?>
+                + '<option value="<?php echo $code ?>"><?php echo $this->jsQuoteEscape($this->escapeHtml($value)) ?></option>'
+                <?php }   ?>
+                + '</select>'
+                + ' </td>'
+                + '<td><input class="<?php echo $_htmlClass; ?> required-entry" type="text" name="<?php echo $_htmlName; ?>[{{index}}][value]" value="{{value}}" id="standard_identifier_{{index}}_value" />'
+                +'</td>'
+                + '<td class="last"><input type="hidden" name="<?php echo $_htmlName; ?>[{{index}}][delete]" class="delete" value="" id="standard_identifier_{{index}}_delete" />'
+                + '<button title="<?php echo $this->jsQuoteEscape(Mage::helper('jet')->__('Delete')); ?>" type="button" class="scalable delete icon-btn delete-product-option" id="standard_identifier_{{index}}_delete_button" onclick="return standardIdentifier.deleteItem(event);">'
+                + '<span><?php echo $this->jsQuoteEscape(Mage::helper('catalog')->__('Delete')); ?></span></button></td>'
+
+                + '</tr>';
+
+            var standardIdentifier = {
+                template: new Template(standardIdentifierRowTemplate, new RegExp('(^|.|\\r|\\n)({{\\s*(\\w+)\\s*}})', "")),
+                itemsCount: 0,
+                addItem : function () {
+
+                    var data = {
+                        code: '',
+                        value: '',
+                        index: this.itemsCount++
+                    };
+
+                   if(arguments.length >= 2) {
+                        data.code      = arguments[0];
+                        data.value        = arguments[1];
+                    }
+
+                    Element.insert($('<?php echo $_htmlId ?>_container'), {
+                        bottom : this.template.evaluate(data)
+                    });
+
+                    $('standard_identifier_' + data.index + '_code').value = data.code;
+                    $('standard_identifier_' + data.index + '_value').value    = data.value;
+                },
+                disableElement: function(el) {
+                    el.disabled = true;
+                    el.addClassName('disabled');
+                },
+                deleteItem: function(event) {
+                    var tr = Event.findElement(event, 'tr');
+                    if (tr) {
+                        Element.select(tr, '.delete').each(function(elem){elem.value='1'});
+                        Element.select(tr, ['input', 'select']).each(function(elem){elem.hide()});
+                        Element.hide(tr);
+                        Element.addClassName(tr, 'no-display template');
+                    }
+                    return false;
+                },
+            };
+            <?php
+
+            $standardIdentifier = $this->getStandardIdentifiersMapping();
+            foreach ($standardIdentifier as $_item):
+            ?>
+            standardIdentifier.addItem('<?php echo $_item['identifier'] ?>', '<?php echo $_item['value'] ?>');
+            <?php endforeach;  ?>
+
+
+            //]]>
+        </script>
+    </td></tr>
+

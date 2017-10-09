@@ -1,0 +1,128 @@
+<?php
+/**
+  * CedCommerce
+  *
+  * NOTICE OF LICENSE
+  *
+  * This source file is subject to the End User License Agreement (EULA)
+  * that is bundled with this package in the file LICENSE.txt.
+  * It is also available through the world-wide-web at this URL:
+  * http://cedcommerce.com/license-agreement.txt
+  *
+  * @category    Ced
+  * @package     Ced_Jet
+  * @author      CedCommerce Core Team <connect@cedcommerce.com >
+  * @copyright   Copyright CEDCOMMERCE (http://cedcommerce.com/)
+  * @license      http://cedcommerce.com/license-agreement.txt
+  */
+?>
+<?php $_htmlId      = 'configAttributes' ?>
+<?php $_htmlClass   = 'configAttributeClass' ?>
+<?php $_htmlName    = 'variant_attributes' ?>
+<?php $_readonly    = false ?>
+<tr>
+    <td class="label"><?php echo  Mage::helper('jet')->__('Config Attribute') ?></td>
+    <td colspan="10" class="grid tier">
+    <table cellspacing="0" class="data border" id="tiers_table" style="width: 50%;">
+        <col width="120" />
+        <col width="95" />
+        <col />
+        <col width="1" />
+        <thead>
+            <tr class="headings">
+                <th><?php echo Mage::helper('catalog')->__('Jet Attribute') ?></th>
+                <th><?php echo Mage::helper('catalog')->__('Magento Catalog Attribute') ?></th>
+                <th class="last"><?php echo Mage::helper('catalog')->__('Action') ?></th>
+            </tr>
+        </thead>
+        <tbody id="<?php echo $_htmlId ?>_container"></tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="a-right"><?php echo $this->getAddButtonHtml() ?></td>
+            </tr>
+        </tfoot>
+    </table>
+<script type="text/javascript">
+//<![CDATA[
+var configAttributeRowTemplate = '<tr>'
+    + '<td>'
+    + '<input type="hidden" name="<?php echo $_htmlName ?>[{{index}}][jet_attribute_type]" id="config_attribute_row_{{index}}_jet_attribute_type"" />'
+    +'<select  onclick="return configAttributeControl.setJetAttributeType(this, {{index}});" class="<?php echo $_htmlClass ?> custgroup required-entry" name="<?php echo $_htmlName ?>[{{index}}][jet_attribute_name]" id="config_attribute_row_{{index}}_jet_attribute">'
+
+    <?php
+    foreach ($this->getJetConfigAttributes() as $code => $attribute){
+    ?>
+
+    + '<option attribute_type="<?php echo $attribute['jet_attribute_type'] ?>" value="<?php echo $code ?>"><?php echo $this->jsQuoteEscape($this->escapeHtml($attribute['jet_attribute_name'])) ?></option>'
+    <?php }   ?>
+    + '</select></td>'
+
+    + '<td> <select class="<?php echo $_htmlClass ?> required_magento_attr required-entry" name="<?php echo $_htmlName ?>[{{index}}][magento_attribute_code]" id="config_attribute_row_{{index}}_magento_attr">'
+    <?php foreach ($this->getMagentoAttributes() as $_groupId=>$_groupName): ?>
+    + '<option value="<?php echo $_groupId ?>"><?php echo $this->jsQuoteEscape($this->escapeHtml($_groupName)) ?></option>'
+    <?php endforeach ?>
+    + '</select>'
+    + ' </td>'
+    + '<td class="last"><input type="hidden" name="<?php echo $_htmlName ?>[{{index}}][delete]" class="delete" value="" id="config_attribute_row_{{index}}_delete" />'
+    + '<button title="<?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('catalog')->__("Delete Tier")) ?>" type="button" class="scalable delete icon-btn delete-product-option" id="config_attribute_row_{{index}}_delete_button" onclick="return configAttributeControl.deleteItem(event);">'
+    + '<span><span><span><?php echo Mage::helper('core')->jsQuoteEscape(Mage::helper('catalog')->__("Delete")) ?></span></span></span></button></td>'
+    + '</tr>';
+
+var configAttributeControl = {
+    template: new Template(configAttributeRowTemplate, new RegExp('(^|.|\\r|\\n)({{\\s*(\\w+)\\s*}})', "")),
+    itemsCount: 0,
+    addItem : function () {
+
+       
+         var data = {
+                jet_attribute: '',
+                magento_attr: '',
+                required: '',
+                jet_attribute_type: '',
+                index: this.itemsCount++
+            };
+
+        if(arguments.length >= 3) {
+            data.jet_attribute      = arguments[0];
+            data.magento_attr        = arguments[1];
+            data.jet_attribute_type        = arguments[2];
+        }
+
+        Element.insert($('<?php echo $_htmlId ?>_container'), {
+            bottom : this.template.evaluate(data)
+        });
+        $('config_attribute_row_' + data.index + '_jet_attribute').value = data.jet_attribute;
+        $('config_attribute_row_' + data.index + '_magento_attr').value    = data.magento_attr;
+        $('config_attribute_row_' + data.index + '_jet_attribute_type').value    = data.jet_attribute_type;
+
+
+        $('<?php echo $_htmlId ?>_container').select('input', 'select').each(function(el){ Event.observe(el, 'change', el.setHasChanges.bind(el)); });
+    },
+    disableElement: function(el) {
+        el.disabled = true;
+        el.addClassName('disabled');
+    },
+    deleteItem: function(event) {
+        var tr = Event.findElement(event, 'tr');
+        if (tr) {
+            Element.select(tr, '.delete').each(function(elem){elem.value='1'});
+            Element.select(tr, ['input', 'select']).each(function(elem){elem.hide()});
+            Element.hide(tr);
+            Element.addClassName(tr, 'no-display template');
+        }
+        return false;
+    },
+    setJetAttributeType: function(e, index) {
+        if(e.value != ""){
+        var attributeType = e.options[e.selectedIndex].getAttribute('attribute_type');
+        $('config_attribute_row_' + index + '_jet_attribute_type').value = attributeType;
+        }
+    }
+};
+<?php foreach ($this->getJetAttributeValuesMapping() as $_item): ?>
+configAttributeControl.addItem('<?php echo $_item['jet_attribute_name'] ?>', '<?php echo $_item['magento_attribute_code'] ?>', '<?php echo $_item['jet_attribute_type'] ?>');
+<?php endforeach; ?>
+
+//]]>
+</script>
+</td></tr>

@@ -1,0 +1,200 @@
+<?php
+/**
+  * CedCommerce
+  *
+  * NOTICE OF LICENSE
+  *
+  * This source file is subject to the End User License Agreement (EULA)
+  * that is bundled with this package in the file LICENSE.txt.
+  * It is also available through the world-wide-web at this URL:
+  * http://cedcommerce.com/license-agreement.txt
+  *
+  * @category    Ced
+  * @package     Ced_Jet
+  * @author      CedCommerce Core Team <connect@cedcommerce.com >
+  * @copyright   Copyright CEDCOMMERCE (http://cedcommerce.com/)
+  * @license      http://cedcommerce.com/license-agreement.txt
+  */
+?>
+<?php $_htmlId      = 'requiredAttributes' ?>
+<?php $_htmlClass   = 'requiredAttributeClass' ?>
+<?php $_htmlName    = 'mapped_attribute' ?>
+<?php $_readonly    = false ?>
+<?php $nodeId = $this->getRequest()->getParam('node_id'); ?>
+<tr>
+    <td class="label"><?php echo  Mage::helper('jet')->__('Required Attribute') ?></td>
+    <td colspan="10" class="grid tier">
+    <table cellspacing="0" class="data border" id="tiers_table" style="width: 50%;">
+        <col width="120" />
+        <col width="95" />
+        <col />
+        <col width="1" />
+        <thead>
+            <tr class="headings">
+                <th><?php echo Mage::helper('catalog')->__('Jet Attribute') ?></th>
+                <th><?php echo Mage::helper('catalog')->__('Magento Catalog Attribute') ?></th>
+                <th><?php echo Mage::helper('catalog')->__('Free Text') ?>
+                    <div class="field-tooltip"><div>
+                            <b>If Jet Attribute Free Text-</b>
+                            <p><b>Yes :</b> Then Jet will accept any input from the attribute</p>
+                            <p><b>No :</b> Then Jet will accept only Options hints values</p>
+                        </div></div>
+                </th>
+                <th><?php echo Mage::helper('catalog')->__('Options') ?>
+                        <div class="field-tooltip"><div>
+                            <b>If Jet Attribute is having Options it must be same on your <br /> magento attribute also. Please put the
+                                 Jet Attribute <br />options at the magento attribute option field-</b>
+                        </div></div>
+                </th>
+            </tr>
+        </thead>
+        <tbody id="<?php echo $_htmlId ?>_container"></tbody>
+    </table>
+
+<script type="text/javascript">
+//<![CDATA[
+var tierPriceRowTemplate = '<tr>'
+    + '<td>'
+    +'<input type="hidden" id="tier_price_row_{{index}}_jet_attribute_id" />'
+    +'<input type="text" readonly="readonly"  id="tier_price_row_{{index}}_jet_attribute" />'
+    +'</td>'
+    + '<td> <select class="<?php echo $_htmlClass ?> required_magento_attr" name="<?php echo $_htmlName ?>[{{index}}][magento_attribute_code]" id="tier_price_row_{{index}}_magento_attr">'
+    <?php foreach ($this->getMagentoAttributes() as $optGroup){ ?>
+    +'<optgroup label="<?php echo $optGroup['label'] ?> ">'
+        <?php  foreach ($optGroup['value'] as $_groupId=>$_groupName){ ?>
+        + '<option value="<?php echo $_groupId ?>"><?php echo $this->jsQuoteEscape($this->escapeHtml($_groupName)) ?></option>'
+        <?php }   ?>
+    +'</optgroup>'
+    <?php } ?>
+    + '</select>'
+    + ' </td>'
+    + '<td> <div id="tier_price_row_{{index}}_jet_attribute_freetext"></div>'
+    +'</td>'
+    + '<td> <div class="field-tooltip"  id="tier_price_row_{{index}}_jet_attribute_options"><div>You do not have any options in this Jet Attribute</div></div>'
+    +'</td>'
+
+    + '</tr>';
+
+var tierPriceControl = {
+    template: new Template(tierPriceRowTemplate, new RegExp('(^|.|\\r|\\n)({{\\s*(\\w+)\\s*}})', "")),
+    itemsCount: 0,
+    addItem : function () {
+
+        var data = {
+                jet_attribute_id: '',
+                jet_attribute_name: '',
+                jet_attribute_freetext: '',
+                jet_attribute_options: '',
+                magento_attribute_code: '',
+
+                index: this.itemsCount++
+            };
+
+        //fix if element exist then return
+        var elementExists = document.getElementById("tier_price_row_"+data.index+"_jet_attribute");
+        if(elementExists){
+        //            elementExists.parent().parent().remove();;
+            $("tier_price_row_"+data.index+"_jet_attribute").up(1).remove();
+
+        }
+
+
+
+
+        if(arguments.length >= 5) {
+            data.jet_attribute_id      = arguments[0];
+            data.jet_attribute_name        = arguments[1];
+            data.jet_attribute_freetext      = arguments[2];
+            if(arguments[3]!='')
+                data.jet_attribute_options        = JSON.parse(arguments[3]);
+            data.magento_attribute_code        = arguments[4];
+        }
+
+        Element.insert($('<?php echo $_htmlId ?>_container'), {
+            bottom : this.template.evaluate(data)
+        });
+        
+        $('tier_price_row_' + data.index + '_jet_attribute').value = data.jet_attribute_name;
+        $('tier_price_row_' + data.index + '_magento_attr').value    = data.magento_attribute_code;
+
+
+
+        $('tier_price_row_' + data.index + '_jet_attribute_id').name = '<?php echo $_htmlName ?>['+data.jet_attribute_id+'][jet_attribute_id]';
+        $('tier_price_row_' + data.index + '_jet_attribute_id').value = data.jet_attribute_id;
+
+        $('tier_price_row_' + data.index + '_magento_attr').name    = '<?php echo $_htmlName ?>['+data.jet_attribute_id+'][magento_attribute_code]';
+
+        var freeTextMsg = 'No';
+        if(data.jet_attribute_freetext==1)
+            freeTextMsg = 'Yes';
+
+        $('tier_price_row_' + data.index + '_jet_attribute_freetext').innerHTML  = freeTextMsg;
+
+    var msg = '<div> <p style="color="red">No Option Available</p></div>';
+
+     if(data.jet_attribute_options!= '') {
+         msg = '<div> <p>Allowed Option for this Jet Attribute</p> <ul>';
+         for (var i = 0; i < data.jet_attribute_options.length; i++) {
+             msg += '<li>' + data.jet_attribute_options[i] + '</li>';
+         }
+         msg += '</ul</div>';
+     }
+
+
+
+        $('tier_price_row_' + data.index + '_jet_attribute_options').innerHTML  = msg;
+
+    },
+    disableElement: function(el) {
+        el.disabled = true;
+        el.addClassName('disabled');
+    },
+    deleteItem: function(event) {
+        var tr = Event.findElement(event, 'tr');
+        if (tr) {
+            Element.select(tr, '.delete').each(function(elem){elem.value='1'});
+            Element.select(tr, ['input', 'select']).each(function(elem){elem.hide()});
+            Element.hide(tr);
+            Element.addClassName(tr, 'no-display template');
+        }
+        return false;
+    },
+    setJetAttributeType: function(e, index) {
+        if(e.value != ""){
+        var attributeType = e.options[e.selectedIndex].getAttribute('attribute_type');
+        $('tier_price_row_' + index + '_walmart_attribute_type').value = attributeType;
+        }
+    }
+};
+<?php
+
+$attribute = $this->getJetAttributeValuesMapping();
+$globalVariantMapping = Mage::helper('jet/data')->getGlobalVariantAttributeMapping();
+
+
+
+
+
+if(isset($attribute['jet_attribute']) && count($attribute['jet_attribute'])>0)
+ foreach ($attribute['jet_attribute'] as $_item):
+
+     $magentoAttributeCode =    isset($attribute['mapped_attribute'][$_item['attribute_id']]['magento_attribute_code'])?$attribute['mapped_attribute'][$_item['attribute_id']]['magento_attribute_code']:'';
+        if($magentoAttributeCode == '')
+            foreach ($globalVariantMapping as $global){
+                if($global['jet_attribute_id'] == $_item['attribute_id']){
+                    $magentoAttributeCode = $global['magento_attribute_code'];
+                    break;
+                }
+            }
+        $isVariant = '';
+        if(isset($_item['variant']) && $_item['variant']==true)
+            $isVariant = ' [Variant]';
+
+    ?>
+tierPriceControl.addItem('<?php echo $_item['attribute_id'] ?>', '<?php echo addslashes($_item['attribute_description']).$isVariant ?>', '<?php echo $_item['free_text'] ?>', '<?php echo isset($_item['values'])?addslashes(json_encode($_item['values'])):'' ?>',  '<?php echo $magentoAttributeCode ?>');
+<?php endforeach;  ?>
+
+
+//]]>
+</script>
+</td></tr>
