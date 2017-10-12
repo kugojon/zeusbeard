@@ -40,6 +40,16 @@
            </observers>
         </controller_action_predispatch>
     </events>
+    <events>
+        <checkout_onepage_controller_success_action>
+            <observers>
+               <bss_cookiecart_checkout_onepage_controller_success_action>
+                  <class>Bss_CookieCart_Model_Order_Observer</class>
+                  <method>removeItemCookie</method>
+               </bss_cookiecart_checkout_onepage_controller_success_action>
+           </observers>
+        </checkout_onepage_controller_success_action>
+    </events>
   <!--events>
         <controller_action_postdispatch>
             <observers>

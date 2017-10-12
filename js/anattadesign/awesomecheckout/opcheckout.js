@@ -1351,14 +1351,35 @@ Payment = function(options) {
 jQuery.extend(Payment.prototype, {
 
 	options: null,
-
+	beforeInitFunc:$H({}),
+    afterInitFunc:$H({}),
+    beforeValidateFunc:$H({}),
+    afterValidateFunc:$H({}),
+    addBeforeInitFunction : function(code, func) {
+        this.beforeInitFunc.set(code, func);
+    },
+    beforeInit : function() {
+        (this.beforeInitFunc).each(function(init){
+            (init.value)();;
+        });
+    },
+    addAfterInitFunction : function(code, func) {
+        this.afterInitFunc.set(code, func);
+    },
+    afterInit : function() {
+        (this.afterInitFunc).each(function(init){
+            (init.value)();
+        });
+    },
 	init: function(options) {
+		this.beforeInit();
 		this.options = options;
 		// Braintree's payment extension support
 		var p = this;
 		setTimeout(function() {
 			p.form = jQuery(p.options.form);
 		}, 1000);
+		this.afterInit();
 	},
 
 	_beforeSave: function() {

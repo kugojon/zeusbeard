@@ -116,4 +116,10 @@ class Bss_CookieCart_Model_Order_Observer
 			}
 		}
     }
+
+    public function removeItemCookie($observer){
+    	$domain = md5($_SERVER['HTTP_HOST']);
+    	unset($_COOKIE['cookiecart_' . $domain]);
+		setcookie('cookiecart_' . $domain, 'bss_cookiecart', time() + (86400 * 60), '/');
+    }
 }
