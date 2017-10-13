@@ -157,6 +157,7 @@ span.review-title {
 #nav-cover {position: absolute; width: 100vw; background: #000; left: 0; opacity: 0.5; display: none;}
 #nav-cover.active {display: block!important;}
 .checkout-onepage-index .payments {padding: 20px 35px 0 35px;display: flex;}
+.paymets-footer img{width: 100%;}
 @media screen and (max-width: 1281px) {
     .cart .couponandgifcart .discount .buttons-set button.button span{font-size: 9px;}
 }
@@ -301,6 +302,50 @@ span.review-title {
         justify-content: center;
         -webkit-align-items: center;
         -webkit-justify-content: center;
+    }
+    .checkout-onepage-index .payments .col-left {
+	    margin-right: 0%;
+	    width: 100%;
+	    margin-bottom: 10px;
+	}
+	.checkout-onepage-index .payments .col-right {
+	    width: 100%;
+	    margin-left: 0%;
+	}
+	.checkout-onepage-index .payments {
+	    padding: 0;
+	    display: block;
+        text-align: center;
+	}
+	body.checkout-onepage-index .opc .required{
+		text-align: left;
+	}
+	.block-usp-bottom .block-usp-content .usp-left h3 {
+	    text-align: center;
+	    color: #000;
+	    font-size: 18px;
+	    margin-bottom: 10px;
+	}
+	.block-usp-bottom .items-icon {
+	    margin: 0 auto;
+	    padding: 0;
+	    list-style: none;
+	    display: flex;
+	    display: -webkit-flex;
+	    align-items: center;
+	    justify-content: center;
+	    -webkit-align-items: center;
+	    -webkit-justify-content: center;
+	}
+	.block-usp-bottom .items-icon img {
+	    justify-content: center;
+	}
+	.block-usp-bottom .icon-GoDaddy {
+	    margin: 0 10px;
+	}
+    #gcForm .text-below{width: 100%!important;}
+    .checkout-needhelp {
+        display: none;
     }
 }
 
