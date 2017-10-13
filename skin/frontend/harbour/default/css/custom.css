@@ -157,6 +157,7 @@ span.review-title {
 #nav-cover {position: absolute; width: 100vw; background: #000; left: 0; opacity: 0.5; display: none;}
 #nav-cover.active {display: block!important;}
 .checkout-onepage-index .payments {padding: 20px 35px 0 35px;display: flex;}
+.paymets-footer{text-align: center;}
 .paymets-footer img{width: 100%;}
 @media screen and (max-width: 1281px) {
     .cart .couponandgifcart .discount .buttons-set button.button span{font-size: 9px;}
