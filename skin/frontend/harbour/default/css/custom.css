@@ -159,6 +159,7 @@ span.review-title {
 .checkout-onepage-index .payments {padding: 20px 35px 0 35px;display: flex;}
 .paymets-footer{text-align: center;}
 .paymets-footer img{width: 100%;}
+#ac-page .cards li {width: 51px !important;}
 @media screen and (max-width: 1281px) {
     .cart .couponandgifcart .discount .buttons-set button.button span{font-size: 9px;}
 }
@@ -348,5 +349,17 @@ span.review-title {
     .checkout-needhelp {
         display: none;
     }
+    .checkout-onepage-index img.img-pay-amazon{padding: 0!important;}
+    #ac-page #checkout-payment-method-load .cvv-what-is-this {left: 155px !important;top: 2px;}
 }
-
+@media only screen and (max-width: 479px){
+    #ac-page #checkout-payment-method-load .cvv-what-is-this {left: 150px !important;}
+}
+@media only screen and (max-width: 320px){
+    .block-usp-bottom .icon-PayPal {width: 80px;}
+    .block-usp-bottom .icon-GoDaddy {margin: 0 10px;width: 100px;height: 32px;}
+    .block-usp-bottom .icon-McAfee {width: 90px;height: 40px;}
+    .checkout-onepage-index .payments {padding: 0!important;display: block;}
+    .checkout-onepage-index .payments.i-checkout{padding-top: 10px!important;}
+    .checkout-onepage-index img.img-pay-amazon{padding: 0!important;}
+}

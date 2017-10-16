@@ -127,7 +127,20 @@ body {
   border: 1px solid #B6B6B6;
   line-height: 19px;
   margin-bottom: 8px; }
-
+.button_giftvoucher {
+    margin: 20px 0 25px;
+    border-bottom: 1px solid #eee; 
+    padding-bottom: 25px;
+}
+.point_amount .price{color:#870503;font-size:14px;font-weight:bold;}
+dt.point_rewart {
+    padding-top: 0px!important;
+}
+dl.reward_points {
+    border-bottom: 1px solid #eee;
+    margin: 0 0 25px;
+    padding-bottom: 10px;
+}
 #ac-page #checkoutSteps, #ac-page #checkout-progress-wrapper .progress-block {
   float: left;
   background: #fff;
@@ -275,7 +288,7 @@ body {
   font-size: 20px;
   font-weight: bold;
   line-height: 20px;
-  margin: 0 0 11px	0; }
+  margin: 0 0 11px  0; }
 #ac-page #checkout-progress-wrapper h2.show-iphone {
   display: none; }
 #ac-page #checkout-progress-wrapper blockquote {
@@ -921,8 +934,127 @@ body {
 #ac-page .gift-messages-form .inner-box .product-img-box .product-image {
   float: left;
   margin-right: 15px; }
+.checkout-onepage-index .payments {
+    padding: 20px 35px 0 35px;
+    display: flex;
+}
+.checkout-onepage-index .payments .col-left {
+    margin-right: 5%;
+    width: 49%;
+}
+.checkout-onepage-index .payments .col-right {
+    width: 49%;
+    margin-left: 5%;
+}
+.checkout-onepage-index img.img-pay-amazon {
+    max-width: 100%;
+}
 
+#ac-page #checkoutSteps header {
+    padding: 10px 0 0 38px;
+}
+.paymets-footer {
+    text-align: center;
+}
+#siteseal,.trustedsite-floating-element{
+    display: none;
+}
+@media only screen and (min-width: 768px){
+    .checkout-needhelp-bottom{display: none;}
+    .checkout-needhelp{
+        position: absolute;
+        float: right;
+        right: 100px;
+        top: 45%;
+        color: #000;
+    }
+
+    p.checkout-needhelp strong {
+        font-weight: 700;
+        color: #000;
+    }
+
+    p.checkout-needhelp a {
+        color: #000;
+        text-decoration: none;
+    }
+    .block-usp-bottom {
+        margin-top: 20px;
+        float: none;
+    }
+
+    .block-usp-bottom .block-usp-content {
+        max-width: 962px;
+        margin: 0 auto;
+        display: flex;
+        display: -webkit-flex;
+    }
+
+    .block-usp-bottom .block-usp-content .usp-left {
+        width: 100%;
+    }
+
+    .block-usp-bottom .block-usp-content .usp-left h3 {
+        text-align: center;
+        color: #000;
+        font-size: 18px;
+    }
+
+    .block-usp-bottom .items-icon {
+        margin: 0 auto;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
+    }
+
+    .block-usp-bottom .icon-GoDaddy {
+        margin: 0 80px;
+        width: 123px;
+        height: 32px;
+    }
+
+    .block-usp-bottom .items-icon img {
+        justify-content: center;
+        -webkit-justify-content: center;
+    }
+
+    .block-usp-bottom .icon-McAfee {
+        width: 98px;
+        height: 40px;
+    }
+}
+@media only screen and (min-width: 1024px){
+    .block-usp-bottom .block-usp-content .usp-left {
+        width: 648px;
+    }
+    .block-usp-bottom .icon-GoDaddy {
+        margin: 0 50px;
+    }
+    .block-usp-bottom {
+        float: left;
+    }
+}
 @media (min-width: 768px) and (max-width: 979px) {
+  .checkout-onepage-index .payments .col-left {
+      margin-right: 0%;
+      width: 49%;
+  }
+  .checkout-onepage-index .payments .col-right {
+      width: 49%;
+      margin-left: 9%;
+  }
+  .checkout-onepage-index img.img-pay-amazon {
+      margin-left: 0;
+  }
+  .checkout-onepage-index .payments .col-left .paypal-logo img{
+      display: block;
+      float: right;
+  }
   #ac-page {
     width: auto;
     margin: 0px 20px; }
@@ -1006,9 +1138,59 @@ body {
     line-height: 14px;
     color: #6d6e70;
     position: static;
-    text-transform: capitalize; } }
+    text-transform: capitalize; } 
 
+}
 @media (max-width: 767px) {
+    .checkout-needhelp-bottom p {
+    text-align: center;
+    }
+
+    .checkout-needhelp-bottom {
+        margin: 20px;
+    }
+
+    .checkout-needhelp-bottom p {
+        color: #000;
+    }
+
+    .checkout-needhelp-bottom strong {
+        font-weight: 700;
+    }
+
+    .checkout-needhelp-bottom a {
+        color: #000;
+        text-decoration: none;
+    }
+  .checkout-onepage-index .payments {
+      padding: 20px 20px 0 20px;
+      display: block;
+  }
+  .checkout-onepage-index .payments .col-left {
+      margin-right: 0%;
+      width: 100%;
+      margin-bottom: 10px;
+  }
+  .checkout-onepage-index .payments .col-right {
+      width: 100%;
+      margin-left: 0%;
+  }
+  .checkout-onepage-index  .payments  div#AmazonPayButtonMethod {
+      margin: 0 auto !important;
+      display: block !important;
+      width: 200px;
+  }
+  .checkout-onepage-index .payments .col-left img {
+      display: block;
+      margin: 0 auto;
+  }
+  .checkout-onepage-index img.img-pay-amazon {
+      max-width: 280px;
+      padding: 0 20px;
+      margin: 0 auto;
+      padding-top: 20px;
+      display: block;
+  }
   body {
     background: #fff; }
 
@@ -1568,4 +1750,67 @@ body {
     font-size: 12px; }
 
   .modal-ac-body {
-    font-size: 11px; } }
+    font-size: 11px; } 
+
+    .block-usp-bottom {
+    margin-bottom: 40px;
+    }
+
+    .block-usp-bottom .block-usp-content {
+        max-width: 962px;
+        margin: 0 auto;
+        display: flex;
+        display: -webkit-flex;
+    }
+
+    .block-usp-bottom .block-usp-content .usp-left {
+        width: 100%;
+    }
+
+    .block-usp-bottom .block-usp-content .usp-left h3 {
+        text-align: center;
+        color: #000;
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .block-usp-bottom .items-icon {
+        margin: 0 auto;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        display: -webkit-flex;
+        align-items: center;
+        justify-content: center;
+        -webkit-align-items: center;
+        -webkit-justify-content: center;
+    }
+
+    .block-usp-bottom .icon-GoDaddy {
+        margin: 0 10px;
+    }
+
+    .block-usp-bottom .items-icon img {
+        justify-content: center;
+    }
+
+    
+    .checkout-needhelp{display: none;}
+}
+@media only screen and (max-width: 320px){
+    .block-usp-bottom .icon-GoDaddy {
+        margin: 0 10px;
+        width: 100px;
+        height: 32px;
+    }
+    .block-usp-bottom .icon-McAfee {
+        width: 90px;
+        height: 40px;
+    } 
+    .block-usp-bottom .icon-PayPal {
+        width: 80px;
+    }
+    .block-usp-bottom .items-icon {
+        width:90%;
+    }
+}
