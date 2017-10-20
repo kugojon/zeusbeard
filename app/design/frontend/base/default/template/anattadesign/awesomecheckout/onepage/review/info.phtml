@@ -70,11 +70,11 @@
 	// don't want to do anything if newsletter functionality is disabled in admin
 	if ( Mage::getStoreConfigFlag( 'awesomecheckout/newsletter/enable' ) && Mage::getStoreConfigFlag( 'awesomecheckout/newsletter/ask_the_user' ) ) {
 		//getting customer email & showing the checkbox only if the user is not already subscribed
-		$email = Mage::getSingleton('checkout/session')->getQuote()->getCustomerEmail();
-		$status = Mage::getModel( 'newsletter/subscriber' )->loadByEmail( $email )->getStatus();
-		if ( $status != Mage_Newsletter_Model_Subscriber::STATUS_SUBSCRIBED ) {
+//		$email = Mage::getSingleton('checkout/session')->getQuote()->getCustomerEmail();
+//		$status = Mage::getModel( 'newsletter/subscriber' )->loadByEmail( $email )->getStatus();
+//		if ( $status != Mage_Newsletter_Model_Subscriber::STATUS_SUBSCRIBED ) {
 			echo $this->getChildHtml( 'newsletter' );
-		}
+//		}
 	}
 	?>
 	<div class="agreements">

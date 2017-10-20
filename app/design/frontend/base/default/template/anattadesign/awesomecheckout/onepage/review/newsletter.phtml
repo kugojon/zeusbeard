@@ -18,6 +18,12 @@
 ?>
 <div class ="newsletter">
 	<form id="newsletter-form" onsubmit="return false;">
-		<label><input type="checkbox" name="newsletter_subscribe" value="1" /> <?php echo $this->__( 'Subscribe to Newsletter' ); ?></label>
+		<label><input type="checkbox" name="newsletter_subscribe" value="1" checked /> <?php echo $this->__( 'Sign up for the Zeus newsletter for discounts, promotions, and new arrivals' ); ?></label>
 	</form>
 </div>
+<style>
+	.newsletter #newsletter-form label {
+		font-size: 13px;
+		float: right;
+	}
+</style>
