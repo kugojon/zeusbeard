@@ -14,98 +14,101 @@ $expires = $meigee_harbour_general['popup']['cookielifetime'];
 $popupWidth = $meigee_harbour_general['popup']['popupwidth'];
 $popupHeight = $meigee_harbour_general['popup']['popupheight'];
 $popupStatic = $meigee_harbour_general['popup']['popup_static'];
-$currentCat = Mage::registry('current_category');
-$popup = $currentCat->getPopupBox();
 $checkPopup = true;
-if($popup == 1){
-    $checkPopup = false;
+$currentCat = Mage::registry('current_category');
+if($currentCat != ''){
+    $popup = $currentCat->getPopupBox();
+    if($popup == 1){
+        $checkPopup = false;
+    }   
 }
-if ($meigee_harbour_general['popup']['popup_status'] == 1) {
-	$popupCookie = Mage::getModel('core/cookie')->get("harbourPopup");
-	if(!$popupCookie && $checkPopup): ?>
-		<section class="popup-block" id="popup-block" style="width:<?php echo $popupWidth; ?>px; height:<?php echo $popupHeight; ?>px;">
-			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId($popupStatic)->toHtml() ?>
-			<div class="clear"></div>
-			<label class="popup-bottom"><input type="checkbox"><?php echo $this->__('Don’t show this popup again'); ?></label>
-			<div class="clear"></div>
-		</section>
-		<script type="text/javascript">
-			
-			/* Newsletter init */
-			function popupNewsletter() {
-				jQuery.fancybox({
-					padding: '0px',
-					autoScale: true,
-					transitionIn: 'fade',
-					transitionOut: 'fade',
-					showCloseButton: false,
-					type: 'inline',
-					href: '#popup-block'
-				});
-				jQuery('#popup-block').trigger('click');
-			}
-			
-			isSuccess = jQuery('ul.messages li.success-msg').length;
-			subscribeFlag = jQuery.cookie('harbourPopupFlag');
-			
-			function subsSetcookie(){
-				jQuery.cookie('harbourPopup', 'true', {
-					expires: <?php echo $expires; ?>,
-					path: '/'
-				});
-			}
-			
-			if(!(subscribeFlag && isSuccess)){
-				popupNewsletter();
-			}else{
-				jQuery.removeCookie('harbourPopupFlag', { path: '/' });
-				subsSetcookie();
-			}
-			
-			jQuery('#popup-block').parents('.fancybox-wrap').addClass('subscribe-fancy').next('.fancybox-overlay').addClass('subscribe-fancy');
-			
-			jQuery('#popup-block .popup-bottom input').on('click', function(){
-				if(jQuery(this).parent().find('input:checked').length){
-					subsSetcookie();
-				} else {
-					jQuery.removeCookie('harbourPopup', { path: '/' });
-				}
-			});
-			
-			setTimeout(function(){
-				jQuery('.fancybox-close').on('click', function(){
-					jQuery.cookie('harbourPopup', 'true');
-				});
-			}, 1000);
 
-			if(jQuery('#popup-block .popup-content-wrapper').data('bgcolor')){
-				jQuery('#popup-block .popup-content-wrapper').addClass('no-bgimg');
-				var bgColor = jQuery('#popup-block .popup-content-wrapper').data('bgcolor');
-				jQuery('#popup-block .popup-content-wrapper').attr('style', bgColor);
-			}
-			
-			if(jQuery('#popup-block .popup-content-wrapper').data('bgimg')){
-				var bgImg = jQuery('#popup-block .popup-content-wrapper').data('bgimg');
-				jQuery('#popup-block .popup-content-wrapper').attr('style', bgImg);
-			}
-			
-			if((jQuery('#popup-block .popup-content-wrapper').data('bgimg')) && (jQuery('#popup-block .popup-content-wrapper').data('bgcolor'))) {
-				jQuery('#popup-block .popup-content-wrapper').attr('style', bgImg + bgColor);
-			} 
-			if (jQuery('body').hasClass('retina-ready')) {
-				if (pixelRatio > 1) {
-					if(jQuery('#popup-block .popup-content-wrapper').data('srcx2')) {
-						jQuery('#popup-block .popup-content-wrapper').removeClass('no-bgimg');
-						var retinaBg = jQuery('#popup-block .popup-content-wrapper').data('srcx2');
-						jQuery('#popup-block .popup-content-wrapper').attr('style', retinaBg);
-					}
-					if((jQuery('#popup-block .popup-content-wrapper').data('srcx2')) && (jQuery('#popup-block .popup-content-wrapper').data('bgcolor'))) {
-						jQuery('#popup-block .popup-content-wrapper').addClass('no-bgimg');
-						jQuery('#popup-block .popup-content-wrapper').attr('style', retinaBg + bgColor);
-					} 
-				}
-			}
-		</script> 
+if ($meigee_harbour_general['popup']['popup_status'] == 1) {
+    $popupCookie = Mage::getModel('core/cookie')->get("harbourPopup");
+    if(!$popupCookie && $checkPopup): ?>
+        <section class="popup-block" id="popup-block" style="width:<?php echo $popupWidth; ?>px; height:<?php echo $popupHeight; ?>px;">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId($popupStatic)->toHtml() ?>
+            <div class="clear"></div>
+            <label class="popup-bottom"><input type="checkbox"><?php echo $this->__('Don’t show this popup again'); ?></label>
+            <div class="clear"></div>
+        </section>
+        <script type="text/javascript">
+            
+            /* Newsletter init */
+            function popupNewsletter() {
+                jQuery.fancybox({
+                    padding: '0px',
+                    autoScale: true,
+                    transitionIn: 'fade',
+                    transitionOut: 'fade',
+                    showCloseButton: false,
+                    type: 'inline',
+                    href: '#popup-block'
+                });
+                jQuery('#popup-block').trigger('click');
+            }
+            
+            isSuccess = jQuery('ul.messages li.success-msg').length;
+            subscribeFlag = jQuery.cookie('harbourPopupFlag');
+            
+            function subsSetcookie(){
+                jQuery.cookie('harbourPopup', 'true', {
+                    expires: <?php echo $expires; ?>,
+                    path: '/'
+                });
+            }
+            
+            if(!(subscribeFlag && isSuccess)){
+                popupNewsletter();
+            }else{
+                jQuery.removeCookie('harbourPopupFlag', { path: '/' });
+                subsSetcookie();
+            }
+            
+            jQuery('#popup-block').parents('.fancybox-wrap').addClass('subscribe-fancy').next('.fancybox-overlay').addClass('subscribe-fancy');
+            
+            jQuery('#popup-block .popup-bottom input').on('click', function(){
+                if(jQuery(this).parent().find('input:checked').length){
+                    subsSetcookie();
+                } else {
+                    jQuery.removeCookie('harbourPopup', { path: '/' });
+                }
+            });
+            
+            setTimeout(function(){
+                jQuery('.fancybox-close').on('click', function(){
+                    jQuery.cookie('harbourPopup', 'true');
+                });
+            }, 1000);
+
+            if(jQuery('#popup-block .popup-content-wrapper').data('bgcolor')){
+                jQuery('#popup-block .popup-content-wrapper').addClass('no-bgimg');
+                var bgColor = jQuery('#popup-block .popup-content-wrapper').data('bgcolor');
+                jQuery('#popup-block .popup-content-wrapper').attr('style', bgColor);
+            }
+            
+            if(jQuery('#popup-block .popup-content-wrapper').data('bgimg')){
+                var bgImg = jQuery('#popup-block .popup-content-wrapper').data('bgimg');
+                jQuery('#popup-block .popup-content-wrapper').attr('style', bgImg);
+            }
+            
+            if((jQuery('#popup-block .popup-content-wrapper').data('bgimg')) && (jQuery('#popup-block .popup-content-wrapper').data('bgcolor'))) {
+                jQuery('#popup-block .popup-content-wrapper').attr('style', bgImg + bgColor);
+            } 
+            if (jQuery('body').hasClass('retina-ready')) {
+                if (pixelRatio > 1) {
+                    if(jQuery('#popup-block .popup-content-wrapper').data('srcx2')) {
+                        jQuery('#popup-block .popup-content-wrapper').removeClass('no-bgimg');
+                        var retinaBg = jQuery('#popup-block .popup-content-wrapper').data('srcx2');
+                        jQuery('#popup-block .popup-content-wrapper').attr('style', retinaBg);
+                    }
+                    if((jQuery('#popup-block .popup-content-wrapper').data('srcx2')) && (jQuery('#popup-block .popup-content-wrapper').data('bgcolor'))) {
+                        jQuery('#popup-block .popup-content-wrapper').addClass('no-bgimg');
+                        jQuery('#popup-block .popup-content-wrapper').attr('style', retinaBg + bgColor);
+                    } 
+                }
+            }
+        </script> 
 <?php
-	endif;
+    endif;
 }
