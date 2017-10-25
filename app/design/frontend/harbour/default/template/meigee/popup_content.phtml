@@ -14,9 +14,15 @@ $expires = $meigee_harbour_general['popup']['cookielifetime'];
 $popupWidth = $meigee_harbour_general['popup']['popupwidth'];
 $popupHeight = $meigee_harbour_general['popup']['popupheight'];
 $popupStatic = $meigee_harbour_general['popup']['popup_static'];
+$currentCat = Mage::registry('current_category');
+$popup = $currentCat->getPopupBox();
+$checkPopup = true;
+if($popup == 1){
+    $checkPopup = false;
+}
 if ($meigee_harbour_general['popup']['popup_status'] == 1) {
 	$popupCookie = Mage::getModel('core/cookie')->get("harbourPopup");
-	if(!$popupCookie): ?>
+	if(!$popupCookie && $checkPopup): ?>
 		<section class="popup-block" id="popup-block" style="width:<?php echo $popupWidth; ?>px; height:<?php echo $popupHeight; ?>px;">
 			<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId($popupStatic)->toHtml() ?>
 			<div class="clear"></div>

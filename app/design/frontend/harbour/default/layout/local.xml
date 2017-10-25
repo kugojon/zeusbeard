@@ -50,14 +50,14 @@
 				<aParams>class="top-link-wishlist"</aParams>
 		   </action>
 		</reference>
-		<reference name="before_body_end">
+		<!-- <reference name="before_body_end">
 			<block type="page/html" name="popup_block" as="popup_block">
 				<action method="setTemplate">
 					<template>meigee/popup_content.phtml</template>
 				</action>
 			</block>
 			<action ifconfig="meigee_harbour_general/popup/onlyhome" method="unsetChild"><name>popup_block</name></action>
-		</reference>
+		</reference> -->
 	</reference>
 	<reference name="head">
 		<block type="core/text" name="viewport.media">

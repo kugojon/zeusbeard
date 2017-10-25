@@ -104,6 +104,15 @@ Category default layout
                 </block>
             </block>
         </reference>
+        <reference name="before_body_end">
+            <block type="page/html" ifconfig="meigee_harbour_general/popup/showcateogry" name="popup_block_cate" as="popup_block_cate">
+                <action method="setTemplate">
+                    <template>meigee/popup_content.phtml</template>
+                </action>
+            </block>
+            <action ifconfig="meigee_harbour_general/popup/showcateogry" method="unsetChild"><name>popup_block_cate</name></action>
+        </reference>
+
     </catalog_category_default>
 
 <!--
@@ -148,6 +157,14 @@ Category layered navigation layout
                     <action method="setToolbarBlockName"><name>product_list_toolbar</name></action>
                 </block>
             </block>
+        </reference>
+        <reference name="before_body_end">
+            <block type="page/html" ifconfig="meigee_harbour_general/popup/showcateogry" name="popup_block_cate" as="popup_block_cate">
+                <action method="setTemplate">
+                    <template>meigee/popup_content.phtml</template>
+                </action>
+            </block>
+            <action ifconfig="meigee_harbour_general/popup/showcateogry" method="unsetChild"><name>popup_block_cate</name></action>
         </reference>
     </catalog_category_layered>
 
