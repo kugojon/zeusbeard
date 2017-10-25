@@ -52,7 +52,7 @@ class Amasty_Xnotif_Block_Product_View_Type_Configurable extends Amasty_Xnotif_B
                     $aStockStatus[$k] = $v;
                 }   
             }
-            $html = '<script type="text/javascript">var stStatus = new StockStatus(' . Zend_Json::encode($aStockStatus) . ');</script>' . $html;
+            $html = $html .'<script type="text/javascript">var stStatus = new StockStatus(' . Zend_Json::encode($aStockStatus) . ');</script>';
         }
         return $html;
     }
