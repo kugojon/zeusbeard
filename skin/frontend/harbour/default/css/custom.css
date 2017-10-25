@@ -207,6 +207,12 @@ span.review-title {
 
 
 @media only screen and (min-width: 768px){
+    .cart.cart-2 .cart-table .product-box img {
+        display: block;
+        width: 86px;
+        float: left;
+        margin-right: 20px;
+    }
     .block-usp-bottom .icon-GoDaddy {
         margin: 0 80px;
         width: 123px;
