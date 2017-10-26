@@ -160,6 +160,7 @@ span.review-title {
 .paymets-footer{text-align: center;}
 .paymets-footer img{width: 100%;}
 #ac-page .cards li {width: 51px !important;}
+
 @media screen and (max-width: 1281px) {
     .cart .couponandgifcart .discount .buttons-set button.button span{font-size: 9px;}
 }
@@ -287,6 +288,7 @@ span.review-title {
         justify-content: center;
         -webkit-justify-content: center;
     }
+    #my-price{display: none;}
 }
 
 @media (max-width: 767px){
@@ -357,6 +359,55 @@ span.review-title {
     }
     .checkout-onepage-index img.img-pay-amazon{padding: 0!important;}
     #ac-page #checkout-payment-method-load .cvv-what-is-this {left: 155px !important;top: 2px;}
+    .cart-table td a.product-image,.cart .cart-table .product-box > img {
+        width: 30% !important;
+        margin: 0 !important;
+        float: left !important;
+    }
+    .cart-table .item-options {
+        float: left !important;
+        max-width: 175px;
+    }
+    .cart-table .product-box:after {
+        content: "";
+        clear: both;
+        display: block;
+    }
+    .cart-table .product-box {
+        position: relative;
+    }
+    .cart-table .c_actions,.cart .cart-table .product-box .c_actions {
+        float: left;
+        display: block;
+        clear: none;
+        margin-bottom: 0;
+        position: absolute;
+        bottom: -20px;
+        left: 30%;
+    }
+    .cart-table .product-name,.cart .cart-table .product-box .product-name {
+        float: left !important;
+        width: 70% !important;
+        clear: none !important;
+        padding-left: 10px;
+        box-sizing: border-box;
+    }
+    .hide-mobi span.cart-price {
+        display: none;
+    }
+
+    #my-price {
+        position: absolute;
+        right: 15px;
+        padding-top: 5px;
+    }
+    .cart-table .item-msg {
+        padding-left: 10px;
+        margin-left: 30%;
+    }
+    table.cart-table td.information {
+        position: relative;
+    }
 }
 @media only screen and (max-width: 479px){
     #ac-page #checkout-payment-method-load .cvv-what-is-this {left: 150px !important;}
