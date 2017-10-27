@@ -367,6 +367,7 @@ span.review-title {
     .cart-table .item-options {
         float: left !important;
         max-width: 175px;
+        padding-left: 10px;
     }
     .cart-table .product-box:after {
         content: "";
