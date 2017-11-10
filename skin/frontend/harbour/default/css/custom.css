@@ -421,3 +421,8 @@ span.review-title {
     .checkout-onepage-index .payments.i-checkout{padding-top: 10px!important;}
     .checkout-onepage-index img.img-pay-amazon{padding: 0!important;}
 }
+
+/**Hides 'Required Fields' text below product price on Bundle products (11/9/2017; Jon)**/
+.product-options p.required {
+    display: none;
+}
