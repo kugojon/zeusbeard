@@ -1,11 +1,28 @@
 <?php
+$pid = $this->getProductId();
+$url = 'http://staticw2.yotpo.com/batch';
+$data = array('methods' => '[{"method":"bottomline","params":{"pid":"'.$pid.'","link":"","skip_average_score":false}}]',
+    'app_key' => $this->getAppKey());
 
+$options = array(
+    'http' => array(
+        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+        'method'  => 'POST',
+        'content' => http_build_query($data),
+    ),
+);
+$context  = stream_context_create($options);
+$result = file_get_contents($url, false, $context);
+// Parsing the response
+$response = json_decode($result, true);
+$bottom_line = $response[0]["result"];
 ?>
 <div class="yotpo bottomLine"
-    data-appkey="d8jBYdxpgfwdMFZOufoSX6M494KJXLmQa66UEkgO"
-    data-product-id="<?php echo $this->getProductId() ?>"
-    data-name="<?php echo $this->getProductName() ?>"
-    data-url="<?php echo $this->getProductUrl() ?>"   
-    data-image-url="<?php echo $this->getProductImageUrl() ?>"
-    data-description="<?php echo $this->getProductDescription() ?>">
+     data-appkey="<?php echo $this->getAppKey(); ?>"
+     data-product-id="<?php echo $this->getProductId() ?>"
+     data-name="<?php echo $this->getProductName() ?>"
+     data-url="<?php echo $this->getProductUrl() ?>"
+     data-image-url="<?php echo $this->getProductImageUrl() ?>"
+     data-description="<?php echo $this->getProductDescription() ?>">
+    <?php echo $bottom_line; ?>
 </div>
