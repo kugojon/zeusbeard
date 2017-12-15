@@ -22,7 +22,13 @@
 	<div class="page-title title-buttons">
 		<h1><?php echo $this->__('Shopping Cart') ?></h1>
 		<?php if(!$this->hasError()): ?>
-		
+			<ul class="checkout-types top-checkout">
+	            <?php foreach ($this->getMethods('top_methods') as $method): ?>
+	                <?php if ($methodHtml = $this->getMethodHtml($method)): ?>
+	                    <li><?php echo $methodHtml; ?></li>
+	                <?php endif; ?>
+	            <?php endforeach; ?>
+	        </ul>
 		<?php endif; ?>
 		<br class="clear" />
 	</div>
@@ -95,27 +101,53 @@
 			<p class="shipping-total"><span class="messchamthan">!</span> You're only <?php echo Mage::helper('core')->currency($total,true,false) ?> away from Free Shipping!</p>
 		</div>
 		<?php endif ?>
-		<div class="couponandgifcart grid_9">
-			<div class="giftcart">
-				<?php if(Mage::helper('checkout/cart')->getItemsCount()): ?>
-				<?php 
-					$block = Mage::app()->getLayout()->createBlock('aw_giftcard/frontend_checkout_cart_giftcard');
-                	echo $block->toHtml();
-				 ?>
-				<?php endif; ?>
-			</div>
-			<div class="counpon">
-				<?php if($this->getChildHtml('coupon')): ?>
-					<section class="coupon">
-						<?php echo $this->getChildHtml('coupon') ?>
-					</section>
-				<?php endif; ?>
-			</div>
-		</div>
+		
 		<div class="clear"></div>
 		<?php echo $this->getChildHtml('crosssell_big') ?>
 	</div>
-	<aside class="grid_3 omega">
+	<aside class="grid_3 omega payment_top">
+		<?php if (!$this->getIsVirtual()): ?>
+			<?php echo $this->getChildHtml('shipping'); ?>
+		<?php endif; ?>
+		<section class="totals">
+			<!-- <div class="totals"> -->
+				<header class="cart-blocks-title">
+					<h2><?php echo $this->__('Total') ?></h2>
+				</header>
+				<div class="totals-border">
+					<div class="totals-wrapper"><?php echo $this->getChildHtml('totals'); ?></div>
+					<?php if(!$this->hasError()): ?>
+					<ul class="checkout-types">
+					<?php foreach ($this->getMethods('methods') as $method): ?>
+						<?php if ($methodHtml = $this->getMethodHtml($method)): ?>
+						<li><?php echo $methodHtml; ?></li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+					</ul>
+					<?php endif; ?>
+				</div>
+			<!-- </div> -->
+		</section>
+		<div class="clear"></div>
+	</aside>
+	<div class="couponandgifcart grid_9">
+		<div class="giftcart">
+			<?php if(Mage::helper('checkout/cart')->getItemsCount()): ?>
+			<?php 
+				$block = Mage::app()->getLayout()->createBlock('aw_giftcard/frontend_checkout_cart_giftcard');
+            	echo $block->toHtml();
+			 ?>
+			<?php endif; ?>
+		</div>
+		<div class="counpon">
+			<?php if($this->getChildHtml('coupon')): ?>
+				<section class="coupon">
+					<?php echo $this->getChildHtml('coupon') ?>
+				</section>
+			<?php endif; ?>
+		</div>
+	</div>
+	<aside class="omega payment_bot">
 		<?php if (!$this->getIsVirtual()): ?>
 			<?php echo $this->getChildHtml('shipping'); ?>
 		<?php endif; ?>
@@ -143,3 +175,20 @@
 	<div class="clear"></div>
 <div class="clear"></div>
 </div>
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        var myVar = setInterval(function(){ 
+            if (jQuery('.top-checkout .amazon-pay-button img').length ){
+                jQuery('.top-checkout .amazon-pay-button img').clone().appendTo('.omega .amazon-pay-button');
+                jQuery('.omega .amazon-pay-button img').click(function(){
+                    jQuery('.top-checkout .amazon-pay-button img').click();
+                });
+                myStopFunction();
+            }
+        }, 1000);
+
+        function myStopFunction() {
+            clearInterval(myVar);
+        }
+    });
+</script>
