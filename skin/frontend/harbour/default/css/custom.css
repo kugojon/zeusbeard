@@ -463,8 +463,20 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
 .inter_text{text-align: center;}
 .cart .top-checkout{display: none;}
 .payment_bot{display: none;}
+@media only screen and (min-width: 1020px){
+    #giftcard_code{width: 100% !important;margin-bottom: 5px;padding: 5px 0;}
+    .cart div.aw_giftcard form#aw_giftcard-form button{
+        display: block;
+        margin: 0 !important;
+        float: left;
+        width: 48%;
+    }
+    .cart div.aw_giftcard form#aw_giftcard-form button:first-child{margin: 0 4% 0 0!important;}
+    body .cart.cart-2 .discount .input-box input{width: 100%;}
+    .couponandgifcart .counpon .discount-form .button{margin-right: 0;}
+}
 @media only screen and (min-width: 1020px) and (max-width: 1280px){
-    .cart.cart-2 .button_onepage span span{background-position: 0%; font-size: 15px;} 
+    .cart.cart-2 .button_onepage span span{background-position: 4%; font-size: 15px;} 
 }
 @media only screen and (min-width: 768px) and (max-width: 1019px){
     .cart .alpha{margin: 0 0 1.5em;width: 100%;}
