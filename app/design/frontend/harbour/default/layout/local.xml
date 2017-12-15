@@ -410,6 +410,7 @@
 		<action method="addItem"><type>skin_js</type><name helper="ThemeOptionsHarbour/fancySwitcherJS" /></action>
         <!--Cloud Zoom-->
         <action method="addItem"><type>skin_js</type><name>js/cloud-zoom.1.0.2.min.js</name><params/></action>
+        <action method="addJs"><script>varien/product_options.js</script></action>
 	</reference>
     <reference name="product.info">
 		<block type="core/text_list" name="product_col" as="product_col" translate="label">
@@ -625,6 +626,15 @@
 			<label>Payment Methods After Checkout Button</label>
 			<block type="checkout/onepage_link" name="checkout.cart.methods.onepage" template="checkout/onepage/link.phtml"/>
 			<block type="checkout/multishipping_link" name="checkout.cart.methods.multishipping" template="checkout/multishipping/link.phtml"/>
+			<block type="paypal/express_shortcut" name="checkout.cart.methods.paypal_express.bottom" after="-" template="paypal/express/shortcut.phtml">
+				<action method="setIsQuoteAllowed"><value>1</value></action>
+			</block>		
+			<block type="amazon_payments/button" after="-" name="AmazonPayButtonMethod" template="amazon_payments/button.phtml"/>
+			<block type="globalshopex/internationallogic" name="globalshopex.internationallogic" after="-" template="globalshopex/switchtypecart.phtml">
+                <block type="globalshopex/internationallogic" name="formiframe"  template="globalshopex/formiframe.phtml" />
+                <block type="globalshopex/internationallogic" name="buttoniframe"  template="globalshopex/buttoniframe.phtml" />
+                <block type="globalshopex/internationallogic" name="formcartocart"  template="globalshopex/formcarttocart.phtml" />
+            </block>
 		</block>
 		<block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="checkout/cart/coupon.phtml"/>
 		<block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
@@ -632,39 +642,24 @@
 		<block type="checkout/cart_totals" name="checkout.cart.totals" as="totals" template="checkout/cart/totals.phtml"/>
 		<block type="checkout/cart_crosssell" name="checkout.cart.crosssell.big" as="crosssell_big" template="checkout/cart/crosssell_big.phtml"/>
 		
-		<checkout_cart_index>
-    <remove name="checkout.cart.shipping" />
-</checkout_cart_index>
+
 <!-- <checkout_cart_index>
     <remove name="checkout.cart.coupon" />
 </checkout_cart_index> -->
 
 		<reference name="checkout.cart.top_methods">
-			<block type="paypal/express_shortcut" name="checkout.cart.methods.paypal_express.top" before="-" template="paypal/express/shortcut.phtml">
+			<block type="paypal/express_shortcut" name="checkout.cart.methods.paypal_express.bottom" after="-" template="paypal/express/shortcut.phtml">
 				<action method="setIsQuoteAllowed"><value>1</value></action>
-			</block>
+			</block>		
+			<block type="amazon_payments/button" after="-" name="AmazonPayButtonMethod" template="amazon_payments/button.phtml"/>
+			<block type="globalshopex/internationallogic" name="globalshopex.internationallogic" after="-" template="globalshopex/switchtypecart.phtml">
+                <block type="globalshopex/internationallogic" name="formiframe"  template="globalshopex/formiframe.phtml" />
+                <block type="globalshopex/internationallogic" name="buttoniframe"  template="globalshopex/buttoniframe.phtml" />
+                <block type="globalshopex/internationallogic" name="formcartocart"  template="globalshopex/formcarttocart.phtml" />
+            </block>
 		</reference>
-		<reference name="checkout.cart.methods">
-
-			<block type="paypal/express_shortcut" name="checkout.cart.methods.paypal_express.bottom" before="-" template="paypal/express/shortcut.phtml">
-				<action method="setIsQuoteAllowed"><value>1</value></action>
-			</block>
-			
-			<block type="amazon_payments/button" before="-" name="AmazonPayButtonMethod" template="amazon_payments/button.phtml"/>
-
-		</reference>
+		<remove name="checkout.cart.shipping" />
     </reference>
-<reference name="content">
-            <reference name="checkout.cart">
-                <reference name="checkout.cart.methods">  
-                    <block type="globalshopex/internationallogic" name="globalshopex.internationallogic" template="globalshopex/switchtypecart.phtml">
-                        <block type="globalshopex/internationallogic" name="formiframe"  template="globalshopex/formiframe.phtml" />
-                        <block type="globalshopex/internationallogic" name="buttoniframe"  template="globalshopex/buttoniframe.phtml" />
-                        <block type="globalshopex/internationallogic" name="formcartocart"  template="globalshopex/formcarttocart.phtml" />
-                    </block>
-                </reference>	
-            </reference>
-        </reference>
 </checkout_cart_index>
 
 <checkout_onepage_reorder>

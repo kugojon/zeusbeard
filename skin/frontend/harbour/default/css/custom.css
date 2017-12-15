@@ -3,6 +3,10 @@
 * Feel free to add your own css rules here.
 *
 */
+@font-face {
+    font-family: MyriadPro-Bold;
+    src: url('../fonts/Myriad-Pro-Bold_31631.ttf');
+}
 .product-options{border-bottom:none!important;margin-bottom:0!important;padding-bottom:0!important;}
 .product-options-bottom{border-bottom:none!important;padding-bottom:0!important;}
 .product-view .add-to-links-box{border-top:1px dotted #ddd;border-bottom:1px solid #ddd;padding-top: 10px;}
@@ -130,7 +134,7 @@ span.review-title {
 }
 .giftcart,.counpon { width: 48%;float: left;}
 .counpon {border-left: 1px solid #ddd;}
-.cart .discount .buttons-set button.button span span, .cart .shipping .buttons-set button.button span span{ background-color: #4cb1f1!important;}
+.cart .discount .buttons-set button.button span span, .cart .shipping .buttons-set button.button span span{/* background-color: #4cb1f1!important;*/}
 .cart.cart-2  .couponandgifcart .discount label{margin-bottom: 3px;}
 .cart .couponandgifcart .discount .buttons-set{ margin: 4px 0 0;}
 .cart div.aw_giftcard form#aw_giftcard-form button{width: 48%;margin: 0 3px 5px 0 !important}
@@ -143,7 +147,7 @@ span.review-title {
 .cart.cart-2 .couponandgifcart header {margin-bottom: 3px;}
 .couponandgifcart .counpon .discount-form{ width: 75%;}
 .couponandgifcart .counpon .discount-form .button{ width: 42%;margin-right: 5px;}
-.cart .couponandgifcart .discount .buttons-set button.button span{font-size: 11px;height: 28px;line-height: 30px!important;}
+.cart .couponandgifcart .discount .buttons-set button.button span{font-size: 11px;height: auto;line-height: 30px!important;}
 .shipping-mess {border: 1px solid #ddd;margin-bottom: 11px;padding: 13px 0 13px 26px;}
 .shipping-mess .messchamthan {color: red;font-size: 15px;}
 .shipping-total {font-size: 14px;}
@@ -175,10 +179,9 @@ span.review-title {
 }
 @media only screen and (max-width: 767px) {
     header#header.header-2 .header-text-banners.hiden-alow-768{display:none;}
-    .giftcart,.counpon { width: 100%;float: left;}
     .counpon {border-left: transparent;border-top: 1px solid #ddd;}
     .cart div.aw_giftcard form#aw_giftcard-form button{ width: 100%;margin-right: 5px;}
-    .couponandgifcart .counpon .discount-form .button{width: 42%;}
+    .couponandgifcart .counpon .discount-form .button{width: 42%; margin-right:0 }
     .col-amz {
         width: 100% !important;
         display: block !important;
@@ -425,4 +428,93 @@ span.review-title {
 /**Hides 'Required Fields' text below product price on Bundle products (11/9/2017; Jon)**/
 .product-options p.required {
     display: none;
+}
+
+
+/*cart page*/
+.cart.cart-2 .button_onepage > span{
+    height: 65px;
+    border: none;
+}
+.cart.cart-2 .button_onepage span span{    
+    font-family: "MyriadPro-Bold";
+    text-transform: uppercase;
+    font-size: 19px;
+    line-height: 67px;
+    background: url(../images/icon-clock.png);
+    background-position: 8%;
+    background-repeat: no-repeat;
+    height: auto;
+    background-color: #4CB1F1;
+    background-size: 18px;
+}
+.cart .omega{float: right;}
+body .cart .alpha button.button span, body .cart .couponandgifcart button.button span{
+    background-color: initial !important;
+    color: initial;
+    border: initial;
+}
+body .cart .alpha button.button span span, body .cart .couponandgifcart button.button span span{
+    background-color: white !important;
+    color: #000 !important;
+    border: 1px solid #000;
+}
+.cart.cart-2 aside section.totals header{background-color: #6f6f6f;}
+.inter_text{text-align: center;}
+.cart .top-checkout{display: none;}
+.payment_bot{display: none;}
+@media only screen and (min-width: 1020px) and (max-width: 1280px){
+    .cart.cart-2 .button_onepage span span{background-position: 0%; font-size: 15px;} 
+}
+@media only screen and (min-width: 768px) and (max-width: 1019px){
+    .cart .alpha{margin: 0 0 1.5em;width: 100%;}
+    .main-container .cart.cart-2 .omega{
+        width: 50%;
+        float: right;
+        margin: 0;
+    }
+    .cart .couponandgifcart{
+        width: calc( 50% - 30px );
+        width: -webkit-calc( 50% - 30px );
+        width: -moz-calc( 50% - 30px ); 
+        border: none; 
+        padding-right: 30px;
+    }
+    body .cart.cart-2 aside section{width: 100%;padding: 0;margin: 0}
+    .giftcart, .counpon{width: 100%;border: 1px solid #c3c3c3;margin-bottom: 20px;}
+    .cart.cart-2 aside.omega section.totals header{margin: 0 0 1.5em;}
+    .checkout-cart-index .aw_giftcard{width: 85%!important;}
+    .couponandgifcart .counpon .discount-form{width: 85%;}
+}
+@media only screen and (min-width: 978px) and (max-width: 1019px){
+    .cart.cart-2 .totals .checkout-types button.button{width: 54%;}
+}
+@media only screen and (min-width: 768px) and (max-width: 977px){
+    .cart.cart-2 .totals .checkout-types button.button{width: 71%;}
+}
+@media only screen and (max-width: 767px){
+    .cart.cart-2 .totals .checkout-types button.button{width: 73%;}
+    .cart .top-checkout{display: block;}
+    .cart.cart-2 .title-buttons .checkout-types li{float: none;}
+    .cart .omega{float: none;}
+    .cart .checkout-types button.button, .cart .paypal-logo img{width: 73%;}
+    .giftcart,.counpon {width: 100%;float: none;}
+    .couponandgifcart{float: none;}
+    .payment_top{display: none;}
+    .payment_bot{display: block;}
+    .cart.cart-2 .button_onepage span span{font-size: 17px;}
+    .searchautocomplete{width: 100%;}
+    .searchautocomplete .nav{
+        width: calc(100% - 39px);
+        width: -webkit-calc(100% - 39px);
+        width: -moz-calc(100% - 39px);
+    }
+    .checkout-cart-index .aw_giftcard, .checkout-cart-index #discount-coupon-form{width: 75%!important;padding: 10px 10px 10px 25px;}
+    #giftcard_code{width: 100% !important; box-sizing: border-box; height: 30px;}
+    .checkout-cart-index .coupon { padding:0;}
+    .checkout-cart-index #coupon_code {box-sizing: border-box; width: 100%; height: 30px; margin-bottom: 5px;}
+    .couponandgifcart .counpon .discount-form{ width: 100%;}
+}
+@media only screen and (max-width: 480px){
+    .cart.cart-2 .totals .checkout-types button.button, .cart .checkout-types button.button, .cart .paypal-logo img{width: 90%;}
 }
