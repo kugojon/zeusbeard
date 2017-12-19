@@ -280,11 +280,12 @@ Product.Config.prototype.reloadPrice = function(){
         }
         
         var title = null;
-        if (typeof priceConfig[productId].title !== 'undefined') {
-	        title = priceConfig[productId].title;
-        }
-        
-        History.pushState(null, title, priceConfig[productId].url);
+        if (typeof priceConfig[productId] !== 'undefined') {
+            if (typeof priceConfig[productId].title !== 'undefined') {
+                title = priceConfig[productId].title;
+            }
+            History.pushState(null, title, priceConfig[productId].url);
+        }        
     } else {
         optionsPrice.changePrice('config', {'price': price, 'oldPrice': oldPrice});
         optionsPrice.reload();

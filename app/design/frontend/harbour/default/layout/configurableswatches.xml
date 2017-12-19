@@ -58,7 +58,8 @@
 
     <PRODUCT_TYPE_configurable>
         <reference name="head">
-            <action method="addItem" ifconfig="configswatches/general/enabled"><type>skin_js</type><name>js/configurableswatches/product-media.js</name></action>
+            <!-- <action method="addItem" ifconfig="configswatches/general/enabled"><type>skin_js</type><name>js/configurableswatches/product-media.js</name></action> -->
+            <action method="addItem"><type>skin_js</type><name>js/configurableswatches/product-media.js</name></action>
             <action method="addItem"><type>skin_js</type><name>js/configurableswatches/swatches-product.js</name></action>
         </reference>
         <reference name="product.info.media">
