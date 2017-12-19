@@ -1,20 +1,11 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2012 Amasty (http://www.amasty.com)
-* @package Amasty_Xnotif
-*/  
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Xnotif
+ */  
 
-if(class_exists("Mage_ProductAlert_Model_Resource_Price_Customer_Collection"))
-{
-	class Amasty_Xnotif_Model_Resource_Price_Customer_Collection_Pure extends Mage_ProductAlert_Model_Resource_Price_Customer_Collection{}
-}
-else 
-{
-	class Amasty_Xnotif_Model_Resource_Price_Customer_Collection_Pure extends Mage_ProductAlert_Model_Mysql4_Price_Customer_Collection{}
-}
-
-class Amasty_Xnotif_Model_Resource_Price_Customer_Collection extends Amasty_Xnotif_Model_Resource_Price_Customer_Collection_Pure  
+class Amasty_Xnotif_Model_Resource_Price_Customer_Collection extends Mage_ProductAlert_Model_Mysql4_Price_Customer_Collection
 { 
     public function join($productId, $websiteId)
     {
@@ -25,7 +16,7 @@ class Amasty_Xnotif_Model_Resource_Price_Customer_Collection extends Amasty_Xnot
                             )
                          ->reset( Zend_Db_Select::WHERE )
                          ->where('alert.product_id=?', $productId)
-                         ->group('alert.email');
+                         ->group('alert.email')->group('e.email');
         if ($websiteId) {
             $this->getSelect()->where('alert.website_id=?', $websiteId);
         }

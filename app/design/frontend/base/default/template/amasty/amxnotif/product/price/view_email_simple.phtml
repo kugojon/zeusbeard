@@ -1,9 +1,9 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2012 Amasty (http://www.amasty.com)
-* @package Amasty_Xnotif
-*/   
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Xnotif
+ */   
 ?>
 <?php $_productId = Mage::registry('product')->getId()?>
  <script type="text/javascript">
@@ -37,7 +37,7 @@
         return true;
     }
 </script>
-<div class="amxnotif-block-price">
+<div class="amxnotif-block-price" class="clear: both;">
 	<label style="color: #2F2F2F;font-weight: bold; float:none;" ><?php echo $this->__('Sign up for price alert'); ?> </label><br/>
 	<input type="text" name="guest_email_price" id="amxnotif_guest_email_price-<?php echo $_productId;?>" onKeyPress="return checkItPrice(event, '<?php echo $this->escapeHtml(Mage::helper('amxnotif')->getEmailUrl('price'));?>', $('button-email-send-<?php echo $_productId;?>'))" class="input-text" size="30" />
 	<input type="hidden" name="product_id" value="<?php echo $_productId;?>" />

@@ -1,20 +1,11 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2013 Amasty (http://www.amasty.com)
-* @package Amasty_Xnotif
-*/
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Xnotif
+ */
 
-if(class_exists("Mage_Catalog_Model_Resource_Product_Collection"))
-{
-	class Amasty_Xnotif_Model_Mysql4_Product_Collection_Pure extends Mage_Catalog_Model_Resource_Product_Collection{}
-}
-else 
-{
-	class Amasty_Xnotif_Model_Mysql4_Product_Collection_Pure extends Mage_Catalog_Model_Resource_Eav_Mysql4_Product_Collection{}
-}
-
-class Amasty_Xnotif_Model_Mysql4_Product_Collection extends  Amasty_Xnotif_Model_Mysql4_Product_Collection_Pure
+class Amasty_Xnotif_Model_Mysql4_Product_Collection extends  Mage_Catalog_Model_Resource_Eav_Mysql4_Product_Collection
 {
     /**
      * Customer mode flag

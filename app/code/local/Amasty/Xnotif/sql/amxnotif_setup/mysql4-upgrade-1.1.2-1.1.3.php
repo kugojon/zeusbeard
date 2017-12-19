@@ -1,9 +1,9 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2012 Amasty (http://www.amasty.com)
-* @package Amasty_Xnotif
-*/  
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Xnotif
+ */  
 $this->startSetup();
 try{
     $tableName = Mage::getSingleton('core/resource')->getTableName('core/config_data');

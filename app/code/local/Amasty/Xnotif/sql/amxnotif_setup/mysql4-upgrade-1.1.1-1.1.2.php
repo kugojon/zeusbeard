@@ -1,4 +1,10 @@
 <?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Xnotif
+ */
+
 
 $installer = new Mage_Eav_Model_Entity_Setup($this->_resourceName);
 $installer->startSetup();

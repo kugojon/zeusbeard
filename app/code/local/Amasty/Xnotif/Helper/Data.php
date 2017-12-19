@@ -1,115 +1,149 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2012 Amasty (http://www.amasty.com)
-* @package Amasty_Xnotif
-*/   
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Xnotif
+ */   
 class Amasty_Xnotif_Helper_Data extends Mage_Core_Helper_Url
 {
-    
-    public function getStockAlert($product, $isLogged, $simple = 0)
+    const SALT = 'AmastyUnsubscribeSalt';
+
+    public function getStockAlertBlock($block)
     {
-        if (!$product->getId() || !Mage::registry('current_product')) // this is the extension's setting.
-        {
-            return '';
-        }
-        $tempCurrentProduct = Mage::registry('current_product');
-        
-        Mage::unregister('par_product_id');
-        Mage::unregister('product');
-        Mage::unregister('current_product');
-        
-        Mage::register('par_product_id', $tempCurrentProduct->getId());
-        Mage::register('current_product', $product);
-        Mage::register('product', $product);
-        $alertBlock = Mage::app()->getLayout()->createBlock('productalert/product_view', 'productalert.stock.'.$product->getId());
-        if ($alertBlock && !$product->getData('amxnotif_hide_alert') )
-        {
-            if( !$isLogged && !Mage::getStoreConfig('amxnotif/general/disable_guest')){
-                if($simple){
-                      $alertBlock->setTemplate('amasty/amxnotif/product/view_email_simple.phtml');
-                }else{
-                      $alertBlock->setTemplate('amasty/amxnotif/product/view_email.phtml');
-                }
-            }
-            else{
-                $alertBlock->setTemplate('amasty/amxnotif/product/view.phtml');
-                $alertBlock->prepareStockAlertData();
-                $alertBlock->setHtmlClass('alert-stock link-stock-alert');
-                $alertBlock->setSignupLabel($this->__('Sign up to get notified when this configuration is back in stock'));
-            }
-
-            $html = $alertBlock->toHtml();
-            Mage::unregister('product');
-            Mage::unregister('current_product');
-            Mage::register('current_product', $tempCurrentProduct);
-            Mage::register('product', $tempCurrentProduct);
-
-            return $html;
+        $product = $this->getProduct();
+        if (method_exists(Mage::helper('productalert'), 'isStockAlertAllowed')) {
+            $isStockAlertAllowed = Mage::helper('productalert')->isStockAlertAllowed();
+        } else {
+            $isStockAlertAllowed = Mage::getStoreConfigFlag('catalog/productalert/allow_stock');
         }
         
-        Mage::unregister('product');
-        Mage::unregister('current_product');
-        Mage::register('current_product', $tempCurrentProduct);
-        Mage::register('product', $tempCurrentProduct);
-            
-        return '';
+        /* checking product and module settings*/
+        if ($product->getData('amxnotif_hide_alert') == '1'
+            || !$this->enableForCustomerGroup('stock')
+            || (!$isStockAlertAllowed || !$product || $product->isAvailable())
+        ) {
+            $block->setTemplate('');
+            return $block;
+        }
+
+        if (!Mage::helper('customer')->isLoggedIn()) {
+            $block->setTemplate('amasty/amxnotif/product/view_email.phtml');
+        } else {
+            $block->setTemplate('amasty/amxnotif/product/view.phtml');
+        }
+
+        return $block;
     }
-    
-    public function getPriceAlert($product, $isLogged)
+
+    public function enableForCustomerGroup($type)
     {
-        if (!$product->getId() || !Mage::registry('current_product')) // this is the extension's setting.
-        {
-            return '';
+        $setting =  Mage::getStoreConfig('amxnotif/' . $type . '/allow_for');
+        $setting = explode(',', $setting);
+        if (in_array('-1', $setting)) {//for all groups
+            return true;
         }
+
+        if (in_array(Mage::getSingleton('customer/session')->getCustomerGroupId(), $setting)) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function getPriceAlertBlock($block)
+    {
+        $product = $this->getProduct();
+
+        if (!$this->enableForCustomerGroup('price')
+            || (!Mage::helper('productalert')->isPriceAlertAllowed() || false === $product->getCanShowPrice())
+        ) {
+            $block->setTemplate('');
+            return $block;
+        }
+
+        if (!Mage::helper('customer')->isLoggedIn()) {
+            $block->setTemplate('amasty/amxnotif/product/price/view_email.phtml');
+        }
+
+        return $block;
+    }
+
+    
+    public function getStockAlert($product, $parentProductId = null)
+    {
+        $html = '';
         $tempCurrentProduct = Mage::registry('current_product');
-        
-        Mage::unregister('par_product_id');
-        Mage::unregister('product');
         Mage::unregister('current_product');
-        
-        Mage::register('par_product_id', $tempCurrentProduct->getId());
         Mage::register('current_product', $product);
-        Mage::register('product', $product);
-        $alertBlock = Mage::app()->getLayout()->createBlock('productalert/product_view', 'productalert.price'.$product->getId());
-        if ($alertBlock)
-        {
-            if( !$isLogged && !Mage::getStoreConfig('amxnotif/general/disable_guest')){
-                $alertBlock->setTemplate('amasty/amxnotif/product/price/view_email_simple.phtml');
-                $html = $alertBlock->toHtml();
 
-                Mage::unregister('product');
-                Mage::unregister('current_product');
-                Mage::register('current_product', $tempCurrentProduct);
-                Mage::register('product', $tempCurrentProduct);
+        $alertBlock = Mage::app()->getLayout()->createBlock(
+            'productalert/product_view',
+            'productalert.stock.' . $product->getId()
+        );
+        if ($alertBlock) {
+            $alertBlock->setProduct($product);
+            $alertBlock->setParentProductId($parentProductId);
+            $alertBlock->setTemplate('amasty/amxnotif/product/view.phtml');
+            $alertBlock->prepareStockAlertData();
+            $alertBlock->setHtmlClass('alert-stock link-stock-alert');
+            $alertBlock->setSignupLabel($this->__('Sign up to get notified when this configuration is back in stock'));
 
-                return $html;
-            }
+            $alertBlock = $this->getStockAlertBlock($alertBlock);
+            $html = $alertBlock->toHtml();
         }
-        
-        Mage::unregister('product');
+
         Mage::unregister('current_product');
         Mage::register('current_product', $tempCurrentProduct);
-        Mage::register('product', $tempCurrentProduct);
             
-        return '';
+        return $html;
     }
     
     public function getProduct()
     {
-        return Mage::registry('product');
+        return Mage::registry('current_product');
     }
     
-    public function getSignupUrl($type){
-         return $this->_getUrl('xnotif/email/' . $type, array(
-                    'product_id'    => $this->getProduct()->getId(),  
-                    'parent_id'     => Mage::registry('par_product_id'),
-                     Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED => $this->getEncodedUrl()
-                ));
+    public function getSignupUrl($type, $productId = null)
+    {
+        if (!$productId) {
+            $productId = $this->getProduct()->getId();
+        }
+        $url = $this->_getUrl(
+            'xnotif/email/' . $type,
+            array(
+                'product_id'    => $productId,
+                'parent_id'     => Mage::registry('par_product_id'),
+                Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED => $this->getEncodedUrl()
+            )
+        );
+
+        return $url;
     }
 
-    public function getEmailUrl($type){
-      
+    public function getEmailUrl($type)
+    {
          return $this->_getUrl('xnotif/email/' . $type);
+    }
+
+    public function getStockAlertBlockCategory()
+    {
+        $block = Mage::app()->getLayout()->createBlock('amxnotif/category_subscribe');
+        $block = $this->configureTemplate($block);
+
+        return $block;
+    }
+
+    public function configureTemplate($block)
+    {
+        $template = 'amasty/amxnotif/product/view.phtml';
+        if (!Mage::helper('customer')->isLoggedIn()) {
+            if (Mage::getStoreConfig('amxnotif/stock/with_popup')) {
+                $block->setData('popup', true);
+            }
+            $template = 'amasty/amxnotif/product/view_email.phtml';
+        }
+        $block->setTemplate($template);
+
+        return $block;
     }
 }

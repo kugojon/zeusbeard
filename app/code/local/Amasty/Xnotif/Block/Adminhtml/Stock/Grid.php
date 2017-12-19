@@ -1,9 +1,9 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2012 Amasty (http://www.amasty.com)
-* @package Amasty_Xnotif
-*/
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Xnotif
+ */
 class Amasty_Xnotif_Block_Adminhtml_Stock_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
     public function __construct()
@@ -17,15 +17,19 @@ class Amasty_Xnotif_Block_Adminhtml_Stock_Grid extends Mage_Adminhtml_Block_Widg
     {
         $stockAlertTable = Mage::getSingleton('core/resource')->getTableName('productalert/stock');
         $collection = Mage::getModel('amxnotif/product')->getCollection();
-        $collection->addAttributeToSelect('name'); 
+        $collection->addAttributeToSelect('name')
+                    ->addAttributeToFilter(
+                        'status',
+                        array('eq' => Mage_Catalog_Model_Product_Status::STATUS_ENABLED)
+                    );
 
-        $select = $collection->getSelect();        
-        $select->joinRight(array('s'=> $stockAlertTable), 's.product_id = e.entity_id', array('cnt' => 'count(s.product_id)', 'last_d'=>'MAX(add_date)', 'first_d'=>'MIN(add_date)', 'product_id'))
-               ->where('status=0')
-               ->group(array('s.product_id'));
+        $select = $collection->getSelect();
+
+        $select->joinRight(array('s'=> $stockAlertTable), 's.product_id = e.entity_id', array('total_cnt' => 'count(s.product_id)', 'cnt' => 'COUNT( NULLIF(`s`.`status`, 1) )', 'last_d'=>'MAX(add_date)', 'first_d'=>'MIN(add_date)', 'product_id'))
+                ->group(array('s.product_id'));
 
         $select->columns(array('website_id' => new Zend_Db_Expr("SUBSTRING( GROUP_CONCAT( `s`.`website_id` ) , 1, 100 )")));
-    
+
         $columnId = $this->getParam($this->getVarNameSort(), $this->_defaultSort);
         $dir      = $this->getParam($this->getVarNameDir(), $this->_defaultDir);
         if (isset($this->_columns[$columnId]) && $this->_columns[$columnId]->getIndex()) {
@@ -65,12 +69,6 @@ class Amasty_Xnotif_Block_Adminhtml_Stock_Grid extends Mage_Adminhtml_Block_Widg
             'index'     => 'sku',
         ));
         
-        $this->addColumn('cnt', array(
-            'header'      => $hlp->__('Count'),
-            'index'       => 'cnt',
-            'filter'  => false,
-        ));
-        
         $this->addColumn('first_d', array(
             'header'    => $hlp->__('First Subscription'),
             'index'     => 'first_d',
@@ -90,7 +88,49 @@ class Amasty_Xnotif_Block_Adminhtml_Stock_Grid extends Mage_Adminhtml_Block_Widg
             'filter'  => false,
         ));
 
+        $this->addColumn('total_cnt', array(
+            'header'      => $hlp->__('Total Number of Subscriptions'),
+            'index'       => 'total_cnt',
+            'filter'  => false,
+            'align' => 'center',
+            'width'     => '150px'
+        ));
+
+        $this->addColumn('cnt', array(
+            'header'      => $hlp->__('Customers Awaiting Notification'),
+            'index'       => 'cnt',
+            'filter'  => false,
+            'frame_callback' => array($this, 'addColors'),
+            'width'     => '150px'
+        ));
+
+
+        $this->addExportType('*/*/exportAlertsCsv', Mage::helper('customer')->__('CSV'));
+        $this->addExportType('*/*/exportAlertsXml', Mage::helper('customer')->__('Excel XML'));
         return parent::_prepareColumns();
+    }
+
+    public function addColors($value, $row, $column)
+    {
+        switch($value){
+            case 0: $color = "green";
+                break;
+            case 1: $color = "lightcoral";
+                break;
+            case 2: $color = "indianred";
+                break;
+            case 3: $color = "brown";
+                break;
+            case 4: $color = "firebrick";
+                break;
+            case 4: $color = "darkred";
+                break;
+            default: $color = "red";
+        }
+
+        return '<div style="width: 50px; margin: 0 auto; border-radius: 3px;text-align: center; background-color: ' . $color .'">' .
+                    $value .
+                '</div>';
     }
 
     public function getRowUrl($row)
