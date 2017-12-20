@@ -1,4 +1,11 @@
-<?xml version="1.0"?> 
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Xnotif
+ */
+--> 
 <!--
     Copyright (c) 2010 Amasty (http://www.amasty.com) 
 -->
@@ -8,12 +15,12 @@
                 <children>
                     <amxnotif_stock translate="title" module="amxnotif">
                         <title>Out of Stock Notifications</title>
-                        <action>amxnotif/adminhtml_stock</action>
+                        <action>adminhtml/amstock/index</action>
                         <sort_order>120</sort_order>
                     </amxnotif_stock>
                     <amxnotif_price translate="title" module="amxnotif">
                         <title>Price Notifications</title>
-                        <action>amxnotif/adminhtml_price</action>
+                        <action>adminhtml/amprice</action>
                         <sort_order>130</sort_order>
                     </amxnotif_price>
                 </children>
@@ -29,15 +36,15 @@
                     <children>
                         <report>
                             <children>
-                                <amxnotif translate="title" module="amxnotif">
+                                <amxnotif_stock translate="title" module="amxnotif">
                                     <title>Out of Stock Notifications</title>
-                                </amxnotif>
-                                <amxnotif translate="title" module="amxnotif">
+                                </amxnotif_stock>
+                                <amxnotif_price translate="title" module="amxnotif">
                                     <title>Price Notifications</title>
-                                </amxnotif>
+                                </amxnotif_price>
                             </children>
                         </report>
-			 <system>
+			             <system>
                            <children>
                             <config>
                                 <children>

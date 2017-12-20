@@ -1,9 +1,9 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2012 Amasty (http://www.amasty.com)
-* @package Amasty_Xnotif
-*/ 
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Xnotif
+ */ 
 class Amasty_Xnotif_Block_Adminhtml_Catalog_Product_Edit_Tab_Alerts_Price extends  Mage_Adminhtml_Block_Catalog_Product_Edit_Tab_Alerts_Price
 {
     protected function _prepareColumns()

@@ -1,18 +1,70 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2012 Amasty (http://www.amasty.com)
-* @package Amasty_Xnotif
-*/   
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Xnotif
+ */
 ?>
-<?php $_productId = Mage::registry('product')->getId()?>
-<div class="amxnotif-block" style="margin-left: 9px; margin-bottom: 5px;">
-	<label style="color: #2F2F2F;font-weight: bold; float:none;" ><?php echo $this->__('Subscribe to back in stock notification'); ?> </label><br/>
-	<input type="text" name="guest_email" id="amxnotif_guest_email-<?php echo $_productId;?>" onKeyPress="return checkIt(event, '<?php echo $this->escapeHtml(Mage::helper('amxnotif')->getEmailUrl('stock'));?>', $('button-email-send-<?php echo $_productId;?>'))" class="input-text" size="30" />
-	<input type="hidden" name="product_id" value="<?php echo $_productId;?>" />
-	<input type="hidden" name="type" value="email" />
-	<input type="hidden" name="parent_id" value="<?php echo Mage::registry('par_product_id')?>" />
-	<input type="hidden" name="<?php echo Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED ?>" value="<?php echo Mage::helper('amxnotif')->getEncodedUrl()?>" />
-	<button type="button" id="button-email-send-<?php echo $_productId;?>" class="button btn-cart amcart-ignore" onclick="send_alert_email('<?php echo $this->escapeHtml(Mage::helper('amxnotif')->getEmailUrl('stock'));?>', this)" title="<?php echo $this->__('Subscribe'); ?>"><span><span><?php echo $this->__('Subscribe'); ?></span></span> </button>
-</div>   
- 
+<?php
+if ($this->getType() == 'amxnotif/category_subscribe') {
+    $productId = $this->getData('product')->getId();
+    $category = true;
+} else {
+    $productId = Mage::registry('current_product')->getId();
+    $category = false;
+}
+$withPopup = $this->getData('popup');
+$subscribeUrl = $this->escapeHtml(Mage::helper('amxnotif')->getEmailUrl('stock'));
+?>
+
+<div class="amxnotif-block <?php if ($category) echo 'category'?>">
+    <label <?php if ($withPopup) echo 'class="amxnotif-block-label" onclick="showSubscribePopup(' . $productId . ')"' ?> >
+        <?php echo $this->__('Subscribe to back in stock notification'); ?>
+    </label>
+
+        <?php if ($withPopup): ?>
+            </div>
+            <div id="subcribe-<?php echo $productId ?>" class="subcribe-popup amxnotif-block" style="display: none">
+                <div class="subcribe-popup-content">
+                    <span class="close-subcribe-popup" onclick="closeSubscribePopup()">&times;</span>
+                    <div>
+                        <label>
+                            <?php echo $this->__('Subscribe to back in stock notification'); ?>
+                        </label>
+                    </div>
+        <?php endif; ?>
+
+        <input type="text" name="guest_email"
+               id="amxnotif_guest_email-<?php echo $productId; ?>"
+               onKeyPress="return checkIt(
+                       event,
+                       '<?php echo $subscribeUrl; ?>',
+                       $('button-email-send-<?php echo $productId; ?>')
+                       )"
+               class="input-text" size="30"/>
+        <input type="hidden" name="product_id" value="<?php echo $productId; ?>"/>
+        <input type="hidden" name="type" value="email"/>
+        <?php if ($parentId = $this->getParentProductId()): ?>
+            <input type="hidden" name="parent_id" value="<?php echo $parentId ?>"/>
+        <?php endif; ?>
+        <input type="hidden"
+               name="<?php echo Mage_Core_Controller_Front_Action::PARAM_NAME_URL_ENCODED ?>"
+               value="<?php echo Mage::helper('amxnotif')->getEncodedUrl() ?>"
+        />
+        <button type="button"
+                id="button-email-send-<?php echo $productId; ?>"
+                class="button btn-cart amcart-ignore"
+                onclick="send_alert_email('<?php echo $subscribeUrl; ?>', this)"
+                title="<?php echo $this->__('Subscribe'); ?>">
+            <span>
+                <span><?php echo $this->__('Subscribe'); ?></span>
+            </span>
+        </button>
+
+        <?php if ($withPopup): ?>
+            </div>
+        <?php endif; ?>
+
+</div>
+
+

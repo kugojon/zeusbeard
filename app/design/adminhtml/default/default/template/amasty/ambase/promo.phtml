@@ -6,7 +6,9 @@
  */
 ?>
 <?php
-    $notification = $this->getLatestNotification();
+/** @var Amasty_Base_Block_Adminhtml_Promo $this */
+
+$notification = $this->getLatestNotification();
     
     if ($notification) {
     

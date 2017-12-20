@@ -1,9 +1,9 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2010-2012 Amasty (http://www.amasty.com)
-* @package Amasty_Xnotif
-*/
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Xnotif
+ */
 ?>
 <?php $this->setPreconfiguredValue(); ?>
 <?php $_product = $this->getProduct(); ?>
@@ -57,7 +57,10 @@
            <?php 
                 if (!$_item->isSaleable()){
                         $isLogged = Mage::helper('customer')->isLoggedIn();
-                        echo Mage::helper('amxnotif')->getStockAlert(Mage::getModel('catalog/product')->load($_item->getId()), $isLogged,  1);
+                        echo Mage::helper('amxnotif')->getStockAlert(
+                            Mage::getModel('catalog/product')->load($_item->getId()),
+                            $this->getProduct()->getId()
+                        );
                 }
              ?>
                 <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
@@ -73,4 +76,47 @@
     <?php endif; ?>
     </tbody>
 </table>
-<script type="text/javascript">decorateTable('super-product-table')</script>
+<script type="text/javascript">
+    decorateTable('super-product-table');
+
+    //Out Of stock notification
+    function send_alert_email(url, button)
+    {
+        var f = document.createElement('form');
+        var productId = button.id.replace(/\D+/g,"");
+        var block = button.up('.amxnotif-block');
+        if($('amxnotif_guest_email-' + productId)){
+            $('amxnotif_guest_email-' + productId).addClassName("validate-email required-entry");
+        }
+        if(block) {
+            block.childElements().each(function (child) {
+                f.appendChild( Element.clone(child));
+            });
+        }
+
+        var validator = new Validation(block);
+        if (validator.validate()) {
+            f.action = url;
+            f.hide();
+            $$('body')[0].appendChild(f);
+            f.setAttribute("method", 'post');
+            f.id = 'am_product_addtocart_form';
+            f.submit();
+            button.remove();
+            return true;
+        }
+        if($('amxnotif_guest_email-' + productId)){
+            $('amxnotif_guest_email-' + productId).removeClassName("validate-email required-entry");
+        }
+        return false;
+    }
+
+    function checkIt(evt,url, button) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode == 13) {
+            return send_alert_email(url, button);
+        }
+        return true;
+    }
+</script>

@@ -4,11 +4,7 @@
 * @package Amasty_Stockstatus Amasty_Xnotif
 */
 
-currentProductId = 0;
-defaultProductId = 0;
-
 StockStatus = Class.create();
-
 StockStatus.prototype = 
 {
     options : null,
@@ -22,39 +18,48 @@ StockStatus.prototype =
             stStatus.onConfigure('', $$('select.super-attribute-select'));
         })
 		this.spanElement = $$('p.availability span:last-child')[0];
+
         this._rewritePrototypeFunction();
     },
-    
+/**
+ * show stock alert block in wrapper
+ */
     showStockAlert: function(code)
     {
-        var beforeNode = $('product-options-wrapper').childElements()[0];
+        var wrapper = $('product-options-wrapper');
+        var beforeNode = wrapper.childElements()[0];
         var span = document.createElement('span');
         span.id  = 'amstockstatus-stockalert'; 
         span.innerHTML = code;
-        $('product-options-wrapper').insertBefore(span, beforeNode);
+        wrapper.insertBefore(span, beforeNode);
+
         $$('.product-options p.required').each(function(required) {
                     required.style.position = 'relative';
                     required.style.top = '0px';
         }.bind(this));
     },
-    
-    hideStockAlert: function()
+    /**
+     * remove stock alert block
+     */
+    _hideStockAlert: function()
     {
     	if ($('amstockstatus-stockalert'))
     	{
     		$('amstockstatus-stockalert').remove();
     	}
     },
-    
+    /*
+    * configure statuses at product page
+    */
     onConfigure : function(key, settings, realKey)
     {
-	    this.hideStockAlert();
+	    this._hideStockAlert();
         this._removeStockStatus();
         if (null == this.configurableStatus && this.spanElement)
         {
             this.configurableStatus = this.spanElement.innerHTML;
         }
-
+        //get current selected key
         var selectedKey = "";
         for (var i = 0; i < settings.length; i++){
             if(parseInt(settings[i].value) > 0){
@@ -93,10 +98,18 @@ StockStatus.prototype =
                 if ('undefined' != typeof(this.options[keyCheck]) && this.options[keyCheck])
                 {
                     var status = this.options[keyCheck]['custom_status'];
-                    if (this.options[keyCheck] && status)
+                    if (status)
                     {
+                        status     = status.replace(/<(?:.|\n)*?>/gm, ''); // replace html tags
                         if (!strpos(settings[i].options[x].text, status))
                         {
+                            if('undefined' != typeof(Product.ConfigurableSwatches)){
+                                var text = settings[i].options[x].text;
+                                if(text.indexOf('(') > 0){
+                                    text = text.substring(0, text.indexOf('('));
+                                    settings[i].options[x].text = text;
+                                }
+                            }
                             settings[i].options[x].text = settings[i].options[x].text + ' (' + status + ')';
                         }
                     }
@@ -105,7 +118,9 @@ StockStatus.prototype =
         }
 
     },
-
+    /*
+    * reload default stock status after select option
+    */
     _reloadContent : function(key)
     {
         if ('undefined' != typeof(changeConfigurableStatus) && changeConfigurableStatus && this.spanElement)
@@ -114,12 +129,10 @@ StockStatus.prototype =
             {
                 if(this.options[key]['custom_status_icon_only'] == 1){
                     this.spanElement.innerHTML = this.options[key]['custom_status_icon'];
-                }
-                else{
+                } else{
                     this.spanElement.innerHTML = this.options[key]['custom_status_icon'] + this.options[key]['custom_status'];
                 }
-            }
-            else
+            } else
             {
                 this.spanElement.innerHTML = this.configurableStatus;
             }
@@ -134,28 +147,17 @@ StockStatus.prototype =
                 pricebox.appendChild(span);
             }.bind(this));
         }
-        if ('undefined' != typeof(this.options[key]) && this.options[key] && 0 == this.options[key]['is_in_stock'])
-        {
+        if ('undefined' != typeof(this.options[key]) && this.options[key] && 0 == this.options[key]['is_in_stock']) {
             $$('.add-to-cart').each(function(elem) {
                 elem.hide();
             });
-            if (this.options[key]['stockalert'])
-            {
+            if (this.options[key]['stockalert']) {
                 this.showStockAlert(this.options[key]['stockalert']);
             }
-        } else
-        {
+        } else {
             $$('.add-to-cart').each(function(elem) {
                 elem.show();
             });
-        }
-
-        if (this.options[key] && this.options[key]['product_id'])
-        {
-            currentProductId = this.options[key]['product_id'];
-        } else
-        {
-            currentProductId = 0;
         }
     },
 
@@ -167,7 +169,6 @@ StockStatus.prototype =
         $$('.add-to-cart').each(function(elem) {
             elem.show();
         });
-        currentProductId = 0;
     },
 
     _removeStockStatus : function()
@@ -177,32 +178,33 @@ StockStatus.prototype =
             $('amstockstatus-status').remove();
         }
     },
-
+    /*
+    * rewrite methods from /js/varien/configurable.js
+    */
     _rewritePrototypeFunction : function(){
+        /*Amasty Preorder*/
+        if(typeof PreorderNoteConfigurable != 'undefined') {
+            PreorderNoteConfigurable.prototype.enable = function(){
+                return;
+            }
+            PreorderNoteConfigurable.prototype.disable = function(){
+                return;
+            }
+        }
+
+        Product.Config.prototype.amOrig_configure = Product.Config.prototype.configure;
         Product.Config.prototype.configure = function(event){
-            var element = Event.element(event);
-            this.configureElement(element);
+            this.amOrig_configure(event);
 
             stStatus.onConfigure('', this.settings);
         }
 
         if(typeof AmConfigurableData == 'undefined') {
-
+            Product.Config.prototype.amOrig_configureElement = Product.Config.prototype.configureElement;
             Product.Config.prototype.configureElement = function (element) {
-                this.reloadOptionLabels(element);
-                if (element.value) {
-                    this.state[element.config.id] = element.value;
-                    if (element.nextSetting) {
-                        element.nextSetting.disabled = false;
-                        this.fillSelect(element.nextSetting);
-                        this.resetChildren(element.nextSetting);
-                    }
-                }
-                else {
-                    this.resetChildren(element);
-                }
-                this.reloadPrice();
+                this.amOrig_configureElement(element);
 
+                stStatus.onConfigure('', this.settings);
                 //Amasty code for Automatically select attributes that have one single value
                 if (('undefined' != typeof(amConfAutoSelectAttribute) && amConfAutoSelectAttribute) || ('undefined' != typeof(amStAutoSelectAttribute) && amStAutoSelectAttribute)) {
                     var nextSet = element.nextSetting;
@@ -211,16 +213,12 @@ StockStatus.prototype =
                         this.configureElement(nextSet);
                     }
                 }
-            }
 
+            }
+            Product.Config.prototype.amOrig_configureForValues = Product.Config.prototype.configureForValues;
             Product.Config.prototype.configureForValues = function () {
-                if (this.values) {
-                    this.settings.each(function (element) {
-                        var attributeId = element.attributeId;
-                        element.value = (typeof(this.values[attributeId]) == 'undefined') ? '' : this.values[attributeId];
-                        this.configureElement(element);
-                    }.bind(this));
-                }
+                this.amOrig_configureForValues();
+
                 //Amasty code for Automatically select attributes that have one single value
                 if (('undefined' != typeof(amConfAutoSelectAttribute) && amConfAutoSelectAttribute) || ('undefined' != typeof(amStAutoSelectAttribute) && amStAutoSelectAttribute)) {
                     var select = this.settings[0];
@@ -232,23 +230,21 @@ StockStatus.prototype =
             }
         }
         else {
+            Product.Config.prototype.amOrig_reloadOptionLabels = Product.Config.prototype.reloadOptionLabels;
             Product.Config.prototype.reloadOptionLabels = function (element) {
-                var selectedPrice;
-                if (element.options[element.selectedIndex].config && !this.config.stablePrices) {
-                    selectedPrice = parseFloat(element.options[element.selectedIndex].config.price)
-                }
-                else {
-                    selectedPrice = 0;
-                }
-                for (var i = 0; i < element.options.length; i++) {
-                    if (element.options[i].config) {
-                        element.options[i].text = this.getOptionLabel(element.options[i].config, element.options[i].config.price - selectedPrice);
-                    }
-                }
-
+                this.amOrig_reloadOptionLabels(element);
+                //add our function
                 stStatus.onConfigure('', this.settings);
             }
         }
+
+        if('undefined' != typeof(changeConfigurableStatus) && changeConfigurableStatus && 'undefined' != typeof(Product.ConfigurableSwatches)) {
+            Product.ConfigurableSwatches.prototype.setStockStatus = function (inStock) {
+                //disable magento changing stockstatus
+                return false;
+            }
+        }
+
     }
 };
 
@@ -325,42 +321,4 @@ function strpos (haystack, needle, offset)
 {
     var i = (haystack+'').indexOf(needle, (offset ? offset : 0));
     return i === -1 ? false : i;
-}
-
-Event.observe(window, 'load', function(){
-    defaultProductId = document.getElementsByName('product')[0].value;
-});
-
-//Out Of stock notification
-function send_alert_email(url, button)
-{
-    var f = $('product_addtocart_form');
-    var productId = button.id.replace(/\D+/g,"");
-    if($('amxnotif_guest_email-' + productId)){
-        $('amxnotif_guest_email-' + productId).addClassName("validate-email required-entry");
-    }
-    var validator = new Validation(f);
-    if (validator.validate()) {
-        f.action = url;
-        f.id = 'am_product_addtocart_form';
-        f.submit();
-        button.remove();
-        return true;
-    }
-    button.style.position = 'relative';
-    button.style.top = '-50px';
-    button.style.left = '180px';
-    if($('amxnotif_guest_email-' + productId)){
-        $('amxnotif_guest_email-' + productId).removeClassName("validate-email required-entry");
-    }
-    return false;
-}
-
-function checkIt(evt,url, button) {
-    evt = (evt) ? evt : window.event;
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if (charCode == 13) {
-           return send_alert_email(url, button);
-    }
-    return true;
 }

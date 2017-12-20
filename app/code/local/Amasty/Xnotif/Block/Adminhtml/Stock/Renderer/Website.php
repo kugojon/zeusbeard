@@ -1,9 +1,9 @@
 <?php
 /**
-* @author Amasty Team
-* @copyright Copyright (c) 2012 Amasty (http://www.amasty.com)
-* @package Amasty_Xnotif
-*/
+ * @author Amasty Team
+ * @copyright Copyright (c) 2017 Amasty (https://www.amasty.com)
+ * @package Amasty_Xnotif
+ */
 
 class  Amasty_Xnotif_Block_Adminhtml_Stock_Renderer_Website extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Text
 {
