@@ -1,0 +1,35 @@
+<?php
+if ($this->isEnabled()) {
+    $button_width = Mage::getStoreConfig("checkout/internationalcheckout/ic_button_width");
+    $button_height = Mage::getStoreConfig("checkout/internationalcheckout/ic_button_height");
+    $ic_button_image = trim(Mage::getStoreConfig("checkout/internationalcheckout/ic_button_image"));
+    $ic_button_image = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'Ic/images/'.$ic_button_image;
+
+    if($button_width == ''){$button_width = '200';}
+    if(stripos(Mage::getBaseUrl(), 'http')){
+        $url = Mage::getBaseUrl();
+    }else{
+        $url = str_replace('http', 'http', Mage::getBaseUrl());     
+    }
+    
+    
+?>
+<div class="checkout-types">    
+    <form name="icForm" id="icForm" method="post" action="<?php echo $url.'index.php/internationalcheckout';?>">
+            <button style="border:1px solid #ddd; width:<?php echo $button_width; ?>px; height:<?php echo  $button_height; ?>px;line-height: <?php echo  $button_height - 2; ?>px; background: url(<?php echo $ic_button_image; ?>) no-repeat 100% 100%;cursor: pointer;" title="<?php echo $this->__('International Checkout') ?>" class="<?php echo $this->buttonClassName(); ?>"  type="submit">
+                <!-- <span class="ic" style="cursor:pointer;">
+                    <span style="font:11px/31px Open Sans,sans-serif" >
+                        <?php //echo $this->buttonText(); ?>
+                    </span>
+                </span> -->
+            </button>   
+        <div class="text-below" style="width:<?php echo $button_width; ?>px;float:left;text-align: center;margin-bottom: 20px;">
+            <?php echo $this->textBelowButton(); ?>
+        </div>
+    </form>
+</div>
+
+<?php
+    } // isEnabled  
+?>
+

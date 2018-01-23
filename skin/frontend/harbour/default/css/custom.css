@@ -463,6 +463,96 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
 .inter_text{text-align: center;}
 .cart .top-checkout{display: none;}
 .payment_bot{display: none;}
+.block-usp-wrap {padding-top: 15px;}
+.cart.cart-2 aside section.block-colright {
+    background: transparent;
+    border: 1px solid #dddddd;
+    padding: 0px;
+    padding-bottom: 10px;
+}
+.cart.cart-2 aside section.block-colright h3 {
+    font-family: Open Sans, sans-serif;
+    font-size: 12px;
+    text-align: center;
+    line-height: 35px;
+    color: #aaaaaa;
+    background-color: #f5f5f5;
+}
+.needhelp-items {
+    display: flex;
+    display: -webkit-flex;
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+.item-phone p {
+    margin-left: 29px;
+}
+.needhelp-items p {
+    color: #000;
+    font-size: 14px;
+}
+.needhelp-items p strong {
+    font-size: 16px;
+    font-weight: 600;
+}
+.needhelp-items p {
+    margin-left: 24px;
+}
+.item-headset p {
+    margin-left: 10px;
+}
+.display-tablet {display: none;}
+.hide-tablet {display: block;}
+@media only screen and (min-width: 768px){
+    .block-usp-wrap .usp-content {
+        display: flex;
+        display: -webkit-flex;
+        padding: 25px 15px 25px 40px;
+        border: 1px solid #c5c5c5;
+        margin-right: 10px;
+    }
+    .block-usp-wrap .usp-content .usp-items {
+        width: 33.33%;
+        padding-left: 6px;
+    }
+    .usp-items img {
+        display: inline-block;
+        margin-right: 10px;
+    }
+    .usp-items p {
+        color: #000;
+        display: inline-block;
+        width: 70%;
+    }
+    .usp-items p strong {
+        font-weight: 700;
+        margin-bottom: 10px;
+        display: block;
+    }
+}
+
+@media only screen and (min-width: 1025px){
+    .usp-wrapper {
+        margin-top: 15px;
+    }
+    .block-usp-wrap .usp-content {
+        display: flex;
+        display: -webkit-flex;
+        padding: 25px 50px;
+        margin-right: 0px;
+    }
+    .block-usp-wrap .usp-content .usp-items {
+        width: 33.33%;
+        padding-left: 25px;
+    }
+    .usp-items img {
+        display: inline-block;
+        margin-right: 20px;
+    }
+
+}
+
 @media only screen and (min-width: 1020px){
     #giftcard_code{width: 100% !important;margin-bottom: 5px;padding: 5px 0;}
     .cart div.aw_giftcard form#aw_giftcard-form button{
@@ -474,6 +564,12 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
     .cart div.aw_giftcard form#aw_giftcard-form button:first-child{margin: 0 4% 0 0!important;}
     body .cart.cart-2 .discount .input-box input{width: 100%;}
     .couponandgifcart .counpon .discount-form .button{margin-right: 0;}
+}
+@media only screen and (min-width: 978px){
+    .cart.cart-2 aside section.payment-wrap .items-icon img {
+        display: block;
+        margin: 14px auto;
+    }
 }
 @media only screen and (min-width: 1020px) and (max-width: 1280px){
     .cart.cart-2 .button_onepage span span{background-position: 4%; font-size: 15px;} 
@@ -504,6 +600,39 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
 @media only screen and (min-width: 768px) and (max-width: 977px){
     .cart.cart-2 .totals .checkout-types button.button{width: 71%;}
 }
+@media only screen and (max-width: 1024px) and (min-width: 768px){
+    .cart.cart-2 aside section.block-colright {
+        width: 94%;
+    }
+    body .cart.cart-2 aside section {
+        margin-left: 10px;
+    }
+    .needhelp-tablet {
+        background: transparent;
+        border: 1px solid #c5c5c5;
+        padding: 0px;
+        margin-top: 10px;
+        margin-right: 0;
+        width: 100%;
+    }
+    .needhelp-tablet h3, .needhelp-wrap h3 {
+        font-family: Open Sans, sans-serif;
+        font-size: 18px;
+        text-align: left;
+        line-height: 35px;
+        color: #aaaaaa;
+        padding-left: 40px;
+        padding-top: 20px;
+        margin-bottom: 0;
+    }
+    .cart .grid_9.alpha.block-usp-wrap {
+        margin: 0 0 1.5em;
+        width: 100%;
+    }
+    .display-tablet {display: block;}
+    .hide-tablet {display: none;}
+    .needhelp-wrap {border: 1px solid #c5c5c5;}
+}
 @media only screen and (max-width: 767px){
     .cart.cart-2 .totals .checkout-types button.button{width: 73%;}
     .cart .top-checkout{display: block;}
@@ -512,8 +641,8 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
     .cart .checkout-types button.button, .cart .paypal-logo img{width: 73%;}
     .giftcart,.counpon {width: 100%;float: none;}
     .couponandgifcart{float: none;}
-    .payment_top{display: none;}
-    .payment_bot{display: block;}
+    /*.payment_top{display: none;}*/
+    .payment_bot{display: none;}
     .cart.cart-2 .button_onepage span span{font-size: 17px;}
     .searchautocomplete{width: 100%;}
     .searchautocomplete .nav{
@@ -526,7 +655,62 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
     .checkout-cart-index .coupon { padding:0;}
     .checkout-cart-index #coupon_code {box-sizing: border-box; width: 100%; height: 30px; margin-bottom: 5px;}
     .couponandgifcart .counpon .discount-form{ width: 100%;}
+    .alpha, .omega {
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .cart .couponandgifcart .block-usp-wrap {
+        border-top: 1px solid #ccc;
+    }
+    .checkout-cart-index .giftcart {position: relative;}
+    .checkout-cart-index .aw_giftcard .giftcard-item-button,.checkout-cart-index .counpon .coupon-item-button {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        font-size: 20px;
+    }
+    .checkout-cart-index .counpon .coupon {position: relative;}
+    .checkout-cart-index .cart .discount  {margin-bottom: 0px;}
+    .usp-items {
+        margin: 30px auto;
+        overflow: auto;
+        width: 250px;
+    }
+    .usp-items img {
+        float: left;
+        margin-right: 10px;
+    }
+    .usp-items p {
+        float: left;
+        width: 70%;
+        color: #000;
+    }
+    .usp-items p strong {
+        display: block;
+        font-weight: 700;
+    }
+    .payment-mobile {
+        border: 1px solid #c5c5c5;
+        padding-bottom: 10px;
+    }
+    .payment-mobile h3 {
+        font-family: Open Sans, sans-serif;
+        font-size: 14px;
+        text-align: center;
+        line-height: 35px;
+        color: #000;
+        background-color: #f5f5f5;
+        text-transform: uppercase;
+    }
+    .payment-mobile .items-icon img {
+        display: block;
+        margin: 20px auto;
+    }
 }
 @media only screen and (max-width: 480px){
     .cart.cart-2 .totals .checkout-types button.button, .cart .checkout-types button.button, .cart .paypal-logo img{width: 90%;}
+}
+.cart .international{border: 1px solid #ddd!important;}
+@media only screen and (max-width: 350px){
+    .cart #icForm .international{width: 100% !important;}
 }

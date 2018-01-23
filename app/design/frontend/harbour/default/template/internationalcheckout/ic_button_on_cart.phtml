@@ -1,0 +1,43 @@
+<?php
+if ($this->isEnabled()) {
+	$button_width = Mage::getStoreConfig("checkout/internationalcheckout/ic_button_width");
+	if($button_width == ''){$button_width = '200';}
+	if(stripos(Mage::getBaseUrl(), 'http')){
+		$url = Mage::getBaseUrl();
+	}else{
+		$url = str_replace('http', 'http', Mage::getBaseUrl());		
+	}
+	
+?>
+<br />
+<form name="icForm" id="icForm" method="post" action="<?php echo $url.'index.php/internationalcheckout';?>">
+	<?php if($this->buttonImagePath()!= ""): ?>
+	<button  title="<?php echo $this->__('International Checkout') ?>" class="international <?php echo $this->buttonClassName(); ?>" <?php echo $this->buttonImagePath(); ?> type="submit">
+    	<span style="cursor:pointer;">
+        	<span >
+				<?php echo $this->buttonText(); ?>
+				<?php //echo $this->__('International Checkout') ?>
+            </span>
+        </span>
+    </button>
+	<?php else:?>
+	<button  title="<?php echo $this->__('International Checkout') ?>" class="button btn-proceed-checkout btn-checkout btn-internationalcheckout" <?php echo $this->buttonClassName(); ?>" <?php echo $this->buttonImagePath(); ?> type="submit">
+    	<span style="cursor:pointer;">
+        	<span >
+				<?php echo $this->buttonText(); ?>
+				<?php //echo $this->__('International Checkout') ?>
+            </span>
+        </span>
+    </button>
+	<?php endif; ?>
+    <br />	
+    <div align="right" style="font-size:11px;float:right">
+    	<div style="width:<?php echo $button_width; ?>px;margin-bottom:10px;text-align:center">
+			<?php echo $this->textBelowButton(); ?>
+        </div>
+    </div>
+</form>
+<?php
+	} // isEnabled	
+?>
+
