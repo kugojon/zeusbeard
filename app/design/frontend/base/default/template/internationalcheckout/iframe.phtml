@@ -1,0 +1,223 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2011 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php $session = Mage::getSingleton('checkout/session');
+
+$cart_count = $this->helper('checkout/cart')->getSummaryCount();  //get total items in cart  - crinch, 17-july-14
+$cart_total = $this->helper('checkout/cart')->getQuote()->getGrandTotal(); //get total price  - crinch, 17-july-14
+
+/* Show message in the case of empty cart */
+if(!$session->getQuote()->getAllVisibleItems()){
+?>
+    <div class="page-title">
+        <h1><?php echo $this->__('Shopping Cart is Empty') ?></h1>
+    </div>
+    <div class="cart-empty">
+        <?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+        <p><?php echo $this->__('You have no items in your shopping cart.') ?></p>
+        <p><?php echo $this->__('Click <a href="%s">here</a> to continue shopping.', '/') ?></p>
+    </div>
+
+<?php }else{?>
+
+    <!-- Load ic iframe page if there are items in the cart -->
+    <iframe name="icIframe" id="icIframe" src="javascript:parent.getFrameHTML()" style="margin: 0;display:none; height:1150px; width: 100%;" align="middle" frameborder="0" scrolling="auto" >Your Browser Does Not Support Frames</iframe>
+
+	<div style=" width:100%;height:500px; text-align:center; " align="center" id="loading">Loading......</div>
+
+	<?php
+    if (Mage::getStoreConfig('checkout/internationalcheckout/ic_server') == 1) {
+        $this->IC_URL = "http://www.internationalcheckoutsolutions.com/sandbox/checkout/index.php";
+    }
+    ?>
+	<form name="icForm" id="icForm" method="post" action="<?php echo $this->IC_URL;?>"  target="icIframe">
+		<?php
+        $output = "";
+        $i = 1;
+        $cartTotal = '';
+        $itemPrice = '';
+		$shipping_thresold = '';
+        foreach ($session->getQuote()->getAllVisibleItems() as $item) {
+            
+            if(strstr($this->buildItemDescription($item), "Gift C")) {
+                $output .= "<input type=\"hidden\" name=\"GiftStatus\" class=\"GiftStatus\" value=\"1\"/>\n";
+                break;
+            }
+            
+            $output .= "<input type=\"hidden\" name=\"ItemDescription$i\" value=\"".str_replace('&quot;', '&acute;&acute;',$this->buildItemDescription($item))."\"/>\n";
+            $options = $this->getProductOptions($item);
+            if (count($options)) {
+                for ($c=0; $c<count($options); $c++) {
+                    if (is_array($options[$c]["value"])) {
+                        if (preg_match("/color/i", $options[$c]["label"])) {
+                            $output .= "<input type=\"hidden\" name=\"ItemColor$i\" value=\"".strip_tags(implode($valueSeperator,$options[$c]["value"]))."\"/>\n";
+                        }
+                        if(preg_match("/size/i", $options[$c]["label"]) ){
+                            $output .= "<input type=\"hidden\" name=\"ItemSize$i\" value=\"".strip_tags(implode($valueSeperator,$options[$c]["value"]))."\"/>\n";
+                        }
+                    }
+                    else {
+                        if(preg_match("/color/i", $options[$c]["label"])){
+                            $output .= "<input type=\"hidden\" name=\"ItemColor$i\" value=\"".strip_tags($options[$c]["value"])."\"/>\n";
+                        }else if(preg_match("/size/i", $options[$c]["label"]) ){
+                            $output .= "<input type=\"hidden\" name=\"ItemSize$i\" value=\"".strip_tags($options[$c]["value"])."\"/>\n";
+                        }
+                    }
+                }
+            }
+
+			$item_sku = $item->getSku();
+			$item_id = $item->getId();
+			$child_id = Mage::getModel('catalog/product')->getIdBySku($item_sku);		
+			$child_product = Mage::getModel('catalog/product')->loadByAttribute('sku', $item_sku);
+			$parentId = Mage::getResourceSingleton('catalog/product_type_configurable')->getParentIdsByChild($child_id);         //for configurable products		
+			$final_product_image = '';
+			if(isset($parentId[0]) && $parentId[0]!='' && $item->getImage()=='')
+			{			
+				$parent_product = Mage::getModel('catalog/product')->load($parentId[0]);
+				//$product_sku = $parent_product->getSku();
+				$product_sku = $item->getSku();
+				$parent_product_image = Mage::helper('catalog/image')->init($parent_product, 'thumbnail');
+				$final_product_image = $parent_product_image;
+
+				// Get Product Option for Configurable Product
+				$product = Mage::getModel('catalog/product')->setStoreId(Mage::app()->getStore()->getId())->load($parentId);
+				$attributes = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
+				$child = Mage::getModel('catalog/product')->setStoreId(Mage::app()->getStore()->getId())->load($child_id);
+				if(count($options) < 1 && count($attributes) > 1 ){
+					foreach ($attributes as $attribute){
+						//if you want the label of the option use the foreach below.
+						foreach ($attribute['values'] as $value){
+							$childValue = $child->getData($attribute['attribute_code']);
+							if ($value['value_index'] == $childValue){
+								if (is_array($value['store_label'])) {
+									if (preg_match("/color/i", $attribute['store_label'])) {
+										$output .= "<input type=\"hidden\" name=\"ItemColor$i\" value=\"".strip_tags(implode($valueSeperator,$value['store_label']))."\"/>\n";
+									}
+									if(preg_match("/size/i", $attribute['store_label']) ){
+										$output .= "<input type=\"hidden\" name=\"ItemSize$i\" value=\"".strip_tags(implode($valueSeperator,$value['store_label']))."\"/>\n";
+									}
+								}
+								else {
+									if(preg_match("/color/i", $attribute['store_label'])){
+										$output .= "<input type=\"hidden\" name=\"ItemColor$i\" value=\"".strip_tags($value['store_label'])."\"/>\n";
+									}else if(preg_match("/size/i", $attribute['store_label']) ){
+										$output .= "<input type=\"hidden\" name=\"ItemSize$i\" value=\"".strip_tags($value['store_label'])."\"/>\n";
+									}
+								}							
+							}
+						}
+					}
+				}
+			}else{
+				$product_id_by_sku = Mage::getModel('catalog/product')->getIdBySku($item->getSku());
+				$product_sku = $item->getSku();				
+				$product = Mage::getModel('catalog/product')->load($product_id_by_sku);
+				$final_product_image = Mage::helper('catalog/image')->init($product, 'thumbnail');
+			}		
+
+			$product = Mage::getModel('catalog/product')->load($child_id);
+			//$finalPriceExcludingTax = $this->helper('tax')->getPrice($product, $product->getFinalPrice());
+			$finalPriceExcludingTax = $item->getPrice();  //27-July-14
+			
+
+            $output .= "<input type=\"hidden\" name=\"ItemSKU$i\" value=\"".$product_sku."\"/>\n";
+            $output .= "<input type=\"hidden\" name=\"ItemQuantity$i\" value=\"".$item->getQty()."\"/>\n";
+            $output .= "<input type=\"hidden\" name=\"ItemPrice$i\" value=\"".$finalPriceExcludingTax."\"/>\n";
+            
+            $itemPrice = ($item->getPrice()*$item->getQty());
+            $cartTotal += $itemPrice;
+            
+            $imgWidth = trim(Mage::getStoreConfig('checkout/internationalcheckout/image_width'));
+            $imgHeight = trim(Mage::getStoreConfig('checkout/internationalcheckout/image_height'));
+            
+            if ($imgWidth == "" || $imgWidth <=0) {
+                $imgWidth = 75;
+            }
+            if ($imgHeight == "" || $imgHeight <=0) {
+                $imgHeight = 75;
+            }
+            $output .= "<input type=\"hidden\" name=\"ItemImage$i\" value=\"".$this->getProductThumbnail($item)->resize($imgWidth)."\"/>\n";
+            $output .= "<input type=\"hidden\" name=\"ImgHeight$i\" value=\"".$imgHeight."\"/>\n";
+            $output .= "<input type=\"hidden\" name=\"ImgWidth$i\" value=\"".$imgWidth."\"/>\n";
+            
+            $i++;
+        }
+        echo $output;
+		$shipping_threshold = Mage::getStoreConfig('checkout/internationalcheckout/shipping_threshold');
+		if($shipping_threshold && $shipping_threshold != 0 && ( $cart_total > $shipping_threshold)){
+			$shipping_price = 0;
+		}else{
+			$shipping_price = $this->shippingPrice();
+		}
+        ?>
+        
+        <input type="hidden" name="p" value="<?php echo $this->formatCompany(Mage::getStoreConfig('checkout/internationalcheckout/name_of_company'))?>" />
+        <input type="hidden" name="shipping_method" value="<?php echo trim(Mage::getStoreConfig("checkout/internationalcheckout/shipping_method"))?>" /> 
+        <input type="hidden" name="external_domesticshipping" value="<?php echo $shipping_price; ?>" />
+        <?php
+        $address = $session->getQuote()->getShippingAddress();
+        $coupon_code = $session->getQuote()->getCouponCode();
+        $coupon_discount = $address->getDiscountAmount();
+        if (($coupon_discount != 0) && $coupon_code ) {
+        ?>
+		<!--
+        - Un comment following two lines of code to provide support for coupon code to IC -
+        -->         
+		
+        <!--<input type="hidden" name="coupon_code" value="<?php echo $coupon_code ?>" />
+        <input type="hidden" name="coupon_discount" value="<?php echo $coupon_discount ?>" />
+		-->        
+        
+		<?php } ?>
+	</form>
+   
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+<script language="javascript">
+        if(jQuery(".GiftStatus") && jQuery(".GiftStatus").val() == '1' ){
+            alert('Gift Certificate is not available for international orders. Please remove Gift Certificate from shopping cart before proceeding with International Checkout.');
+            window.parent.location.href = 'checkout/cart/';  
+        }else{
+            jQuery(".main").css("width","1150px");
+            jQuery(".main").css("background","none");
+            jQuery(".col-main").css("background","none");
+            jQuery(".col-main").css("padding","0px");
+            jQuery(".main").css("padding","0px");
+    
+            document.getElementById('icIframe').src = "https://www.internationalcheckout.com/cart.php?ver="+Math.random();
+
+			document.getElementById('icForm').submit();
+            jQuery('#icIframe').ready(function(){
+				// Set a time interval to laod iframe, remove Ic Form and hide Loading text.	
+				 setTimeout(function() {
+					jQuery("#icIframe").css("display","block");
+					jQuery("#loading").css("display","none");
+				}, 5000);
+	
+			});
+        }
+</script> 
+<?php }?>

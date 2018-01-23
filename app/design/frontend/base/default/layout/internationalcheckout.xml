@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<layout version="0.0.1">
+
+   <checkout_cart_index> 
+       <reference name="content">
+            <reference name="checkout.cart">
+            	<reference name="checkout.cart.methods">  
+					<block type="internationalcheckout/international" name="internationalcheckout.international" template="internationalcheckout/ic_button_on_cart.phtml"/>
+				</reference>	
+            </reference>
+        </reference>
+	</checkout_cart_index>   
+
+	<!--Remove comments from below code if you want to show International Checkout button on One Page Checkout-->
+	<!--    
+	<checkout_onepage_index> 
+       <reference name="content">
+						<block type="internationalcheckout/international" name="internationalcheckout.onepage" template="internationalcheckout/ic_button_on_onepage.phtml"/>
+		</reference>
+	</checkout_onepage_index>   
+	-->
+	<!--Remove comments from below code if you want to show International Checkout button on Gomage One Page Checkout-->
+	<!--    
+	<gomage_checkout_onepage_index> 
+       <reference name="content">
+						<block type="internationalcheckout/international" name="internationalcheckout.onepage" template="internationalcheckout/ic_button_on_onepage.phtml"/>
+		</reference>
+	</gomage_checkout_onepage_index>   
+	-->
+
+	<internationalcheckout_index_index>
+		<reference name="root">
+			<action method="setTemplate"><template>page/1column.phtml</template></action>
+		</reference>
+		<reference name="content">
+			<block type="internationalcheckout/international" name="iframe" template="internationalcheckout/iframe.phtml"/>
+		</reference>
+	</internationalcheckout_index_index>
+   
+</layout>
