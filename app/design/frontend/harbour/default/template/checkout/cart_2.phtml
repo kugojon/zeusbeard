@@ -129,6 +129,18 @@
 			<!-- </div> -->
 		</section>
 		<div class="clear"></div>
+
+		<section class="block-colright payment-wrap">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('harbour-payment-block')->toHtml(); ?> 
+        </section>
+        
+        <div class="clear"></div>
+
+        <section class="block-colright needhelp-wrap hide-tablet">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('harbour-needhelp-block')->toHtml(); ?> 
+        </section>
+
+
 	</aside>
 	<div class="couponandgifcart grid_9">
 		<div class="giftcart">
@@ -146,7 +158,25 @@
 				</section>
 			<?php endif; ?>
 		</div>
+		<div class="clear"></div>
+		<section class="block-colright needhelp-wrap display-tablet">
+            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('harbour-needhelp-block')->toHtml(); ?> 
+        </section>
+
+		<div class="grid_9 alpha block-usp-wrap hide-tablet">
+        	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('harbour-usp-block')->toHtml(); ?>
+    	</div>
+
+    	
+
+
 	</div>
+
+	<div class="grid_9 alpha block-usp-wrap display-tablet">
+        	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('harbour-usp-block')->toHtml(); ?>
+    	</div>
+	
+
 	<aside class="omega payment_bot">
 		<?php if (!$this->getIsVirtual()): ?>
 			<?php echo $this->getChildHtml('shipping'); ?>
@@ -191,4 +221,76 @@
             clearInterval(myVar);
         }
     });
+</script>
+<script type="text/javascript">
+        jQuery(document).ready(function() {
+            var windowWidth = jQuery(window).width();
+            function setToogle() {
+            	jQuery('.giftcard-item-button').on('click', function() {
+	                if(jQuery('.discount.aw_giftcard').hasClass('isset_plus')){
+	                    jQuery('.giftcard-item-button #plus-2').css('display','none');
+	                    jQuery('.giftcard-item-button #minus-2').css('display','block');
+	                    jQuery('.discount.aw_giftcard').removeClass('isset_plus');
+	                }else {
+	                    jQuery('.giftcard-item-button #plus-2').css('display','block');
+	                    jQuery('.giftcard-item-button #minus-2').css('display','none');
+	                    jQuery('.discount.aw_giftcard').addClass('isset_plus');
+	                }
+	            });
+	            jQuery('.coupon-item-button').on('click', function() {
+	                if(jQuery('.coupon .discount').hasClass('isset_plus')){
+	                    jQuery('.coupon-item-button #plus-1').css('display','none');
+	                    jQuery('.coupon-item-button #minus-1').css('display','block');
+	                    jQuery('.coupon .discount').removeClass('isset_plus');
+	                }else {
+	                    jQuery('.coupon-item-button #plus-1').css('display','block');
+	                    jQuery('.coupon-item-button #minus-1').css('display','none');
+	                    jQuery('.coupon .discount').addClass('isset_plus');
+	                }
+	            });
+            }
+            if(windowWidth < 768) {
+                jQuery('.discount.aw_giftcard').addClass('isset_plus');
+                jQuery('.giftcard-item-button #minus-2').css('display','none');
+                jQuery('#aw_giftcard-form').css('display','none');
+                jQuery('.coupon .discount').addClass('isset_plus');
+                jQuery('.discount #minus-1').css('display','none');
+                jQuery('.discount .discount-form').css('display','none');
+            }else {
+            	jQuery('.giftcard-item-button #plus-2').css('display','none');
+                jQuery('.giftcard-item-button #minus-2').css('display','none');
+                jQuery('.coupon-item-button #plus-1').css('display','none');
+                jQuery('.coupon-item-button #minus-1').css('display','none');
+            }
+            setToogle();
+            jQuery('.giftcard-item-button').on('click', function() {
+            	jQuery('#aw_giftcard-form').slideToggle();
+            });
+            jQuery('.coupon-item-button').on('click', function() {
+            	jQuery('.discount .discount-form').slideToggle();
+            });
+			jQuery(window).resize(function() {
+				var windowWidth = jQuery(window).width();
+	            if(windowWidth > 767) {
+	            	jQuery('.giftcard-item-button #plus-2').css('display','none');
+                    jQuery('.giftcard-item-button #minus-2').css('display','none');
+                    jQuery('.coupon-item-button #plus-1').css('display','none');
+                    jQuery('.coupon-item-button #minus-1').css('display','none');
+                    jQuery('#aw_giftcard-form').css('display','block');
+                    jQuery('.discount .discount-form').css('display','block');
+	            	jQuery('.discount.aw_giftcard').removeClass('isset_plus');
+	            	jQuery('.coupon .discount').removeClass('isset_plus');
+	            }else {
+	            	setToogle();
+	            	jQuery('.discount.aw_giftcard').addClass('isset_plus');
+	            	jQuery('.giftcard-item-button #plus-2').css('display','block');
+	                jQuery('.giftcard-item-button #minus-2').css('display','none');
+	                jQuery('#aw_giftcard-form').css('display','none');
+	                jQuery('.coupon .discount').addClass('isset_plus');
+	                jQuery('.discount #plus-1').css('display','block');
+	                jQuery('.discount #minus-1').css('display','none');
+	                jQuery('.discount .discount-form').css('display','none');
+	            }
+	        });
+	    });
 </script>

@@ -630,11 +630,12 @@
 				<action method="setIsQuoteAllowed"><value>1</value></action>
 			</block>		
 			<block type="amazon_payments/button" after="-" name="AmazonPayButtonMethod" template="amazon_payments/button.phtml"/>
-			<block type="globalshopex/internationallogic" name="globalshopex.internationallogic" after="-" template="globalshopex/switchtypecart.phtml">
+			<!-- <block type="globalshopex/internationallogic" name="globalshopex.internationallogic" after="-" template="globalshopex/switchtypecart.phtml">
                 <block type="globalshopex/internationallogic" name="formiframe"  template="globalshopex/formiframe.phtml" />
                 <block type="globalshopex/internationallogic" name="buttoniframe"  template="globalshopex/buttoniframe.phtml" />
                 <block type="globalshopex/internationallogic" name="formcartocart"  template="globalshopex/formcarttocart.phtml" />
-            </block>
+            </block> -->
+            <block type="internationalcheckout/international" name="internationalcheckout.international" after='-' template="internationalcheckout/ic_button_on_cart.phtml"/>
 		</block>
 		<block type="checkout/cart_coupon" name="checkout.cart.coupon" as="coupon" template="checkout/cart/coupon.phtml"/>
 		<block type="checkout/cart_shipping" name="checkout.cart.shipping" as="shipping" template="checkout/cart/shipping.phtml"/>
@@ -652,11 +653,12 @@
 				<action method="setIsQuoteAllowed"><value>1</value></action>
 			</block>		
 			<block type="amazon_payments/button" after="-" name="AmazonPayButtonMethod" template="amazon_payments/button.phtml"/>
-			<block type="globalshopex/internationallogic" name="globalshopex.internationallogic" after="-" template="globalshopex/switchtypecart.phtml">
+			<!-- <block type="globalshopex/internationallogic" name="globalshopex.internationallogic" after="-" template="globalshopex/switchtypecart.phtml">
                 <block type="globalshopex/internationallogic" name="formiframe"  template="globalshopex/formiframe.phtml" />
                 <block type="globalshopex/internationallogic" name="buttoniframe"  template="globalshopex/buttoniframe.phtml" />
                 <block type="globalshopex/internationallogic" name="formcartocart"  template="globalshopex/formcarttocart.phtml" />
-            </block>
+            </block> -->
+            <block type="internationalcheckout/international" name="internationalcheckout.international" after='-' template="internationalcheckout/ic_button_on_cart.phtml"/>
 		</reference>
 		<remove name="checkout.cart.shipping" />
     </reference>

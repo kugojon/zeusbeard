@@ -1,0 +1,34 @@
+<?php
+if ($this->isEnabled()) {
+	$button_width = Mage::getStoreConfig("checkout/internationalcheckout/ic_button_width");
+	if($button_width == ''){$button_width = '200';}
+	if(stripos(Mage::getBaseUrl(), 'http')){
+		$url = Mage::getBaseUrl();
+	}else{
+		$url = str_replace('http', 'http', Mage::getBaseUrl());		
+	}
+	
+?>
+<div class="checkout-types" style="float:right;position:absolute;right:0px" >    
+	<form name="icForm" id="icForm" method="post" action="<?php echo $url.'index.php/internationalcheckout';?>">
+        <div align="right" style="font-size:11px;float:right">
+            <button style="width:<?php echo $button_width; ?>px; padding:0px;cursor:pointer;" title="<?php echo $this->__('International Checkout') ?>" class="<?php echo $this->buttonClassName(); ?>" <?php echo $this->buttonImagePath(); ?> type="submit">
+                <span class="ic" style="cursor:pointer;">
+                    <span style="font:11px/31px Open Sans,sans-serif" >
+                        <?php echo $this->buttonText(); ?>
+                    </span>
+                </span>
+            </button>	
+        </div>
+        <br /><br />
+        <div align="right" style="font-size:11px;float:right">
+            <div style="width:227px;margin-bottom:10px;text-align:center">
+                <?php echo $this->textBelowButton(); ?>
+            </div>
+        </div>
+	</form>
+</div>
+<?php
+	} // isEnabled	
+?>
+

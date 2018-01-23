@@ -41,14 +41,15 @@ $disable_postcode_autocomplete = Mage::getStoreConfig( 'awesomecheckout/options/
     </div>
     <div class="payments i-checkout">
         <div class="col-left">
-            <div class="checkout-types">
+            <!-- <div class="checkout-types">
 				<form name="gcForm" id="gcForm" method="post" action="<?php echo Mage::getBaseUrl().'GSXInternationalCheckout/GSX' ?>">
 			            <button style="border:1px solid #ddd; width:265px; height:40px;line-height: 38px; background: url(<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'internationalcheckout/FF-International-Checkout-Buttonm_3.jpg'; ?>) no-repeat 100% 100%;cursor: pointer;" title="International Checkout" class="" type="submit">
 			            </button>	
 			        <div class="text-below" style="width:265px;float:left;text-align: center;margin-bottom: 20px;">
 			            (For non-US orders)        </div>
 				</form>
-			</div>
+			</div> -->
+			<?php echo $this->getLayout()->createBlock('internationalcheckout/international')->setTemplate('internationalcheckout/button_onepage.phtml')->toHtml(); ?>
         </div>
 
     </div>
