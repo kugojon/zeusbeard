@@ -9,7 +9,6 @@ if ($this->isEnabled()) {
 	}
 	
 ?>
-<br />
 <form name="icForm" id="icForm" method="post" action="<?php echo $url.'index.php/internationalcheckout';?>">
 	<?php if($this->buttonImagePath()!= ""): ?>
 	<button  title="<?php echo $this->__('International Checkout') ?>" class="international <?php echo $this->buttonClassName(); ?>" <?php echo $this->buttonImagePath(); ?> type="submit">
