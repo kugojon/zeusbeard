@@ -128,12 +128,11 @@ span.review-title {
 }
 
 .couponandgifcart {
-    border: 1px solid #ddd;
     float: left;
     margin: 0;
 }
 .giftcart,.counpon { width: 48%;float: left;}
-.counpon {border-left: 1px solid #ddd;}
+.counpon {border-left: 1px solid #c5c5c5;}
 .cart .discount .buttons-set button.button span span, .cart .shipping .buttons-set button.button span span{/* background-color: #4cb1f1!important;*/}
 .cart.cart-2  .couponandgifcart .discount label{margin-bottom: 3px;}
 .cart .couponandgifcart .discount .buttons-set{ margin: 4px 0 0;}
@@ -466,10 +465,10 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
 .block-usp-wrap {padding-top: 15px;}
 .cart.cart-2 aside section.block-colright {
     background: transparent;
-    border: 1px solid #dddddd;
     padding: 0px;
     padding-bottom: 10px;
 }
+.harbour-payment{border: 1px solid #dddddd;}
 .cart.cart-2 aside section.block-colright h3 {
     font-family: Open Sans, sans-serif;
     font-size: 12px;
@@ -564,6 +563,8 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
     .cart div.aw_giftcard form#aw_giftcard-form button:first-child{margin: 0 4% 0 0!important;}
     body .cart.cart-2 .discount .input-box input{width: 100%;}
     .couponandgifcart .counpon .discount-form .button{margin-right: 0;}
+    .gc-coupon{margin: 10px 0;border: 1px solid #c5c5c5;}
+    .needhelp-wrap{margin-top: 20px;}
 }
 @media only screen and (min-width: 978px){
     .cart.cart-2 aside section.payment-wrap .items-icon img {
@@ -572,7 +573,8 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
     }
 }
 @media only screen and (min-width: 1020px) and (max-width: 1280px){
-    .cart.cart-2 .button_onepage span span{background-position: 4%; font-size: 15px;} 
+    .cart.cart-2 .button_onepage span span{background-position: 4%; font-size: 15px;}
+    .cart .international{background-size: 100% 100%;width: 100% !important;} 
 }
 @media only screen and (min-width: 768px) and (max-width: 1019px){
     .cart .alpha{margin: 0 0 1.5em;width: 100%;}
@@ -588,7 +590,6 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
         border: none; 
         padding-right: 30px;
     }
-    body .cart.cart-2 aside section{width: 100%;padding: 0;margin: 0}
     .giftcart, .counpon{width: 100%;border: 1px solid #c3c3c3;margin-bottom: 20px;}
     .cart.cart-2 aside.omega section.totals header{margin: 0 0 1.5em;}
     .checkout-cart-index .aw_giftcard{width: 85%!important;}
@@ -602,10 +603,14 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
 }
 @media only screen and (max-width: 1024px) and (min-width: 768px){
     .cart.cart-2 aside section.block-colright {
-        width: 94%;
+        width: 100%;
+        margin: 10px 0;
     }
     body .cart.cart-2 aside section {
         margin-left: 10px;
+    }
+    body .cart.cart-2 aside section.totals {
+        width: 100%;padding: 0;margin: 0;
     }
     .needhelp-tablet {
         background: transparent;

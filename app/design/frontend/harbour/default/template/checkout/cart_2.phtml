@@ -131,7 +131,9 @@
 		<div class="clear"></div>
 
 		<section class="block-colright payment-wrap">
-            <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('harbour-payment-block')->toHtml(); ?> 
+			<div class='harbour-payment'>
+            	<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('harbour-payment-block')->toHtml(); ?> 
+            </div>
         </section>
         
         <div class="clear"></div>
@@ -143,20 +145,22 @@
 
 	</aside>
 	<div class="couponandgifcart grid_9">
-		<div class="giftcart">
-			<?php if(Mage::helper('checkout/cart')->getItemsCount()): ?>
-			<?php 
-				$block = Mage::app()->getLayout()->createBlock('aw_giftcard/frontend_checkout_cart_giftcard');
-            	echo $block->toHtml();
-			 ?>
-			<?php endif; ?>
-		</div>
-		<div class="counpon">
-			<?php if($this->getChildHtml('coupon')): ?>
-				<section class="coupon">
-					<?php echo $this->getChildHtml('coupon') ?>
-				</section>
-			<?php endif; ?>
+		<div class='gc-coupon clearfix'>
+			<div class="giftcart">
+				<?php if(Mage::helper('checkout/cart')->getItemsCount()): ?>
+				<?php 
+					$block = Mage::app()->getLayout()->createBlock('aw_giftcard/frontend_checkout_cart_giftcard');
+	            	echo $block->toHtml();
+				 ?>
+				<?php endif; ?>
+			</div>
+			<div class="counpon">
+				<?php if($this->getChildHtml('coupon')): ?>
+					<section class="coupon">
+						<?php echo $this->getChildHtml('coupon') ?>
+					</section>
+				<?php endif; ?>
+			</div>
 		</div>
 		<div class="clear"></div>
 		<section class="block-colright needhelp-wrap display-tablet">
