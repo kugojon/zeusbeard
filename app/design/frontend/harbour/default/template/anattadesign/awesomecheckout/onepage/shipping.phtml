@@ -172,8 +172,25 @@ $disable_postcode_autocomplete = Mage::getStoreConfig( 'awesomecheckout/options/
 							<?php elseif ( $countryOptionsCount <= 20 ): ?>
 								<?php echo $this->getCountryHtmlSelect( 'shipping' ); ?>
 							<?php else: ?>
-								<input type="text" name="shipping[country_label]" id="shipping:country_label" value="<?php if ( $this->getAddress()->getCountry() ) echo Mage::getModel( 'directory/country' )->load( $this->getAddress()->getCountry() )->getName(); else echo Mage::getModel( 'directory/country' )->load( Mage::helper( 'core' )->getDefaultCountry() )->getName(); ?>" class="required input-text" />
+								<input type="text" name="shipping[country_label]" id="shipping:country_label" value="<?php if ( $this->getAddress()->getCountry() ) echo Mage::getModel( 'directory/country' )->load( $this->getAddress()->getCountry() )->getName(); else echo Mage::getModel( 'directory/country' )->load( Mage::helper( 'core' )->getDefaultCountry() )->getName(); ?>" class="required input-text input-country" />
 								<input type="hidden" name="shipping[country_id]" id="shipping:country_id" value="<?php if ( $this->getAddress()->getCountry() ) echo $this->getAddress()->getCountryId(); else echo Mage::helper( 'core' )->getDefaultCountry(); ?>" />
+								<div class='mess-country'><span>Shipping out of the USA? </span><a href='<?php echo Mage::getBaseUrl();?>internationalcheckout'>Click here to place an international order!</a></div>
+								<script type="text/javascript">
+									var country_array = ['United States','United States of America','USA','U.S.A.','US','U.S.','America'];
+									jQuery('.mess-country').hide();
+									jQuery(".input-country").focusout(function(){
+										jQuery('.mess-country').hide();
+										var input1 = jQuery(this).val();
+										jQuery.each(country_array, function(index, item) {
+										    if ( item.trim().toLowerCase() == input1.trim().toLowerCase() || input1 == ''){
+										    	jQuery('.mess-country').hide();
+										    	return false;
+										    }else{
+										    	jQuery('.mess-country').show();
+										    }
+										});
+									});
+								</script>
 							<?php endif; ?>
 						</div>
 					</li>
