@@ -195,6 +195,10 @@ span.review-title {
         border-right: none !important;
     }
     .catalog-category-view .hide-768{display: none;}
+    .display-tablet.block-usp-wrap{display: block;margin-top: 15px;border: 1px solid #ddd;padding: 0;}
+    .hide-tablet.block-usp-wrap{display: none;}
+    .couponandgifcart{border: none;}
+    .reward-mess{display: none;}
 }
 .grid_4.omega .form-list, .grid_4.omega .form-list p {
     padding-left: 0px !important;
