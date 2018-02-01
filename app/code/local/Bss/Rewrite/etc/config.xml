@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Bss_Rewrite>
+      <version>0.1.0</version>
+    </Bss_Rewrite>
+  </modules>
+  <global>
+    <helpers>
+      <bss_rewrite>
+        <class>Bss_Rewrite_Helper</class>
+      </bss_rewrite>
+    </helpers>
+  </global>
+</config> 
