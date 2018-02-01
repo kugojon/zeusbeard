@@ -723,3 +723,6 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
 @media only screen and (max-width: 350px){
     .cart #icForm .international{width: 100% !important;}
 }
+.mess-country{font-style: italic;}
+.mess-country a{color: #53a548;}
+.mess-country span{font-weight: bold;color: #938a8d;}

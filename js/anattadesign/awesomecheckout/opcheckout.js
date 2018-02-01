@@ -973,13 +973,13 @@ jQuery.extend(Checkout.prototype, {
 			return false;
 		},
 		change: function(event, ui) {
-			if (ui.item == null) {
-				jQuery(event.target).next().val('');
-				if (event.target.value != '' && checkout.isCountryAllowed(event.target.value) == false) {
-					checkout.handleError(Translator.translate('Country is not allowed. Please select one from the list.'));
-					event.target.value = '';
-				}
-			}
+			// if (ui.item == null) {
+			// 	jQuery(event.target).next().val('');
+			// 	if (event.target.value != '' && checkout.isCountryAllowed(event.target.value) == false) {
+			// 		checkout.handleError(Translator.translate('Country is not allowed. Please select one from the list.'));
+			// 		event.target.value = '';
+			// 	}
+			// }
 		},
 		autoFocus: true,
 		delay: 0
