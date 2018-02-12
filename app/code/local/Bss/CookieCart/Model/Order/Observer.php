@@ -82,8 +82,11 @@ class Bss_CookieCart_Model_Order_Observer
 			if($isProductInCart){
 		    	$data_serialize = '';
 				$cart = Mage::getModel('checkout/cart')->getQuote()->getAllVisibleItems();
-				$data = array();				
+				$data = array();
 				foreach ($cart as $item) {
+				    if($item->getPrice() == 0){
+				        continue;
+                    }
 				    $productId = $item->getProductId();
 				    $productQty = $item->getQty();
 				 	$product = Mage::getModel('catalog/product')->load($productId); 
@@ -106,7 +109,7 @@ class Bss_CookieCart_Model_Order_Observer
 					
 				    $data[] = $info_buyRequest;
 				}
-				$data_serialize = serialize($data);	
+				$data_serialize = serialize($data);
 				setcookie("cookiecart_" . $domain, $data_serialize, time() + (86400 * 60), "/");
 				
 	    	}
