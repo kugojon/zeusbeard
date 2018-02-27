@@ -242,8 +242,8 @@
 						<?php if ($_product->isSaleable() && $this->hasOptions()):?>
 							<?php echo $this->getChildChildHtml('container1', '', true, true) ?>
 						<?php endif;?>
-						
-						
+
+                        <?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('block_shipping_product')->toHtml();?>
 						<?php if ($_product->getShortDescription()):?>
 						   <div class="short-description">
 							   <div class="std"<?php if($richSnippets['status'] == 1): ?> itemprop="description"<?php endif; ?>><h2><?php echo $this->__('Details:') ?></h2><?php echo $_helper->productAttribute($_product, nl2br($_product->getShortDescription()), 'short_description') ?></div>
