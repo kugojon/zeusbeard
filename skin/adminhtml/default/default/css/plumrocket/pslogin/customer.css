@@ -1,0 +1,72 @@
+/**
+ * Plumrocket Inc.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the End-user License Agreement
+ * that is available through the world-wide-web at this URL:
+ * http://wiki.plumrocket.net/wiki/EULA
+ * If you are unable to obtain it through the world-wide-web, please
+ * send an email to support@plumrocket.com so we can send you a copy immediately.
+ *
+ * @package     Plumrocket_SocialLogin
+ * @copyright   Copyright (c) 2017 Plumrocket Inc. (http://www.plumrocket.com)
+ * @license     http://wiki.plumrocket.net/wiki/EULA  End-user License Agreement
+ */
+
+.custinfo.social {
+	background-color: #1c5fa9;
+	color: white;
+	text-align: center;
+	text-transform: uppercase;
+	font-size: 10px;
+	width:75px;
+    float: left;
+    margin-right: 8px;
+
+}
+/*.custinfo.facebook {background-color: #1c5fa9;}
+.custinfo.googleplus {background-color: #df4b38;}
+.custinfo.amazon {background-color: #ff8e2e;}
+.custinfo.live {background-color: #0cb3ee;}
+.custinfo.paypal {background-color: #195d82;}
+.custinfo.yahoo {background-color: #85228f;}
+.custinfo.social:before {
+	display: none;
+}*/
+.custinfo.social .user-photo {
+    background-image: url("../../../images/plumrocket/customerdashboard/facebook_test.png");
+    background-size: cover;
+    background-position: center;
+    width: 56px;
+    height: 56px;
+    vertical-align: middle;
+    float: none;
+    margin: 6px auto 0 auto;
+    border-radius: 50%;
+    display: block;
+}
+
+.custinfo.social .soc-li-icon {
+    background: none;
+    width: 100%;
+    height: 100%;
+}
+
+.custinfo.social a {
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 10px;
+}
+
+.custinfo.social {
+    -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+    transition: all 0.5s;
+}
+
+.custinfo.social:hover {
+    opacity: 0.7;
+}
