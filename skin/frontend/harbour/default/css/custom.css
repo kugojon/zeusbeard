@@ -163,7 +163,26 @@ span.review-title {
 .paymets-footer{text-align: center;}
 .paymets-footer img{width: 100%;}
 #ac-page .cards li {width: 51px !important;}
+.block-shiping-product{
+    border-bottom: 1px solid #9a9a9a;
+    border-top: 1px solid #9a9a9a;
+}
+.block-shiping-product .shipping-content {
+    display: flex;
+    display: -webkit-flex;
+    /*width: 50%;*/
+}
+.block-shiping-product .shipping-content img{
+    width: 50px;
+    height: 49px;
+}
 
+.block-shiping-product .shipping-content p {
+    margin-bottom: 0 !important;
+    padding: 5px 0 5px 10px;
+    color: #000;
+    font-weight: 700;
+}
 @media screen and (max-width: 1281px) {
     .cart .couponandgifcart .discount .buttons-set button.button span{font-size: 9px;}
 }
@@ -177,6 +196,9 @@ span.review-title {
     .form-list textarea, .form-list input.input-text.fix-input {width: 478px;}
 }
 @media only screen and (max-width: 767px) {
+    .block-shiping-product .shipping-content{
+        width: 100%;
+    }
     header#header.header-2 .header-text-banners.hiden-alow-768{display:none;}
     .counpon {border-left: transparent;border-top: 1px solid #ddd;}
     .cart div.aw_giftcard form#aw_giftcard-form button{ width: 100%;margin-right: 5px;}
@@ -214,6 +236,26 @@ span.review-title {
 
 
 @media only screen and (min-width: 768px){
+    .block-shiping-product .shipping-content {
+        display: flex;
+        display: -webkit-flex;
+    }
+    .block-shiping-product .shipping-content img{
+        width: 50px;
+        height: 49px;
+    }
+
+    .block-shiping-product .shipping-content p {
+        margin-bottom: 0 !important;
+        padding: 5px 0 5px 10px;
+        color: #000;
+        font-weight: 700;
+    }
+
+    .block-shiping-product {
+        padding-bottom: 10px;
+        padding-left: 10px;
+    }
     .cart.cart-2 .cart-table .product-box img {
         display: block;
         width: 86px;
@@ -604,6 +646,9 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
 }
 @media only screen and (min-width: 768px) and (max-width: 977px){
     .cart.cart-2 .totals .checkout-types button.button{width: 71%;}
+    body .product-view .add-to-links, body .product-options-bottom .add-to-links{float: left;}
+    .product-view .productpage_small .product-img-box, body .productpage_small .product-shop {float: none;}
+
 }
 @media only screen and (max-width: 1024px) and (min-width: 768px){
     .cart.cart-2 aside section.block-colright {
