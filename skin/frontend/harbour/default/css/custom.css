@@ -170,7 +170,7 @@ span.review-title {
 .block-shiping-product .shipping-content {
     display: flex;
     display: -webkit-flex;
-    width: 50%;
+    /*width: 50%;*/
 }
 .block-shiping-product .shipping-content img{
     width: 50px;
