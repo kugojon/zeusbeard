@@ -774,3 +774,28 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
 .mess-country{font-style: italic;}
 .mess-country a{color: #53a548;}
 .mess-country span{font-weight: bold;color: #938a8d;}
+
+/*Login Social module*/
+.account-login .pslogin-block {text-align: center;}
+.account-login .pslogin-block .pslogin-spacer{display: none}
+.account-login .pslogin-spacer {margin-top: 112px }
+.account-login .pslogin-spacer h2{text-align:left; margin-bottom: 15px;}
+.account-create h2 {
+    font-size: 1.5em;
+    line-height: 1.8em;
+    border-bottom: 1px solid #ccc;
+}
+.account-create .pslogin-spacer h2{text-align:left;}
+.account-create .pslogin-spacer h2.zeus-register{margin-top: 45px;}
+.pslogin-block.pslogin-register .pslogin-buttons {display: block; text-align: center;}
+#checkout-step-shipping .pslogin-login .pslogin-spacer, .paymets-footer p{font-size: 16px; margin-top: 0;}
+#checkout-step-shipping .pslogin-block.pslogin-login {margin-bottom: 0}
+#checkout-step-shipping .pslogin-block.pslogin-login .pslogin-buttons {text-align: center;}
+#ac-page .pslogin-buttons li {display: inline-block; width: auto !important;}
+
+@media only screen and (max-width: 1280px){
+    .account-login .pslogin-spacer {margin-top: 95px }
+}
+@media only screen and (max-width: 767px){
+    .account-login .pslogin-spacer {margin-top: 20px }
+}
