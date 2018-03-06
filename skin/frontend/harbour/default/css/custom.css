@@ -183,6 +183,9 @@ span.review-title {
     color: #000;
     font-weight: 700;
 }
+header#header {
+    z-index: 2000;
+}
 @media screen and (max-width: 1281px) {
     .cart .couponandgifcart .discount .buttons-set button.button span{font-size: 9px;}
 }
