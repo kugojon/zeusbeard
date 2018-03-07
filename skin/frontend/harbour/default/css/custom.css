@@ -799,3 +799,7 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
 @media only screen and (max-width: 767px){
     .account-login .pslogin-spacer {margin-top: 20px }
 }
+
+/*Product page*/
+.product-view .price-box p.price-as-configured {margin-bottom: 3em !important}
+.product-options-bottom .add-to-cart {margin-bottom: 3em !important}
