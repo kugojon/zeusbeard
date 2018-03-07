@@ -52,6 +52,19 @@ $storeCode1 = Mage::app()->getStore()->getCode();
                 ?>
                 </span></span></button>
             </div>
+            <?php if (Mage::helper('pslogin')->modulePositionEnabled('login') && Mage::helper('pslogin')->hasButtons()) : ?>
+                    <div class="pslogin-spacer pslogin-clearfix"> 
+                    <h2>Login with your social account</h2>
+                        <!-- <table>
+                            <tr>
+                                <td><div class="pslogin-border"></div></td>
+                                <td class="pslogin-bordertext w25"><?php echo $this->__('OR'); ?></td>
+                                <td><div class="pslogin-border"></div></td>
+                            </tr>
+                        </table> -->
+                    </div>
+                <?php echo $this->getChildHtml('pslogin_buttons'); ?>
+            <?php endif; ?>
         </div>
         <div class="grid_6 omega registered-users">
             <div class="content">
@@ -86,18 +99,6 @@ $storeCode1 = Mage::app()->getStore()->getCode();
                 <button type="submit" class="button" title="<?php echo $this->__('Login') ?>" name="send" id="send2"><span><span><?php echo $this->__('Login') ?></span></span></button>
                 <a href="<?php echo $this->getForgotPasswordUrl() ?>" class="f-left"><?php echo $this->__('Forgot Your Password?') ?></a>
             </div>
-            <?php if (Mage::helper('pslogin')->modulePositionEnabled('login') && Mage::helper('pslogin')->hasButtons()) : ?>
-                    <div class="pslogin-spacer pslogin-clearfix"> 
-                        <table>
-                            <tr>
-                                <td><div class="pslogin-border"></div></td>
-                                <td class="pslogin-bordertext w25"><?php echo $this->__('OR'); ?></td>
-                                <td><div class="pslogin-border"></div></td>
-                            </tr>
-                        </table>
-                    </div>
-                <?php echo $this->getChildHtml('pslogin_buttons'); ?>
-            <?php endif; ?>
         </div>
         <?php if (Mage::helper('checkout')->isContextCheckout()): ?>
             <input name="context" type="hidden" value="checkout" />
