@@ -467,7 +467,8 @@
 		<action method="setTemplate"><template>page/1column.phtml</template></action>
 	</reference>
 	<reference name="customer_form_login">
-		<action method="setTemplate"><template>persistent/customer/form/login.phtml</template></action>
+		<action ifconfig="pslogin/general/replace_templates" method="setTemplate"><template>pslogin/customer/form/login.phtml</template></action>
+        <block type="pslogin/buttons" name="pslogin.customer.form.login.buttons" as="pslogin_buttons" template="pslogin/customer/form/login/buttons.phtml" />
 	</reference>
 <reference name="content">
             <block type="customer/account_forgotpassword" name="forgotPassword" template="globalshopex/login.phtml" />
