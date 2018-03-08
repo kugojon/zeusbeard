@@ -118,7 +118,7 @@
 "The number of billing cycles for payment period.","The number of billing cycles for payment period."
 "The number of scheduled payments that can fail before the profile is automatically suspended.","The number of scheduled payments that can fail before the profile is automatically suspended."
 "The payment review action is unavailable.","The payment review action is unavailable."
-"The requested Payment Method is not available.","The requested Payment Method is not available."
+"The requested Payment Method is not available.","Please choose a payment method to continue your purchase!"
 "Title","Title"
 "Trial Billing Amount","Trial Billing Amount"
 "Trial Billing Frequency","Trial Billing Frequency"
