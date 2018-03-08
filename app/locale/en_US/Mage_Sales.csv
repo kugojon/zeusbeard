@@ -764,7 +764,7 @@
 "The profile has no changes.","The profile has no changes."
 "The profile state has been updated.","The profile state has been updated."
 "The quantity you want to add exceeds the total shipped quantity for some of selected Product(s)","The quantity you want to add exceeds the total shipped quantity for some of selected Product(s)"
-"The requested Payment Method is not available.","The requested Payment Method is not available."
+"The requested Payment Method is not available.","Please choose a payment method to continue your purchase!"
 "The shipping label has been created.","The shipping label has been created."
 "The transaction ""%s"" (%s) is already closed.","The transaction ""%s"" (%s) is already closed."
 "The transaction ""%s"" cannot be captured yet.","The transaction ""%s"" cannot be captured yet."
