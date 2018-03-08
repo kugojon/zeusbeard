@@ -44,7 +44,7 @@ $defaultValue = Mage::app()->getRequest()->getParam('payment[points_amount]');
 <?php foreach ($this->getMethods() as $_method): $_code = $_method->getCode() ?>
     <dt>
         <?php if (sizeof($this->getMethods()) > 1): ?>
-            <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if ($this->getSelectedMethodCode() == $_code): ?> checked="checked"<?php endif; ?> class="radio" />
+            <input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" title="<?php echo $this->htmlEscape($_method->getTitle()) ?>" onclick="payment.switchMethod('<?php echo $_code ?>')"<?php if ($this->getSelectedMethodCode() == $_code || $this->getSelectedMethodCode() == "" && $_code=="paypal_direct"): ?> checked="checked"<?php endif; ?> class="radio" />
         <?php else: ?>
             <?php $oneMethod = $_method->getCode();?>
             <span class="no-display"><input id="p_method_<?php echo $_code ?>" value="<?php echo $_code ?>" type="radio" name="payment[method]" checked="checked" class="radio" /></span>
@@ -56,6 +56,10 @@ $defaultValue = Mage::app()->getRequest()->getParam('payment[points_amount]');
             <?php echo $html; ?>
         </dd>
     <?php endif; ?>
+    <?php if($this->getSelectedMethodCode() == "" && $_code=="paypal_direct"){
+            $oneMethod = $_code;
+        } 
+    ?>
 <?php endforeach; ?>
 </dl>
 <?php echo $this->getChildChildHtml('additional'); ?>
