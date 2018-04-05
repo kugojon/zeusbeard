@@ -183,7 +183,7 @@ class Magestore_Affiliateplus_Block_Account_Banner extends Mage_Core_Block_Templ
     public function getImageUrl($params = array())
     {
         if (!Mage::getStoreConfig('affiliateplus/action/use_magento_link')) {
-            $url = $this->getJsUrl() . 'magestore/affiliateplus/banner.php?';
+            $url = Mage::getBaseUrl() . 'js/magestore/affiliateplus/banner.php?';
             $url .= http_build_query($params);
         } else {
             $url = $this->getUrl('affiliateplus/banner/image', $params);
