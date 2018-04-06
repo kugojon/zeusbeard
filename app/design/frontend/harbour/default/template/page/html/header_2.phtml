@@ -237,6 +237,14 @@
 	});
 
 	jQuery('.header .top-cart .block-title').click(function() {
-		jQuery("#nav-cover").toggleClass('active'); 
+		var checkClass = jQuery(this).hasClass('active');
+		if(checkClass){
+			jQuery("#nav-cover").addClass('active'); 	
+		}else{
+			jQuery("#nav-cover").removeClass('active');
+		}
+	});
+	jQuery(document).click(function() {
+	    jQuery("#nav-cover").removeClass('active'); 
 	});
 </script>
