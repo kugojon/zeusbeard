@@ -77,7 +77,12 @@ class Amasty_Cart_AjaxController extends Mage_Core_Controller_Front_Action
 
                     Mage::getSingleton('checkout/session')->setCartWasUpdated(true);
                     if (!$cart->getQuote()->getHasError()) {
-                        $responseText = $this->addToCartResponse($product, $cart, $params, 0);
+                        if(!empty($params['product_id'])) {
+                            $product_add = Mage::getModel('catalog/product')
+                                ->setStoreId(Mage::app()->getStore()->getId())
+                                ->load($params['product_id']);
+                        }
+                        $responseText = $this->addToCartResponse($product, $cart, $params, 0, $product_add);
                     } else {
                         $errors = $cart->getQuote()->getErrors();
                         foreach ($errors as $message) {
@@ -403,7 +408,7 @@ class Amasty_Cart_AjaxController extends Mage_Core_Controller_Front_Action
      * creating finale popup
      *
      */
-    protected function addToCartResponse(Mage_Catalog_Model_Product $product, $cart, $params, $text)
+    protected function addToCartResponse(Mage_Catalog_Model_Product $product, $cart, $params, $text, $product_add = false)
     {
         $summaryQty = Mage::getSingleton('checkout/cart')->getSummaryQty();
         $count = $this->getCountText($summaryQty);
@@ -427,9 +432,17 @@ class Amasty_Cart_AjaxController extends Mage_Core_Controller_Front_Action
             $this->saveSimpleProductToSession($product, $params);
 
             $result['related'] = $this->getRelatedBlockHtml($product);
-            $block = Mage::app()->getLayout()
-                ->createBlock('amcart/dialog', 'amcart.dialog')
-                ->setProduct($product);
+            $result['upsell'] = $this->getUpsellBlockHtml($product);
+            if($product_add) {
+                $block = Mage::app()->getLayout()
+                    ->createBlock('amcart/dialog', 'amcart.dialog')
+                    ->setProduct($product_add);
+            }else {
+                $block = Mage::app()->getLayout()
+                    ->createBlock('amcart/dialog', 'amcart.dialog')
+                    ->setProduct($product);
+            }
+
             $result['message'] = $block->toHtml();
         }
 
@@ -630,6 +643,20 @@ class Amasty_Cart_AjaxController extends Mage_Core_Controller_Front_Action
             $relatedBlock = Mage::app()->getLayout()
                 ->createBlock('amcart/catalog_product_list_related', 'product_list_related')
                 ->setTemplate('amasty/amcart/catalog/product/list/related.phtml');
+
+            $html = $relatedBlock->toHtml();
+        }
+
+        return $html;
+    }
+
+    protected function getUpsellBlockHtml($product)
+    {
+        $html = '';
+        if ($this->getAmcartHelper()->isUpsellBlockEnabled()) {
+            $relatedBlock = Mage::app()->getLayout()
+                ->createBlock('amcart/catalog_product_list_upsell', 'product_list_upsell')
+                ->setTemplate('amasty/amcart/catalog/product/list/upsell.phtml');
 
             $html = $relatedBlock->toHtml();
         }

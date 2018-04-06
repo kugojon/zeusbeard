@@ -61,6 +61,11 @@ class Amasty_Cart_Helper_Data extends Mage_Core_Helper_Abstract
         return Mage::getStoreConfig('amcart/selling/related');
     }
 
+    public function isUpsellBlockEnabled()
+    {
+        return Mage::getStoreConfig('amcart/selling/upsell');
+    }
+
     public function getConfigurableImage()
     {
         return Mage::getStoreConfig('amcart/configurable/image');

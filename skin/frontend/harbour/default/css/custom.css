@@ -803,3 +803,56 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
 /*Product page*/
 .product-view .price-box p.price-as-configured {margin-bottom: 3em !important}
 .product-options-bottom .add-to-cart {margin-bottom: 3em !important}
+
+/*Amasty Ajax Cart*/
+#messageBox input.qty, #confirmButtons .am-btn-left .timer {float: none;}
+#confirmButtons button.am-btn-right {background-color: #4CB1F1}
+.amcart-dialog-container > .amcart-title a {font-size: 20px; word-break: break-word;}
+.amcart-related-block .button.add-tocart,.amcart-upsell-block .button.add-tocart {background-color: #4CB1F1; color: #ffffff; box-shadow: 0 2px 0 #4CB1F1;}
+.amcart-related-block .block-content, #am-block-upsell .block-content {display: -webkit-flex; display: flex;}
+#am-block-upsell {margin-bottom: 40px;}
+#messageBox .block-upsell:after {display: block; content: ''; clear: both;}
+#messageBox .block-upsell p {padding: 5px 0 0 0; margin: 0;}
+#messageBox .block-upsell {padding: 0; margin: 22px auto; width: 400px;}
+.amcart-upsell-block .block-upsell .product {
+    display: -webkit-flex;
+    display: flex;
+    width: 50%;    height: inherit;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+#messageBox .block-upsell .price {font-size: 16px;}
+.am-upsell-title {margin: 40px; font-size: 15px; height: 1px; background: #cecccc; line-height: 0;}
+.am-upsell-title .am-title {padding: 0 20px;}
+div#confirmBox, .am-upsell-title > .am-title {background-color: #ffffff}
+#am-block-upsell {margin-bottom: 40px;}
+.amcart-upsell-block .block-upsell .product {
+    display: -webkit-flex;
+    display: flex;
+    width: 50%;
+    height: inherit;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+}
+#messageBox .block-upsell .price {font-size: 16px;}
+#messageBox .product.one-upsell {float: none; display: inline;}
+.amcart-upsell-block .button.add-tocart {width: 114px; height: 30px; text-transform: none; border-radius: 5px;}
+.amcart-upsell-block .block-content {display: -webkit-flex; display: flex;}
+.amcart-upsell-block .block-content .add-tocart {margin: 0 auto;}
+.amcart-upsell-block .block-content .product-image:hover,
+.amcart-upsell-block .block-content .product-image {
+    border: 0;
+    display: block;
+    float: none;
+    margin: 0 auto 1.123em;
+}
+@media (max-width: 566px) {
+    .amcart-upsell-block .product-image > img {width: 100%; height: auto;}
+    #confirmBox .amcart-upsell-block .product-name a {width: auto;}
+    .amcart-upsell-block .block-upsell .product {margin: 0;}
+    .amcart-upsell-block .block-content {padding: 0 5px;}
+} 
