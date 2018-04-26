@@ -124,7 +124,7 @@ document.observe("dom:loaded", function () {
         }
 
         $.confirm.hide = function () {
-            $('#confirmOverlay', window.parent.document).fadeOut(function () {
+            $('#confirmOverlay', window.parent.document).each(function () {
                 var hasPopupOptions = $('#confirmBox .super-attribute-select', window.parent.document).length;
                 $(this).remove();
                 if ($('.col-main', window.parent.document).length && hasPopupOptions) {
