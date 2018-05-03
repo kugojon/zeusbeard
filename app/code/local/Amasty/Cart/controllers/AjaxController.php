@@ -10,9 +10,9 @@ class Amasty_Cart_AjaxController extends Mage_Core_Controller_Front_Action
 
     public function indexAction()
     {
-        $this->isProductView = Mage::registry('current_product') ? true : false;
-        $responseText = '';
         $params = Mage::app()->getRequest()->getParams();
+        $this->isProductView = isset($params['IsProductView']) && $params['IsProductView'];
+        $responseText = '';
         $idProduct = $this->getProductId($params);
         /* Compatibility with Amasty Product Matrix*/
         list($configurableQty, $attributeId) = $this->getConfigurableMatrixQty($params);
@@ -154,7 +154,12 @@ class Amasty_Cart_AjaxController extends Mage_Core_Controller_Front_Action
                     optionsPrice = new Product.OptionsPrice(' . $block->getJsonConfig() . '); 
                     ' . $textScript . '
                     $("messageBox").addClassName("amcart-options"); 
-                 </script><form id="product_addtocart_form" enctype="multipart/form-data">';
+                 </script><form id="product_addtocart_form" enctype="multipart/form-data">'
+                .'<div class="amcart-title">'
+                .'<a href="' . $product->getProductUrl() . '" title="'.$product->getName() .'">'
+                . $product->getName()
+                . '</a>'
+                . '</div>';
 
         switch ($product->getTypeId()) {
             case Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE :

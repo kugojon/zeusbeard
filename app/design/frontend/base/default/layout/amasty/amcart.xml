@@ -20,7 +20,9 @@
             <action method="addItem" ifconfig="amgiftcard/general/active"><type>js</type><name>calendar/calendar.js</name></action>
             <action method="addItem" ifconfig="amgiftcard/general/active"><type>js</type><name>calendar/calendar-setup.js</name></action>
             <action method="addCss"  ifconfig="amgiftcard/general/active"><stylesheet>css/amasty/amgiftcard/product_view.css</stylesheet></action>
-            <block type="core/html_calendar" name="head.calendar" as="calendar" template="page/js/calendar.phtml"/>
+            <action method="append" ifconfig="amgiftcard/general/active">
+                <block>head.calendar</block>
+            </action>
         </reference>
     </amcart_category_handle>
 

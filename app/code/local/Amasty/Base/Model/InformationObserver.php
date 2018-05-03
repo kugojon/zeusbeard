@@ -81,7 +81,7 @@ class Amasty_Base_Model_InformationObserver
                 $html .=
                     '<br/><span class="upgrade-error">'
                     . $this->getBaseHelper()->__(
-                        'The update is available and recommended. See the '
+                        'Update is available and recommended. See the '
                         . '<a target="_blank" href="%s">Change Log</a>',
                         $this->_getChangeLogLink()
                     )
@@ -180,8 +180,8 @@ class Amasty_Base_Model_InformationObserver
         if ($conflicts) {
             $html = '<div class="amasty-conflicts">'
                 . $this->getBaseHelper()->__(
-                    'We have detected conflicts with the following modules: %s. <br/>'
-                    . 'To fix the conflicts please check the <a target="_blank" href="%s">guide</a>.',
+                    'There are conflicts with the 3rd party modules: %s. <br/>'
+                    . 'To fix the conflicts please follow the  <a target="_blank" href="%s">steps</a>.',
                     $conflicts,
                     $this->_getFixConflictGuide()
                 )
@@ -212,7 +212,7 @@ class Amasty_Base_Model_InformationObserver
         $html = '<div class="amasty-user-guide">'
             . $this->getBaseHelper()->__(
                 'Confused with configuration?'
-                . ' No worries, please check the <a target="_blank" href="%s">guide</a> covering all the settings</a>.',
+                . ' No worries, please consult the <a target="_blank" href="%s">user guide</a> to properly configure the extension.',
                 $this->_getUserGuideLink()
             )
             . '</div>';
@@ -222,8 +222,13 @@ class Amasty_Base_Model_InformationObserver
 
     protected function _getUserGuideLink()
     {
-        return $this->getBlock()->getUserGuideLink()
-            . $this->_getSeoparams() . 'userguide_' . $this->_getShortModuleName();
+        $link = $this->getBlock()->getUserGuideLink();
+        $seoLink = $this->_getSeoparams();
+        if (strpos($link, '?') !== false) {
+            $seoLink =str_replace('?', '&', $seoLink);
+        }
+
+        return $link . $seoLink . 'userguide_' . $this->_getShortModuleName();
     }
 
     /**
@@ -302,8 +307,8 @@ class Amasty_Base_Model_InformationObserver
         foreach ($this->getBlock()->getKnownConflictExtensions() as $moduleName) {
             if (Mage::helper('core')->isModuleEnabled($moduleName)) {
                 $messages[] = $this->getBaseHelper()->__(
-                    'Our extension provides the %s functionality. '
-                    . 'To avoid the conflicts we recommend turning off the 3rd party mod via "%s" file.',
+                    'Our extension is not compatible with the %s. '
+                    . 'To avoid the conflicts we strongly recommend turning off the 3rd party mod via "%s" file.',
                     'app/etc/modules/' . $moduleName . '.xml',
                     $moduleName
                 );

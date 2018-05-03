@@ -3,10 +3,7 @@ document.observe("dom:loaded", function () {
 
     (function ($) {
         $.confirm = function (params) {
-            if ($('#confirmOverlay', window.parent.document).length > 0) {
-                // A confirm is already shown on the page:
-                return false;
-            }
+            $('#confirmOverlay', window.parent.document).remove();
 
             var buttonHTML = '',
                 value;
@@ -124,7 +121,7 @@ document.observe("dom:loaded", function () {
         }
 
         $.confirm.hide = function () {
-            $('#confirmOverlay', window.parent.document).each(function () {
+            $('#confirmOverlay', window.parent.document).fadeOut(function () {
                 var hasPopupOptions = $('#confirmBox .super-attribute-select', window.parent.document).length;
                 $(this).remove();
                 if ($('.col-main', window.parent.document).length && hasPopupOptions) {
