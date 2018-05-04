@@ -62,7 +62,8 @@ class Amasty_Cart_Block_Dialog extends Mage_Core_Block_Template
         $helper = $this->helper('catalog/image');
 
         if ($this->getAmcartHelper()->getConfigurableImage() && $simpleProduct) {
-            $src = $helper->init($simpleProduct, 'image')
+            $image = $simpleProduct->getResource()->getAttributeRawValue($simpleProduct->getId(),'image');
+            $src = $helper->init($simpleProduct, 'image', $image)
                     ->resize(self::IMAGE_WIDTH, self::IMAGE_HEIGHT);
         } else {
             $src = $helper->init($this->getProduct(), 'image')

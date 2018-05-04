@@ -9,7 +9,7 @@
 <config>
     <modules>
         <Amasty_Cart>
-            <version>2.4.0</version>
+            <version>2.4.5</version>
         </Amasty_Cart>
     </modules>
 
@@ -165,7 +165,7 @@
             </reloading>
             <visual>
                 <background_color>FFFFFF</background_color>
-                <header_color>FF9416</header_color>
+                <header_color>F58C12</header_color>
                 <text>000000</text>
                 <button_text>FFFFFF</button_text>
                 <left_button>BBBBBB</left_button>
