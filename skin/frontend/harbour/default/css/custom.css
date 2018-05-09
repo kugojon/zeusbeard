@@ -183,6 +183,8 @@ span.review-title {
     color: #000;
     font-weight: 700;
 }
+
+.header-phone span{color: yellow;}
 header#header {
     z-index: 2000;
 }
@@ -197,6 +199,8 @@ header#header {
 }
 @media only screen and (max-width: 977px) and (min-width: 768px) {
     .form-list textarea, .form-list input.input-text.fix-input {width: 478px;}
+    header#header.header-2 h2.logo{width: 20%;margin-right: 0;}
+    .header-text-banner{width: 80%;}
 }
 @media only screen and (max-width: 767px) {
     .block-shiping-product .shipping-content{
@@ -224,6 +228,18 @@ header#header {
     .hide-tablet.block-usp-wrap{display: none;}
     .couponandgifcart{border: none;}
     .reward-mess{display: none;}
+    .header-top{display: none;}
+    a.logo{display: none;}
+    header#header h2.logo{width: 105px;left: 40px;padding: 0;}
+    header.header .top-cart{float: none;right: 0;position: absolute;}
+    header.header .menu-button.mobile{position: absolute;top: 0;left: 0;width: 10%;color: black!important;background-color: initial;}
+    .menu-button i{font-size: 2.16em;}
+    .menu-text{display: none;}
+    header.header .menu-line{position: absolute;top: 0;}
+    .header .top-block{display: none;}
+    .login-mobile{position: absolute;top: 10px;right: 55px;}
+    .phone-mobile{position: absolute;top: 11px;right: 97px;}
+    header.header .top-cart .block-title .title-cart{font-size: 30px;padding: 6px 0 0;}
 }
 .grid_4.omega .form-list, .grid_4.omega .form-list p {
     padding-left: 0px !important;
@@ -340,6 +356,9 @@ header#header {
         -webkit-justify-content: center;
     }
     #my-price{display: none;}
+    a.logo-mobile{display: none;}
+    .login-mobile{display: none;}
+    .phone-mobile{display: none;}
 }
 
 @media (max-width: 767px){

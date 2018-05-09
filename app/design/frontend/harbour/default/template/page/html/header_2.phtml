@@ -174,13 +174,24 @@
 		<div class="container_12">
 			<div class="grid_12">
 				<?php if(!$isHome && !$isDefaultHome && isset($logo['second_logo'])): ?>
-					<h2 class="logo"><strong><?php echo $logo['logo_alt']; ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $logo['logo_alt']; ?>" class="logo"><img src="<?php echo $mediaurl.$logo['second_logo']; ?>" <?php echo MAGE::helper('ThemeOptionsHarbour/Retina')->getRetinaData('second_logo'); ?> alt="<?php echo $logo['logo_alt']; ?>" /></a></h2>
+					<h2 class="logo"><strong><?php echo $logo['logo_alt']; ?></strong>
+						<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $logo['logo_alt']; ?>" class="logo"><img src="<?php echo $mediaurl.$logo['second_logo']; ?>" <?php echo MAGE::helper('ThemeOptionsHarbour/Retina')->getRetinaData('second_logo'); ?> alt="<?php echo $logo['logo_alt']; ?>" />
+						</a>
+						<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $logo['logo_alt']; ?>" class="logo-mobile"><img src="<?php echo $this->getSkinUrl('images/horizontal-logo-for-amazon.png'); ?>" alt="<?php echo $logo['logo_alt']; ?>" /></a>
+					</h2>
 				<?php elseif(isset($logo['logo'])): ?>
-					<h2 class="logo"><strong><?php echo $logo['logo_alt']; ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $logo['logo_alt']; ?>" class="logo"><img src="<?php echo $mediaurl.$logo['logo']; ?>" <?php echo MAGE::helper('ThemeOptionsHarbour/Retina')->getRetinaData('logo'); ?> alt="<?php echo $logo['logo_alt']; ?>" /></a></h2>
+					<h2 class="logo"><strong><?php echo $logo['logo_alt']; ?></strong>
+						<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $logo['logo_alt']; ?>" class="logo"><img src="<?php echo $mediaurl.$logo['logo']; ?>" <?php echo MAGE::helper('ThemeOptionsHarbour/Retina')->getRetinaData('logo'); ?> alt="<?php echo $logo['logo_alt']; ?>" /></a>
+						<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $logo['logo_alt']; ?>" class="logo-mobile"><img src="<?php echo $this->getSkinUrl('images/horizontal-logo-for-amazon.png'); ?>" alt="<?php echo $logo['logo_alt']; ?>" /></a>
+					</h2>
 				<?php else : ?>
-					<h2 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong><a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getSkinUrl('images/logo.png') ?>" <?php echo MAGE::helper('ThemeOptionsHarbour/Retina')->getRetinaData('default_logo'); ?> alt="<?php echo $this->getLogoAlt() ?>" /></a></h2>
+					<h2 class="logo"><strong><?php echo $this->getLogoAlt() ?></strong>
+						<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $this->getLogoAlt() ?>" class="logo"><img src="<?php echo $this->getSkinUrl('images/logo.png') ?>" <?php echo MAGE::helper('ThemeOptionsHarbour/Retina')->getRetinaData('default_logo'); ?> alt="<?php echo $this->getLogoAlt() ?>" />
+						</a>
+						<a href="<?php echo $this->getUrl('') ?>" title="<?php echo $logo['logo_alt']; ?>" class="logo-mobile"><img src="<?php echo $this->getSkinUrl('images/horizontal-logo-for-amazon.png'); ?>" alt="<?php echo $logo['logo_alt']; ?>" /></a>
+					</h2>
 				<?php endif; ?>
-				<div class="left">
+				<div class="left header-text-banner">
 					<?php if ($this->getLayout()->createBlock('cms/block')->setBlockId('harbour_header2_text_banners')->toHtml()): ?>
 							<div class="header2-text"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('harbour_header2_text_banners')->toHtml() ?> </div>	 
 					<?php endif; ?>
@@ -203,10 +214,29 @@
 						if($toplinks['displayas'] == 1){echo '</span>';} ?>
 						<?php echo $this->getChildHtml('topLinks') ?>
 					</div>
+					<div class="login-mobile">
+						<?php
+				        if ($this->helper('customer')->isLoggedIn()) {
+				            ?>
+				            <a href="<?php echo Mage::getUrl('customer/account/logout'); ?>">
+				            	<img src="<?php echo $this->getSkinUrl('images/user.png'); ?>" />
+				            </a>
+				        <?php } else {
+				            ?>
+				            <a href="<?php echo Mage::getUrl('customer/account/login'); ?>">
+				            	<img src="<?php echo $this->getSkinUrl('images/user.png'); ?>" />
+				            </a>
+				        <?php } ?>
+					</div>
+					<div class="phone-mobile">
+			            <a href="tel:800-721-2723">
+			            	<img src="<?php echo $this->getSkinUrl('images/phone.png'); ?>" />
+			            </a>
+					</div>
 					<?php if($toplinks['displayas'] == 0){
 						echo $this->getChildHtml('cart_sidebar');
 					} ?>
-					<div class="menu-button"><span><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('mobilemenu'); ?><?php echo $this->__('Menu'); ?></span></div>
+					<div class="menu-button"><span><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('mobilemenu'); ?><span class='menu-text'><?php echo $this->__('Menu'); ?></span></span></div>
 				</div>
 				<div class="clear"></div>
 			</div>
