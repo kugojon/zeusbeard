@@ -45,6 +45,20 @@ $isOnHover = $meigee_harbour_appearance['mycart']['cartonhover'];
 ?>
 <div class="top-cart">
     <?php $_cartQty = $this->getSummaryCount() ? $this->getSummaryCount() : 0 ?>
+    <div class="top-cart-mobile block-title">
+        <a class="cartHeader" href="<?php echo Mage::getBaseUrl().'checkout/cart'; ?>">
+            <span class="title-cart">
+                <span class="top-cart-icon">
+                    <i class="fa fa-shopping-cart"></i>
+                    <?php
+                    if ($topCartCount) {
+                        echo '<span class="cart-qty">' . $_cartQty . '</span>';
+                    }
+                    ?>
+                </span>
+            </span>
+        </a>
+    </div>
     <div class="block-title<?php
     if (!$_cartQty) {
         echo (' no-items');

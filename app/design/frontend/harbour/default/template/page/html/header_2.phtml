@@ -266,14 +266,17 @@
 	  jQuery("#nav-cover").css('display', 'none');
 	});
 
-	jQuery('.header .top-cart .block-title').click(function() {
-		var checkClass = jQuery(this).hasClass('active');
-		if(checkClass){
-			jQuery("#nav-cover").addClass('active'); 	
-		}else{
-			jQuery("#nav-cover").removeClass('active');
-		}
-	});
+	var w = jQuery(document).width();
+	if ( w > 767){
+		jQuery('.header .top-cart .block-title').click(function() {
+			var checkClass = jQuery(this).hasClass('active');
+			if(checkClass){
+				jQuery("#nav-cover").addClass('active'); 	
+			}else{
+				jQuery("#nav-cover").removeClass('active');
+			}
+		});
+	}
 	jQuery(document).click(function() {
 	    jQuery("#nav-cover").removeClass('active'); 
 	});

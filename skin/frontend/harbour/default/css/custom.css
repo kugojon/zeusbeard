@@ -240,6 +240,11 @@ header#header {
     .login-mobile{position: absolute;top: 10px;right: 55px;}
     .phone-mobile{position: absolute;top: 11px;right: 97px;}
     header.header .top-cart .block-title .title-cart{font-size: 30px;padding: 6px 0 0;}
+    header#header{padding-bottom: 20px;}
+    .nav-container.mobile{z-index: 11;top: 40px;}
+    header.header .top-cart .block-title{display: none;}
+    header.header .top-cart .block-title.top-cart-mobile{display: block;}
+    header.header .top-cart .block-title.top-cart-mobile .title-cart:hover{background-color: initial;}
 }
 .grid_4.omega .form-list, .grid_4.omega .form-list p {
     padding-left: 0px !important;
@@ -359,6 +364,7 @@ header#header {
     a.logo-mobile{display: none;}
     .login-mobile{display: none;}
     .phone-mobile{display: none;}
+    .top-cart-mobile{display: none;}
 }
 
 @media (max-width: 767px){
