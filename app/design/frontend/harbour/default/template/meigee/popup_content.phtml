@@ -59,7 +59,9 @@ if ($meigee_harbour_general['popup']['popup_status'] == 1) {
             }
             
             if(!(subscribeFlag && isSuccess)){
-                popupNewsletter();
+                setTimeout(function(){
+                    popupNewsletter();
+                }, 7000); 
             }else{
                 jQuery.removeCookie('harbourPopupFlag', { path: '/' });
                 subsSetcookie();
