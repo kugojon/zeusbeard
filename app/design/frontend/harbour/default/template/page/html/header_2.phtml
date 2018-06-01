@@ -119,14 +119,24 @@
 	$isDefaultHome = strpos($this->getLayout()->getBlock('root')->getBodyClass(), "cms-index-defaultindex");
 ?>
 <div class="header-wrapper <?php if($stickyStatus){echo $stickyLogo .' '. $stickyNav .' '. $stickySearch .' '. $stickyCart;} if($header_bg != 0 && !$isHome && !$isDefaultHome){echo ' transparent-header';} ?>">
-	<header id="header" class="header header-2">
+    <div class="header-top-promo mobile" style="display: none;">
+        <p class="mobile-free-close mobile-active"><span></span></p>
+        <div class="container_12 promo-block">
+            <div class="mobile-device"><?php echo $this->getChildHtml('promo_block_mobile'); ?></div>
+        </div>
+    </div>
+    <header id="header" class="header header-2">
 		<?php if($header_home_bg == 2 && ($isHome || $isDefaultHome)) : ?>
 			<div class="header-background home" <?php echo $home_background_img.' '.$home_background_imgX2; ?>></div>
 		<?php endif; ?>
 		<?php if($header_bg == 1 && !$isHome && !$isDefaultHome) : ?>
 			<div class="header-background" <?php echo $background_img.' '.$background_imgX2; ?>></div>
 		<?php endif; ?>
-
+        <div class="header-top-promo desktop">
+            <div class="container_12 promo-block">
+                <div class="desktop-device"><?php echo $this->getChildHtml('promo_block_desktop'); ?></div>
+            </div>
+        </div>
 		<div class="header-top">
 			<div class="container_12">
 				<div class="grid_12">
@@ -280,4 +290,18 @@
 	jQuery(document).click(function() {
 	    jQuery("#nav-cover").removeClass('active'); 
 	});
+
+    if (jQuery.cookie("promo-block") == "closed") {
+        jQuery('.header-top-promo.mobile').hide();
+    }else {
+        jQuery('.header-top-promo.mobile').show();
+    }
+
+    jQuery('.mobile-free-close').click(function(e) {
+        e.preventDefault();
+        jQuery.cookie('promo-block','closed');
+        jQuery(this).parent().hide();
+    });
+
+
 </script>

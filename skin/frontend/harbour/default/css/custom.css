@@ -188,6 +188,18 @@ span.review-title {
 header#header {
     z-index: 2000;
 }
+.header-top-promo { background-color: #F5F5F5;}
+.header-top-promo { background-color: #E7E7E7;}
+.header-top-promo .desktop-device,
+.header-top-promo .mobile-device {
+    text-align: center;
+    padding: 10px 0;
+}
+.header-top-promo p {
+    font-weight: bold;
+    letter-spacing: 2px;
+    font-size: 11px;
+}
 @media screen and (max-width: 1281px) {
     .cart .couponandgifcart .discount .buttons-set button.button span{font-size: 9px;}
 }
@@ -203,6 +215,21 @@ header#header {
     .header-text-banner{width: 80%;}
 }
 @media only screen and (max-width: 767px) {
+    .header-top-promo {position: relative;}
+    .header-top-promo .desktop-device {display: none;}
+    .header-top-promo p {letter-spacing: 1px;}
+    .header-top-promo p.mobile-free-close {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+    .header-top-promo p.mobile-active span:before {
+        content: "\2715";
+        color: #000;
+        font-size: 15px;
+        font-weight: bold;
+    }
+    
     .block-shiping-product .shipping-content{
         width: 100%;
     }
@@ -260,6 +287,8 @@ header#header {
 
 
 @media only screen and (min-width: 768px){
+    .header-top-promo p.mobile-active,
+    .header-top-promo .mobile-device {display: none;}
     .block-shiping-product .shipping-content {
         display: flex;
         display: -webkit-flex;

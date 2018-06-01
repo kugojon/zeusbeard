@@ -123,6 +123,16 @@
 	</reference>
 	
 	<reference name="header">
+		<block type="cms/block" name="promo_block_desktop">
+			<action method="setBlockId">
+				<block_id>promo_block_desktop</block_id>
+			</action>
+		</block>
+		<block type="cms/block" name="promo_block_mobile">
+			<action method="setBlockId">
+				<block_id>promo_block_mobile</block_id>
+			</action>
+		</block>
 		<action method="setTemplate">
 			<template helper="ThemeOptionsHarbour/data/switchHeader" />
 		</action>
