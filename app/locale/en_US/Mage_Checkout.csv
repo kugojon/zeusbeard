@@ -1,4 +1,4 @@
-"%s was added to your shopping cart.","%s was added to your shopping cart."
+"%s was added to your shopping cart.","%s was added to your <a href='/checkout/cart/'>shopping cart</a>! Feel free to continue shopping, or <a href='/checkout/onepage/'>click here to begin checkout</a>."
 "%s was updated in your shopping cart.","%s was updated in your shopping cart."
 "(Excl. Tax)","(Excl. Tax)"
 "(Incl. Tax)","(Incl. Tax)"
