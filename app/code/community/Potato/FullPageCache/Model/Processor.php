@@ -108,7 +108,7 @@ class Potato_FullPageCache_Model_Processor
     {
         if (isset($_COOKIE['NO_CACHE']) || isset($_GET['no_cache']) || isset($_GET['___store']) ||
             self::isManaFilter() || !Mage::app()->useCache('po_fpc') ||
-            isset($_GET['isAjax']) || isset($_POST['isAjax']) || isset($_GET['isLayerAjax']) || isset($_GET['is_ajax'])
+            isset($_GET['isAjax']) || $_SERVER['REQUEST_METHOD'] === 'POST' || isset($_POST['isAjax']) || isset($_GET['isLayerAjax']) || isset($_GET['is_ajax'])
         ) {
             return false;
         }

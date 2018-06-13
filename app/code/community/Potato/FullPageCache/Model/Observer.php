@@ -14,7 +14,7 @@ class Potato_FullPageCache_Model_Observer
      */
     public function setFrameTags($observer)
     {
-        if (!Mage::app()->useCache('po_fpc') || Potato_FullPageCache_Helper_Data::isUpdater()) {
+        if (!Mage::app()->useCache('po_fpc') || Potato_FullPageCache_Helper_Data::isUpdater() || !Potato_FullPageCache_Model_Processor::getIsAllowed()) {
             return $this;
         }
         $block = $observer->getBlock();
