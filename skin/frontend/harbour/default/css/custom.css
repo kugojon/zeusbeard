@@ -947,3 +947,36 @@ div#confirmBox, .am-upsell-title > .am-title {background-color: #ffffff}
     .amcart-upsell-block .block-upsell .product {margin: 0;}
     .amcart-upsell-block .block-content {padding: 0 5px;}
 } 
+
+/** Custom Description table **/
+.meigee-tabs-content::after{
+    clear: both;
+    content: "";
+    display: block;    
+}
+.table {
+    border: 1px solid #000;
+    display: table;
+    width: 100%;
+}
+.row {
+    display: table-row;
+}
+.row .column:first-child {
+    border-right: 1px solid #000;
+    text-align: center;
+    font-weight: bold;
+}
+.column {
+    border-bottom: 1px solid #000;
+    display: table-cell;
+    padding: 15px;
+    text-align: left;
+    vertical-align: middle;
+}
+.row .column:last-child {
+    border-right: 0;
+}
+.table .row:last-child .column {
+    border-bottom: 0;
+}
