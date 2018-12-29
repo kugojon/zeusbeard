@@ -51,7 +51,6 @@
 
     <customer_account_create translate="label">
         <reference name="customer_form_register">
-            <action ifconfig="pslogin/general/replace_templates" method="setTemplate"><template>pslogin/customer/form/register.phtml</template></action>
             <block type="pslogin/buttons" name="pslogin.customer.form.register.buttons" as="pslogin_buttons" template="pslogin/customer/form/register/buttons.phtml" />
             <!-- <block type="pslogin/share" name="pslogin.customer.form.register.share" as="pslogin_share" template="pslogin/customer/form/register/share.phtml" /> -->
         </reference>
