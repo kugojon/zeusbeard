@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Bss_Adminhtml>
+            <version>0.1.0</version>
+        </Bss_Adminhtml>
+    </modules>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <bss_adminhtml before="Mage_Adminhtml">Bss_Adminhtml</bss_adminhtml>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+</config>
