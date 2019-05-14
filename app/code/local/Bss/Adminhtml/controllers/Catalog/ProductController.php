@@ -13,10 +13,11 @@ class Bss_Adminhtml_Catalog_ProductController extends Mage_Adminhtml_Catalog_Pro
         if ($data) {
             $this->_filterStockData($data['product']['stock_data']);
             $yt_url = $data['product']['video'];
-            if($yt_url) {
+            if(strpos($yt_url, 'youtube') > 0) {
+                $headers = get_headers('http://www.youtube.com/oembed?url='.$yt_url.'');
                 $url_parsed_arr = parse_url($yt_url);
                 $check = $url_parsed_arr['host'] == "www.youtube.com" && $url_parsed_arr['path'] == "/watch" && substr($url_parsed_arr['query'], 0, 2) == "v=" && substr($url_parsed_arr['query'], 2) != "";
-                if (!$check) {
+                if (!$check || !strpos($headers[0], '200')) {
                     $this->_getSession()->addError($this->__('Not a valid YouTube link'));
                     $this->_redirect('*/*/edit', array(
                         'id' => $productId,
@@ -24,6 +25,25 @@ class Bss_Adminhtml_Catalog_ProductController extends Mage_Adminhtml_Catalog_Pro
                     ));
                     return;
                 }
+            } elseif (strpos($yt_url, 'vimeo') > 0 ) {
+                $headers = get_headers($yt_url);
+                $url_parsed_arr = parse_url($yt_url);
+                $check = $url_parsed_arr['host'] == "vimeo.com";
+                if (!$check || !strpos($headers[0], '200')) {
+                    $this->_getSession()->addError($this->__('Not a valid Vimeo link'));
+                    $this->_redirect('*/*/edit', array(
+                        'id' => $productId,
+                        '_current' => true
+                    ));
+                    return;
+                }
+            } else {
+                $this->_getSession()->addError($this->__('Not a valid Video link'));
+                $this->_redirect('*/*/edit', array(
+                    'id' => $productId,
+                    '_current' => true
+                ));
+                return;
             }
 
             $product = $this->_initProductSave();

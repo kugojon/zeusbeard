@@ -91,6 +91,20 @@
 	$labelsType = $meigee_harbour_general['productlabels']['labelview'];
 	$labelsPosition = $meigee_harbour_general['productlabels']['labelsposition'];
 	$fancy = $meigee_harbour_general['fancybox'];
+
+    if($_product->getVideo()) {
+        if (strpos($_product->getVideo(), 'youtube') > 0) {
+            $video_id = explode("?v=", $_product->getVideo());
+            $video_id = $video_id[1];
+            $thumbnail = "http://img.youtube.com/vi/" . $video_id . "/sddefault.jpg";
+            $url_video = preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i", "<div class='link-video' src=\"https://www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen ></div>", $_product->getVideo());
+        }elseif (strpos($_product->getVideo(), 'vimeo') > 0) {
+            $image_url = parse_url($_product->getVideo());
+            $vimeo = unserialize(file_get_contents("http://vimeo.com/api/v2/video/".substr($image_url['path'], 1).".php"));
+            $thumbnail = $vimeo[0]['thumbnail_medium'];
+            $url_video = preg_replace("/\s*[a-zA-Z\/\/:\.]*vimeo.com\/([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i","<div class='link-video' src=\"https://player.vimeo.com/video/$1\" frameborder=\"0\" allowfullscreen ></div>", $_product->getVideo());
+        }
+    }
 ?>
 <div class="product-image<?php echo ' '.$labelsType.' '.$labelsPosition;  ?>">
 	<div class="img-holder<?php if($labelsoptions['labelsorder'] == 'new_sale'):?> labels-new-sale<?php endif; ?>">
@@ -119,7 +133,7 @@
 		<?php echo MAGE::helper('ThemeOptionsHarbour')->getProductLabels($_product, 'sale'); ?>
         <?php if ($_product->getVideo()):?>
             <div class="video-product">
-                <?php echo  preg_replace("/\s*[a-zA-Z\/\/:\.]*youtube.com\/watch\?v=([a-zA-Z0-9\-_]+)([a-zA-Z0-9\/\*\-\_\?\&\;\%\=\.]*)/i","<div class='link-video' src=\"https://www.youtube.com/embed/$1\" frameborder=\"0\" allowfullscreen ></div>", $_product->getVideo()) ?>
+                <?php echo $url_video ?>
                 <iframe allow="accelerometer; autoplay;" style="max-width: 100%;" width="560" height="315" src="#" frameborder="0" allowfullscreen ></iframe>
             </div>
         <?php endif;?>
@@ -130,13 +144,6 @@
 		</script>
 	<?php endif; ?>
 <?php if (count($this->getGalleryImages()) > 0): ?>
-<?php if ($_product->getVideo()):?>
-    <?php
-        $video_id = explode("?v=", $_product->getVideo());
-        $video_id = $video_id[1];
-        $thumbnail = "http://img.youtube.com/vi/".$video_id."/sddefault.jpg";
-    ?>
-<?php endif;?>
 <div class="more-views-container">
 	<div class="more-views<?php if ($productpage_moreviews == 'moreviews_slider' && count($this->getGalleryImages()) > 3){echo ' slider-on';} ?>">
 		<h2><?php echo $this->__('More Views') ?></h2>
