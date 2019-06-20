@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<widgets>
+    <CustomWidgets_productskulink type="bss_widget/product">
+        <name>Bss widget show product</name>
+        <description type="desc">Creates product list</description>
+        <parameters>
+            <id_product1 translate="label">
+                <visible>1</visible>
+                <required>0</required>
+                <label>Product 1</label>
+                <type>label</type>
+                <helper_block>
+                    <type>adminhtml/catalog_product_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Product...</open>
+                        </button>
+                    </data>
+                </helper_block>
+                <sort_order>1</sort_order>
+            </id_product1>
+            <id_product2 translate="label">
+                <visible>1</visible>
+                <required>0</required>
+                <label>Product 2</label>
+                <type>label</type>
+                <helper_block>
+                    <type>adminhtml/catalog_product_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Product...</open>
+                        </button>
+                    </data>
+                </helper_block>
+                <sort_order>2</sort_order>
+            </id_product2>
+            <id_product3 translate="label">
+                <visible>1</visible>
+                <required>0</required>
+                <label>Product 3</label>
+                <type>label</type>
+                <helper_block>
+                    <type>adminhtml/catalog_product_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Product...</open>
+                        </button>
+                    </data>
+                </helper_block>
+                <sort_order>3</sort_order>
+            </id_product3>
+        </parameters>
+    </CustomWidgets_productskulink>
+</widgets>
