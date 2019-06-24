@@ -24,12 +24,6 @@ if($categoryComplete->getProductname()) {
 } else {
     $productname = $meigee_harbour_appearance['productlisting']['productname'];
 }
-if($categoryComplete->getProductprice()) {
-    $productprice = $categoryComplete->getProductprice();
-    if($productprice == 2){$productprice = 0;}
-} else {
-    $productprice = $meigee_harbour_appearance['productlisting']['productprice'];
-}
 if($categoryComplete->getCompareproducts()) {
     $compareproducts = $categoryComplete->getCompareproducts();
     if($compareproducts == 2){$compareproducts = 0;}
@@ -81,6 +75,7 @@ $productOnlyXleft = $meigee_harbour_general['productlabels']['labelonlyxleft'];
 						<?php if($productname): ?>
 							<h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
 						<?php endif; ?>
+
 						<?php
 							// Provides extra blocks on which to hang some features for products in the list
 							// Features providing UI elements targeting this block will display directly below the product name
@@ -96,9 +91,7 @@ $productOnlyXleft = $meigee_harbour_general['productlabels']['labelonlyxleft'];
 						<?php if($_product->getRatingSummary()): ?>
 							<?php echo $this->getReviewsSummaryHtml($_product) ?>
 						<?php endif; ?>
-						<?php if($productprice): ?>
-							<?php echo $this->getPriceHtml($_product, true) ?>
-						<?php endif; ?>
+                        <?php echo Mage::getBlockSingleton('affiliateplusreferfriend/product_list')->getPriceHtml($_product, true) ?>
 					</div>
                     <form action="<?php echo Mage::getBlockSingleton('affiliateplusreferfriend/product_list')->getSubmitUrl($_product) ?>" method="post" class="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
                         <div class="no-display">
@@ -106,17 +99,14 @@ $productOnlyXleft = $meigee_harbour_general['productlabels']['labelonlyxleft'];
                             <input type="hidden" name="related_product" id="related-products-field" value="" />
                         </div>
                         <div class="product-type-block">
-                            <div class="add-to-box">
-                                <div class="add-to-cart">
-                                    <label for="qty">Qty:</label>
-                                    <input type="text" name="qty" maxlength="12" value="1" title="Qty" class="input-text qty">
-                                    <div class="quantity-buttons">
-                                        <div class="quantity-increase"><i class="fa fa-caret-up"></i></div>
-                                        <div class="quantity-decrease""><i class="fa fa-caret-down"></i></div>
-                                    </div>
-                                    <button type="submit" title="Add to Cart" id="product-addtocart-button" class="button btn-cart"><span><span>Add to Cart</span></span></button>
+                            <div class="add-to-cart">
+                                <label for="qty">Qty:</label>
+                                <input type="text" name="qty" maxlength="12" value="1" title="Qty" class="input-text qty">
+                                <div class="quantity-buttons">
+                                    <div class="quantity-increase"><i class="fa fa-caret-up"></i></div>
+                                    <div class="quantity-decrease""><i class="fa fa-caret-down"></i></div>
                                 </div>
-
+                                <button type="submit" title="Add to Cart" id="product-addtocart-button" class="button btn-cart"><span><span>Add to Cart</span></span></button>
                             </div>
                         </div>
                     </form>

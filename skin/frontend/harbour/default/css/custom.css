@@ -200,6 +200,102 @@ header#header {
     letter-spacing: 2px;
     font-size: 11px;
 }
+
+/* style page ingredients */
+.main-img {
+    text-align: right;
+}
+.main-img img {
+    max-width: 1150px;
+    margin: 15px 0 65px;
+}
+.cms-ingredients .main-content h2 {
+    font-size: 2em;
+    line-height: 1.44em;
+    font-weight: normal;
+    vertical-align: middle;
+    margin: 0 0 .5em;
+    color: #222;
+    font-family: Raleway,sans-serif;
+}
+.cms-ingredients .main-content h2.product-name {
+    font-size: 1em;
+}
+.cms-ingredients .description {
+    max-width: 650px;
+    margin: 20px 0 60px;
+}
+.cms-ingredients  p {
+    font-size: 1.16em;
+}
+.cms-ingredients .free {
+    text-align: center;
+    width: 100%;
+    margin: 45px 0;
+}
+.cms-ingredients .text-choose {
+    font-size: 2em;
+    margin-bottom: 35px;
+    line-height: 1.44em;
+    text-align: center;
+    color: #222;
+    font-family: Raleway,sans-serif;
+}
+.product-block {
+    display: table;
+    width: 100%;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.product-block .products-grid li.item {
+    width: 30%;
+    margin: 0 2.5%;
+}
+.product-block .products-grid li.item.alpha {
+    margin-left: 0;
+}
+.product-block .products-grid li.item.omega {
+    margin-right: 0;
+}
+.cms-ingredients .static-block.columns-3{
+    max-width: 1150px;
+    float: right;
+    width: 100%;
+}
+.cms-ingredients .static-block .grid_4 {
+    width: 30.33333%;
+    margin: 0 1.5%;
+}
+.cms-ingredients .static-block {
+    text-align: center;
+}
+.cms-ingredients .static-block h3 {
+    font-weight: 300;
+    font-size: 1.4em;
+    font-family: Raleway,sans-serif;
+    color: #222;
+    margin: 23px 0;
+    text-transform: uppercase;
+}
+.cms-ingredients .add-to-cart {
+    display: table;
+    margin: auto;
+}
+.cms-ingredients .add-to-cart button.button {
+    float: none;
+    margin-left: 20px;
+}
+.cms-ingredients .add-to-cart button.button span {
+    height: 40px;
+    border: 0;
+}
+.cms-ingredients .add-to-cart button.button span span {
+    line-height: 40px;
+}
+
+
+
 @media screen and (max-width: 1281px) {
     .cart .couponandgifcart .discount .buttons-set button.button span{font-size: 9px;}
 }
