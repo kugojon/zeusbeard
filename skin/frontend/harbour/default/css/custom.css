@@ -208,6 +208,7 @@ header#header {
 .main-img img {
     max-width: 1150px;
     margin: 15px 0 65px;
+    width: 100%;
 }
 .cms-ingredients .main-content h2 {
     font-size: 2em;
@@ -405,6 +406,37 @@ header#header {
     header.header .top-cart .block-title{display: none;}
     header.header .top-cart .block-title.top-cart-mobile{display: block;}
     header.header .top-cart .block-title.top-cart-mobile .title-cart:hover{background-color: initial;}
+
+
+    .main-img {
+        display: none;
+    }
+    .cms-ingredients .static-block .grid_4 {
+        width: auto;
+        margin: 0;
+    }
+    .cms-ingredients .page-title h1 {
+        margin: 0 0 22px;
+    }
+    .cms-ingredients .description {
+        margin-bottom: 40px;
+    }
+    .cms-ingredients .free {
+        margin: 25px 0 60px;
+    }
+    .product-block .products-grid li.item {
+        width: auto;
+        margin: 0;
+        padding-bottom: 41px;
+    }
+
+    .product-block .add-to-cart button.button span span {
+        width: 110px;
+    }
+    .main-content .static-block .grid_3,
+    .main-content .static-block .grid_4{
+        margin-bottom: 35px;
+    }
 }
 .grid_4.omega .form-list, .grid_4.omega .form-list p {
     padding-left: 0px !important;
