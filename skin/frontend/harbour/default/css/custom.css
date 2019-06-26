@@ -260,8 +260,8 @@ header#header {
     margin-right: 0;
 }
 .cms-ingredients .static-block.columns-3{
-    max-width: 1150px;
-    float: right;
+    max-width: 1000px;
+    margin: auto;
     width: 100%;
 }
 .cms-ingredients .static-block .grid_4 {
