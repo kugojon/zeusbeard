@@ -226,7 +226,7 @@ header#header {
     max-width: 650px;
     margin: 20px 0 60px;
 }
-.cms-ingredients  p {
+.cms-ingredients .content-wrapper p {
     font-size: 1.16em;
 }
 .cms-ingredients .free {
@@ -234,7 +234,7 @@ header#header {
     width: 100%;
     margin: 45px 0;
 }
-.cms-ingredients .text-choose {
+.cms-ingredients .content-wrapper .text-choose {
     font-size: 2em;
     margin-bottom: 35px;
     line-height: 1.44em;
