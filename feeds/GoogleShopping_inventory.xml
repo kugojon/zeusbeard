@@ -11,6 +11,12 @@
 
 </item>
 <item>
+<g:id><![CDATA[426-115-01]]></g:id>
+<g:availability><![CDATA[out of stock]]></g:availability>
+<g:price><![CDATA[26.00 USD]]></g:price>
+
+</item>
+<item>
 <g:id><![CDATA[426-110-00]]></g:id>
 <g:availability><![CDATA[in stock]]></g:availability>
 <g:price><![CDATA[16.00 USD]]></g:price>
@@ -66,7 +72,7 @@
 </item>
 <item>
 <g:id><![CDATA[903-002-01]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[22.00 USD]]></g:price>
 
 </item>
@@ -85,7 +91,7 @@
 <item>
 <g:id><![CDATA[903-002-04]]></g:id>
 <g:availability><![CDATA[in stock]]></g:availability>
-<g:price><![CDATA[22.00 USD]]></g:price>
+<g:price><![CDATA[22.01 USD]]></g:price>
 
 </item>
 <item>
@@ -120,7 +126,7 @@
 </item>
 <item>
 <g:id><![CDATA[903-003-04]]></g:id>
-<g:availability><![CDATA[preorder]]></g:availability>
+<g:availability><![CDATA[in stock]]></g:availability>
 <g:price><![CDATA[18.00 USD]]></g:price>
 
 </item>
@@ -168,13 +174,13 @@
 </item>
 <item>
 <g:id><![CDATA[439-050-00]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
-<g:price><![CDATA[14.00 USD]]></g:price>
+<g:availability><![CDATA[out of stock]]></g:availability>
+<g:price><![CDATA[12.00 USD]]></g:price>
 
 </item>
 <item>
 <g:id><![CDATA[439-047-00]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[15.00 USD]]></g:price>
 
 </item>
@@ -222,8 +228,14 @@
 </item>
 <item>
 <g:id><![CDATA[407-135]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[40.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-136]]></g:id>
+<g:availability><![CDATA[out of stock]]></g:availability>
+<g:price><![CDATA[105.00 USD]]></g:price>
 
 </item>
 <item>
@@ -252,14 +264,14 @@
 </item>
 <item>
 <g:id><![CDATA[439-056-00]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[5.00 USD]]></g:price>
 
 </item>
 <item>
 <g:id><![CDATA[439-057-00]]></g:id>
 <g:availability><![CDATA[in stock]]></g:availability>
-<g:price><![CDATA[18.00 USD]]></g:price>
+<g:price><![CDATA[15.00 USD]]></g:price>
 
 </item>
 <item>
@@ -319,7 +331,7 @@
 <item>
 <g:id><![CDATA[407-141-02]]></g:id>
 <g:availability><![CDATA[in stock]]></g:availability>
-<g:price><![CDATA[76.00 USD]]></g:price>
+<g:price><![CDATA[59.00 USD]]></g:price>
 
 </item>
 <item>
@@ -330,19 +342,19 @@
 </item>
 <item>
 <g:id><![CDATA[903-004-03]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[24.00 USD]]></g:price>
 
 </item>
 <item>
 <g:id><![CDATA[903-004-04]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[24.00 USD]]></g:price>
 
 </item>
 <item>
 <g:id><![CDATA[903-004]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[24.00 USD]]></g:price>
 
 </item>
@@ -360,7 +372,7 @@
 </item>
 <item>
 <g:id><![CDATA[903-005-04]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[24.00 USD]]></g:price>
 
 </item>
@@ -384,13 +396,13 @@
 </item>
 <item>
 <g:id><![CDATA[904-006-06]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[20.00 USD]]></g:price>
 
 </item>
 <item>
 <g:id><![CDATA[426-110-04]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[16.00 USD]]></g:price>
 
 </item>
@@ -474,43 +486,43 @@
 </item>
 <item>
 <g:id><![CDATA[407-145-04]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[30.00 USD]]></g:price>
 
 </item>
 <item>
 <g:id><![CDATA[407-131-04]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[44.00 USD]]></g:price>
 
 </item>
 <item>
 <g:id><![CDATA[407-132-04]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[68.00 USD]]></g:price>
 
 </item>
 <item>
 <g:id><![CDATA[407-133-04]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[179.00 USD]]></g:price>
 
 </item>
 <item>
 <g:id><![CDATA[407-137-04]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[69.00 USD]]></g:price>
 
 </item>
 <item>
 <g:id><![CDATA[407-141-04]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
-<g:price><![CDATA[76.00 USD]]></g:price>
+<g:availability><![CDATA[out of stock]]></g:availability>
+<g:price><![CDATA[59.00 USD]]></g:price>
 
 </item>
 <item>
 <g:id><![CDATA[407-142-04]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[77.00 USD]]></g:price>
 
 </item>
@@ -534,7 +546,7 @@
 </item>
 <item>
 <g:id><![CDATA[903-004-02]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[24.00 USD]]></g:price>
 
 </item>
@@ -612,7 +624,7 @@
 </item>
 <item>
 <g:id><![CDATA[407-140-00]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
+<g:availability><![CDATA[out of stock]]></g:availability>
 <g:price><![CDATA[13.00 USD]]></g:price>
 
 </item>
@@ -637,7 +649,7 @@
 <item>
 <g:id><![CDATA[439-092-00]]></g:id>
 <g:availability><![CDATA[in stock]]></g:availability>
-<g:price><![CDATA[15.00 USD]]></g:price>
+<g:price><![CDATA[13.00 USD]]></g:price>
 
 </item>
 <item>
@@ -709,7 +721,7 @@
 <item>
 <g:id><![CDATA[407-141-06]]></g:id>
 <g:availability><![CDATA[in stock]]></g:availability>
-<g:price><![CDATA[76.00 USD]]></g:price>
+<g:price><![CDATA[59.00 USD]]></g:price>
 
 </item>
 <item>
@@ -751,7 +763,7 @@
 <item>
 <g:id><![CDATA[439-101-00]]></g:id>
 <g:availability><![CDATA[in stock]]></g:availability>
-<g:price><![CDATA[14.00 USD]]></g:price>
+<g:price><![CDATA[13.00 USD]]></g:price>
 
 </item>
 <item>
@@ -779,12 +791,6 @@
 
 </item>
 <item>
-<g:id><![CDATA[407-147-04]]></g:id>
-<g:availability><![CDATA[in stock]]></g:availability>
-<g:price><![CDATA[109.00 USD]]></g:price>
-
-</item>
-<item>
 <g:id><![CDATA[407-147-06]]></g:id>
 <g:availability><![CDATA[in stock]]></g:availability>
 <g:price><![CDATA[109.00 USD]]></g:price>
@@ -803,7 +809,7 @@
 
 </item>
 <item>
-<g:id><![CDATA[426-246-30]]></g:id>
+<g:id><![CDATA[426-246-30X]]></g:id>
 <g:availability><![CDATA[in stock]]></g:availability>
 <g:price><![CDATA[34.00 USD]]></g:price>
 
@@ -872,6 +878,444 @@
 <g:id><![CDATA[904-009-06]]></g:id>
 <g:availability><![CDATA[in stock]]></g:availability>
 <g:price><![CDATA[22.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[426-133-04]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[22.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[test2]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[20.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[463-030-02]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[14.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-157-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[63.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[462-020-01]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[23.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[905-001-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[165.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-132-04X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[68.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-133-02X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[179.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-133-06X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[179.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-134-02X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[34.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-134-04X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[34.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-134-06X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[34.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-134-07X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[34.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-134-08X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[34.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-134-09X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[34.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-135-00X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[34.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-137-02X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[69.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-137-04X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[69.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-137-06X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[69.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-140-00X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[13.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-141-02X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[59.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-141-04X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[59.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-141-06X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[59.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-143-02X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[38.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-143-04X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[38.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-144-02X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[14.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-144-04X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[14.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-147-02X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[109.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-147-04X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[109.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-147-06X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[109.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-148-00X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[29.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-149-00X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[22.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-150-02X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[17.50 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-151-00X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[15.50 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[465-264-30X]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[44.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[434-005-03]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[15.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[434-005-00-old]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[15.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[434-005-06]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[15.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[434-005-12 ]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[15.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-434-05]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[44.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[434-017-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[229.95 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[434-018-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[229.95 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[434-HC78]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[229.95 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[434-005-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[15.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-105-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[13.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[407-160-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[26.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[426-246-30]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[34.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[465-381-02]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[18.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[465-380-02]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[16.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[426-133-06]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[22.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[z-promo-10]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[10.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[z-promo-20]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[20.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-023-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[15.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-021-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[12.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-054-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[12.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-019-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[150.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[905-002-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[16.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-094-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[24.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[910-004-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[5.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[910-005-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[1.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-030-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[11.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-045-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[11.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-043-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[5.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-044-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[9.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-043-03]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[13.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[438-062-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[2.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-106-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[30.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-107-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[24.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[462-020-02]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[23.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-109-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[6.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-029-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[12.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-086-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[11.00 USD]]></g:price>
+
+</item>
+<item>
+<g:id><![CDATA[439-087-00]]></g:id>
+<g:availability><![CDATA[in stock]]></g:availability>
+<g:price><![CDATA[11.00 USD]]></g:price>
 
 </item>
 </channel>
