@@ -108,7 +108,7 @@ class Magestore_Affiliateplus_AccountController extends Mage_Core_Controller_Fro
             if ($customer->hashPassword($currPass, $salt) == $oldPass) {
                 if (strlen($newPass)) {
                     $customer->setPassword($newPass);
-                    $customer->setConfirmation($confPass);
+                    $customer->setPasswordConfirmation($confPass);
                 } else {
                     $errors[] = $this->__('The New Password field is empty. Please enter a new password.');
                 }
