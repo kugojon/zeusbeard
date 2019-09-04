@@ -55,8 +55,10 @@ if (!file_exists($mageFilename)) {
     }
     exit;
 }
+$ip = $_SERVER["HTTP_X_SUCURI_CLIENTIP"];
+$allowed = array('183.91.4.151','123.16.189.234','101.99.6.21');
 
-if (file_exists($maintenanceFile)) {
+if (file_exists($maintenanceFile) && !in_array($ip, $allowed)) {
     include_once dirname(__FILE__) . '/errors/503.php';
     exit;
 }
@@ -70,7 +72,9 @@ if (isset($_SERVER['MAGE_IS_DEVELOPER_MODE'])) {
     Mage::setIsDeveloperMode(true);
 }
 
-ini_set('display_errors', 1);
+// ini_set('display_errors', 1);
+// ini_set('display_startup_errors', 1);
+// error_reporting(E_ALL);
 
 umask(0);
 
