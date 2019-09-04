@@ -158,9 +158,9 @@ aside.sidebar .block-subscribe .actions .button:hover span i,
 .cart.cart-2 aside section.totals header,
 .cart .btn-proceed-checkout span span,
 .products-list li.item .fancybox:hover,
-.products-grid li.item .fancybox:hover {background-color: #FF2C2C;}
+.products-grid li.item .fancybox:hover {background-color: #4CB1F1;}
 
-.cart .btn-proceed-checkout > span {border-color: #FF2C2C;}
+.cart .btn-proceed-checkout > span {border-color: #4CB1F1;}
 
 a:hover,
 .dashboard .box-title a:hover,
@@ -182,7 +182,7 @@ aside.sidebar .block.block-wishlist li.item .product-details .product-name a:hov
 .block-account li a:hover,
 .block-account li strong,
 .my-wishlist .data-table .table-buttons a i:hover,
-#footer .footer-products-list .product-shop .product-name a:hover {color: #FF2C2C;}
+#footer .footer-products-list .product-shop .product-name a:hover {color: #4CB1F1;}
 
 /*====== Category Labels =======*/
 .nav-wide li.level-top .category-label.label_one { 

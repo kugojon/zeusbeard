@@ -44,7 +44,8 @@ if(!$session->getQuote()->getAllVisibleItems()){
 <?php }else{?>
 
     <!-- Load ic iframe page if there are items in the cart -->
-    <iframe name="icIframe" id="icIframe" src="javascript:parent.getFrameHTML()" style="margin: 0;display:none; height:1150px; width: 100%;" align="middle" frameborder="0" scrolling="auto" >Your Browser Does Not Support Frames</iframe>
+    <!--<iframe name="icIframe" id="icIframe" src="javascript:parent.getFrameHTML()" style="margin: 0;display:none; height:1150px; width: 100%;" align="middle" frameborder="0" scrolling="auto" >Your Browser Does Not Support Frames</iframe>-->
+<iframe name="icIframe" id="icIframe" src="" style="display:none;width:100%;" frameborder="0" scrolling="no">Your Browser Does Not Support Frames</iframe>
 
 	<div style=" width:100%;height:500px; text-align:center; " align="center" id="loading">Loading......</div>
 
@@ -195,7 +196,8 @@ if(!$session->getQuote()->getAllVisibleItems()){
 		<?php } ?>
 	</form>
    
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>
+<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" type="text/javascript"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.3/iframeResizer.min.js"></script>
 <script language="javascript">
         if(jQuery(".GiftStatus") && jQuery(".GiftStatus").val() == '1' ){
             alert('Gift Certificate is not available for international orders. Please remove Gift Certificate from shopping cart before proceeding with International Checkout.');
@@ -208,16 +210,32 @@ if(!$session->getQuote()->getAllVisibleItems()){
             jQuery(".main").css("padding","0px");
     
             document.getElementById('icIframe').src = "https://www.internationalcheckout.com/cart.php?ver="+Math.random();
-
-			document.getElementById('icForm').submit();
+	    document.getElementById('icForm').submit();
+/*
             jQuery('#icIframe').ready(function(){
-				// Set a time interval to laod iframe, remove Ic Form and hide Loading text.	
 				 setTimeout(function() {
 					jQuery("#icIframe").css("display","block");
 					jQuery("#loading").css("display","none");
 				}, 5000);
 	
 			});
+*/
+		jQuery('#icIframe').load(function() {
+
+			jQuery("#icForm").remove();// Remove Ic for for security
+			jQuery("#loading").css("display","none");// Don't display the loading text now as Ic iframe has been loaded now.
+
+			jQuery('html, body').animate({
+				scrollTop: jQuery("#icIframe").offset().top
+			}, 1000);
+			jQuery('#icIframe').fadeIn();	               
+
+		});
+
+		iFrameResize({
+					checkOrigin:false,								
+					enablePublicMethods     : true,
+		});
         }
 </script> 
 <?php }?>
