@@ -52,7 +52,6 @@ class Ced_Jet_Model_System_Config_Adminhtml_Serialized_Identifier extends Mage_C
             }
 
             $values["standard_".$i++] = array('magento_attribute_code' =>$magetoAttrCode, 'identifier'=>$code);
-
         }
 
 

@@ -38,68 +38,81 @@ class Ced_Jet_Block_Adminhtml_Profile_Grid extends Mage_Adminhtml_Block_Widget_G
 
     protected function _prepareColumns()
     {
-        $this->addColumn('id', array(
+        $this->addColumn(
+            'id', array(
             'header'    => Mage::helper('jet')->__('ID'),
             'align'     =>'right',
             'width'     => '10px',
             'index'     => 'id',
-        ));
+            )
+        );
 
-        $this->addColumn('profile_name', array(
+        $this->addColumn(
+            'profile_name', array(
             'header'    => Mage::helper('jet')->__('Profile Name'),
             'align'     =>'left',
             'index'     => 'profile_name',
             'width'     => '200px',
             'type'  => 'text',
-        ));
+            )
+        );
 
 
         $statuses = array('1' => 'Active', '0' => 'Inactive');
 
-        $this->addColumn('profile_status', array(
+        $this->addColumn(
+            'profile_status', array(
             'header'    => Mage::helper('jet')->__('Status'),
             'align'     =>'left',
             'index'     => 'profile_status',
             'width'     => '200px',
             'type'  => 'options',
             'options' => $statuses,
-        ));
+            )
+        );
 
 
 
-        $this->addColumn('total_item', array(
+        $this->addColumn(
+            'total_item', array(
             'header'    => Mage::helper('jet')->__('Total Item'),
             'align'     =>'left',
             'index'     => 'total_item',
             'width'     => '50px',
-            'filter'   	 	=> false,
+            'filter'            => false,
 
             'renderer'  => 'jet/adminhtml_profile_grid_column_renderer_totalitem',
-        ));
+            )
+        );
 
-        $this->addColumn('active_item', array(
+        /*$this->addColumn(
+            'active_item', array(
             'header'    => Mage::helper('jet')->__('Active Item'),
             'align'     =>'left',
             'index'     => 'active_item',
             'width'     => '50px',
-            'filter'   	 	=> false,
+            'filter'            => false,
 
             'renderer'  => 'jet/adminhtml_profile_grid_column_renderer_activeitem',
 
-        ));
+            )
+        );
 
-        $this->addColumn('inactive_item', array(
+        $this->addColumn(
+            'inactive_item', array(
             'header'    => Mage::helper('jet')->__('Inactive Item'),
             'align'     =>'left',
             'index'     => 'inactive_item',
             'width'     => '50px',
-            'filter'   	 	=> false,
+            'filter'            => false,
 
             'renderer'  => 'jet/adminhtml_profile_grid_column_renderer_inactiveitem',
 
-        ));
+            )
+        );*/
 
-        $this->addColumn('action',
+        $this->addColumn(
+            'action',
             array(
                 'header'    =>  Mage::helper('jet')->__('Action'),
                 'width'     => '50',
@@ -121,7 +134,8 @@ class Ced_Jet_Block_Adminhtml_Profile_Grid extends Mage_Adminhtml_Block_Widget_G
                 'sortable'  => false,
                 'index'     => 'action',
                 'is_system' => true,
-            ));
+            )
+        );
         return parent::_prepareColumns();
     }
 
@@ -148,16 +162,19 @@ class Ced_Jet_Block_Adminhtml_Profile_Grid extends Mage_Adminhtml_Block_Widget_G
         $this->setMassactionIdField('id');
         $this->getMassactionBlock()->setFormFieldName('id');
 
-        $this->getMassactionBlock()->addItem('delete', array(
+        $this->getMassactionBlock()->addItem(
+            'delete', array(
             'label'    => Mage::helper('jet')->__('Delete'),
             'url'      => $this->getUrl('*/*/massDelete'),
             'confirm'  => Mage::helper('jet')->__('Are you sure?')
-        ));
+            )
+        );
 
         $statuses = array('1' => 'Active', '0' => 'Inactive');
 
 
-        $this->getMassactionBlock()->addItem('status', array(
+        $this->getMassactionBlock()->addItem(
+            'status', array(
             'label'=> Mage::helper('jet')->__('Change status'),
             'url'  => $this->getUrl('*/*/massStatus/', array('_current'=>true)),
             'additional' => array(
@@ -170,7 +187,8 @@ class Ced_Jet_Block_Adminhtml_Profile_Grid extends Mage_Adminhtml_Block_Widget_G
                     'values' =>$statuses,
                 )
             )
-        ));
+            )
+        );
         return $this;
     }
 

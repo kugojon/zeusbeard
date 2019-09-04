@@ -18,20 +18,20 @@
 
 class Ced_Jet_Block_Adminhtml_Return_Renderer_Labelaction extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
-	
-	 
-	public function render(Varien_Object $row)
-	{
-		$url='';
-		$label="Edit";
-		if($row->getData('status')=='completed'){
-				$label="View";
-		}
-		$url=$this->getUrl('*/*/edit',array('id'=>$row->getId()));
-		$html = "<a href='".$url."'>".$label."</a>";
-		return $html;
-	 
-	}	
- 		
+    
+     
+    public function render(Varien_Object $row)
+    {
+        $url='';
+        $label="Edit";
+        if($row->getData('status')=='completed'){
+                $label="View";
+        }
+
+        $url=$this->getUrl('*/*/edit', array('id'=>$row->getId()));
+        $html = "<a href='".$url."'>".$label."</a>";
+        return $html;
+     
+    }    
+         
 }
-?>

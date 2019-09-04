@@ -24,56 +24,71 @@ class Ced_Jet_Block_Adminhtml_Jetcategory_Edit_Tab_Prodform extends Mage_Adminht
         $form = new Varien_Data_Form();
         $this->setForm($form);
 
-        $fieldset = $form->addFieldset('jet_product',array('legend'=>Mage::helper('jet')->__('Product Information')));
+        $fieldset = $form->addFieldset('jet_product', array('legend'=>Mage::helper('jet')->__('Product Information')));
         
 
-        $fieldset->addField('sku', 'text', array(
-          'label'     => Mage::helper('jet')->__('Sku'),
-          'readonly' => true,
-          'name'      => 'sku',
-        ));
+        $fieldset->addField(
+            'sku', 'text', array(
+            'label'     => Mage::helper('jet')->__('Sku'),
+            'readonly' => true,
+            'name'      => 'sku',
+            )
+        );
 
-        $fieldset->addField('title', 'text', array(
-          'label'     => Mage::helper('jet')->__('Product Title'),
-          'readonly' => true,
-          'name'      => 'title',
-        ));
+        $fieldset->addField(
+            'title', 'text', array(
+            'label'     => Mage::helper('jet')->__('Product Title'),
+            'readonly' => true,
+            'name'      => 'title',
+            )
+        );
 
-        $fieldset->addField('description', 'text', array(
-          'label'     => Mage::helper('jet')->__('Detail description'),
-          'readonly' => true,
-          'name'      => 'description',
-        ));
+        $fieldset->addField(
+            'description', 'text', array(
+            'label'     => Mage::helper('jet')->__('Detail description'),
+            'readonly' => true,
+            'name'      => 'description',
+            )
+        );
 
-        $fieldset->addField('image', 'image', array(
-          'label'     => Mage::helper('jet')->__('Image'),
-          'name'      => 'image',
-        ));
+        $fieldset->addField(
+            'image', 'image', array(
+            'label'     => Mage::helper('jet')->__('Image'),
+            'name'      => 'image',
+            )
+        );
 
 
-        $fieldset->addField('qty', 'text', array(
-          'label'     => Mage::helper('jet')->__('Quantity'),
-          'readonly'  => true,
-          'name'      => 'qty',
-        ));
+        $fieldset->addField(
+            'qty', 'text', array(
+            'label'     => Mage::helper('jet')->__('Quantity'),
+            'readonly'  => true,
+            'name'      => 'qty',
+            )
+        );
 
-        $fieldset->addField('price', 'text', array(
-          'label'     => Mage::helper('jet')->__('Product Price'),
-          'name'      => 'price',
-          'readonly'  =>  true,
-        ));
+        $fieldset->addField(
+            'price', 'text', array(
+            'label'     => Mage::helper('jet')->__('Product Price'),
+            'name'      => 'price',
+            'readonly'  =>  true,
+            )
+        );
 
-        $fieldset->addField('status', 'text', array(
-          'label'     => Mage::helper('jet')->__('Status'),
-          'name'      => 'status',
-          'readonly'  =>  true,
-        ));
+        $fieldset->addField(
+            'status', 'text', array(
+            'label'     => Mage::helper('jet')->__('Status'),
+            'name'      => 'status',
+            'readonly'  =>  true,
+            )
+        );
 
         
         if(Mage::registry('prod_data'))
         {
           $form->setValues(Mage::registry('prod_data'));
         }
+
         return parent::_prepareForm();
     }
 }

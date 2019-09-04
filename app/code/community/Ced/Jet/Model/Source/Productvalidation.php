@@ -21,7 +21,7 @@ class Ced_Jet_Model_Source_Productvalidation extends Mage_Eav_Model_Entity_Attri
   
     public function getAllOptions()
     {
-	
+    
         if (is_null($this->_options)) {
             $this->_options = array(
 
@@ -29,7 +29,7 @@ class Ced_Jet_Model_Source_Productvalidation extends Mage_Eav_Model_Entity_Attri
                     'label' => 'Valid',
                     'value' => 'valid'
                 ),
-             	array(
+                 array(
                     'label' =>'Invalid',
                     'value' =>'invalid'
                 ),
@@ -40,6 +40,7 @@ class Ced_Jet_Model_Source_Productvalidation extends Mage_Eav_Model_Entity_Attri
 
             );
         }
+
         return $this->_options;
     }
 
@@ -54,6 +55,7 @@ class Ced_Jet_Model_Source_Productvalidation extends Mage_Eav_Model_Entity_Attri
         foreach ($this->getAllOptions() as $option) {
             $_options[$option['value']] = $option['label'];
         }
+
         return $_options;
     }
 
@@ -71,6 +73,7 @@ class Ced_Jet_Model_Source_Productvalidation extends Mage_Eav_Model_Entity_Attri
                 return $option['label'];
             }
         }
+
         return false;
     }
 

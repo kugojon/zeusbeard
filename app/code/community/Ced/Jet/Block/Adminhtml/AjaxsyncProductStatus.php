@@ -18,16 +18,16 @@
 
 class Ced_Jet_Block_Adminhtml_AjaxsyncProductStatus extends Mage_Adminhtml_Block_Widget_Container
 {
-   	public function __construct()
-    {
+       public function __construct()
+       {
         parent::__construct();
-		$this->setTemplate('ced/jet/ajaxsync_product_status.phtml');
-    }
-	
-	public function totalcount()
+        $this->setTemplate('ced/jet/ajaxsync_product_status.phtml');
+       }
+    
+    public function totalcount()
     {
-		$api_dat = Mage::getSingleton('adminhtml/session')->getStatusSyncChunks();
-		return count($api_dat);
+        $api_dat = Mage::getSingleton('adminhtml/session')->getStatusSyncChunks();
+        return count($api_dat);
     }
    
 }

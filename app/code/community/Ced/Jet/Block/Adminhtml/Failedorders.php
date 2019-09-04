@@ -17,22 +17,24 @@
   */
 class Ced_Jet_Block_Adminhtml_Failedorders extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
-	public function __construct()
-	{
-		
-		$this->_removeButton('add');
-		$this->_controller = 'adminhtml_failedorders';
-		$this->_blockGroup = 'jet';
-		$this->_headerText = Mage::helper('jet')->__('Failed Jet Orders Import Log');
-		
-		$this->_addButton("Clear Failed Import Order Logs", array(
+    public function __construct()
+    {
+        
+        $this->_removeButton('add');
+        $this->_controller = 'adminhtml_failedorders';
+        $this->_blockGroup = 'jet';
+        $this->_headerText = Mage::helper('jet')->__('Failed Jet Orders Import Log');
+        
+        $this->_addButton(
+            "Clear Failed Import Order Logs", array(
                     "label"     => Mage::helper("jet")->__("Clear Failed Import Order Logs"),
                     "onclick"   => "location.href = '".$this->getUrl('adminhtml/adminhtml_jetorder/clearall')."';",
                     "class"     => "btn btn-danger",
-                )); 
-		
-		parent::__construct();
-		$this->removeButton('add');
-	}
+            )
+        ); 
+        
+        parent::__construct();
+        $this->removeButton('add');
+    }
 }
 

@@ -18,20 +18,20 @@
 
 class Ced_Jet_Block_Adminhtml_Mfeeds extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
-	public function __construct()
-	{
-		
-		$this->_controller = 'adminhtml_mfeeds';
-		$this->_blockGroup = 'jet';
-		//$this->_addButtonLabel = 'Sync Feeds';
-		$this->_headerText = Mage::helper('jet')->__('Feeds Files');
-		/*$this->_addButton("Clear All Logs", array(
+    public function __construct()
+    {
+        
+        $this->_controller = 'adminhtml_mfeeds';
+        $this->_blockGroup = 'jet';
+        //$this->_addButtonLabel = 'Sync Feeds';
+        $this->_headerText = Mage::helper('jet')->__('Feeds Files');
+        /*$this->_addButton("Clear All Logs", array(
                     "label"     => Mage::helper("jet")->__("Clear All Logs"),
                     "onclick"   => "location.href = '".$this->getUrl('adminhtml/adminhtml_jetproduct/clearall')."';",
                     "class"     => "btn btn-danger",
                 ));*/
-		parent::__construct();
+        parent::__construct();
     $this->removeButton('add');
 
-	}
+    }
 }

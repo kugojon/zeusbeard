@@ -31,7 +31,8 @@
             if($key < count($cats)-1)
                 $allCats.= ',<br />';
         }
+
         return $allCats;
     }
 
-}
+ }

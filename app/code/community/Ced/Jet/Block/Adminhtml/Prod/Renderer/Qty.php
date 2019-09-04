@@ -16,17 +16,20 @@
   * @license      http://cedcommerce.com/license-agreement.txt
   */
 
-class Ced_Jet_Block_Adminhtml_Prod_Renderer_Qty extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Action { 
-	public function render(Varien_Object $row) {
-					$sku=$row->getSku();
-					$ur = Mage::helper('adminhtml')->getUrl('*/');
-					$zz = array();
-					$zz = explode('index/index',$ur);
+class Ced_Jet_Block_Adminhtml_Prod_Renderer_Qty extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Action
+{
+ 
+    public function render(Varien_Object $row) 
+    {
+                    $sku=$row->getSku();
+                    $ur = Mage::helper('adminhtml')->getUrl('*/');
+                    $zz = array();
+                    $zz = explode('index/index', $ur);
 
-			        //$id=$row->getData('entity_id');
-			        $content='<a href="javascript: void(0);" id="qty_'.$sku.'" onclick="qtyProduct(event,'."'".$sku."'".','."'".$zz[0]."'".')">Get Qty</a>';
-			        $content.='<div class="qtyall" id="qmanage_'.$sku.'" ></div>';
-			        return $content;
-	 
-	 	 }
+                    //$id=$row->getData('entity_id');
+                    $content='<a href="javascript: void(0);" id="qty_'.$sku.'" onclick="qtyProduct(event,'."'".$sku."'".','."'".$zz[0]."'".')">Get Qty</a>';
+                    $content.='<div class="qtyall" id="qmanage_'.$sku.'" ></div>';
+                    return $content;
+     
+    }
 }

@@ -18,19 +18,21 @@
 
 class Ced_Jet_Block_Adminhtml_Rejected extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
-	public function __construct()
-	{
-		
-		$this->_controller = 'adminhtml_rejected';
-		$this->_blockGroup = 'jet';
-		$this->_addButtonLabel = 'Sync Feeds';
-		$this->_headerText = Mage::helper('jet')->__('Sync Feeds');
-		$this->_addButton("Clear All Logs", array(
+    public function __construct()
+    {
+        
+        $this->_controller = 'adminhtml_rejected';
+        $this->_blockGroup = 'jet';
+        $this->_addButtonLabel = 'Sync Feeds';
+        $this->_headerText = Mage::helper('jet')->__('Sync Feeds');
+        $this->_addButton(
+            "Clear All Logs", array(
                     "label"     => Mage::helper("jet")->__("Clear All Logs"),
                     "onclick"   => "location.href = '".$this->getUrl('adminhtml/adminhtml_jetproduct/clearall')."';",
                     "class"     => "btn btn-danger",
-                ));
-		parent::__construct();
+            )
+        );
+        parent::__construct();
 
-	}
+    }
 }

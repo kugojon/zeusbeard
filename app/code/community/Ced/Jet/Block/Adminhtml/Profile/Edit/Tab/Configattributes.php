@@ -57,11 +57,13 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Configattributes
     protected function _prepareLayout()
     {
         $button = $this->getLayout()->createBlock('adminhtml/widget_button')
-            ->setData(array(
+            ->setData(
+                array(
                 'label' => Mage::helper('catalog')->__('Add Attribute'),
                 'onclick' => 'return configAttributeControl.addItem()',
                 'class' => 'add'
-            ));
+                )
+            );
         $button->setName('add_tier_price_item_button');
 
         $this->setChild('add_button', $button);
@@ -101,15 +103,16 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Configattributes
     {
       
         $attributeCollections = Mage::getModel('jet/jetconfattribute')->getCollection();
-        $configAttribute = [];
+        $configAttribute = array();
         foreach ($attributeCollections as $item) {
             $this->_jetAttribute[$item->getJetAttributeName()] = $item->getJetAttributeName();
             $temp = array();
-            $temp['jet_attribute_name'] = $item->getWalmartAttributeName();
+            $temp['jet_attribute_name'] = $item->getJetAttributeName();
             $temp['magento_attribute_code'] = $item->getMagentoAttributeCode();
-            $temp['jet_attribute_type'] = $item->getWalmartAttributeType();
-            $configAttribute[$item->getWalmartAttributeName()] = $temp;
+            $temp['jet_attribute_type'] = $item->getJetAttributeType();
+            $configAttribute[$item->getJetAttributeName()] = $temp;
         }
+
         $this->_jetAttribute = $configAttribute;
         return $this->_jetAttribute;
 
@@ -126,7 +129,7 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Configattributes
     {
         $attributes = Mage::getResourceModel('catalog/product_attribute_collection')
             ->addFieldToFilter('is_configurable', 1)
-            ->addFieldToFilter('frontend_input', ['in' => ['select', 'multiselect']]);
+            ->addFieldToFilter('frontend_input', array('in' => array('select', 'multiselect')));
         $magentoattributeCodeArray = array();
         foreach ($attributes as $attribute) {
             $magentoattributeCodeArray[$attribute->getAttributecode()] = $attribute->getAttributecode();
@@ -156,7 +159,8 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Configattributes
     }
 
 
-    public function getJetAttributeValuesMapping(){
+    public function getJetAttributeValuesMapping()
+    {
         $data = array();
         if($this->_profile && $this->_profile->getId()>0){
             $data = json_decode($this->_profile->getProfileAttributeMapping(), true);

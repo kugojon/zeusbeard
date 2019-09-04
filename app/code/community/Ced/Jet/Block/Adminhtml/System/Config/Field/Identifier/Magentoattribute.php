@@ -73,6 +73,7 @@ class Ced_Jet_Block_Adminhtml_System_Config_Field_Identifier_Magentoattribute ex
                 $this->addOption($attribute['value'], addslashes($attribute['label']));
             }
         }
+
         return parent::_toHtml();
     }
 }

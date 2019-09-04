@@ -21,13 +21,13 @@ class Ced_Jet_Block_Adminhtml_Ajaxunarchieve extends Mage_Adminhtml_Block_Widget
     public function __construct()
     {
         parent::__construct();
-		
+        
         $this->setTemplate('ced/jet/ajaxunarchieve.phtml');
     }
 
     public function totalcount()
     {
-        $api_dat = Mage::getSingleton( 'adminhtml/session' )->getProductUndoArcChunks();
+        $api_dat = Mage::getSingleton('adminhtml/session')->getProductUndoArcChunks();
         return count($api_dat);
     }
 }

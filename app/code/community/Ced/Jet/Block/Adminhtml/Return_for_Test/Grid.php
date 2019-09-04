@@ -38,19 +38,23 @@ class Ced_Jet_Block_Adminhtml_Return_Grid extends Mage_Adminhtml_Block_Widget_Gr
  
     protected function _prepareColumns()
     {
-        $this->addColumn('id', array(
-          'header'    => Mage::helper('jet')->__('ID'),
-          'align'     =>'right',
-          'width'     => '10px',
-          'index'     => 'id',
-        ));
+        $this->addColumn(
+            'id', array(
+            'header'    => Mage::helper('jet')->__('ID'),
+            'align'     =>'right',
+            'width'     => '10px',
+            'index'     => 'id',
+            )
+        );
 
-        $this->addColumn('returnid', array(
-          'header'    => Mage::helper('jet')->__('Return Id'),
-          'align'     =>'left',
-          'index'     => 'returnid',
-          'width'     => '50px',
-        ));
+        $this->addColumn(
+            'returnid', array(
+            'header'    => Mage::helper('jet')->__('Return Id'),
+            'align'     =>'left',
+            'index'     => 'returnid',
+            'width'     => '50px',
+            )
+        );
 
        /* $this->addColumn('real_order_id', array(
             'header'=> Mage::helper('jet')->__('Magento Order #'),
@@ -60,12 +64,14 @@ class Ced_Jet_Block_Adminhtml_Return_Grid extends Mage_Adminhtml_Block_Widget_Gr
             'renderer'  => 'Ced_Jet_Block_Adminhtml_Return_Renderer_Vieworder'
         ));*/
 
-        $this->addColumn('merchant_order_id', array(
-          'header'    => Mage::helper('jet')->__('Merchant Order Id'),
-          'align'     =>'left',
-          'index'     => 'merchant_order_id',
-          'width'     => '50px',
-        ));
+        $this->addColumn(
+            'merchant_order_id', array(
+            'header'    => Mage::helper('jet')->__('Merchant Order Id'),
+            'align'     =>'left',
+            'index'     => 'merchant_order_id',
+            'width'     => '50px',
+            )
+        );
 
          /*$this->addColumn('order_item_id', array(
           'header'    => Mage::helper('jet')->__('Order Item Id'),
@@ -102,14 +108,17 @@ class Ced_Jet_Block_Adminhtml_Return_Grid extends Mage_Adminhtml_Block_Widget_Gr
            'type'	  =>'options',
           'options'   => array('1' => 'Yes', '0' => 'No'),
         ));*/
-        $this->addColumn('status', array(
-          'header'    => Mage::helper('jet')->__('Return Status'),
-          'align'     =>'left',
-          'index'     => 'status',
-          'width'     => '50px',
+        $this->addColumn(
+            'status', array(
+            'header'    => Mage::helper('jet')->__('Return Status'),
+            'align'     =>'left',
+            'index'     => 'status',
+            'width'     => '50px',
          
-        ));
-        $this->addColumn('action',
+            )
+        );
+        $this->addColumn(
+            'action',
             array(
                 'header'    => Mage::helper('jet')->__('Action'),
                 'width'     => '50px',
@@ -129,8 +138,9 @@ class Ced_Jet_Block_Adminhtml_Return_Grid extends Mage_Adminhtml_Block_Widget_Gr
                 'sortable'  => false,
                 'index'     => 'stores',
                 'renderer'  => 'Ced_Jet_Block_Adminhtml_Return_Renderer_Labelaction',
-        ));
-		
+            )
+        );
+        
         $this->addExportType('*/*/exportReturnCsv', Mage::helper('jet')->__('CSV'));
         return parent::_prepareColumns();
     }

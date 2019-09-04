@@ -165,6 +165,14 @@
             </jet>
         </helpers>
          <events>
+             <sales_order_shipment_track_save_after>
+              <observers>
+               <ced_custom_tracking>
+                        <class>Ced_Jet_Model_Observer</class>
+                        <method>getTrackingNumber</method>
+                </ced_custom_tracking>
+              </observers>
+          </sales_order_shipment_track_save_after>
              <cataloginventory_stock_item_save_after>
                  <observers>
                      <inventory_observer>
@@ -226,16 +234,7 @@
                 </jet_catalog_product_delete_before>
             </observers>
         </catalog_product_delete_before>
-        <sales_order_shipment_save_before>
-            <observers>
-                <jet_sales_order_shipment_save_before>
-                    <type>singleton</type>
-                    <class>Ced_Jet_Model_Observer</class>
-                    <method>shipbyjet</method>
-                </jet_sales_order_shipment_save_before>
-            </observers>
-        </sales_order_shipment_save_before>
-     </events>
+    </events>
     </global>
     <default>
         <system>
@@ -347,6 +346,14 @@
             </updates>
         </layout>
         <events>
+            <sales_order_shipment_track_save_after>
+              <observers>
+               <ced_custom_tracking>
+                        <class>Ced_Jet_Model_Observer</class>
+                        <method>getTrackingNumber</method>
+                </ced_custom_tracking>
+              </observers>
+          </sales_order_shipment_track_save_after>
            <core_block_abstract_to_html_before>
                 <observers>
                     <package_test_adminhtml_widget_container_html_before>

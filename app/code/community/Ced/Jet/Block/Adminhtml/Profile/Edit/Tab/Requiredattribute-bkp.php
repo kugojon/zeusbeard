@@ -31,7 +31,7 @@
  * @package    Mage_Adminhtml
  * @author     Magento Core Team <core@magentocommerce.com>
  */
-class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattribute  extends Mage_Adminhtml_Block_Template implements Varien_Data_Form_Element_Renderer_Interface
+class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Requiredattribute  extends Mage_Adminhtml_Block_Template implements Varien_Data_Form_Element_Renderer_Interface
 {
     /**
      * @var Varien_Data_Form_Element_Abstract
@@ -44,7 +44,7 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattribute  extends Ma
     protected function _construct()
     {
         parent::_construct();
-        $this->setTemplate('ced/walmart/profile/requiredattribute.phtml');
+        $this->setTemplate('ced/jet/profile/requiredattribute.phtml');
     }
 
     /**
@@ -125,16 +125,16 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattribute  extends Ma
      *
      * @return string
      */
-    public function getWalmartOnSelectAttributeHtml()
+    public function getJetOnSelectAttributeHtml()
     {
-        print_r($this->_getDisplayOnOptions());die;
-        $selectBlock = $this->getLayout()->createBlock('core/html_select')
+        return;
+       /* $selectBlock = $this->getLayout()->createBlock('core/html_select')
             ->setName('widget_instance[{{id}}][page_group]')
             ->setId('widget_instance[{{id}}][page_group]')
             ->setClass('required-entry page_group_select select')
-            ->setExtraParams("onchange=\"WalmartAttributeInstance.displayPageGroup(this.value+\'_{{id}}\')\"")
-            ->setOptions($this->_getWalmartOnAttributeOptions());
-        return $selectBlock->toHtml();
+            ->setExtraParams("onchange=\"JetAttributeInstance.displayPageGroup(this.value+\'_{{id}}\')\"")
+            ->setOptions($this->_getJetOnAttributeOptions());
+        return $selectBlock->toHtml();*/
     }
 
     /**
@@ -145,7 +145,7 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattribute  extends Ma
      *
      * @return array
      */
-    protected function _getWalmartOnAttributeOptions()
+    protected function _getJetOnAttributeOptions()
     {
         $options = array();
         $options[] = array(
@@ -174,10 +174,13 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattribute  extends Ma
                 'label' => $this->helper('core')->jsQuoteEscape($type['label'])
             );
         }
-        array_unshift($productsOptions, array(
+
+        array_unshift(
+            $productsOptions, array(
             'value' => 'all_products',
             'label' => $this->helper('core')->jsQuoteEscape(Mage::helper('widget')->__('All Product Types'))
-        ));
+            )
+        );
         $options[] = array(
             'label' => $this->helper('core')->jsQuoteEscape(Mage::helper('widget')->__('Products')),
             'value' => $productsOptions
@@ -240,6 +243,7 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattribute  extends Ma
                 'product_type_id' => $typeId
             );
         }
+
         return $container;
     }
 
@@ -267,11 +271,13 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattribute  extends Ma
     public function getAddAttributeButtonHtml()
     {
         $button = $this->getLayout()->createBlock('adminhtml/widget_button')
-            ->setData(array(
+            ->setData(
+                array(
                 'label'     => Mage::helper('widget')->__('Add Attribute'),
-                'onclick'   => 'WalmartAttributeInstance.addAttrbuteGroup({})',
+                'onclick'   => 'JetAttributeInstance.addAttrbuteGroup({})',
                 'class'     => 'add'
-            ));
+                )
+            );
         return $button->toHtml();
     }
 
@@ -283,11 +289,13 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattribute  extends Ma
     public function getRemoveLayoutButtonHtml()
     {
         $button = $this->getLayout()->createBlock('adminhtml/widget_button')
-            ->setData(array(
+            ->setData(
+                array(
                 'label'     => $this->helper('core')->jsQuoteEscape(Mage::helper('widget')->__('Remove Layout Update')),
-                'onclick'   => 'WalmartAttributeInstance.removePageGroup(this)',
+                'onclick'   => 'JetAttributeInstance.removePageGroup(this)',
                 'class'     => 'delete'
-            ));
+                )
+            );
         return $button->toHtml();
     }
 
@@ -298,10 +306,10 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattribute  extends Ma
      */
     public function getPageGroups()
     {
-        $walmartAttributeInstance = $this->getWidgetInstance();
+        $jetAttributeInstance = $this->getWidgetInstance();
         $pageGroups = array();
-        /*if ($walmartAttributeInstance->getPageGroups()) {
-            foreach (walmartAttributeInstance->getPageGroups() as $pageGroup) {
+        /*if ($jetAttributeInstance->getPageGroups()) {
+            foreach (jetAttributeInstance->getPageGroups() as $pageGroup) {
                 $pageGroups[] = array(
                     'page_id' => $pageGroup['page_id'],
                     'group' => $pageGroup['page_group'],

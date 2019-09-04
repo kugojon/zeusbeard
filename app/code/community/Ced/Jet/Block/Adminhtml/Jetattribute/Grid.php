@@ -19,37 +19,37 @@
 
 class Ced_Jet_Block_Adminhtml_Jetattribute_Grid extends Mage_Eav_Block_Adminhtml_Attribute_Grid_Abstract
 {
-	protected function _prepareCollection()
+    protected function _prepareCollection()
     {
-			$data=Mage::getModel('eav/entity_attribute_group')->getCollection()->addFieldToFilter('attribute_group_name','jetcom')->getdata();
-			
-			$groupid=$data[0]['attribute_group_id'];
-			
-			$collection = Mage::getResourceModel('catalog/product_attribute_collection')
-				->addVisibleFilter()
-		   		->setAttributeGroupFilter($groupid);
-			  
-			$jetAttrTable =	Mage::getSingleton('core/resource')->getTableName('jet/jetattribute');
-		
-			$jetGroupIds = $collection->getAllIds();
-			
-			$jetAttr = Mage::getModel('jet/jetattribute')->getCollection();
-			$jetAttrIds = $jetAttr->getColumnValues('magento_attr_id');
-			$jetAttrIds = array_merge($jetGroupIds, $jetAttrIds);
-			
-			$newCollection = Mage::getResourceModel('catalog/product_attribute_collection')->addFieldToFilter('main_table.attribute_id',array('in'=>$jetAttrIds));
-			
-			
-			$newCollection->getSelect()->joinLeft(
-				array('jet_attr'=>$jetAttrTable),
-			   'main_table.attribute_id = jet_attr.magento_attr_id',
-				array('jet_attr_id')
-			);
+            $data=Mage::getModel('eav/entity_attribute_group')->getCollection()->addFieldToFilter('attribute_group_name', 'jetcom')->getdata();
+            
+            $groupid=$data[0]['attribute_group_id'];
+            
+            $collection = Mage::getResourceModel('catalog/product_attribute_collection')
+                ->addVisibleFilter()
+                   ->setAttributeGroupFilter($groupid);
+              
+            $jetAttrTable =    Mage::getSingleton('core/resource')->getTableName('jet/jetattribute');
+        
+            $jetGroupIds = $collection->getAllIds();
+            
+            $jetAttr = Mage::getModel('jet/jetattribute')->getCollection();
+            $jetAttrIds = $jetAttr->getColumnValues('magento_attr_id');
+            $jetAttrIds = array_merge($jetGroupIds, $jetAttrIds);
+            
+            $newCollection = Mage::getResourceModel('catalog/product_attribute_collection')->addFieldToFilter('main_table.attribute_id', array('in'=>$jetAttrIds));
+            
+            
+            $newCollection->getSelect()->joinLeft(
+                array('jet_attr'=>$jetAttrTable),
+                'main_table.attribute_id = jet_attr.magento_attr_id',
+                array('jet_attr_id')
+            );
 
-				$this->setCollection($newCollection);
-			
-			
-		
+                $this->setCollection($newCollection);
+            
+            
+        
         return parent::_prepareCollection();
     }
 
@@ -61,16 +61,19 @@ class Ced_Jet_Block_Adminhtml_Jetattribute_Grid extends Mage_Eav_Block_Adminhtml
     protected function _prepareColumns()
     {
        // Mage_Eav_Block_Adminhtml_Attribute_Grid_Abstract::_prepareColumns();
-		//Mage_Adminhtml_Block_Widget_Grid::_prepareColumns();
+        //Mage_Adminhtml_Block_Widget_Grid::_prepareColumns();
        parent::_prepareColumns();
-		$this->addColumnAfter('jet_attr_id', array(
+        $this->addColumnAfter(
+            'jet_attr_id', array(
             'header'=>Mage::helper('catalog')->__('Jet Attribute Id'),
             'sortable'=>true,
             'index'=>'jet_attr_id',
             'align' => 'center',
-        ), 'frontend_label');
-		
-        $this->addColumnAfter('is_global', array(
+            ), 'frontend_label'
+        );
+        
+        $this->addColumnAfter(
+            'is_global', array(
             'header'=>Mage::helper('catalog')->__('Scope'),
             'sortable'=>true,
             'index'=>'is_global',
@@ -81,9 +84,11 @@ class Ced_Jet_Block_Adminhtml_Jetattribute_Grid extends Mage_Eav_Block_Adminhtml
                 Mage_Catalog_Model_Resource_Eav_Attribute::SCOPE_GLOBAL =>Mage::helper('catalog')->__('Global'),
             ),
             'align' => 'center',
-        ), 'is_visible');
+            ), 'is_visible'
+        );
 
-        $this->addColumn('is_searchable', array(
+        $this->addColumn(
+            'is_searchable', array(
             'header'=>Mage::helper('catalog')->__('Searchable'),
             'sortable'=>true,
             'index'=>'is_searchable',
@@ -93,9 +98,11 @@ class Ced_Jet_Block_Adminhtml_Jetattribute_Grid extends Mage_Eav_Block_Adminhtml
                 '0' => Mage::helper('catalog')->__('No'),
             ),
             'align' => 'center',
-        ), 'is_user_defined');
+            ), 'is_user_defined'
+        );
 
-        $this->addColumnAfter('is_filterable', array(
+        $this->addColumnAfter(
+            'is_filterable', array(
             'header'=>Mage::helper('catalog')->__('Use in Layered Navigation'),
             'sortable'=>true,
             'index'=>'is_filterable',
@@ -106,9 +113,11 @@ class Ced_Jet_Block_Adminhtml_Jetattribute_Grid extends Mage_Eav_Block_Adminhtml
                 '0' => Mage::helper('catalog')->__('No'),
             ),
             'align' => 'center',
-        ), 'is_searchable');
+            ), 'is_searchable'
+        );
 
-        $this->addColumnAfter('is_comparable', array(
+        $this->addColumnAfter(
+            'is_comparable', array(
             'header'=>Mage::helper('catalog')->__('Comparable'),
             'sortable'=>true,
             'index'=>'is_comparable',
@@ -118,12 +127,13 @@ class Ced_Jet_Block_Adminhtml_Jetattribute_Grid extends Mage_Eav_Block_Adminhtml
                 '0' => Mage::helper('catalog')->__('No'),
             ),
             'align' => 'center',
-        ), 'is_filterable');
+            ), 'is_filterable'
+        );
 
         return $this;
     }
-	
-	/**
+    
+    /**
      * Return url of given row
      *
      * @return string
@@ -132,5 +142,5 @@ class Ced_Jet_Block_Adminhtml_Jetattribute_Grid extends Mage_Eav_Block_Adminhtml
     {
         return $this->getUrl('adminhtml/catalog_product_attribute/edit', array('attribute_id' => $row->getAttributeId()));
     }
-	
+    
 }

@@ -23,17 +23,18 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
         return true;
     }
     
-	public function clearallAction(){
-	
-		$resource = Mage::getSingleton('core/resource');
-		$writeConnection = $resource->getConnection('core_write');
-		$query = "TRUNCATE TABLE ". $resource->getTableName('jet/orderimport') ."";
-		$writeConnection->query($query);
-		
-		Mage::getSingleton('adminhtml/session')->addSuccess('Failed Jet.com Order Log cleared.');
-		
-		$this->_redirect('*/*/failedorders');
-	} 
+    public function clearallAction()
+    {
+    
+        $resource = Mage::getSingleton('core/resource');
+        $writeConnection = $resource->getConnection('core_write');
+        $query = "TRUNCATE TABLE ". $resource->getTableName('jet/orderimport') ."";
+        $writeConnection->query($query);
+        
+        Mage::getSingleton('adminhtml/session')->addSuccess('Failed Jet.com Order Log cleared.');
+        
+        $this->_redirect('*/*/failedorders');
+    } 
 
     public function returnAction()
     {
@@ -83,7 +84,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
             $magento_order_id = $helper->getMagentoIncrementOrderId($order_id);
 
             if($magento_order_id!=NULL){
-
                     if (is_numeric($magento_order_id) &&  $magento_order_id == 0) {
                          Mage::getSingleton('adminhtml/session')->addError('Incomplete information of Order in Return.');
                          $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
@@ -99,8 +99,8 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                  Mage::getSingleton('adminhtml/session')->addError('Incomplete information of Order in Return.');
                 $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
                 return;
-
-            }   
+            }
+   
             /*
             if ($magento_order_id == 0) {
                 Mage::getSingleton('adminhtml/session')->addError('Incomplete information of Order in Return.');
@@ -115,8 +115,8 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                 Mage::getSingleton('adminhtml/session')->addError("Order not Exists for this return.");
                 $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
                 return;
-
             }
+
             $refund_flag = false;
             $refund_flag = $helper->checkOrderInRefund($order_id);
             if ($refund_flag) {
@@ -124,6 +124,7 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                 $this->_redirect('adminhtml/adminhtml_jetorder/return');
                 return;
             }
+
             $data_ship['merchant_order_id'] = $order_id;
             $status = $this->getRequest()->getParam('agreeto_return');
             if ($status == 0) {
@@ -131,31 +132,39 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
             } else {
                 $agreeto_return = true;
             }
+
             $data_ship['agree_to_return_charge'] = $agreeto_return;
+            if($agreeto_return == false)
+            {
+                $data_ship['return_charge_feedback'] = $this->getRequest()->getParam('not_agreeto_return');
+            }
             $sku_detail = $this->getRequest()->getParam('sku_details');
             if (count($sku_detail) > 0) {
                 $i = 0;
                 foreach ($sku_detail as $key => $detail) {
                     if ($detail['want_to_return'] == '0') {
-                        continue;
+                        //continue;
                     }
+
                     if ($detail['changes_made'] == '1') {
                         continue;
                     }
+
                     if ($detail['return_quantity'] == "") {
                         Mage::getSingleton('adminhtml/session')->addError("Please enter Qty Returned.");
                         $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
                         return;
                     }
+
                     if ($detail['refund_quantity'] == "") {
                         Mage::getSingleton('adminhtml/session')->addError("Please enter Qty Refunded.");
                         $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
                         return;
                     }
+
                     $detail['return_quantity'] = (int)trim($detail['return_quantity']);
                     $detail['refund_quantity'] = (int)trim($detail['refund_quantity']);
                     if (is_numeric($detail['refund_quantity']) && $detail['refund_quantity'] >= 0 && $detail['refund_quantity'] <= $detail['return_quantity']) {
-
                     } else {
                         Mage::getSingleton('adminhtml/session')->addError("Please enter correct value to Qty Refunded.");
                         $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
@@ -172,6 +181,7 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                         $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
                         return;
                     }
+
                     $qty_already_refunded = 0;
                     $available_to_refund_qty = 0;
                     $qty_ordered = 0;
@@ -183,9 +193,11 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                         $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
                         return;
                     }
+
                     if ($detail['refund_quantity'] < 0) {
                         continue;
                     }
+
                     $arr = array();
                     $arr['order_item_id'] = $detail['order_item_id'];
                     $arr['total_quantity_returned'] = (int)$detail['return_quantity'];
@@ -194,6 +206,7 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                     if ($detail['return_refundfeedback'] != "") {
                         $arr['return_refund_feedback'] = $detail['return_refundfeedback'];
                     }
+
                     $return_principal = "";
                     $return_shipping_tax = "";
                     $return_shipping_cost = "";
@@ -207,11 +220,13 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                         $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
                         return;
                     }
+
                     $arr['refund_amount'] = array('principal' => $return_principal, 'tax' => $return_tax, 'shipping_tax' => $return_shipping_tax, 'shipping_cost' => $return_shipping_tax);
                     $data_ship['items'][] = $arr;
 
                     $i++;
                 }
+
                 if ($i == 0) {
                     Mage::getSingleton('adminhtml/session')->addError("No item's 'Want to Send' is selected Yes to send its data to Jet.com.");
                     $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
@@ -231,10 +246,12 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                             $str = $str . "<br/>" . $val;
                         }
                     }
+
                     Mage::getSingleton('adminhtml/session')->addError($str);
                     $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
                     return;
                 }
+
                 if (empty($responsedata) || $responsedata == "") {
                     $model = "";
                     $details_saved_after = $helper->saveChangesMadeValue($details_saved_after);
@@ -262,11 +279,13 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                             $flag = Mage::helper('jet')->generateCreditMemoForReturn($id);
                         }
                     }
+
                     Mage::getSingleton('adminhtml/session')->addSuccess('Your return has been posted to jet successfully.');
                     if ($agreeto_return) {
                         //$flag=false;
                         //$flag=Mage::helper('jet')->generateCreditMemo($id);
                     }
+
                     $this->_redirect('adminhtml/adminhtml_jetorder/return');
                     return;
                 } else {
@@ -274,19 +293,17 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                     $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
                     return;
                 }
-
             } else {
                 Mage::getSingleton('adminhtml/session')->addError("Return Data Missing.Please try again.");
                 $this->_redirect('adminhtml/adminhtml_jetorder/edit', array('id' => $id));
                 return;
             }
-
-
         } else {
             Mage::getSingleton('adminhtml/session')->addError("Return Id not found.");
             $this->_redirect('adminhtml/adminhtml_jetorder/return');
             return;
         }
+
         /*$this->loadLayout();
         $this->_setActiveMenu('jet/return');
         $this->renderLayout();*/
@@ -315,7 +332,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                 $magento_order_id = $helper->getMagentoIncrementOrderId($return_data['merchant_order_id']);
                 
                 if($magento_order_id!=NULL){
-
                     if (is_numeric($magento_order_id) &&  $magento_order_id == 0) {
                         Mage::getSingleton('adminhtml/session')->addError('Incomplete information of Order in Return.');
                         $this->_redirect('*/*/return');
@@ -331,7 +347,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                     Mage::getSingleton('adminhtml/session')->addError('Incomplete information of Order in Return.');
                     $this->_redirect('*/*/return');
                     return;      
-
                 }      
 
                 //$magento_order_id = $helper->getMagentoIncrementOrderId($return_data['merchant_order_id']);
@@ -347,8 +362,8 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                     Mage::getSingleton('adminhtml/session')->addError("Order not Exists for this return.");
                     $this->_redirect('*/*/return');
                     return;
-
                 }
+
                 $resulting_data = $return_data;
                 $resulting_data['status'] = $returnModel->getData('status');
                 $view_case_for_return = false;
@@ -368,12 +383,9 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                         }
                     }
                 }
-
-
             } 
 
             elseif ($returnModel->getData('return_details') != "") {
-
                 $return_ser_data = "";
                 $return_ser_data = $returnModel->getData('return_details');
 
@@ -390,7 +402,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
 
                 
                if($magento_order_id!=NULL){
-                    
                     if (is_numeric($magento_order_id) &&  $magento_order_id == 0) {
                         Mage::getSingleton('adminhtml/session')->addError('Incomplete information of Order in Return.');
                         $this->_redirect('*/*/return');
@@ -402,12 +413,11 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                         $this->_redirect('*/*/return');
                         return;  
                     }
-                }else{
+               }else{
                     Mage::getSingleton('adminhtml/session')->addError('Incomplete information of Order in Return.');
                     $this->_redirect('*/*/return');
                     return;      
-
-                }      
+               }      
 
 
                 //if ($magento_order_id == 0) {
@@ -422,14 +432,15 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                     Mage::getSingleton('adminhtml/session')->addError("Order not Exists for this return.");
                     $this->_redirect('*/*/return');
                     return;
-
                 }
+
                 $refund_flag = $helper->checkOrderInRefund($return_data->merchant_order_id);
                 if ($refund_flag) {
                     Mage::getSingleton('adminhtml/session')->addError("Refund of this order already exists.Return can't be generated.");
                     $this->_redirect('*/*/return');
                     return;
                 }
+
                 $resulting_data['merchant_return_authorization_id'] = $return_data->merchant_return_authorization_id;
                 $resulting_data['merchant_return_charge'] = $return_data->merchant_return_charge;
                 $resulting_data['reference_order_id'] = $return_data->reference_order_id;
@@ -453,6 +464,7 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                         $this->_redirect('*/*/return');
                         return;
                     }
+
                     //$resulting_data['sku_details']["sku$i"]['created']=0;
                     $resulting_data['sku_details']["sku$i"]['changes_made'] = 0;
                     $resulting_data['sku_details']["sku$i"]['qty_already_refunded'] = $check['qty_already_refunded'];
@@ -468,12 +480,14 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                     $resulting_data['sku_details']["sku$i"]['return_shipping_tax'] = $sku_detail->requested_refund_amount->shipping_tax;
                     $i++;
                 }
+
                 if ($i == 0) {
                     Mage::getSingleton('adminhtml/session')->addError("No items found in return order.");
                     $this->_redirect('*/*/return');
                     return;
                 }
             }
+                
             Mage::register('return_data', $resulting_data);
 
             $this->loadLayout();
@@ -485,9 +499,12 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
             $this->getLayout()->getBlock('head')
                 ->setCanLoadExtJs(true);
 
-            $this->_addContent($this->getLayout()
-                ->createBlock('jet/adminhtml_return_edit'))
-                ->_addLeft($this->getLayout()
+            $this->_addContent(
+                $this->getLayout()
+                ->createBlock('jet/adminhtml_return_edit')
+            )
+                ->_addLeft(
+                    $this->getLayout()
                         ->createBlock('jet/adminhtml_return_edit_tabs')
                 );
             $this->renderLayout();
@@ -603,7 +620,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
             } else {
                 Mage::getSingleton('adminhtml/session')->addError('Your Jet Order ' . $Incrementid . ' has been acknowledged but on updated on Jet.com.');
             }
-
         }
 
         $this->_redirect("adminhtml/sales_order/view", array('order_id' => $orderid));
@@ -647,7 +663,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                 // We have order data form api now save it into registry
                 Mage::register('current_jetorder', $JorderData);
             }
-
         } else {
             Mage::getSingleton('adminhtml/session')->addSuccess('No information found for this jet order.');
 
@@ -694,8 +709,10 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
             if ($order_Ack_status == 'accepted') {
                 Mage::getSingleton('adminhtml/session')->addError('You have to acknowledge order if order Acknowledgement Status is "accepted" othervise select other reasons from acknowledgement status.');
 
-                $this->_redirect('adminhtml/adminhtml_jetorder/rejectreason/',
-                    array('increment_id' => $Incrementid, 'order_id' => $order_id));
+                $this->_redirect(
+                    'adminhtml/adminhtml_jetorder/rejectreason/',
+                    array('increment_id' => $Incrementid, 'order_id' => $order_id)
+                );
             }
 
             // if item level error exist
@@ -713,26 +730,25 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                     $reject_items_arr[] = array(
                         'order_item_acknowledgement_status' => $rej_item_reasonArr[$order_item_level_status[$k]],
                         'order_item_id' => $items_order_idsArr[$k]);
-
                 }
 
                 if ($fullfillsel_count == $count_total) {
-
                     Mage::getSingleton('adminhtml/session')->addError('You can not select all orders item level "fullfillable" if you have selected "Acknowledgement status" rejected - item level error.');
 
-                    $this->_redirect('adminhtml/adminhtml_jetorder/rejectreason',
-                        array('increment_id' => $Incrementid, 'order_id' => $order_id));
+                    $this->_redirect(
+                        'adminhtml/adminhtml_jetorder/rejectreason',
+                        array('increment_id' => $Incrementid, 'order_id' => $order_id)
+                    );
                     return;
                 }
-
             } else { // in normal case
                 foreach ($order_item_level_status as $k => $valdata) {
-
                     $reject_items_arr[] = array(
                         'order_item_acknowledgement_status' => $rej_item_reasonArr[$order_item_level_status[$k]],
                         'order_item_id' => $items_order_idsArr[$k]);
                 }
             }
+
             // All thinsg fine now go for acknowledgement
 
             $data_var = array();
@@ -744,7 +760,7 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
 
             $modeldata = Mage::getModel('jet/jetorder')->getCollection()->addFieldToFilter('magento_order_id', $Incrementid)->getData();
 
-            // var_dump($data_var);echo '<br/><br/>';
+
 
             $data = Mage::helper('jet')->CPutRequest('/orders/' . $merchant_order_id . '/acknowledge', json_encode($data_var));
 
@@ -759,7 +775,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
 
                 $this->_redirect("adminhtml/sales_order/view", array('order_id' => $order_id));
                 return;
-
             } else {
                 // api called successfull
                 $modeldata = Mage::getModel('jet/jetorder')->getCollection()->addFieldToFilter('magento_order_id', $Incrementid)->getData();
@@ -783,20 +798,17 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                                 Mage::getSingleton('adminhtml/session')->addSuccess('Your Jet Order ' . $Incrementid . ' has been rejected');
                             } catch (Exception $e) {
                                 Mage::getSingleton('adminhtml/session')->addError('Your Jet Order rejected on Jet.com but not updated in magento because of this error: ' . $e->getMessage());
-
                             }
                         }
                     } catch (Exception $e) {
                         Mage::getSingleton('adminhtml/session')->addError('Your Jet Order rejected on Jet.com but not updated in magento because of this error: ' . $e->getMessage());
                     }
                 }
-
             }
-
-
         } else {
             Mage::getSingleton('adminhtml/session')->addError('Sorry!! No information found for this order.');
         }
+
         $this->_redirect("adminhtml/sales_order/view", array('order_id' => $order_id));
     }
 
@@ -811,6 +823,7 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
         } else {
             $offset = '.0000000' . trim($offset_end);
         }
+
         $shipTodatetime = strtotime($this->getRequest()->getPost('ship_todate'));
         $exptime = strtotime($this->getRequest()->getPost('exp_deliver'));
         $carrtime = strtotime($this->getRequest()->getPost('carre_pickdate'));
@@ -836,7 +849,9 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
         
 
         if (count($items_data) == 0) {
-            echo "You have no any item in your Order.";
+            $message = "You have no any item in your Order.";
+            $this->getResponse()->setHeader('Content-type', 'application/json');
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
             return;
         }
 
@@ -845,23 +860,34 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
         $city = trim(Mage::getStoreConfig('jet_options/ced_jetaddress/jet_city'));
         $state = trim(Mage::getStoreConfig('jet_options/ced_jetaddress/jet_state'));
         $zip = trim(Mage::getStoreConfig('jet_options/ced_jetaddress/jet_zip'));
-		
+        
 
 
         if (trim($zip) == "") {
-            echo "kindly set zip code from system configuration";
+            $message = "kindly set zip code from system configuration";
+            $this->getResponse()->setHeader('Content-type', 'application/json');
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
             return;
         }
+
         if (trim($state) == "") {
-            echo "kindly set state from system configuration";
+            $message = "kindly set state from system configuration";
+            $this->getResponse()->setHeader('Content-type', 'application/json');
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
             return;
         }
+
         if (trim($city) == "") {
-            echo "kindly set city from system configuration";
+            $message = "kindly set city from system configuration";
+            $this->getResponse()->setHeader('Content-type', 'application/json');
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
             return;
         }
+
         if (trim($address1) == "") {
-            echo "kindly set address from system configuration";
+            $message = "kindly set address from system configuration";
+            $this->getResponse()->setHeader('Content-type', 'application/json');
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
             return;
         }
 
@@ -909,7 +935,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
 
 
         foreach ($items_data as $k => $valdata) {
-
             /* uncomment logic once confirmed by jet for shipment related query */
             //$can_cancel_jetorder++ ;
             /* change logic end */
@@ -918,7 +943,9 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                 continue;
             }*/
 
-            if($valdata[7] <= 0){continue;}
+            if($valdata[7] <= 0){continue;
+            }
+
             $total_avail_qty += $valdata[7];
 
              if($base_order_detail){
@@ -930,12 +957,13 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
             $can_qunt = isset($valdata[2]) ? (int)$valdata[2]  : 0;
 
             $total_jet_orderqty += (int)$valdata[6];
-            if($valdata[2] != 0){$total_jet_cancelqty+=(int)$valdata[2];}
+            if($valdata[2] != 0){$total_jet_cancelqty+=(int)$valdata[2];
+            }
 
             if ($prev_ship_items_info) {
                 $prev_shipped_qty = $prev_ship_items_info[$valdata[0]]['response_shipment_sku_quantity'];
                 $prev_cancelled_qty = $prev_ship_items_info[$valdata[0]]['response_shipment_cancel_qty'];
-                $validate = $jetHelper->validateShipment($ordered_qty , $cancel_qty , $prev_shipped_qty , $prev_cancelled_qty , (int)$valdata[6] , (int)$valdata[2] , $valdata[0]);
+                $validate = $jetHelper->validateShipment($ordered_qty, $cancel_qty, $prev_shipped_qty, $prev_cancelled_qty, (int)$valdata[6], (int)$valdata[2], $valdata[0]);
                 $total_prev_shipped_qty += $prev_shipped_qty;
 
                 if($validate != "clear"){
@@ -957,7 +985,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                 $day_return = isset($valdata[5]) ? (int)$valdata[5] : 0;
 
                 if (($can_qunt <= (int)$valdata[7]) && ($can_qunt != 0)) {
-
                     $updated_qty = (int)$valdata[6];
                     /*$cancel_order = ($updated_qty == 0 ? true : false);*/
                     $shipment_arr[] = array(
@@ -971,6 +998,7 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                     if ($updated_qty != 0) {
                         $ship_qty_for_order[$valdata[0]] = $updated_qty;
                     }
+
                     if($can_qunt != 0){
                         $cancel_qty_for_order[$valdata[0]] = $can_qunt;
                     }
@@ -988,6 +1016,7 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                     if ($updated_qty != 0) {
                         $ship_qty_for_order[$valdata[0]] = $updated_qty;
                     }
+
                     if($can_qunt != 0){
                         $cancel_qty_for_order[$valdata[0]] = $can_qunt;
                     }
@@ -1001,18 +1030,22 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                 if ($updated_qty != 0) {
                     $ship_qty_for_order[$valdata[0]] = $updated_qty;
                 }
+
                 if($can_qunt != 0){
                     $cancel_qty_for_order[$valdata[0]] = $can_qunt;
                 }
             }
         }
+
         if ($error) {
-            echo $errormsg;
+            $message = "kindly set zip code from system configuration";
+            $this->getResponse()->setHeader('Content-type', 'application/json');
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
             return;
         }
 
 
-        $unique_random_number = $id.mt_rand(10,10000);
+        $unique_random_number = $id.mt_rand(10, 10000);
        $data_ship = array();
         $checkShipdata = false;
        
@@ -1034,21 +1067,24 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
             'carrier' => $carrier,
             'shipment_items' => $shipment_arr
         );
-            }
+         }
         else
         {
-    
             $data_ship['shipments'][] = array(
                 'alt_shipment_id' => $unique_random_number,
                 'shipment_items' => $shipment_arr
             );
-
         }
         
         if ($data_ship) {
-            if(($total_jet_orderqty + $total_jet_cancelqty + $real_cancel_qty + $total_prev_shipped_qty) == $total_order_qty){$order_is_complete = true;}
-            if(($total_jet_cancelqty == $total_order_qty) && (!$prev_ship_items_info)){ $cancel_order = true;}
-            if($prev_ship_items_info && ($total_jet_cancelqty == $total_avail_qty)){ $cancel_rest_order = true;}
+            if(($total_jet_orderqty + $total_jet_cancelqty + $real_cancel_qty + $total_prev_shipped_qty) == $total_order_qty){$order_is_complete = true;
+            }
+
+            if(($total_jet_cancelqty == $total_order_qty) && (!$prev_ship_items_info)){ $cancel_order = true;
+            }
+
+            if($prev_ship_items_info && ($total_jet_cancelqty == $total_avail_qty)){ $cancel_rest_order = true;
+            }
 
             $data = Mage::helper('jet')->CPutRequest('/orders/' . $order_id . '/shipped', json_encode($data_ship));
             $responsedata = json_decode($data);
@@ -1065,29 +1101,37 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                     if($ship_qty_for_order[$ship_sku] > 0){
                         $itemQty[$item->getId()] = $ship_qty_for_order[$ship_sku];
                     }
+
                     if($cancel_qty_for_order[$ship_sku] > 0){
                         $itemQtytoCancel[$item->getId()] = $cancel_qty_for_order[$ship_sku];
                     }
                 }
+
                 try {
                     if($cancel_rest_order && $order_is_complete){
                         if(count($itemQtytoCancel)>0){
-                            $this->generateCreditMemo($order ,$itemQtytoCancel);
+                            $this->generateCreditMemo($order, $itemQtytoCancel);
                         }
+
                         $this->markOrderComplete($order);
-                        $this->saveJetShipData($jetmodel , $data_ship , $cancel_order , $order_is_complete);
+                        $this->saveJetShipData($jetmodel, $data_ship, $cancel_order, $order_is_complete);
                         Mage::getSingleton('adminhtml/session')->addSuccess('Your Jet Order ' . $id . ' has been Completed.');
-                        echo "Success";
+                        $message = "Success";
+                        $this->getResponse()->setHeader('Content-type', 'application/json');
+                        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
                         return;
                     }elseif($cancel_order && $order_is_complete){
                         if(count($itemQtytoCancel)>0){
-                            $this->generateCreditMemo($order ,$itemQtytoCancel);
+                            $this->generateCreditMemo($order, $itemQtytoCancel);
                         }
+
                         $this->cancelOrderinMagento($order);
-                        $this->saveJetShipData($jetmodel , $data_ship , $cancel_order , $order_is_complete);
+                        $this->saveJetShipData($jetmodel, $data_ship, $cancel_order, $order_is_complete);
                         $this->markOrderComplete($order);
-                        Mage::getSingleton('adminhtml/session')->addError('Your Jet Order ' . $id . ' has been Cancelled.' );
-                        echo "Success";
+                        Mage::getSingleton('adminhtml/session')->addError('Your Jet Order ' . $id . ' has been Cancelled.');
+                        $message = "Success";
+                        $this->getResponse()->setHeader('Content-type', 'application/json');
+                        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
                         return;
                     }
                     elseif($order_is_complete){
@@ -1095,22 +1139,29 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                             if ($order->canInvoice()) $this->generateInvoice($order, $itemQty);
                             if ($order->canShip()) $this->generateShipment($order, $itemQty);
                         }
+
                         if(count($itemQtytoCancel)>0){
-                            $this->generateCreditMemo($order ,$itemQtytoCancel);
+                            $this->generateCreditMemo($order, $itemQtytoCancel);
                         }
+
                         $this->markOrderComplete($order);
-                        $this->saveJetShipData($jetmodel , $data_ship , $cancel_order , $order_is_complete);
+                        $this->saveJetShipData($jetmodel, $data_ship, $cancel_order, $order_is_complete);
                         Mage::getSingleton('adminhtml/session')->addSuccess('Your Jet Order ' . $id . ' has been Completed.');
-                        echo "Success";
+                        $message = "Success";
+                        $this->getResponse()->setHeader('Content-type', 'application/json');
+                        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
                         return;
                     }elseif($cancel_order){
                         if(count($itemQtytoCancel)>0){
-                            $this->generateCreditMemo($order ,$itemQtytoCancel);
+                            $this->generateCreditMemo($order, $itemQtytoCancel);
                         }
+
                         $this->cancelOrderinMagento($order);
-                        $this->saveJetShipData($jetmodel , $data_ship , $cancel_order , $order_is_complete);
-                        Mage::getSingleton('adminhtml/session')->addError('Order Cancellation request for cancelled item(s) has been sent for Jet Order ' . $id );
-                        echo "Success";
+                        $this->saveJetShipData($jetmodel, $data_ship, $cancel_order, $order_is_complete);
+                        Mage::getSingleton('adminhtml/session')->addError('Order Cancellation request for cancelled item(s) has been sent for Jet Order ' . $id);
+                        $message = "Success";
+                        $this->getResponse()->setHeader('Content-type', 'application/json');
+                        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
                         return;
                     }
                     else{
@@ -1118,24 +1169,34 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                             if ($order->canInvoice()) $this->generateInvoice($order, $itemQty);
                             if ($order->canShip()) $this->generateShipment($order, $itemQty);
                         }
+
                         if(count($itemQtytoCancel)>0){
-                            $this->generateCreditMemo($order ,$itemQtytoCancel);
+                            $this->generateCreditMemo($order, $itemQtytoCancel);
                         }
-                        $this->saveJetShipData($jetmodel , $data_ship , $cancel_order , $order_is_complete);
+
+                        $this->saveJetShipData($jetmodel, $data_ship, $cancel_order, $order_is_complete);
                         Mage::getSingleton('adminhtml/session')->addSuccess('Your Jet Order ' . $id . ' is under progress on Jet .');
-                        echo "Success";
+                        $message = "Success";
+                        $this->getResponse()->setHeader('Content-type', 'application/json');
+                        $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
                         return;
                     }
-
                 } catch (Exception $e) {
-                    echo $e->getMessage();
+                    $message = $e->getMessage();
+                    $this->getResponse()->setHeader('Content-type', 'application/json');
+                    $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
+
                 }
             } else {
-                echo $responsedata->errors[0];
+                $message = $responsedata->errors[0];
+                $this->getResponse()->setHeader('Content-type', 'application/json');
+                $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
                 return;
             }
         } else {
-            echo "You have no information to Ship on Jet.com";
+            $message = "You have no information to Ship on Jet.com";
+            $this->getResponse()->setHeader('Content-type', 'application/json');
+            $this->getResponse()->setBody(Mage::helper('core')->jsonEncode($message));
             return;
         }
 
@@ -1173,7 +1234,8 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
         }
     }
 
-    public function generateCreditMemo($order ,$itemQtytoCancel){
+    public function generateCreditMemo($order ,$itemQtytoCancel)
+    {
         $qtys = array('qtys' => $itemQtytoCancel);
         $service = Mage::getModel('sales/service_order', $order);
         $service->prepareCreditmemo($qtys)->register()->save();
@@ -1194,8 +1256,8 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
             {
            foreach ($model_data as $key => $value) {
             $model = Mage::getModel('jet/autoship')->load($value['id'])->setData('jet_shipment_status', 'shipped')->save();
-            }  
-           }
+           }  
+            }
             
     }
 
@@ -1205,7 +1267,8 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
         if(isset($ship_dbdata)){
             $temp_arr = unserialize($ship_dbdata);
             $temp_arr["shipments"][]=$data_ship["shipments"][0];
-        }else{$temp_arr = $data_ship;}
+        }else{$temp_arr = $data_ship;
+        }
 
         if ($cancel_jet_order) {
             $jetmodel->setStatus('cancelled');
@@ -1222,7 +1285,8 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
         }
     }
 
-    public function cancelOrderinMagento($orderModel){
+    public function cancelOrderinMagento($orderModel)
+    {
         if ($orderModel->canCancel()) {
             $orderModel->cancel();
             $orderModel->setStatus('canceled');
@@ -1247,8 +1311,8 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
         } else {
             $shipping = array();
             $shipping['fulfillment_nodes'][] = array('fulfillment_node_id' => "$fullfillmentnodeid", 'shipping_exceptions' => array(array('shipping_method' => $shippingmethod, 'override_type' => $overridetype, 'shipping_charge_amount' => (int)$chargeamount, 'shipping_exception_type' => $exceptiontype)));
-
         }
+
         $data = Mage::helper('jet')->CPutRequest('/merchant-skus/' . $sku . '/shippingexception', json_encode($shipping));
 
     }
@@ -1261,7 +1325,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
     }
 
     public function gridAction()
-
     {
         $this->loadLayout();
         $this->getResponse()->setBody(
@@ -1373,7 +1436,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
     {
         $successcount = 0;
         if (sizeof($this->getRequest()->getParam('order_ids')) > 0) {
-
             $logjetorders = $this->getRequest()->getParam('order_ids');
             foreach ($logjetorders as $orderid) {
                 $OrderErrorLog = Mage::getModel('jet/orderimport')->load($orderid);
@@ -1387,9 +1449,11 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                 }
             }
         }
+
         if ($successcount > 0) {
             Mage::getSingleton('adminhtml/session')->addSuccess($successcount . ' Jet Order Log Deleted Successfully!');
         }
+
         $this->_redirect('adminhtml/adminhtml_jetorder/failedorders');
     }
 
@@ -1397,7 +1461,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
     {
         $successcount = 0;
         if (sizeof($this->getRequest()->getParam('order_ids')) > 0) {
-
             $jet_orders_ids = $this->getRequest()->getParam('order_ids');
             foreach ($jet_orders_ids as $orderid) {
                 $jet_orders_data = Mage::getModel('jet/jetorder')->load($orderid);
@@ -1411,9 +1474,11 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                 }
             }
         }
+
         if ($successcount > 0) {
             Mage::getSingleton('adminhtml/session')->addSuccess($successcount . ' Jet Order Deleted Successfully!');
         }
+
         $this->_redirect('adminhtml/adminhtml_jetorder/jetorder');
     }
 
@@ -1423,7 +1488,8 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
         $grid = $this->getLayout()->createBlock('jet/adminhtml_return_grid');
         $this->_prepareDownloadResponse($fileName, $grid->getCsvFile());
     }
-    public function autoshipAction(){
+    public function autoshipAction()
+    {
         $this->loadLayout();
         $this->renderLayout();
     }
@@ -1431,7 +1497,6 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
     {
         $successcount = 0;
         if (sizeof($this->getRequest()->getParam('order_ids')) > 0) {
-
             $logjetorders = $this->getRequest()->getParam('order_ids');
             foreach ($logjetorders as $orderid) {
                 $OrderErrorLog = Mage::getModel('jet/autoship')->load($orderid);
@@ -1445,9 +1510,11 @@ class Ced_Jet_Adminhtml_JetorderController extends Ced_Jet_Controller_Adminhtml_
                 }
             }
         }
+
         if ($successcount > 0) {
             Mage::getSingleton('adminhtml/session')->addSuccess($successcount . ' Jet Order shipment Log Deleted Successfully!');
         }
+
         $this->_redirect('adminhtml/adminhtml_jetorder/autoship');
     }
 }

@@ -54,19 +54,23 @@ class Ced_Jet_Block_Adminhtml_Autoship_Grid extends Mage_Adminhtml_Block_Widget_
      */
     protected function _prepareColumns()
     {
-        $this->addColumn('id', array(
+        $this->addColumn(
+            'id', array(
             'header'    => Mage::helper('jet')->__('ID'),
             'align'     =>'right',
             'width'     => '80px',
             'index'     => 'id',
-        ));
-        $this->addColumn('order_id', array(
+            )
+        );
+        $this->addColumn(
+            'order_id', array(
             'header'=> Mage::helper('jet')->__('Magento Order #'),
             'width' => '80px',
             'type'  => 'text',
             'index' => 'order_id',
             'renderer'  => 'Ced_Jet_Block_Adminhtml_Autoship_Renderer_Orderinfo'
-        ));
+            )
+        );
 
        /* $this->addColumn('jet_reference_id', array(
             'header'    => Mage::helper('jet')->__('Magento order ID'),
@@ -83,27 +87,33 @@ class Ced_Jet_Block_Adminhtml_Autoship_Grid extends Mage_Adminhtml_Block_Widget_
             'index'     => 'order_id',
         ));*/
 
-        $this->addColumn('jet_reference_id)', array(
+        $this->addColumn(
+            'jet_reference_id)', array(
             'header'    => Mage::helper('jet')->__('Jet Reference Order ID'),
             'align'     =>'left',
             'index'     => 'jet_reference_id',
-        ));
-        $this->addColumn('error_log',
+            )
+        );
+        $this->addColumn(
+            'error_log',
             array(
                 'header'=> Mage::helper('jet')->__('Reason to failed'),
                 'align'     =>'left',
                 'index' => 'error',
                 'sort'  => false ,
                 'filter' => false ,
-            ));
-        $this->addColumn('jet_shipment_status',
+            )
+        );
+        $this->addColumn(
+            'jet_shipment_status',
             array(
                 'header'=> Mage::helper('jet')->__('Jet Shipment Status'),
                 'align'     =>'left',
                 'index' => 'jet_shipment_status',
                 'sort'  => false ,
                 'filter' => false ,
-            ));
+            )
+        );
 
 
         return parent::_prepareColumns();
@@ -119,10 +129,12 @@ class Ced_Jet_Block_Adminhtml_Autoship_Grid extends Mage_Adminhtml_Block_Widget_
         $this->getMassactionBlock()->setFormFieldName('order_ids');
         $this->getMassactionBlock()->setUseSelectAll(false);
 
-        $this->getMassactionBlock()->addItem('delete', array(
+        $this->getMassactionBlock()->addItem(
+            'delete', array(
              'label'=> Mage::helper('jet')->__('Delete'),
              'url'  => $this->getUrl('adminhtml/adminhtml_jetorder/deleteautoshiplog'),
-        ));
+            )
+        );
 
 
 

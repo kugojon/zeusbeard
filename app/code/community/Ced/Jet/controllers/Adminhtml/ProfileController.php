@@ -49,6 +49,7 @@ class Ced_Jet_Adminhtml_ProfileController extends Ced_Jet_Controller_Adminhtml_M
         } else if ($id > 0) {
             $profile = $profile->load($id);
         }
+
         $this->getRequest()->setParam('is_jet', 1);
         Mage::register('current_profile', $profile);
         return Mage::registry('current_profile');
@@ -61,8 +62,10 @@ class Ced_Jet_Adminhtml_ProfileController extends Ced_Jet_Controller_Adminhtml_M
     {
         $this->loadLayout()
             ->_setActiveMenu('jet/jetprofile')
-            ->_addBreadcrumb(Mage::helper('jet')->__('Jet'),
-                Mage::helper('jet')->__('Profile'));
+            ->_addBreadcrumb(
+                Mage::helper('jet')->__('Jet'),
+                Mage::helper('jet')->__('Profile')
+            );
         return $this;
     }
 
@@ -126,12 +129,19 @@ class Ced_Jet_Adminhtml_ProfileController extends Ced_Jet_Controller_Adminhtml_M
 
         $pcode = $this->getRequest()->getParam('pcode', false);
         $profileData = $this->getRequest()->getPost();
+        $profileProducts = $this->getRequest()->getParam('in_profile_products', null);
+        if(!is_array($this->getRequest()->getParam('in_profile_products', null))) {
+            $profileProducts = explode(',' , $this->getRequest()->getParam('in_profile_products', null));
+        }
+        
+        
+       /* $profileData = $this->getRequest()->getPost();
         //print_r($profileData);die;
         //$resource   = explode(',', $this->getRequest()->getPost('resource', false));
-        /*  print_r($resource);die; */
+          print_r($resource);die; 
         $profileProducts = $this->getRequest()->getParam('in_profile_product', null);
         parse_str($profileProducts, $profileProducts);
-        $profileProducts = array_keys($profileProducts);
+        $profileProducts = array_keys($profileProducts);*/
 
 
         /*        $oldProfileProducts = $this->getRequest()->getParam('in_profile_product_old');
@@ -223,19 +233,23 @@ class Ced_Jet_Adminhtml_ProfileController extends Ced_Jet_Controller_Adminhtml_M
                 array(
                     'back' => 'edit',
                     'tab' => $tab,
+                    'id' =>  $profile->getId(),
                     'active_tab' => null,
                     'pcode' => $pcode,
                     'section' => 'jet_configuration',
                     'website' => $website,
-                ));
+                )
+            );
         } else if ($redirectBack == 'upload') {
-
-            $this->_redirect('adminhtml/adminhtml_jetrequest/uploadproduct', array(
+            $this->_redirect(
+                'adminhtml/adminhtml_jetrequest/uploadproduct', array(
                 'profile_id' => $profile->getId(),
-            ));
+                )
+            );
         } else {
             $this->_redirect('*/*/');
         }
+
         return;
     }
 
@@ -266,6 +280,7 @@ class Ced_Jet_Adminhtml_ProfileController extends Ced_Jet_Controller_Adminhtml_M
             //throw $e;
             return false;
         }
+
         return true;
     }
 
@@ -407,10 +422,10 @@ class Ced_Jet_Adminhtml_ProfileController extends Ced_Jet_Controller_Adminhtml_M
         }
 
         $this->getResponse()->setBody(
-                $this->getLayout()
+            $this->getLayout()
                     ->createBlock('jet/adminhtml_profile_edit_tab_attributes')
                     ->setNodeId($node_id)->toHtml()
-            );
+        );
     }
 
     /**
@@ -428,11 +443,13 @@ class Ced_Jet_Adminhtml_ProfileController extends Ced_Jet_Controller_Adminhtml_M
                         $ids[] = $id;
                     }
                 }
+
                 Mage::getSingleton('adminhtml/session')->addSuccess(Mage::helper('adminhtml')->__("Jet Profiles deleted successfully"));
             } catch (Exception $e) {
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
             }
         }
+
         $this->getResponse()->setRedirect($this->_getRefererUrl());
     }
 
@@ -454,6 +471,7 @@ class Ced_Jet_Adminhtml_ProfileController extends Ced_Jet_Controller_Adminhtml_M
                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage());
             }
         }
+
         $this->_redirect('*/*/');
     }
 
@@ -470,21 +488,21 @@ class Ced_Jet_Adminhtml_ProfileController extends Ced_Jet_Controller_Adminhtml_M
         if ($inline) {
             $profileIds = array($profileIds);
         }
+
         if (!is_array($profileIds)) {
             $this->_getSession()->addError($this->__('Please select profile(s)'));
         } else {
             try {
-
                 foreach ($profileIds as $pId) {
                     $model = Mage::getModel('jet/profile')->load($pId);
                     if ($model && $model->getId() > 0) {
                         $model->setProfileStatus($status)->save();
                     }
                 }
+
                 $this->_getSession()->addSuccess(
                     $this->__('Total of %d record(s) have been updated.', count($profileIds))
                 );
-
             } catch (Mage_Core_Model_Exception $e) {
                 $this->_getSession()->addError($e->getMessage());
             } catch (Mage_Core_Exception $e) {
@@ -524,13 +542,14 @@ class Ced_Jet_Adminhtml_ProfileController extends Ced_Jet_Controller_Adminhtml_M
             $profile = Mage::getModel('jet/profile')->loadByField('profile_code', $pcode);
             if ($profile && $profile->getId()) {
                 Mage::getSingleton('adminhtml/session')->addError(
-                    Mage::helper('jet')->__('Profile code with the same code already exists'));
+                    Mage::helper('jet')->__('Profile code with the same code already exists')
+                );
                 $this->_initLayoutMessages('adminhtml/session');
                 $response->setError(true);
                 $response->setMessage($this->getLayout()->getMessagesBlock()->getGroupedHtml());
-
             }
         }
+
         $this->getResponse()->setBody($response->toJson());
     }
 }

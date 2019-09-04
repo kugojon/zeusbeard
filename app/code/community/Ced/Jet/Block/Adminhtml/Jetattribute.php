@@ -17,13 +17,14 @@
   */
 class Ced_Jet_Block_Adminhtml_Jetattribute extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
-    public function __construct(){
-	    $this->_controller = 'adminhtml_jetattribute';
-	    $this->_blockGroup = 'jet';
-	    $this->_headerText = 'Attribute management';
-	    //$this->_addButtonLabel = 'Import New attribute';
-	    parent::__construct();
-		$this->_removeButton('add');
-	   
+    public function __construct()
+    {
+        $this->_controller = 'adminhtml_jetattribute';
+        $this->_blockGroup = 'jet';
+        $this->_headerText = 'Attribute management';
+        //$this->_addButtonLabel = 'Import New attribute';
+        parent::__construct();
+        $this->_removeButton('add');
+       
     }
 }

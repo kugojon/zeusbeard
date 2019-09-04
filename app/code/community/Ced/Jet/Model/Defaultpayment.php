@@ -31,6 +31,7 @@ class Ced_Jet_Model_Defaultpayment
                 );
             }
         }
+
         return $methods;
     }
 }

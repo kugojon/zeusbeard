@@ -16,16 +16,16 @@
   * @copyright   Copyright CEDCOMMERCE (http://cedcommerce.com/)
   * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
   */
-class Ced_Walmart_Block_Adminhtml_Vendor_Group_Edit_Tab_Resources extends Mage_Adminhtml_Block_Widget_Form
+class Ced_Jet_Block_Adminhtml_Vendor_Group_Edit_Tab_Resources extends Mage_Adminhtml_Block_Widget_Form
 {
-	/**
+    /**
      * Get tab label
      *
      * @return string
      */
     public function getTabLabel()
     {
-        return Mage::helper('walmart')->__('Group Resources');
+        return Mage::helper('jet')->__('Group Resources');
     }
 
     /**
@@ -70,14 +70,14 @@ class Ced_Walmart_Block_Adminhtml_Vendor_Group_Edit_Tab_Resources extends Mage_A
 
         $resources = (array)Mage::getModel('csgroup/groups')->getResourcesList();
 
-		$groupId = 0;
-		
-		$group  = Mage::getModel('csgroup/groups')->loadByField('group_code',$groupCode);
-		
-		if($group && $group->getId()) {
-			$groupId = $group->getId();
-		}
-		
+        $groupId = 0;
+        
+        $group  = Mage::getModel('csgroup/groups')->loadByField('group_code', $groupCode);
+        
+        if($group && $group->getId()) {
+            $groupId = $group->getId();
+        }
+        
         $rules_set = Mage::getResourceModel('csgroup/rules_collection')->getByGroups($groupId)->load();
 
         $selrids = array();
@@ -116,9 +116,9 @@ class Ced_Walmart_Block_Adminhtml_Vendor_Group_Edit_Tab_Resources extends Mage_A
     {
         $rid = Mage::app()->getRequest()->getParam('rid', false);
         $resources = Mage::getModel('csgroup/groups')->getResourcesTree();
-		
+        
         $rootArray = $this->_getNodeJson($resources->vendor, 1);
-		//return print_r($rootArray,true);
+        //return print_r($rootArray,true);
         $json = Mage::helper('core')->jsonEncode(isset($rootArray['children']) ? $rootArray['children'] : array());
         return $json;
     }
@@ -155,11 +155,13 @@ class Ced_Walmart_Block_Adminhtml_Vendor_Group_Edit_Tab_Resources extends Mage_A
             if (in_array($item['id'], $selres))
                 $item['checked'] = true;
         }
+
         if (isset($node->children)) {
             $children = $node->children->children();
         } else {
             $children = $node->children();
         }
+
         if (empty($children)) {
             return $item;
         }
@@ -172,6 +174,7 @@ class Ced_Walmart_Block_Adminhtml_Vendor_Group_Edit_Tab_Resources extends Mage_A
                     if (!(string)$child->title) {
                         continue;
                     }
+
                     if ($level != 0) {
                         $item['children'][] = $this->_getNodeJson($child, $level+1);
                     } else {
@@ -179,10 +182,12 @@ class Ced_Walmart_Block_Adminhtml_Vendor_Group_Edit_Tab_Resources extends Mage_A
                     }
                 }
             }
+
             if (!empty($item['children'])) {
                 usort($item['children'], array($this, '_sortTree'));
             }
         }
+
         return $item;
     }
 }

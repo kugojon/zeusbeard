@@ -38,16 +38,19 @@ class Ced_Jet_Helper_Barcodevalidator extends Mage_Core_Helper_Abstract
     const TYPE_EAN = 'EAN';
     const TYPE_UPC = 'UPC';
     const TYPE_UPC_COUPON_CODE = 'UPC Coupon Code';
-    public function setBarcode($barcode) {
+    public function setBarcode($barcode) 
+    {
         $this->barcode = $barcode;
         // Trims parsed string to remove unwanted whitespace or characters
         $this->barcode = trim($this->barcode);
         if (preg_match('/[^0-9]/', $this->barcode)) {
             return false;
         }
+
         if (!is_string($this->barcode)) {
             $this->barcode = strval($this->barcode);
         }
+
         $this->gtin14 = $this->barcode;
         $length = strlen($this->gtin14);
         if (($length > 11 && $length <= 14) || $length == 8) {
@@ -57,6 +60,7 @@ class Ced_Jet_Helper_Barcodevalidator extends Mage_Core_Helper_Abstract
             for ($i = 0; $i < $zeros; $i++) {
                 $fill .= '0';
             }
+
             $this->gtin14 = $fill . $this->gtin14;
             $fill = null;
             $this->valid = true;
@@ -86,23 +90,29 @@ class Ced_Jet_Helper_Barcodevalidator extends Mage_Core_Helper_Abstract
             return false;
         }
     }
-    public function getBarcode(){
+    public function getBarcode()
+    {
         return $this->barcode;
     }
-    public function getType(){
+    public function getType()
+    {
         return $this->type;
     }
-    public function getGTIN14(){
+    public function getGTIN14()
+    {
         return (string)substr($this->gtin14, -14);
     }
-    public function isValid(){
+    public function isValid()
+    {
         return $this->valid;
     }
-    private function checkDigitValid() {
+    private function checkDigitValid() 
+    {
         $calculation = 0;
         for ($i = 0; $i < (strlen($this->gtin14) - 1); $i++) {
             $calculation += $i % 2 ? $this->gtin14[$i] * 1 : $this->gtin14[$i] * 3;
         }
+
         if (substr(10 - (substr($calculation, -1)), -1) != substr($this->gtin14, -1)) {
             return false;
         } else {
@@ -119,13 +129,16 @@ class Ced_Jet_Helper_Barcodevalidator extends Mage_Core_Helper_Abstract
                 ? 1   // ISBN-10
                 : 2;  // ISBN-13
         }
+
         return false; // No valid ISBN found
     }
-    function isAsin($string){
+    function isAsin($string)
+    {
         $ptn = "/B[0-9]{2}[0-9A-Z]{7}|[0-9]{9}(X|0-9])/";
         if(preg_match($ptn, $string, $matches)){
             return true;
         }
+
         return false;
     }
 }

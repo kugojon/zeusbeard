@@ -18,8 +18,12 @@
 
 class Ced_Jet_Controller_Adminhtml_MainController extends Mage_Adminhtml_Controller_Action
 {
+   protected function _isAllowed()
+ {
+        return true;
+ }
   public function preDispatch()
-    {
+  {
         parent::preDispatch();
 
 
@@ -28,7 +32,6 @@ class Ced_Jet_Controller_Adminhtml_MainController extends Mage_Adminhtml_Control
 
 
         if(Mage::getSingleton('admin/session')->isLoggedIn()){
-
             $isValid = Mage::helper('jet/data')->checkIfCredentialsValid();
 
             $session = Mage::getSingleton('adminhtml/session');
@@ -44,15 +47,15 @@ class Ced_Jet_Controller_Adminhtml_MainController extends Mage_Adminhtml_Control
                       if($item->getText() == $message1)
                         return $this;
                 }
+
                 $session
                     ->addError($message);
                     $session
                     ->addError($message1);
             }
-
         }
 
-    }
+  }
 }
 
 

@@ -18,10 +18,11 @@
 
 class Ced_Jet_Block_Adminhtml_Prod_Renderer_Upload extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Action
 {
-    public function render(Varien_Object $row){
-    	$ur = Mage::helper('adminhtml')->getUrl('*/');
-		$zz = array();
-		$zz = explode('index/index',$ur);
+    public function render(Varien_Object $row)
+    {
+        $ur = Mage::helper('adminhtml')->getUrl('*/');
+        $zz = array();
+        $zz = explode('index/index', $ur);
 
         $id=$row->getData('entity_id');
         $content='<a href="javascript: void(0);" id="upload_'.$id.'" onclick="uploadProduct(event,'.$id.','."'".$zz[0]."'".')">Upload</a>';

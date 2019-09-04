@@ -26,4 +26,3 @@ class Ced_Jet_Block_Adminhtml_Jetorder_Renderer_Customercancel extends Mage_Admi
     }
 
 }
-?>

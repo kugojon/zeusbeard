@@ -16,11 +16,12 @@
   * @license      http://cedcommerce.com/license-agreement.txt
   */
 
-class Ced_Jet_Model_Wship 
+class Ced_Jet_Model_Wship
 {
-    public function jetShipment($order, $comments, $carrierData, $tracking){         
+    public function jetShipment($order, $comments, $carrierData, $tracking)
+    {         
         $orderid = $order->getIncrementId();
-        $jetorder = Mage::getModel('jet/jetorder')->getCollection()->addFieldToFilter('magento_order_id',$orderid)->getFirstItem();
+        $jetorder = Mage::getModel('jet/jetorder')->getCollection()->addFieldToFilter('magento_order_id', $orderid)->getFirstItem();
         $jetorderid = $jetorder->getData('merchant_order_id');
         $jet_order_primary_key =  $jetorder->getData('id');               
 
@@ -42,7 +43,7 @@ class Ced_Jet_Model_Wship
             $Exp_delivery = strtotime('+5 day', $shipTodatetime);
 
             $Ship_todate = date("Y-m-d", $shipTodatetime) . 'T' . date("H:i:s", $shipTodatetime) . $offset;
-            $Exp_delivery = date("Y-m-d",$Exp_delivery ) . 'T' . date("H:i:s", $Exp_delivery) . $offset;
+            $Exp_delivery = date("Y-m-d", $Exp_delivery) . 'T' . date("H:i:s", $Exp_delivery) . $offset;
             $Carr_pickdate = date("Y-m-d", $Carr_pickdate) . 'T' . date("H:i:s", $Carr_pickdate) . $offset;
 
             $id = $orderid;
@@ -59,12 +60,15 @@ class Ced_Jet_Model_Wship
             if (trim($zip) == "") {
                 $flag=false;
             }
+
             if (trim($state) == "") {
                 $flag=false;
             }
+
             if (trim($city) == "") {
                 $flag=false;
             }
+
             if (trim($address1) == "") {
                 $flag=false;
             }  
@@ -100,9 +104,18 @@ class Ced_Jet_Model_Wship
                 }                 
 
                 $carrier = Mage::helper('jet/jet')->getJetShipCarrier($shipStationcarrier);
-                $unique_random_number = $id.mt_rand(10,10000);                
+                $unique_random_number = $id.mt_rand(10, 10000);                
                 $data_ship = array();
-                $data_ship['shipments'][] = array(
+                $checkShipdata = false;
+               
+                foreach ($shipment_arr as $value) {
+                    if (isset($value['response_shipment_sku_quantity']) && $value['response_shipment_sku_quantity']!=0) {
+                       $checkShipdata = true;
+                    }
+                }
+                
+                 if ($checkShipdata) {
+                    $data_ship['shipments'][] = array(
                     'alt_shipment_id' => $unique_random_number,
                     'shipment_tracking_number' => "$tracking",
                     'response_shipment_date' => $Ship_todate,
@@ -113,13 +126,21 @@ class Ced_Jet_Model_Wship
                     'carrier' => $carrier,
                     'shipment_items' => $shipment_arr
                 );
+                 }
+                else
+                {
+                    $data_ship['shipments'][] = array(
+                        'alt_shipment_id' => $unique_random_number,
+                        'shipment_items' => $shipment_arr
+                    );
+                }
 
                 if ($data_ship) {                    
                     $data = Mage::helper('jet')->CPutRequest('/orders/' . $jetorderid . '/shipped', json_encode($data_ship));
                     $responsedata = json_decode($data);
                     $jetmodel = Mage::getModel('jet/jetorder')->load($jet_order_primary_key);
 
-                    if (($responsedata == NULL) || ($responsedata == "") ) {
+                    if (($responsedata == NULL) || ($responsedata == "")) {
                         $jetmodel->setStatus('complete');
                         $jetmodel->setShipmentData(serialize($data_ship));
                         $jetmodel->save();
@@ -135,7 +156,6 @@ class Ced_Jet_Model_Wship
                 $jetAutoshipError = Mage::getSingleton('jet/autoship');
                 $jetAutoshipError->setData($data)->save();
             }
-
         }      
     } 
 }

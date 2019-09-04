@@ -24,7 +24,8 @@ class Ced_Jet_Model_Mysql4_Productchange extends Mage_Core_Model_Mysql4_Abstract
      * Initializing Resource Model
      * @see Mage_Core_Model_Resource_Abstract::_construct()
      */
-    protected function _construct() {
+    protected function _construct() 
+    {
         $this->_init('jet/productchange', 'id');
     }
 
@@ -32,7 +33,7 @@ class Ced_Jet_Model_Mysql4_Productchange extends Mage_Core_Model_Mysql4_Abstract
     public function deleteFromProductChange($productIds)
     {
 
-        if ( count($productIds)<=0) {
+        if (count($productIds)<=0) {
             return $this;
         }
 

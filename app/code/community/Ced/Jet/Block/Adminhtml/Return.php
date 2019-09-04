@@ -20,11 +20,11 @@ class Ced_Jet_Block_Adminhtml_Return extends Mage_Adminhtml_Block_Widget_Grid_Co
 {
     public function __construct()
     {
-	    $this->_controller = 'adminhtml_return';
-	    $this->_blockGroup = 'jet';
-	    $this->_headerText = 'Return management';
-	   $this->_addButtonLabel = 'Fetch New Return';
-	    parent::__construct();
-	   
+        $this->_controller = 'adminhtml_return';
+        $this->_blockGroup = 'jet';
+        $this->_headerText = 'Return management';
+       $this->_addButtonLabel = 'Fetch New Return';
+        parent::__construct();
+       
     }
 }

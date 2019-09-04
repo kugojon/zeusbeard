@@ -22,36 +22,38 @@ class Ced_Jet_Block_Adminhtml_Return_Edit extends Mage_Adminhtml_Block_Widget_Fo
     {
         parent::__construct();
         
-		$this->_removeButton('back');
-        $this->addButton('back', array(
+        $this->_removeButton('back');
+        $this->addButton(
+            'back', array(
             'label'   => $this->__('Back'),
             'onclick' => "setLocation('{$this->getUrl('*/*/return')}')",
             'class'   => 'back'
-        ));         
+            )
+        );         
         $this->_objectId = 'id';
         $this->_blockGroup = 'jet';
         $this->_controller = 'adminhtml_return';
         $this->_removeButton('delete'); 
         $this->_removeButton('reset');
-		if($result=Mage::registry('return_data')){
+        if($result=Mage::registry('return_data')){
             if($result['status']=='completed'){
                   $this->_removeButton('save');
             }else{
                 $this->_updateButton('save', 'label', Mage::helper('jet')->__('Submit Return'));
             }
-           
-		}else{
-			$this->_updateButton('save', 'label', Mage::helper('jet')->__('Submit Return'));
-		}
-	}
+        }else{
+            $this->_updateButton('save', 'label', Mage::helper('jet')->__('Submit Return'));
+        }
+    }
  
     public function getHeaderText()
     {
-        if( Mage::registry('return_data'))
+        if(Mage::registry('return_data'))
         {
             return 'Return Fields';
-            return 'Return Fields'.$this->htmlEscape(
-            Mage::registry('return_data')->getTitle()).'<br />';
+            /*return 'Return Fields'.$this->escapeHtml(
+                Mage::registry('return_data')->getTitle()
+            ).'<br />';*/
         }
     }
 }

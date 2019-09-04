@@ -23,12 +23,12 @@ class Ced_Jet_Model_System_Config_Source_Mapimp extends Mage_Eav_Model_Entity_At
     {
        $options = array();
        $options=array(
- 				array('label' =>'','value' => ''),
- 				array('label' =>'Jet member savings never applied to product','value' => '103'),
- 				array('label' =>'Jet member savings on product only visible to logged in Jet members','value' =>'102'),
- 				array('label' =>'no restrictions on product based pricing','value' =>'101'),
-		);
-		
+                 array('label' =>'','value' => ''),
+                 array('label' =>'Jet member savings never applied to product','value' => '103'),
+                 array('label' =>'Jet member savings on product only visible to logged in Jet members','value' =>'102'),
+                 array('label' =>'no restrictions on product based pricing','value' =>'101'),
+        );
+        
         return $options;
     }
  
@@ -45,7 +45,7 @@ class Ced_Jet_Model_System_Config_Source_Mapimp extends Mage_Eav_Model_Entity_At
                 return $item['label'];
             }
         }
+
         return false;
     }
 }
-?>

@@ -11,7 +11,7 @@
  *
  * @category   Ced
  * @package    Ced_CsRma
- * @author   	CedCommerce Core Team <connect@cedcommerce.com>
+ * @author       CedCommerce Core Team <connect@cedcommerce.com>
  * @copyright  Copyright CEDCOMMERCE (http://cedcommerce.com/)
  * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
@@ -29,22 +29,26 @@ class Ced_Jet_Block_Adminhtml_System_Config_Field_Identifier extends Mage_Adminh
 
     /**
      * Prepare to render
-	 *
-	 * @return void
+     *
+     * @return void
      */
     protected function _prepareToRender()
     {
 
-        $this->addColumn('identifier', array(
+        $this->addColumn(
+            'identifier', array(
             'label' => Mage::helper('jet')->__('Identifier'),
-          //  'renderer' => $this->_getIdentifierRenderer(),
+            //  'renderer' => $this->_getIdentifierRenderer(),
             'style' => 'width:60px',
-        ));
-        $this->addColumn('magento_attribute_code', array(
+            )
+        );
+        $this->addColumn(
+            'magento_attribute_code', array(
             'label' => Mage::helper('jet')->__('Magento Attribute'),
             'renderer' => $this->_getMagentoAttributeRenderer(),
             'style' => 'width:150px',
-        ));
+            )
+        );
 
         $this->_addAfter = false;
        // $this->_addButtonLabel = Mage::helper('jet')->__('Add Rules');
@@ -85,6 +89,7 @@ class Ced_Jet_Block_Adminhtml_System_Config_Field_Identifier extends Mage_Adminh
             $this->_regionRenderer->setClass('input-text required-entry');
             $this->_regionRenderer->setExtraParams('style="width:120px"');
         }
+
         return $this->_regionRenderer;
     }
 
@@ -104,6 +109,7 @@ class Ced_Jet_Block_Adminhtml_System_Config_Field_Identifier extends Mage_Adminh
             $this->_methodRenderer->setClass('customer_group_select');
             $this->_methodRenderer->setExtraParams('style="width:120px"');
         }
+
         return $this->_methodRenderer;
     }
 
@@ -118,6 +124,7 @@ class Ced_Jet_Block_Adminhtml_System_Config_Field_Identifier extends Mage_Adminh
         if (empty($this->_columns[$columnName])) {
             throw new Exception('Wrong column name specified.');
         }
+
         $column     = $this->_columns[$columnName];
         $inputName  = $this->getElement()->getName() . '[#{_id}][' . $columnName . ']';
 

@@ -20,7 +20,7 @@
 class Ced_Jet_Block_Adminhtml_Rejected_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
     public function __construct()
-	{
+    {
         parent::__construct();
 
         $this->_objectId = 'id';
@@ -36,15 +36,15 @@ class Ced_Jet_Block_Adminhtml_Rejected_Edit extends Mage_Adminhtml_Block_Widget_
         }
 
 
-		$this->_removeButton('delete');
-		$this->_removeButton('reset');
-		$this->_removeButton('back');
+        $this->_removeButton('delete');
+        $this->_removeButton('reset');
+        $this->_removeButton('back');
         $data = array(
         'label' =>  'Back',
         'onclick'   => 'setLocation(\'' . $this->getUrl('*/*/rejected') . '\')',
         'class'     =>  'back'
-		);
-		$this->addButton ('back', $data, 0, 100,  'header');     
+        );
+        $this->addButton('back', $data, 0, 100, 'header');     
  
            
     }

@@ -17,20 +17,20 @@
   */
 class Ced_Jet_Block_Adminhtml_Jetorder_Renderer_Vieworder extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
-	
-	 
-	public function render(Varien_Object $row)
-	{
-		$order  = Mage::getModel('sales/order')->loadByIncrementId($row->magento_order_id);
-		$html='';
-		if(sizeof($order)>0){
-			$html = "<a href=". $this->getUrl('adminhtml/sales_order/view',array('order_id'=>$order->getId())).">".$row->magento_order_id."</a>";
-		}else{
-			$html = "<span><strong> Order Not Found!</strong></span>";
-		}
-		return $html;
-	 
-	}	
- 		
+    
+     
+    public function render(Varien_Object $row)
+    {
+        $order  = Mage::getModel('sales/order')->loadByIncrementId($row->magento_order_id);
+        $html='';
+        if(sizeof($order)>0){
+            $html = "<a href=". $this->getUrl('adminhtml/sales_order/view', array('order_id'=>$order->getId())).">".$row->magento_order_id."</a>";
+        }else{
+            $html = "<span><strong> Order Not Found!</strong></span>";
+        }
+
+        return $html;
+     
+    }    
+         
 }
-?>

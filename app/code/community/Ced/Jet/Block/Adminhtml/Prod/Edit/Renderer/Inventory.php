@@ -23,21 +23,21 @@ class Ced_Jet_Block_Adminhtml_Prod_Edit_Renderer_Inventory extends  Varien_Data_
 
     public function getElementHtml()
     {   
-		$prices = $this->getValue();
-		$html = "";
-	    $html .= '<div class="grid"><table><thead><tr class="headings"><th>Fulfillment Node</th><th>Quantity</th></tr></thead>';
-		$html .= '<tbody>';
-		$i=0;
-		foreach($prices as $price){
-			
-		$class="";;
-		if($i++/2==0)
-			$class="even";
-			$html .= '<tr '.$class.'><td>'.$price['fulfillment_node_id'].'</td><td>'.$price['quantity'].'</td></tr>';
-	   	}
-		$html .= '</tbody>';
-	    $html .='</table></div>';
-		
-		return $html;
+        $prices = $this->getValue();
+        $html = "";
+        $html .= '<div class="grid"><table><thead><tr class="headings"><th>Fulfillment Node</th><th>Quantity</th></tr></thead>';
+        $html .= '<tbody>';
+        $i=0;
+        foreach($prices as $price){
+        $class="";;
+        if($i++/2==0)
+            $class="even";
+            $html .= '<tr '.$class.'><td>'.$price['fulfillment_node_id'].'</td><td>'.$price['quantity'].'</td></tr>';
+        }
+
+        $html .= '</tbody>';
+        $html .='</table></div>';
+        
+        return $html;
     }
 }

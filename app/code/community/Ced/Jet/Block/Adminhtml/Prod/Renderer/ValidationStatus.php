@@ -16,8 +16,10 @@
   * @license      http://cedcommerce.com/license-agreement.txt
   */
 
-class Ced_Jet_Block_Adminhtml_Prod_Renderer_ValidationStatus extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Action {
-    public function render(Varien_Object $row) {
+class Ced_Jet_Block_Adminhtml_Prod_Renderer_ValidationStatus extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Action
+{
+    public function render(Varien_Object $row) 
+    {
         $id=$row->getId();
 
         $error="";
@@ -25,14 +27,15 @@ class Ced_Jet_Block_Adminhtml_Prod_Renderer_ValidationStatus extends Mage_Adminh
         $date1="";
         $batchmod=Mage::getModel('catalog/product')->load($id);
         $status = $batchmod->getData('jet_product_validation');
-        $errors = json_decode($batchmod->getData('jet_product_validation_error'),true);
+        $errors = json_decode($batchmod->getData('jet_product_validation_error'), true);
         if(is_null($errors)) {
             $errors = $batchmod->getData('jet_product_validation_error');
         }
+
         $html='';
-        if(!Mage::registry('jet_validation_flag_for_script') ){
+        if(!Mage::registry('jet_validation_flag_for_script')){
             // if($this->getRequest()->getParam('isAjax') == 'true'){
-                Mage::register('jet_validation_flag_for_script' ,  true);
+                Mage::register('jet_validation_flag_for_script', true);
                 $html = '<script>
                                
                                 function bindClick(){
@@ -74,8 +77,8 @@ class Ced_Jet_Block_Adminhtml_Prod_Renderer_ValidationStatus extends Mage_Adminh
                                 
                         </script>';
                         // }
-            
         }
+
         if ($batchmod->getTypeId() == 'configurable' && $errors == '') {
             $sku = $batchmod->getSku();
             $productType = $batchmod->getTypeInstance();
@@ -93,25 +96,28 @@ class Ced_Jet_Block_Adminhtml_Prod_Renderer_ValidationStatus extends Mage_Adminh
             foreach($products as $product)
             {
                 $childProduct=Mage::getModel('catalog/product')->load($product->getId());   
-                $childValidation = json_decode($childProduct->getJetProductValidationError(),true);
+                $childValidation = json_decode($childProduct->getJetProductValidationError(), true);
                if(($childProduct->getJetProductValidation() != '') && ($childProduct->getJetProductValidation() != 'valid')){
                     $temp = '<ul style="list-style:square;color:green;margin-left:50px">';
                    if(is_array($childValidation))
                     foreach ($childValidation as $key => $value) {
                        $temp .= '<li>'.$value.'</li>';
                     }
+
                     $temp .= '</ul>';
                     $errors[] = "SKU -- <span style='color:blue'>".$childProduct->getSku().'</span> : '.$temp;    
-                }
+               }
+
                 if($childProduct->getJetProductValidation() == '')
                     $childErrors[] = $childProduct->getSku();
-            }  
+            }
+  
            if(count($childErrors) == $countOfConfigProducts) {
-                $batchmod->setJetProductValidation('not-validated')->getResource()->saveAttribute($batchmod,'jet_product_validation_error');
+                $batchmod->setJetProductValidation('not-validated')->getResource()->saveAttribute($batchmod, 'jet_product_validation_error');
                 $errors = '';
-            } 
+           } 
             elseif($errors == '' || is_null($errors)){
-                $batchmod->setJetProductValidation('valid')->getResource()->saveAttribute($batchmod,'jet_product_validation');
+                $batchmod->setJetProductValidation('valid')->getResource()->saveAttribute($batchmod, 'jet_product_validation');
                 $errors = 'valid';
             } 
         }
@@ -122,8 +128,7 @@ class Ced_Jet_Block_Adminhtml_Prod_Renderer_ValidationStatus extends Mage_Adminh
         else if($status == 'not_validated'){
             $html .= '<span class="grid-severity-minor"><span>'.$this->__('Not Validated').'</span></span>';
         }
-        else{ 
-           
+        else{
             // $errors = explode(',',$errors);
             $html .= "<div id='errors".$id."' style='padding:20px;display:none'><ul style='list-style:disc;color:red;'>";
 
@@ -140,11 +145,13 @@ class Ced_Jet_Block_Adminhtml_Prod_Renderer_ValidationStatus extends Mage_Adminh
                     foreach ($error as $errorvalue){
                         $html .= '<li>'.$errorvalue.'</li>';
                     }
+
                     $html .='</ul>';
                 }else{
                     $html .= '<li>'.$error.'</li>';
                 }
             }
+
             $html .= '</ul></div>';
             $html .= '<a title="" class="jet_errors" data-id="'.$id.'" href="#"><span class="grid-severity-critical"><span>Invalid</span></span></a>';
         }

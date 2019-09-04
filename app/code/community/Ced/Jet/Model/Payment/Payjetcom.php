@@ -17,42 +17,45 @@
   */
 
  
-class Ced_Jet_Model_Payment_Payjetcom extends Mage_Payment_Model_Method_Abstract {
+class Ced_Jet_Model_Payment_Payjetcom extends Mage_Payment_Model_Method_Abstract
+{
 
-	protected $_code = 'payjetcom';
-	protected $_canAuthorize = true;
-	protected $_canCancelInvoice = false;
-	protected $_canCapture = false;
-	protected $_canCapturePartial = false;
-	protected $_canCreateBillingAgreement = false;
-	protected $_canFetchTransactionInfo = false;
-	protected $_canManageRecurringProfiles = false;
-	protected $_canOrder = false;
-	protected $_canRefund = false;
-	protected $_canRefundInvoicePartial = false;
-	protected $_canReviewPayment = false;
-	/* Setting for disable from front-end. */
-	/* START */
-	protected $_canUseCheckout = false;
-	protected $_canUseForMultishipping = false;
-	protected $_canUseInternal = false; 
-	protected $_canVoid = false;
-	protected $_isGateway = false;
-	protected $_isInitializeNeeded = false;
-	
-	/* END */
+    protected $_code = 'payjetcom';
+    protected $_canAuthorize = true;
+    protected $_canCancelInvoice = false;
+    protected $_canCapture = false;
+    protected $_canCapturePartial = false;
+    protected $_canCreateBillingAgreement = false;
+    protected $_canFetchTransactionInfo = false;
+    protected $_canManageRecurringProfiles = false;
+    protected $_canOrder = false;
+    protected $_canRefund = false;
+    protected $_canRefundInvoicePartial = false;
+    protected $_canReviewPayment = false;
+    /* Setting for disable from front-end. */
+    /* START */
+    protected $_canUseCheckout = false;
+    protected $_canUseForMultishipping = false;
+    protected $_canUseInternal = false; 
+    protected $_canVoid = false;
+    protected $_isGateway = false;
+    protected $_isInitializeNeeded = false;
+    
+    /* END */
 
-	/**
-	 * Check whether payment method can be used
-	 * @param Mage_Sales_Model_Quote
-	 * @return bool
-	 */
-	public function isAvailable($quote = null) {
-		return true;
-	}
-	
-	public function getCode(){
-		return $this->_code;
-	}
+    /**
+     * Check whether payment method can be used
+     * @param Mage_Sales_Model_Quote
+     * @return bool
+     */
+    public function isAvailable($quote = null) 
+    {
+        return true;
+    }
+    
+    public function getCode()
+    {
+        return $this->_code;
+    }
 
 }

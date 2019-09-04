@@ -104,15 +104,19 @@ class Ced_Jet_Model_Product_Attribute_Backend_Standardidentifier
             }
 
 
-            $compare = join('-', array_merge(
-                array($identifierRow['identifier']),
-                $this->_getAdditionalUniqueFields($identifierRow)
-            ));
+            $compare = join(
+                '-', array_merge(
+                    array($identifierRow['identifier']),
+                    $this->_getAdditionalUniqueFields($identifierRow)
+                )
+            );
             if (isset($duplicates[$compare])) {
                 Mage::throwException($this->_getDuplicateErrorMessage());
             }
+
             $duplicates[$compare] = true;
         }
+
         return true;
     }
 
@@ -155,7 +159,7 @@ class Ced_Jet_Model_Product_Attribute_Backend_Standardidentifier
      */
     public function afterLoad($object)
     {
-        $standardIdentifier = $object->getData( $this->getAttribute()->getName());
+        $standardIdentifier = $object->getData($this->getAttribute()->getName());
         $data = array();
         if($standardIdentifier!= NULL && $standardIdentifier!="")
             $data = json_decode($standardIdentifier, true);
@@ -186,6 +190,7 @@ class Ced_Jet_Model_Product_Attribute_Backend_Standardidentifier
                 continue;
             $data[] = $row;
         }
+
         $object->setData($attrCode, json_encode($data));
         return $this;
     }
