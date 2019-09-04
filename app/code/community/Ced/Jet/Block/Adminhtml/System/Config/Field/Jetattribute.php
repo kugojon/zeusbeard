@@ -70,9 +70,9 @@ class Ced_Jet_Block_Adminhtml_System_Config_Field_Jetattribute extends Mage_Core
             $this->addOption('-', '--Not Applicable--');
             foreach ($this->_getJetAttribute() as $id=>$label) {
                 $this->addOption($id, $label);
-
             }
         }
+
         return parent::_toHtml();
     }
 }

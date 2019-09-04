@@ -19,13 +19,13 @@
 
 class Ced_Jet_Block_Adminhtml_Jetcategory extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
-	public function __construct()
-	{
-		parent::__construct();
-		$this->_controller = 'adminhtml_jetcategory';
-		$this->_blockGroup = 'jet';
-		$this->_headerText = Mage::helper('jet')->__('Jet Category Information');
-		$this->removeButton('add');
+    public function __construct()
+    {
+        parent::__construct();
+        $this->_controller = 'adminhtml_jetcategory';
+        $this->_blockGroup = 'jet';
+        $this->_headerText = Mage::helper('jet')->__('Jet Category Information');
+        $this->removeButton('add');
 
-	}
+    }
 }

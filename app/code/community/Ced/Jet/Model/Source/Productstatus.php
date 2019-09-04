@@ -21,39 +21,40 @@ class Ced_Jet_Model_Source_Productstatus extends Mage_Eav_Model_Entity_Attribute
   
     public function getAllOptions()
     {
-	
+    
         if (is_null($this->_options)) {
             $this->_options = array(
                 array(
                     'label' => 'Not Uploaded',
                     'value' => 'not_uploaded'
                 ),
-             	array(
+                 array(
                     'label' =>'Under Jet Review',
                     'value' =>'under_jet_review'
                 ),
-				array(
+                array(
                     'label' => 'Missing Listing Data',
                     'value' =>'missing_listing_data'
                 ),
-				array(
+                array(
                     'label' => 'Excluded',
                     'value' =>'excluded'
                 ),
-				array(
+                array(
                     'label' => 'Unauthorized',
                     'value' =>'unauthorized'
                 ),
-				array(
+                array(
                     'label' => 'Available for Purchase',
                     'value' =>'available_for_purchase'
                 ),
-				array(
+                array(
                     'label' => 'Archived',
                     'value' =>'archived'
                 ),
             );
         }
+
         return $this->_options;
     }
 
@@ -68,6 +69,7 @@ class Ced_Jet_Model_Source_Productstatus extends Mage_Eav_Model_Entity_Attribute
         foreach ($this->getAllOptions() as $option) {
             $_options[$option['value']] = $option['label'];
         }
+
         return $_options;
     }
 
@@ -85,6 +87,7 @@ class Ced_Jet_Model_Source_Productstatus extends Mage_Eav_Model_Entity_Attribute
                 return $option['label'];
             }
         }
+
         return false;
     }
 

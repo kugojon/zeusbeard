@@ -17,52 +17,57 @@
   */
 
 class Ced_Jet_Model_Carrier_Shipjetcom 
-	extends Mage_Shipping_Model_Carrier_Abstract 
-	implements Mage_Shipping_Model_Carrier_Interface {
+    extends Mage_Shipping_Model_Carrier_Abstract 
+    implements Mage_Shipping_Model_Carrier_Interface
+{
 
-	protected $_code = 'shipjetcom';
+    protected $_code = 'shipjetcom';
 
-	/**
-	 * Collect rates for this shipping method based on information in $request
-	 *
-	 * @param Mage_Shipping_Model_Rate_Request $request
-	 * @return Mage_Shipping_Model_Rate_Result
-	 */
-	public function collectRates(Mage_Shipping_Model_Rate_Request $request) {
+    /**
+     * Collect rates for this shipping method based on information in $request
+     *
+     * @param Mage_Shipping_Model_Rate_Request $request
+     * @return Mage_Shipping_Model_Rate_Result
+     */
+    public function collectRates(Mage_Shipping_Model_Rate_Request $request) 
+    {
         if (!Mage::getStoreConfig('carriers/'.$this->_code.'/active')) {
-			return false;
-		}
-		if(Mage::getDesign()->getArea() != Mage_Core_Model_App_Area::AREA_ADMINHTML){
-				return false;
-		}
-		
-		$price = $this->getConfigData('price');
-		// set a default shipping price maybe 0
-		if(!$price)
-			$price = 0;
-			
-		$handling = Mage::getStoreConfig('carriers/'.$this->_code.'/handling');
-		$result = Mage::getModel('shipping/rate_result');
-		
-		$method = Mage::getModel('shipping/rate_result_method');
-		$method->setCarrier($this->_code);
-		$method->setMethod($this->_code);
-		
-		$method->setCarrierTitle($this->getConfigData('title'));
-		$method->setMethodTitle($this->getConfigData('name'));
-		
-		$method->setPrice($price);
-		$method->setCost(0);
-		
-		$result->append($method);		
-		return $result;		
-	}
-	
-	public function getAllowedMethods() {
-		return array($this->_code => $this->getConfigData('title'));
-	}
-	
-	public function getCode(){
-		return $this->_code;
-	}
+            return false;
+        }
+
+        if(Mage::getDesign()->getArea() != Mage_Core_Model_App_Area::AREA_ADMINHTML){
+                return false;
+        }
+        
+        $price = $this->getConfigData('price');
+        // set a default shipping price maybe 0
+        if(!$price)
+            $price = 0;
+            
+        $handling = Mage::getStoreConfig('carriers/'.$this->_code.'/handling');
+        $result = Mage::getModel('shipping/rate_result');
+        
+        $method = Mage::getModel('shipping/rate_result_method');
+        $method->setCarrier($this->_code);
+        $method->setMethod($this->_code);
+        
+        $method->setCarrierTitle($this->getConfigData('title'));
+        $method->setMethodTitle($this->getConfigData('name'));
+        
+        $method->setPrice($price);
+        $method->setCost(0);
+        
+        $result->append($method);        
+        return $result;        
+    }
+    
+    public function getAllowedMethods() 
+    {
+        return array($this->_code => $this->getConfigData('title'));
+    }
+    
+    public function getCode()
+    {
+        return $this->_code;
+    }
 }

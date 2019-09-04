@@ -25,28 +25,24 @@ class Ced_Jet_Adminhtml_JetCategoryController extends Mage_Adminhtml_Controller_
 
     public function categorylistAction()
     {
-       
-        //$res = Mage::helper('jet')->CPostRequest('/reports/ProductStatus','');
-        //$res_response = json_decode($res,true);
-        //after 10 seconds
-        //$get_res = Mage::helper('jet')->CGetRequest('/reports/state/1f62161f48fa465aaed34b35f02cde30');
-        //$get_res = Mage::helper('jet')->CGetRequest('/reports/state/'.$res_response['report_id']);
-        //$dd = json_decode($get_res,true);
-
-       //after 10 seconds
-        //$get_res = Mage::helper('jet')->directfile($dd['report_url']);
-        //zip data add code to read
-        //print_r($get_res);
-        //die('success');
-        if($_GET['sku'])
+        /*$response_simple = Mage::helper('jet')->CGetRequest(rawurlencode('/files/e534ecf5ecbb4e7aba824023fadaa2a1'));
+        print_r($response_simple);die();
+        Mage::getModel('jet/observer')->updateInvcron();die('check feed file now');*/
+        $sku = Mage::app()->getRequest()->getParam('sku');
+        if(isset($sku))
         {
-            $response_simple = Mage::helper('jet')->CGetRequest('/merchant-skus/' . rawurlencode($_GET['sku']));
-            print_r(json_decode($response_simple));die('test');
+            $response_simple = Mage::helper('jet')->CGetRequest('/merchant-skus/' . rawurlencode($sku));
+
+            $this->getResponse()->setHeader('Content-type', 'application/json');
+            $this->getResponse()->setBody($response_simple);
+
         }
-         /*$response_simple = Mage::helper('jet')->CGetRequest('/merchant-skus/' . rawurlencode('jon_snow_child1'));
-            print_r(json_decode($response_simple));die('test');*/
-        $this->loadLayout();
-        $this->renderLayout();
+        else{
+            $this->loadLayout();
+            $this->renderLayout();
+        }
+
+
     }
 
     protected function syncCategory($url, $categoryId = null)
@@ -55,6 +51,7 @@ class Ced_Jet_Adminhtml_JetCategoryController extends Mage_Adminhtml_Controller_
         if (!is_null($categoryId) and is_numeric($categoryId)) {
             $url =  '/taxonomy/nodes/'.$categoryId;
         }
+
         $response = $data->CGetRequest($url);
        
         $jetCategory = json_decode($response, true);
@@ -108,6 +105,7 @@ class Ced_Jet_Adminhtml_JetCategoryController extends Mage_Adminhtml_Controller_
                 }
             }
         }
+
         $this->_redirect('*/adminhtml_jetcategory/categorylist');
     }
 
@@ -135,7 +133,7 @@ class Ced_Jet_Adminhtml_JetCategoryController extends Mage_Adminhtml_Controller_
 
     public function syncAction()
     {
-        Mage::log(date("H:i:s")." Entry", null, 'jet_category_sync.log',true);
+        Mage::log(date("H:i:s")." Entry", null, 'jet_category_sync.log', true);
         $data = Mage::helper('jet');
         $offsets = array('0', '999', '1999', '2999', '3999', '4999', '5999', '6999', '7999', '8999', '9999');
         foreach ($offsets as $offset) {
@@ -146,7 +144,8 @@ class Ced_Jet_Adminhtml_JetCategoryController extends Mage_Adminhtml_Controller_
                 }
             }
         }
-        Mage::log(date("H:i:s")." Exit", null, 'jet_category_sync.log',true);
+
+        Mage::log(date("H:i:s")." Exit", null, 'jet_category_sync.log', true);
         $this->_redirect('*/adminhtml_jetcategory/categorylist');
     }
 
@@ -180,6 +179,7 @@ class Ced_Jet_Adminhtml_JetCategoryController extends Mage_Adminhtml_Controller_
                 $this->_redirect('*/*/categorylist');
                 return;
             }
+
             $attribute = array();
             $attribute = explode(',', $attribute_ids);
             $csv = new Varien_File_Csv();
@@ -190,11 +190,13 @@ class Ced_Jet_Adminhtml_JetCategoryController extends Mage_Adminhtml_Controller_
                 $this->_redirect('*/*/categorylist');
                 return;
             }
+
             if (!file_exists($file)) {
                 Mage::getSingleton('adminhtml/session')->addError('Jet Extension Csv missing please check "Jet_Taxonomy_attribute_value.csv" exist at "var/jetcsv" location.');
                 $this->_redirect('*/*/categorylist');
                 return;
             }
+
             $taxonomy1 = $csv->getData($file1);
             unset($taxonomy1[0]);
             $taxonomy = $csv->getData($file);
@@ -222,24 +224,23 @@ class Ced_Jet_Adminhtml_JetCategoryController extends Mage_Adminhtml_Controller_
                                     $details[$field]['attr_value'] = $details[$field]['attr_value'] . ',' . trim($txt[1]);
                                 }
                             }
+
                             if ($details[$field]['units'] == "") {
                                 if (trim($txt[2]) != "") {
                                     if ($txt[2] != 'NULL') {
-
                                         $details[$field]['units'] = trim($txt[2]);
                                     }
                                 }
-
                             } else {
                                 if (trim($txt[2]) != "") {
                                     $details[$field]['units'] = $details[$field]['units'] . ',' . trim($txt[2]);
                                 }
                             }
-
                         }
                     }
                 }
             }
+
             $collection = "";
             $collection = new Varien_Data_Collection();
 
@@ -254,9 +255,11 @@ class Ced_Jet_Adminhtml_JetCategoryController extends Mage_Adminhtml_Controller_
                         break;
                     }
                 }
+
                 if ($magento_attr_id != "") {
                     $status = "Created";
                 }
+
                 $thing_1 = "";
                 $thing_1 = new Varien_Object();
                 $thing_1->setId($key);
@@ -270,6 +273,7 @@ class Ced_Jet_Adminhtml_JetCategoryController extends Mage_Adminhtml_Controller_
                 $thing_1->setUnits($value['units']);
                 $collection->addItem($thing_1);
             }
+
             Mage::getSingleton('adminhtml/session')->setData('attr_collection', $collection);
             $this->loadLayout();
             $this->renderLayout();

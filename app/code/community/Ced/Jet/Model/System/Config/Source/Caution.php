@@ -22,34 +22,34 @@ class Ced_Jet_Model_System_Config_Source_Caution extends Mage_Eav_Model_Entity_A
     public function getAllOptions($withEmpty = false)
     {
        $options = array();
- 		$options[] = array(
-				'label' =>'no warning applicable',
-				'value' => 'no warning applicable',
-		);
-		$options[] = array(
-				'label' =>'choking hazard small parts',
-				'value' => 'choking hazard small parts',
-		);
-		$options[] = array(
-				'label' =>'choking hazard is a small ball',
-				'value' => 'choking hazard is a small ball',
-		);
-		$options[] = array(
-				'label' =>'choking hazard is a marble',
-				'value' => 'choking hazard is a marble',
-		);
-		$options[] = array(
-				'label' =>'choking hazard contains a small ball',
-				'value' => 'choking hazard contains a small ball',
-		);
-		$options[] = array(
-				'label' =>'choking hazard contains a marble',
-				'value' => 'choking hazard contains a marble',
-		);
-		$options[] = array(
-				'label' =>'choking hazard balloon',
-				'value' => 'choking hazard balloon',
-		);
+         $options[] = array(
+                'label' =>'no warning applicable',
+                'value' => 'no warning applicable',
+        );
+        $options[] = array(
+                'label' =>'choking hazard small parts',
+                'value' => 'choking hazard small parts',
+        );
+        $options[] = array(
+                'label' =>'choking hazard is a small ball',
+                'value' => 'choking hazard is a small ball',
+        );
+        $options[] = array(
+                'label' =>'choking hazard is a marble',
+                'value' => 'choking hazard is a marble',
+        );
+        $options[] = array(
+                'label' =>'choking hazard contains a small ball',
+                'value' => 'choking hazard contains a small ball',
+        );
+        $options[] = array(
+                'label' =>'choking hazard contains a marble',
+                'value' => 'choking hazard contains a marble',
+        );
+        $options[] = array(
+                'label' =>'choking hazard balloon',
+                'value' => 'choking hazard balloon',
+        );
         return $options;
     }
  
@@ -66,7 +66,7 @@ class Ced_Jet_Model_System_Config_Source_Caution extends Mage_Eav_Model_Entity_A
                 return $item['label'];
             }
         }
+
         return false;
     }
 }
-?>

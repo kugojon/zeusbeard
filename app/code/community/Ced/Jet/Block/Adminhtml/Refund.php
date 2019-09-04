@@ -20,15 +20,17 @@ class Ced_Jet_Block_Adminhtml_Refund extends Mage_Adminhtml_Block_Widget_Grid_Co
 {
     public function __construct()
     {
-	    $this->_controller = 'adminhtml_refund';
-	    $this->_blockGroup = 'jet';
-	    $this->_headerText = 'Refund management';
-	    $this->_addButtonLabel = 'Create New Refund';
-	    $this->_addButton("Get Updated Refund Status", array(
+        $this->_controller = 'adminhtml_refund';
+        $this->_blockGroup = 'jet';
+        $this->_headerText = 'Refund management';
+        $this->_addButtonLabel = 'Create New Refund';
+        $this->_addButton(
+            "Get Updated Refund Status", array(
                     "label"     => Mage::helper("jet")->__("Get Updated Refund Status"),
                     "onclick"   => "location.href = '".$this->getUrl('adminhtml/adminhtml_jetrefundsettlement/updaterefund')."';",
                     "class"     => "btn btn-danger",
-                ));
-	    parent::__construct();
+            )
+        );
+        parent::__construct();
     }
 }

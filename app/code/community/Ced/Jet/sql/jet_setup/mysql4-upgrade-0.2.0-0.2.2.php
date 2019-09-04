@@ -17,7 +17,8 @@
   */
 $installer = $this;
 $installer->startSetup();
-$installer->run("
+$installer->run(
+    "
 CREATE TABLE IF NOT EXISTS {$this->getTable('jet/orderimport')} (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `merchant_order_id` text NOT NULL,
@@ -25,7 +26,8 @@ CREATE TABLE IF NOT EXISTS {$this->getTable('jet/orderimport')} (
   `order_item_id` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=11 ;       
-");
+"
+);
 $installer->endSetup();
 
 

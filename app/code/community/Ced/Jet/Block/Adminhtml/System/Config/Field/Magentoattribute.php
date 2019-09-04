@@ -54,7 +54,7 @@ class Ced_Jet_Block_Adminhtml_System_Config_Field_Magentoattribute extends Mage_
         $attributes = Mage::getResourceModel('catalog/product_attribute_collection')
             ->addFieldToFilter('is_configurable', 1)
             ->addFieldToFilter('is_global', 1)
-            ->addFieldToFilter('frontend_input', ['in' => ['select', 'boolean']]);
+            ->addFieldToFilter('frontend_input', array('in' => array('select', 'boolean')));
 
 
 
@@ -63,6 +63,7 @@ class Ced_Jet_Block_Adminhtml_System_Config_Field_Magentoattribute extends Mage_
         foreach ($attributes as $attribute) {
             $arr[] = array('value' =>$attribute->getAttributecode(), 'label'=>$attribute->getAttributecode());
         }
+
         return $arr;
     }
 
@@ -83,6 +84,7 @@ class Ced_Jet_Block_Adminhtml_System_Config_Field_Magentoattribute extends Mage_
                 $this->addOption($attribute['value'], addslashes($attribute['label']));
             }
         }
+
         return parent::_toHtml();
     }
 }

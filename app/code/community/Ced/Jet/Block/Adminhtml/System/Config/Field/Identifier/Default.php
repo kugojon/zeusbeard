@@ -55,6 +55,7 @@ class Ced_Jet_Block_Adminhtml_System_Config_Field_Identifier_Default extends Mag
         foreach ($identifiers as $code=> $value) {
             $arr[] = array('value' =>$code, 'label'=>$value);
         }
+
         return $arr;
     }
 
@@ -74,9 +75,9 @@ class Ced_Jet_Block_Adminhtml_System_Config_Field_Identifier_Default extends Mag
             $this->addOption('', 'Select Jet Attribute');
             foreach ($this->_getDefaultIdentifier() as $id=>$label) {
                 $this->addOption($id, $label);
-
             }
         }
+
         return parent::_toHtml();
     }
 }

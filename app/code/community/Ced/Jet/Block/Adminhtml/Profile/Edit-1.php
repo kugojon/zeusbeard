@@ -16,12 +16,12 @@
   * @copyright   Copyright CEDCOMMERCE (http://cedcommerce.com/)
   * @license      http://cedcommerce.com/license-agreement.txt
   */
-class Ced_Walmart_Block_Adminhtml_Profile_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
+class Ced_Jet_Block_Adminhtml_Profile_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
 {
-	/**
-	 * 
-	 * @return void
-	 * */
+    /**
+     * 
+     * @return void
+     * */
     public function __construct()
     {
         
@@ -30,16 +30,18 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit extends Mage_Adminhtml_Block_Widg
         $this->_blockGroup = 'jet';
         $this->_controller = 'adminhtml_profile';
         
-		parent::__construct();
-		
+        parent::__construct();
+        
         $this->_updateButton('save', 'label', Mage::helper('jet')->__('Save Profile'));
         $this->_removeButton('delete');
-		
-        $this->_addButton('saveandcontinue', array(
+        
+        $this->_addButton(
+            'saveandcontinue', array(
             'label'     => Mage::helper('csgroup')->__('Save and Continue Edit'),
             'onclick'   => 'saveAndContinueEdit(\''.$this->getSaveAndContinueUrl().'\')',
             'class'     => 'save',
-        ), -100);
+            ), -100
+        );
 
         $this->_formScripts[] = "
 			function saveAndContinueEdit(urlTemplate) {
@@ -48,22 +50,24 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit extends Mage_Adminhtml_Block_Widg
 			}
         ";
     }
-	
+    
     /**
      * @return string
      * 
      * */
-	public function getSaveAndContinueUrl()
+    public function getSaveAndContinueUrl()
     {
-        return $this->getUrl('*/*/save', array(
+        return $this->getUrl(
+            '*/*/save', array(
             '_current'   => true,
             'back'       => 'edit',
             'tab'        => '{{tab_id}}',
             'active_tab' => null,
-			'id' => $this->getRequest()->getParam('id',false),
-			'section'=>'ced_jet',
-			'website' => $this->getRequest()->getParam('website',false),
-        ));
+            'id' => $this->getRequest()->getParam('id', false),
+            'section'=>'ced_jet',
+            'website' => $this->getRequest()->getParam('website', false),
+            )
+        );
     }
 
     /**
@@ -73,8 +77,8 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit extends Mage_Adminhtml_Block_Widg
      */
     public function getHeaderText()
     {
-        if( Mage::registry('profile_data') && Mage::registry('profile_data')->getId() ) {
-            return Mage::helper('jet')->__('Edit Profile "%s" ', $this->htmlEscape(Mage::registry('profile_data')->getName()));
+        if(Mage::registry('profile_data') && Mage::registry('profile_data')->getId()) {
+            return Mage::helper('jet')->__('Edit Profile "%s" ', $this->escapeHtml(Mage::registry('profile_data')->getName()));
         } else {
             return Mage::helper('jet')->__('Add New Profile');
         }

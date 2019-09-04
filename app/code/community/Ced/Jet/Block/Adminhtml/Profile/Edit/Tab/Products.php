@@ -18,18 +18,20 @@
   */
 class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Products extends Mage_Adminhtml_Block_Widget_Grid
 {
-	/**
-	 * setting parametrs
-	 * @return void
-	 * 
-	 */
-	public function __construct()
+    protected $_massactionBlockName = 'jet/adminhtml_prod_widget_grid_massaction';
+    /**
+     * setting parametrs
+     * @return void
+     * 
+     */
+    public function __construct()
     {
         parent::__construct();
         $this->setDefaultSort('id');
         $this->setDefaultDir('asc');
         $this->setId('groupProductPpcode');
-        $this->setDefaultFilter(array('in_profile_products'=>1));
+        $this->setDefaultFilter(array('massaction' => 1));
+     //   $this->setDefaultFilter(array('in_profile_products'=>1));
         $this->setUseAjax(true);
     }
 
@@ -40,11 +42,12 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Products extends Mage_Adminhtml_B
      */
     protected function _addColumnFilterToCollection($column)
     {
-        if ($column->getId() == 'in_profile_products') {
+        if ($column->getId() == 'massaction') {
             $inProfileIds = $this->_getProducts();
             if (empty($inProfileIds)) {
                 $inProfileIds = 0;
             }
+
             if ($column->getFilter()->getValue()) {
                 $this->getCollection()->addFieldToFilter('entity_id', array('in'=>$inProfileIds));
             }
@@ -57,8 +60,34 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Products extends Mage_Adminhtml_B
         else {
             parent::_addColumnFilterToCollection($column);
         }
+
         return $this;
     }
+
+
+/*    protected function _addColumnFilterToCollection($column)
+    {
+        if ($column->getId() == 'in_profile_products') {
+            $inProfileIds = $this->_getProducts();
+            if (empty($inProfileIds)) {
+                $inProfileIds = 0;
+            }
+
+            if ($column->getFilter()->getValue()) {
+                $this->getCollection()->addFieldToFilter('entity_id', array('in'=>$inProfileIds));
+            }
+            else {
+                if($inProfileIds) {
+                    $this->getCollection()->addFieldToFilter('entity_id', array('nin'=>$inProfileIds));
+                }
+            }
+        }
+        else {
+            parent::_addColumnFilterToCollection($column);
+        }
+
+        return $this;
+    }*/
 
     /**
      * 
@@ -70,21 +99,24 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Products extends Mage_Adminhtml_B
         $profileCode = $this->getRequest()->getParam('id');
         Mage::register('PCODE', $profileCode);
         $collection = Mage::getModel('catalog/product')
-							->getCollection()
-							->addAttributeToSelect('*')
+                            ->getCollection()
+                            ->addAttributeToSelect('*')
                             ->addAttributeToFilter('type_id', array('in' => array('configurable','simple')))
-                            ->addAttributeToFilter('visibility',  array('neq' => 1)) ;
+                            ->addAttributeToFilter('visibility', array('neq' => 1));
 
         $store = $this->_getStore();
 
         if (Mage::helper('catalog')->isModuleEnabled('Mage_CatalogInventory')) {
-            $collection->joinField('qty',
+            $collection->joinField(
+                'qty',
                 'cataloginventory/stock_item',
                 'qty',
                 'product_id=entity_id',
                 '{{table}}.stock_id=1',
-                'left');
+                'left'
+            );
         }
+
         if ($store->getId()) {
             $adminStore = Mage_Core_Model_App::ADMIN_STORE_ID;
             $collection->addStoreFilter($store);
@@ -134,41 +166,49 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Products extends Mage_Adminhtml_B
      */
     protected function _prepareColumns()
     {
-        $this->addColumn('in_profile_products', array(
+        /*$this->addColumn(
+            'in_profile_products', array(
             'header_css_class' => 'a-center',
             'type'      => 'checkbox',
             'name'      => 'in_profile_products',
             'values'    => $this->_getProducts(),
             'align'     => 'center',
             'index'     => 'entity_id'
-        ));
+            )
+        );*/
 
-        $this->addColumn('entity_id', array(
-			'header'    => Mage::helper('catalog')->__('Id'),
-			'align'     =>'right',
-			'width'     => '50px',
-			'index'     => 'entity_id',
-			'filter_index' => 'entity_id',
-			'type'	  => 'int',
+        $this->addColumn(
+            'entity_id', array(
+            'header'    => Mage::helper('catalog')->__('Id'),
+            'align'     =>'right',
+            'width'     => '50px',
+            'index'     => 'entity_id',
+            'filter_index' => 'entity_id',
+            'type'      => 'int',
 
-        ));
-		
-	    $this->addColumn('name', array(
+            )
+        );
+        
+        $this->addColumn(
+            'name', array(
             'header'        => Mage::helper('catalog')->__('Product Name'),
             'align'         => 'left',
             'type'          => 'text',
             'index'         => 'name',
-			'filter_index' => 'name',
-        ));
+            'filter_index' => 'name',
+            )
+        );
 
-        $this->addColumn('type_id',
+        $this->addColumn(
+            'type_id',
             array(
                 'header'=> Mage::helper('catalog')->__('Type'),
                 'width' => '60px',
                 'index' => 'type_id',
                 'type'  => 'options',
                 'options' => Mage::getSingleton('catalog/product_type')->getOptionArray(),
-            ));
+            )
+        );
 
 
 
@@ -177,49 +217,61 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Products extends Mage_Adminhtml_B
             ->load()
             ->toOptionHash();
 
-        $this->addColumn('set_name',
+        $this->addColumn(
+            'set_name',
             array(
                 'header'=> Mage::helper('catalog')->__('Attrib. Set Name'),
                 'width' => '60px',
                 'index' => 'attribute_set_id',
                 'type'  => 'options',
                 'options' => $sets,
-            ));
+            )
+        );
 
-        $this->addColumn('sku',
+        $this->addColumn(
+            'sku',
             array(
                 'header'=> Mage::helper('catalog')->__('SKU'),
                 'index' => 'sku',
-            ));
+            )
+        );
 
 
         $store = $this->_getStore();
-        $this->addColumn('price',
+        $this->addColumn(
+            'price',
             array(
                 'header'=> Mage::helper('catalog')->__('Price'),
                 'type'  => 'price',
                 'currency_code' => $store->getBaseCurrency()->getCode(),
                 'index' => 'price',
-            ));
+            )
+        );
 
         if (Mage::helper('catalog')->isModuleEnabled('Mage_CatalogInventory')) {
-            $this->addColumn('qty',
+            $this->addColumn(
+                'qty',
                 array(
                     'header'=> Mage::helper('catalog')->__('Qty'),
                     'width' => '50px',
                     'type'  => 'number',
                     'index' => 'qty',
-                ));
+                )
+            );
         }
-        $this->addColumn('status',
+
+        $this->addColumn(
+            'status',
             array(
                 'header'=> Mage::helper('catalog')->__('Status'),
                 'width' => '70px',
                 'index' => 'status',
                 'type'  => 'options',
                 'options' => Mage::getSingleton('catalog/product_status')->getOptionArray(),
-            ));
-      $this->addColumn('category1', array(
+            )
+        );
+      $this->addColumn(
+          'category1', array(
                     'header'    => Mage::helper('jet')->__('Category'),
                     'index'     => 'category1',
                     'sortable'  => false,
@@ -228,20 +280,39 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Products extends Mage_Adminhtml_B
                     'options'   => Mage::getSingleton('jet/system_config_source_category')->toOptionArray(),
                     'renderer'  => 'Ced_Jet_Block_Adminhtml_Prod_Renderer_Category',
                     'filter_condition_callback' => array($this, 'filterCallback'),
-            ),'name');
+          ), 'name'
+      );
 
 
 
         return parent::_prepareColumns();
     }
      public function filterCallback($collection, $column)
-    {
+     {
         $value = $column->getFilter()->getValue();
         $_category = Mage::getModel('catalog/category')->load($value);
         $collection->addCategoryFilter($_category);
         
         return $collection;
+     }
+
+    protected function _prepareMassaction()
+    {
+        $this->setMassactionIdField('in_profile_products');
+        $this->getMassactionBlock()->setFormFieldName('in_profile_products[]');
+
+        $this->getMassactionBlock()->addItem(
+            'addproducts', array(
+                'label'    => Mage::helper('jet')->__('Add Products'),
+                'url'      => $this->getUrl('*/*/massAddproducts'),
+                'confirm'  => Mage::helper('jet')->__('Are you sure?')
+            )
+        );
+
+
+        return $this;
     }
+
 
     /**
      * getting grid url
@@ -262,10 +333,11 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Products extends Mage_Adminhtml_B
      */
     public function _getProducts($json=false)
     {
-        if ( $this->getRequest()->getParam('in_profile_product') != "" ) {
+        if ($this->getRequest()->getParam('in_profile_product') != "") {
             return explode(",", $this->getRequest()->getParam('in_profile_product'));
             //return $this->getRequest()->getParam('in_profile_product');
         }
+
         $profileCode = ( strlen($this->getRequest()->getParam('pcode')) > 0 ) ? $this->getRequest()->getParam('pcode') : Mage::registry('PCODE');
         //$vendors  = Mage::getModel('csmarketplace/vendor')->getCollection()->addAttributeToSelect('*')->addAttributeToFilter('group',array('eq'=>$groupCode));
 
@@ -276,8 +348,8 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Products extends Mage_Adminhtml_B
 
         $products  = Mage::getModel('jet/profileproducts')->getProfileProducts($profileId);
 
-		if (sizeof($products) > 0) {
-            if ( $json ) {
+        if (sizeof($products) > 0) {
+            if ($json) {
                 $jsonProducts = Array();
                 foreach($products as $productId) $jsonProducts[$productId] = 0;
                 return Mage::helper('core')->jsonEncode((object)$jsonProducts);
@@ -285,7 +357,7 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Products extends Mage_Adminhtml_B
                 return array_values($products);
             }
         } else {
-            if ( $json ) {
+            if ($json) {
                 return '{}';
             } else {
                 return array();

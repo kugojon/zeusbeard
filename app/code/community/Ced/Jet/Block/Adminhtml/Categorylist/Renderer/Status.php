@@ -26,14 +26,13 @@ class Ced_Jet_Block_Adminhtml_Categorylist_Renderer_Status extends Mage_Adminhtm
         $status = $row->getStatus();
         if (!empty($status) and $status != '0') {
             $html = '<span style="color: green">Active</span>';
-
         } else {
             $html = '<span style="color: red">Inactive</span>';
         }
+
         return $html;
 
     }
 
 }
 
-?>

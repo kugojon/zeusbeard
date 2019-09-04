@@ -18,8 +18,10 @@
 
 class Ced_Jet_Block_Adminhtml_Attribute_Edit_Tab_Jetattr
     extends Mage_Adminhtml_Block_Template
-    implements Mage_Adminhtml_Block_Widget_Tab_Interface 
-{    
+    implements Mage_Adminhtml_Block_Widget_Tab_Interface
+{
+
+    
     public function _construct()
     {
         parent::_construct();
@@ -27,33 +29,39 @@ class Ced_Jet_Block_Adminhtml_Attribute_Edit_Tab_Jetattr
          
     }
 
-    public function getTabLabel() {
+    public function getTabLabel() 
+    {
         return $this->__('Jet Attribute');
     }
 
-    public function getTabTitle() {
+    public function getTabTitle() 
+    {
         return $this->__('Jet Attribute');
     }
 
-    public function canShowTab() {
+    public function canShowTab() 
+    {
         return true;
     }
 
-    public function isHidden() {
+    public function isHidden() 
+    {
         return false;
     }
 
-    public function getJetAttr(){
-	
-		$attribute_id = $this->getRequest()->getParam('attribute_id');
-		$jetattribute = Mage::getModel('jet/jetattribute');
-		$collection = $jetattribute->getCollection()->addFieldToFilter('magento_attr_id', $attribute_id);
+    public function getJetAttr()
+    {
+    
+        $attribute_id = $this->getRequest()->getParam('attribute_id');
+        $jetattribute = Mage::getModel('jet/jetattribute');
+        $collection = $jetattribute->getCollection()->addFieldToFilter('magento_attr_id', $attribute_id);
 
-		if(count($collection)){
-			return $collection->getFirstItem();
-		}
-		return false;
-			
+        if(count($collection)){
+            return $collection->getFirstItem();
+        }
+
+        return false;
+            
     }
 
 } 

@@ -30,16 +30,20 @@ class Ced_Jet_Block_Adminhtml_Jetcategory_Edit_Tabs extends Mage_Adminhtml_Block
  
   protected function _beforeToHtml()
   {
-      $this->addTab('form_section1', array(
+      $this->addTab(
+          'form_section1', array(
           'label'     => Mage::helper('jet')->__('Product Information'),
           'title'     => Mage::helper('jet')->__('Product Information'),
           'content'   => $this->getLayout()->createBlock('jet/adminhtml_prod_edit_tab_prodform')->toHtml(),
-      ));
-      $this->addTab('form_section2', array(
+          )
+      );
+      $this->addTab(
+          'form_section2', array(
           'label'     => Mage::helper('jet')->__('Shipping Exception'),
           'title'     => Mage::helper('jet')->__('Shipping Exception'),
           'content'   => $this->getLayout()->createBlock('jet/adminhtml_prod_edit_tab_shippingform')->toHtml(),
-      ));
+          )
+      );
       return parent::_beforeToHtml();
   }
 }

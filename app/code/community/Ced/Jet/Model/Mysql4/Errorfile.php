@@ -18,13 +18,13 @@
 
 class Ced_Jet_Model_Mysql4_Errorfile extends Mage_Core_Model_Mysql4_Abstract
 {
-	/**
-	 * Initialize resource model
-	 *
-	 * @return void
-	 */
-	public function _construct()
-	{
-		$this->_init('jet/errorfile', 'id');
-	}
+    /**
+     * Initialize resource model
+     *
+     * @return void
+     */
+    public function _construct()
+    {
+        $this->_init('jet/errorfile', 'id');
+    }
 }

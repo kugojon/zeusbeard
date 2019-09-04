@@ -24,8 +24,10 @@ $this->getConnection()->addColumn($this->getTable('jet/jetorder'), 'reference_or
   
 $installer->endSetup();   
 $installer->startSetup();
-$installer->run("
+$installer->run(
+    "
   ALTER TABLE {$this->getTable('jet/jetorder')} CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
   ALTER TABLE {$this->getTable('jet/jetorder')} CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
-");
+"
+);
 $installer->endSetup();

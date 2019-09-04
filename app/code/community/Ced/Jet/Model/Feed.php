@@ -22,9 +22,9 @@ class Ced_Jet_Model_Feed extends Mage_AdminNotification_Model_Feed
     const XML_FEED_URL_PATH     = 'system/csmarketplace/feed_url';
     const XML_FREQUENCY_PATH    = 'system/csmarketplace/frequency';
     const XML_LAST_UPDATE_PATH  = 'system/csmarketplace/last_update';
-	
-	const XML_FEED_TYPES		= 'cedcore/feeds_group/feeds';
-	const XML_PATH_INSTALLATED_MODULES = 'modules';
+    
+    const XML_FEED_TYPES        = 'cedcore/feeds_group/feeds';
+    const XML_PATH_INSTALLATED_MODULES = 'modules';
 
     /**
      * Feed url
@@ -38,7 +38,8 @@ class Ced_Jet_Model_Feed extends Mage_AdminNotification_Model_Feed
      *
      */
     protected function _construct()
-    {}
+    {
+    }
 
     /**
      * Retrieve feed url
@@ -51,6 +52,7 @@ class Ced_Jet_Model_Feed extends Mage_AdminNotification_Model_Feed
             $this->_feedUrl = (Mage::getStoreConfigFlag(self::XML_USE_HTTPS_PATH) ? 'https://' : 'http://')
                 . Mage::getStoreConfig(self::XML_FEED_URL_PATH);
         }
+
         return $this->_feedUrl;
     }
 
@@ -60,66 +62,66 @@ class Ced_Jet_Model_Feed extends Mage_AdminNotification_Model_Feed
      * @return Mage_AdminNotification_Model_Feed
      */
     public function checkUpdate()
-    {	
-		/*if (($this->getFrequency() + $this->getLastUpdate()) > time()) {
+    {    
+        /*if (($this->getFrequency() + $this->getLastUpdate()) > time()) {
 			return $this;
 		}*/
-		$cedModules = Mage::helper('jet/core')->getCedCommerceExtensions();		
-		
+        $cedModules = Mage::helper('jet/core')->getCedCommerceExtensions();        
+        
         $feedData = array();
 
-		$feed = array();
-		
+        $feed = array();
+        
         $feedXml = $this->getFeedData(Mage::helper('jet/core')->getEnvironmentInformation());
-		
-		$allowedFeedType = explode(',',Mage::getStoreConfig(self::XML_FEED_TYPES));
-		
+        
+        $allowedFeedType = explode(',', Mage::getStoreConfig(self::XML_FEED_TYPES));
+        
         if ($feedXml && $feedXml->channel && $feedXml->channel->item) {
-			
-			foreach ($feedXml->channel->item as $item) {
-				if(Mage::helper('jet/core')->isAllowedFeedType($item)) {
-					if(strlen(trim($item->module)) > 0) {
-						if(isset($feedData[trim((string)$item->module)]) && isset($feedData[trim((string)$item->module)]['release_version']) && strlen((string)$item->release_version) > 0 && version_compare($feedData[trim((string)$item->module)]['release_version'],trim((string)$item->release_version), '>')===true) {
-							continue;
-						}
-						$feedData[trim((string)$item->module)] = array(
-												'severity'      	=> (int)$item->severity,
-												'date_added'    	=> $this->getDate((string)$item->pubDate),
-												'title'         	=> (string)$item->title,
-												'description'   	=> (string)$item->description,
-												'url'           	=> (string)$item->link,
-												'module'        	=> (string)$item->module,
-												'release_version'   => (string)$item->release_version,
-												'update_type'       => (string)$item->update_type,
-											);
-						if(strlen((string)$item->warning) > 0) {
-							$feedData[trim((string)$item->module)]['warning'] = (string)$item->warning;
-						}
-						
-						if(strlen((string)$item->product_url) > 0) {
-							$feedData[trim((string)$item->module)]['url'] = (string)$item->product_url;
-						}
-						
-					}
-					
-					$feed[] = array(
-									'severity'      	=> (int)$item->severity,
-									'date_added'    	=> $this->getDate((string)$item->pubDate),
-									'title'         	=> (string)$item->title,
-									'description'   	=> (string)$item->description,
-									'url'           	=> (string)$item->link
-								);
-				}
+            foreach ($feedXml->channel->item as $item) {
+                if(Mage::helper('jet/core')->isAllowedFeedType($item)) {
+                    if(strlen(trim($item->module)) > 0) {
+                        if(isset($feedData[trim((string)$item->module)]) && isset($feedData[trim((string)$item->module)]['release_version']) && strlen((string)$item->release_version) > 0 && version_compare($feedData[trim((string)$item->module)]['release_version'], trim((string)$item->release_version), '>')===true) {
+                            continue;
+                        }
+
+                        $feedData[trim((string)$item->module)] = array(
+                                                'severity'          => (int)$item->severity,
+                                                'date_added'        => $this->getDate((string)$item->pubDate),
+                                                'title'             => (string)$item->title,
+                                                'description'       => (string)$item->description,
+                                                'url'               => (string)$item->link,
+                                                'module'            => (string)$item->module,
+                                                'release_version'   => (string)$item->release_version,
+                                                'update_type'       => (string)$item->update_type,
+                                            );
+                        if(strlen((string)$item->warning) > 0) {
+                            $feedData[trim((string)$item->module)]['warning'] = (string)$item->warning;
+                        }
+                        
+                        if(strlen((string)$item->product_url) > 0) {
+                            $feedData[trim((string)$item->module)]['url'] = (string)$item->product_url;
+                        }
+                    }
+                    
+                    $feed[] = array(
+                                    'severity'          => (int)$item->severity,
+                                    'date_added'        => $this->getDate((string)$item->pubDate),
+                                    'title'             => (string)$item->title,
+                                    'description'       => (string)$item->description,
+                                    'url'               => (string)$item->link
+                                );
+                }
             }
-			
+            
             if ($feed) {
                 Mage::getModel('adminnotification/inbox')->parse(array_reverse($feed));
             }
-			if($feedData) {
-				Mage::app()->saveCache(serialize($feedData), 'all_extensions_by_cedcommerce');
-			}
 
+            if($feedData) {
+                Mage::app()->saveCache(serialize($feedData), 'all_extensions_by_cedcommerce');
+            }
         }
+
         $this->setLastUpdate();
 
         return $this;
@@ -175,28 +177,31 @@ class Ced_Jet_Model_Feed extends Mage_AdminNotification_Model_Feed
     public function getFeedData($urlParams = array())
     {
         $curl = new Varien_Http_Adapter_Curl();
-        $curl->setConfig(array(
+        $curl->setConfig(
+            array(
             'timeout'   => 2
-        ));
-		$body = '';
-		if (is_array($urlParams) && count($urlParams) > 0) {
-			$body = Mage::helper('jet/core')->addParams('',$urlParams);
-			$body = trim($body,'?');
-		}
+            )
+        );
+        $body = '';
+        if (is_array($urlParams) && count($urlParams) > 0) {
+            $body = Mage::helper('jet/core')->addParams('', $urlParams);
+            $body = trim($body, '?');
+        }
 
-		try {
-			$curl->write(Zend_Http_Client::POST, $this->getFeedUrl(), '1.1',array(),$body);
-			$data = $curl->read();
-			if ($data === false) {
-				return false;
-			}
-			$data = preg_split('/^\r?$/m', $data, 2);
-			$data = trim($data[1]);
-		
-			$curl->close();
+        try {
+            $curl->write(Zend_Http_Client::POST, $this->getFeedUrl(), '1.1', array(), $body);
+            $data = $curl->read();
+            if ($data === false) {
+                return false;
+            }
+
+            $data = preg_split('/^\r?$/m', $data, 2);
+            $data = trim($data[1]);
+        
+            $curl->close();
             $xml  = new SimpleXMLElement($data);
         } catch (Exception $e) {
-			return false;
+            return false;
         }
 
         return $xml;

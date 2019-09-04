@@ -22,8 +22,8 @@ class Ced_Jet_Block_Cedcommerce_Store extends Mage_Adminhtml_Block_System_Config
     protected $_dummyElement;
     protected $_fieldRenderer;
     protected $_values;
-	protected $_cedCommerceStoreUrl;
-	
+    protected $_cedCommerceStoreUrl;
+    
     public function render(Varien_Data_Form_Element_Abstract $element)
     {
         return '<div><div><div id="' . $element->getId() . '">
@@ -34,8 +34,8 @@ class Ced_Jet_Block_Cedcommerce_Store extends Mage_Adminhtml_Block_System_Config
 				</div>
 				';
     }
-	
-	/**
+    
+    /**
      * Retrieve feed url
      *
      * @return string
@@ -45,6 +45,7 @@ class Ced_Jet_Block_Cedcommerce_Store extends Mage_Adminhtml_Block_System_Config
         if (is_null($this->_cedCommerceStoreUrl)) {
             $this->_cedCommerceStoreUrl = Mage::app()->getStore()->isCurrentlySecure() ? 'https://cedcommerce.com/store/' : 'http://cedcommerce.com/store/';
         }
+
         return $this->_cedCommerceStoreUrl;
     }
 }

@@ -26,18 +26,22 @@ class Ced_Jet_Block_Adminhtml_Categorylist extends Mage_Adminhtml_Block_Widget_G
         parent::__construct();
         $this->_removeButton('add');
 
-        $this->addButton('sears_category_sync',
+        $this->addButton(
+            'sears_category_sync',
             array(
                 'label' => Mage::helper('jet')->__('Sync Category'),
                 'onclick' => "window.location.href='" . $this->getUrl(
-                    'adminhtml/adminhtml_jetcategory/sync') . "'",
+                    'adminhtml/adminhtml_jetcategory/sync'
+                ) . "'",
             )
         );
-        $this->addButton('sears_category_attribute_sync',
+        $this->addButton(
+            'sears_category_attribute_sync',
             array(
                 'label' => Mage::helper('jet')->__('Sync Attribute'),
                 'onclick' => "window.location.href='" . $this->getUrl(
-                    'adminhtml/adminhtml_jetcategory/syncattributes') . "'",
+                    'adminhtml/adminhtml_jetcategory/syncattributes'
+                ) . "'",
             )
         );
     }

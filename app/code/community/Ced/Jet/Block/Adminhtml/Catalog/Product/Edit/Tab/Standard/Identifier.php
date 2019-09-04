@@ -56,11 +56,13 @@ class Ced_Jet_Block_Adminhtml_Catalog_Product_Edit_Tab_Standard_Identifier
     protected function _prepareLayout()
     {
         $button = $this->getLayout()->createBlock('adminhtml/widget_button')
-            ->setData(array(
+            ->setData(
+                array(
                 'label' => Mage::helper('catalog')->__('Add Identifier'),
                 'onclick' => 'return standardIdentifier.addItem()',
                 'class' => 'add'
-            ));
+                )
+            );
         $button->setName('add_standard_identifier_item_button');
 
         $this->setChild('add_button', $button);
@@ -107,7 +109,8 @@ class Ced_Jet_Block_Adminhtml_Catalog_Product_Edit_Tab_Standard_Identifier
 
 
 
-    public function getStandardIdentifiersMapping(){
+    public function getStandardIdentifiersMapping()
+    {
         $data = array();
         if($this->_product && $this->_product->getId()){
             $data = $this->_product->getData('standard_identifier');
@@ -118,6 +121,7 @@ class Ced_Jet_Block_Adminhtml_Catalog_Product_Edit_Tab_Standard_Identifier
                 break;
             }
         }
+
         return $data;
     }
 

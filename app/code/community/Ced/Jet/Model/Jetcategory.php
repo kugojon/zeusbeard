@@ -18,9 +18,9 @@
 
 class Ced_Jet_Model_Jetcategory extends Mage_Core_Model_Abstract
 {
-	public function _construct()
-	{
-		$this->_init('jet/jetcategory');
-	}
+    public function _construct()
+    {
+        $this->_init('jet/jetcategory');
+    }
 
 }

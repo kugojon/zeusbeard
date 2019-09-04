@@ -17,16 +17,16 @@
   */
 class Ced_Jet_Block_Adminhtml_Ajaximport extends Mage_Adminhtml_Block_Widget_Container
 {
-	public function __construct()
+    public function __construct()
     {
         parent::__construct();
-		$this->setTemplate('ced/jet/ajaximport.phtml');
+        $this->setTemplate('ced/jet/ajaximport.phtml');
     }
-	
-	public function totalcount()
+    
+    public function totalcount()
     {
-        $api_dat = Mage::getSingleton( 'adminhtml/session' )->getProductChunks();
-		
-		return count($api_dat);
+        $api_dat = Mage::getSingleton('adminhtml/session')->getProductChunks();
+        
+        return count($api_dat);
     }
 }

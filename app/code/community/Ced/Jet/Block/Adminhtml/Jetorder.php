@@ -18,27 +18,29 @@
 
 class Ced_Jet_Block_Adminhtml_Jetorder extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
-	public function __construct()
-	{
-		parent::__construct();
-		$this->removeButton('add');
-		$this->_controller = 'adminhtml_jetorder';
-		$this->_blockGroup = 'jet';
-		$this->_headerText = Mage::helper('jet')->__('Jet Orders Details');
+    public function __construct()
+    {
+        parent::__construct();
+        $this->removeButton('add');
+        $this->_controller = 'adminhtml_jetorder';
+        $this->_blockGroup = 'jet';
+        $this->_headerText = Mage::helper('jet')->__('Jet Orders Details');
 
-		/*@ToDo remove the action code if not needed.
+        /*@ToDo remove the action code if not needed.
 		 * $this->_addButton("Fetch Directed Cancel Orders", array(
             "label"     => Mage::helper("jet")->__("Fetch Latest Directed Cancel Orders"),
             "onclick"   => "location.href = '".$this->getUrl('adminhtml/adminhtml_jetorder/directedcancel')."';",
             "class"     => "btn btn-danger",
         ));*/
 
-		$this->_addButton("Fetch Failed Orders", array(
+        $this->_addButton(
+            "Fetch Failed Orders", array(
                     "label"     => Mage::helper("jet")->__("Fetch Latest Jet Orders"),
                     "onclick"   => "location.href = '".$this->getUrl('adminhtml/adminhtml_jetorder/fetch')."';",
                     "class"     => "btn btn-danger",
-                ));
-		
+            )
+        );
+        
 
-	}
+    }
 }

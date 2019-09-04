@@ -25,7 +25,7 @@ class Ced_Jet_Block_Adminhtml_Autoship_Renderer_Orderinfo extends Mage_Adminhtml
         $order  = Mage::getModel('sales/order')->loadByIncrementId($row->order_id);
         $html='';
         if(sizeof($order)>0){
-            $html = "<a href=". $this->getUrl('adminhtml/sales_order/view',array('order_id'=>$order->getId())).">".$row->order_id."</a>";
+            $html = "<a href=". $this->getUrl('adminhtml/sales_order/view', array('order_id'=>$order->getId())).">".$row->order_id."</a>";
         }else{
             $html = "<span><strong> Order Not Found!</strong></span>";
         }
@@ -35,4 +35,3 @@ class Ced_Jet_Block_Adminhtml_Autoship_Renderer_Orderinfo extends Mage_Adminhtml
     }
 
 }
-?>

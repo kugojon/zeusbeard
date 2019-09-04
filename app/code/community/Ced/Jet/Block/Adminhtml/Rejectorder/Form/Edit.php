@@ -20,14 +20,14 @@ class Ced_Jet_Block_Adminhtml_Rejectorder_Form_Edit extends Mage_Adminhtml_Block
 {
     public function __construct()
     {
-      	parent::__construct();
-		
-		$this->_blockGroup = 'jet';
-		$this->_controller = 'adminhtml_rejectorder_form';
-		$this->_headerText = Mage::helper('jet')->__('Jet.com Order Reject reason Form');
-		
-		$this->_removeButton('reset');
-		
+          parent::__construct();
+        
+        $this->_blockGroup = 'jet';
+        $this->_controller = 'adminhtml_rejectorder_form';
+        $this->_headerText = Mage::helper('jet')->__('Jet.com Order Reject reason Form');
+        
+        $this->_removeButton('reset');
+        
     }
  
     public function getHeaderText()

@@ -30,11 +30,13 @@ class Ced_Jet_Block_Adminhtml_Return_Edit_Tabs extends Mage_Adminhtml_Block_Widg
  
   protected function _beforeToHtml()
   {
-      $this->addTab('form_section', array(
+      $this->addTab(
+          'form_section', array(
           'label'     => Mage::helper('jet')->__('Return Information'),
           'title'     => Mage::helper('jet')->__('Return Information'),
           'content'   => $this->getLayout()->createBlock('jet/adminhtml_return_edit_tab_form')->toHtml(),
-      ));
+          )
+      );
       
       return parent::_beforeToHtml();
   }

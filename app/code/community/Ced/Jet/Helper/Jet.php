@@ -17,12 +17,14 @@
   */
 
 
-class Ced_Jet_Helper_Jet extends Mage_Core_Helper_Abstract{
+class Ced_Jet_Helper_Jet extends Mage_Core_Helper_Abstract
+{
     
 
     
 
-    public function createuploadDir(){
+    public function createuploadDir()
+    {
         if(!file_exists(Mage::getBaseDir("var") . DS . "jetupload")) {
             mkdir(Mage::getBaseDir("var") . DS . "jetupload", 0777, true);
         }
@@ -42,46 +44,55 @@ class Ced_Jet_Helper_Jet extends Mage_Core_Helper_Abstract{
                 {
                     continue;
                 }
+
                 return sprintf('UTC %+03d:%02u', $transition['offset'] / 3600, abs($transition['offset']) % 3600 / 60);
             }
+
             return false;
         }
     }
 
-    public function _getConnection($type = 'core_read'){
+    public function _getConnection($type = 'core_read')
+    {
         return Mage::getSingleton('core/resource')->getConnection($type);
     }
 
-    public function _getTableName($tableName){
+    public function _getTableName($tableName)
+    {
         return Mage::getSingleton('core/resource')->getTableName($tableName);
     }
 
-    public function _getIdFromSku($sku){
+    public function _getIdFromSku($sku)
+    {
         $connection = $this->_getConnection('core_read');
         $sql        = "SELECT entity_id , type_id FROM " . $this->_getTableName('catalog_product_entity') . " WHERE sku = ?";
         return $connection->fetchRow($sql, array($sku));
     }
 
-    public function _getSkuQty($id){
+    public function _getSkuQty($id)
+    {
         $connection = $this->_getConnection('core_read');
         $sql        = "SELECT product.sku , stock.qty FROM " . $this->_getTableName('catalog_product_entity') . " AS product INNER JOIN ".$this->_getTableName('cataloginventory_stock_item')." AS stock ON product.entity_id=stock.product_id AND product.entity_id=".$id;
         return $connection->fetchRow($sql);
     }
 
-    public function _getchildId($id){
+    public function _getchildId($id)
+    {
         $connection = $this->_getConnection('core_read');
         $sql        = "SELECT productlink.product_id FROM " . $this->_getTableName('catalog_product_super_link') . " AS productlink WHERE parent_id=".$id;
         return $connection->fetchAll($sql);
     }
 
-    public function _getTypeFromId($id){
+    public function _getTypeFromId($id)
+    {
         $connection = $this->_getConnection('core_read');
         $sql        = "SELECT products.type_id FROM " . $this->_getTableName('catalog_product_entity') . " AS products WHERE entity_id=".$id;
         return $connection->fetchRow($sql);
     }
 
-    public function getUpdatedRefundQty($merchant_order_id){
-        $refundcollection=Mage::getModel('jet/jetrefund')->getCollection()->addFieldToFilter('refund_orderid', $merchant_order_id );
+    public function getUpdatedRefundQty($merchant_order_id)
+    {
+        $refundcollection=Mage::getModel('jet/jetrefund')->getCollection()->addFieldToFilter('refund_orderid', $merchant_order_id);
         $refund_qty=array();
         if($refundcollection->count()>0){
             foreach($refundcollection as $coll){
@@ -91,11 +102,13 @@ class Ced_Jet_Helper_Jet extends Mage_Core_Helper_Abstract{
                 }
             }
         }
+
         return $refund_qty;
     }
 
-    public function getUpdatedReturnQty($merchant_order_id){
-        $returncollection=Mage::getModel('jet/jetreturn')->getCollection()->addFieldToFilter('returnid', $merchant_order_id );
+    public function getUpdatedReturnQty($merchant_order_id)
+    {
+        $returncollection=Mage::getModel('jet/jetreturn')->getCollection()->addFieldToFilter('returnid', $merchant_order_id);
         $return_qty=array();
         if($returncollection->count()>0){
             foreach($returncollection as $coll){
@@ -105,10 +118,12 @@ class Ced_Jet_Helper_Jet extends Mage_Core_Helper_Abstract{
                 }
             }
         }
+
         return $return_qty;
     }
 
-    public function Jarray_merge($child_arr , $parent_arr){
+    public function Jarray_merge($child_arr , $parent_arr)
+    {
         if (version_compare(phpversion(), '5.5.0', '<')===true) {
             return  array_replace($child_arr, $parent_arr);
         }else{
@@ -121,7 +136,8 @@ class Ced_Jet_Helper_Jet extends Mage_Core_Helper_Abstract{
     * Price calculations
     */
 
-    public function getJetPrice($product){
+    public function getJetPrice($product)
+    {
         
         $price = (float)$product->getFinalPrice();
         $config_price = trim(Mage::getStoreConfig('jet_options/productinfo_map/jet_product_price'));
@@ -129,7 +145,7 @@ class Ced_Jet_Helper_Jet extends Mage_Core_Helper_Abstract{
         switch ($config_price){
             case 'plus_fixed':
                 $fixed_price = trim(Mage::getStoreConfig('jet_options/productinfo_map/jprice'));
-                if(is_numeric($fixed_price) && ($fixed_price != '') && ($fixed_price != null) ){
+                if(is_numeric($fixed_price) && ($fixed_price != '') && ($fixed_price != null)){
                     $fixed_price = (float)$fixed_price;
                     if($fixed_price>0){
                         $price= (float) ($price + $fixed_price);
@@ -151,7 +167,7 @@ class Ced_Jet_Helper_Jet extends Mage_Core_Helper_Abstract{
             
             case 'min_fixed':
                 $fixed_price = trim(Mage::getStoreConfig('jet_options/productinfo_map/jpricedec'));
-                if(is_numeric($fixed_price) && ($fixed_price != '') && ($fixed_price != null) ){
+                if(is_numeric($fixed_price) && ($fixed_price != '') && ($fixed_price != null)){
                     $fixed_price = (float)$fixed_price;
                     if($fixed_price>0){
                         $price= (float) ($price - $fixed_price);
@@ -176,41 +192,39 @@ class Ced_Jet_Helper_Jet extends Mage_Core_Helper_Abstract{
                 try{
                     if($custom_price_attr!=null && $custom_price_attr!='')
                     {
-
                         $config_pro  = Mage::getModel('catalog/product')->load($product ->getId());
                          $cprice = (float)$config_pro -> getData($custom_price_attr);
                     }
-                   
-                    
-                }catch (Exception $e){}
+                }catch (Exception $e){
+                }
                 
                 $price = (($cprice != 0) && is_numeric($cprice))? $cprice : $price ;
-                return $price;
+               return $price;
                 break;
 
             default:
                 return (float)$price;
-            
         }
     }
 /*
 compt price
 */
-public function getComptPrice($current_price,$sku,$product){
+public function getComptPrice($current_price,$sku,$product)
+{
     
    $response = Mage::helper('jet')->CGetRequest('/merchant-skus/'.rawurlencode($sku).'/salesdata');
 $price = array();
-        $result = json_decode($response,true);
+        $result = json_decode($response, true);
         if($result['error'])
             {
                 return $current_price;
-            }
+        }
+
             if(isset($result['best_marketplace_offer'][0]['item_price']))
             {
                 $mbo_price = $result['best_marketplace_offer'][0]['item_price'];
                 if($current_price > $result['best_marketplace_offer'][0]['item_price'])
                 {
-                    
                     $min_price = $product->getData('jet_repricing_minimum_price');
                     $max_price = $product->getData('jet_repricing_maximum_price');
                     $bid_amount = $product->getData('jet_repricing_bidding_price');
@@ -219,6 +233,7 @@ $price = array();
                     {
                         return $current_price;
                     }
+
                     $now_price = (float)($mbo_price - $bid_amount);
 
                     if($now_price < $min_price)
@@ -238,13 +253,11 @@ $price = array();
                     {
                         return $current_price;
                     }
-                    
                 }
                 else
                 { 
                     return $current_price;
                 }
-                
             }
             else
             {
@@ -252,11 +265,12 @@ $price = array();
             }
     
 
-    }
+}
     /* calculate jet shipment qty and cancel qty
        @return : array
     */
-     public function getShipped_Cancelled_Qty($order_model_data){
+     public function getShipped_Cancelled_Qty($order_model_data)
+     {
        $shipData=unserialize($order_model_data->getData('shipment_data'));
        if($shipData){ 
            $ship_items_info = array();
@@ -267,11 +281,12 @@ $price = array();
                        $ship_items_info[$items['merchant_sku']]['response_shipment_sku_quantity'] += $items['response_shipment_sku_quantity'];
                }
            }
+
            return $ship_items_info;
        }
        else{  
          $temp_data = $order_model_data->getData();
-           if(count($temp_data) >0 ){
+           if(count($temp_data) >0){
              $shipData = unserialize($temp_data[0]['shipment_data']);
              if($shipData){
                  $ship_items_info = array();
@@ -281,12 +296,13 @@ $price = array();
                          $ship_items_info[$items['merchant_sku']]['response_shipment_sku_quantity'] += $items['response_shipment_sku_quantity'];
                      }
                  }
+
                  return $ship_items_info;
              }
              else{
                  return false;
              }
-         }
+           }
          else{
              return false;
          }
@@ -294,7 +310,8 @@ $price = array();
 
      }
 
-    public function getOrdered_Cancelled_Qty($order_model_data){
+    public function getOrdered_Cancelled_Qty($order_model_data)
+    {
         $orderData=unserialize($order_model_data->getData('order_data'));
         if($orderData) {
             $order_items_info = array();
@@ -302,6 +319,7 @@ $price = array();
                     $order_items_info[$sdata->merchant_sku]['request_sku_quantity'] += $sdata->request_order_quantity;
                     $order_items_info[$sdata->merchant_sku]['request_cancel_qty'] += $sdata->request_order_cancel_qty;
             }
+
             return $order_items_info;
         }elseif(!$orderData){
             $tempData = $order_model_data->getData();
@@ -312,6 +330,7 @@ $price = array();
                     $order_items_info[$sdata->merchant_sku]['request_sku_quantity'] += $sdata->request_order_quantity;
                     $order_items_info[$sdata->merchant_sku]['request_cancel_qty'] += $sdata->request_order_cancel_qty;
                 }
+
                 return $order_items_info;
             }
         }
@@ -320,18 +339,22 @@ $price = array();
         }
     }
 
-    public function validateShipment($ordered_qty , $cancel_qty , $prev_shipped_qty , $prev_cancelled_qty , $merchant_ship_qty , $merchant_cancel_qty , $sku){
+    public function validateShipment($ordered_qty , $cancel_qty , $prev_shipped_qty , $prev_cancelled_qty , $merchant_ship_qty , $merchant_cancel_qty , $sku)
+    {
         $total_cancel_qty = $prev_cancelled_qty + $merchant_cancel_qty - $cancel_qty ;
         $total_shipped_qty = $prev_shipped_qty + $merchant_ship_qty;
         $available_ship_qty = $ordered_qty -($total_cancel_qty + $prev_shipped_qty);
         $msg = '';
 
-        if($available_ship_qty >= 0){$msg = "clear";}
-        else{$msg = "Error for sku : ".$sku." .Total cancelled + shipped qty cannot be greater than ordered quantity . Already Shipped qty : ".$prev_shipped_qty." . Already Cancelled qty : ".$prev_cancelled_qty; }
+        if($available_ship_qty >= 0){$msg = "clear";
+        }
+        else{$msg = "Error for sku : ".$sku." .Total cancelled + shipped qty cannot be greater than ordered quantity . Already Shipped qty : ".$prev_shipped_qty." . Already Cancelled qty : ".$prev_cancelled_qty; 
+        }
 
         return $msg;
     }
-    public function getChildPrice($pid){
+    public function getChildPrice($pid)
+    {
         if(is_numeric($pid))
             $product = Mage::getModel('catalog/product')->load($pid);
         if($product instanceof Mage_Catalog_Model_Product){
@@ -345,7 +368,8 @@ $price = array();
                     if($prices===NULL)
                         {
                             return false;
-                        }
+                    }
+
                     foreach ($prices as $price){
                         if ($price['is_percent']){ //if the price is specified in percents
                             $pricesByAttributeValues[$price['value_index']] = (float)$price['pricing_value'] * $basePrice / 100;
@@ -355,6 +379,7 @@ $price = array();
                         }
                     }
                 }
+
                 $simple = $product->getTypeInstance()->getUsedProducts();
                 foreach ($simple as $sProduct){
                     $totalPrice = $basePrice;
@@ -365,9 +390,11 @@ $price = array();
                             $totalPrice += $pricesByAttributeValues[$value];
                         }
                     }
-                    $totalPrice = $this-> getJetPriceConfig($sProduct ,$totalPrice,$pid);
+
+                    $totalPrice = $this-> getJetPriceConfig($sProduct, $totalPrice, $pid);
                     $childPrices[$sProduct->getSku()]= round($totalPrice, 2);
                 }
+
                 return $childPrices;
             }else{
                 return false;
@@ -375,7 +402,8 @@ $price = array();
         }
     }
 
-    public function getJetPriceConfig($product , $price ,$pid ){
+    public function getJetPriceConfig($product , $price ,$pid )
+    {
 
         //$price = (float)$product->getFinalPrice();
         $config_price = trim(Mage::getStoreConfig('jet_options/productinfo_map/jet_product_price'));
@@ -383,7 +411,7 @@ $price = array();
         switch ($config_price){
             case 'plus_fixed':
                 $fixed_price = trim(Mage::getStoreConfig('jet_options/productinfo_map/jprice'));
-                if(is_numeric($fixed_price) && ($fixed_price != '') && ($fixed_price != null) ){
+                if(is_numeric($fixed_price) && ($fixed_price != '') && ($fixed_price != null)){
                     $fixed_price = (float)$fixed_price;
                     if($fixed_price>0){
                         $price= (float) ($price + $fixed_price);
@@ -405,7 +433,7 @@ $price = array();
 
             case 'min_fixed':
                 $fixed_price = trim(Mage::getStoreConfig('jet_options/productinfo_map/jpricedec'));
-                if(is_numeric($fixed_price) && ($fixed_price != '') && ($fixed_price != null) ){
+                if(is_numeric($fixed_price) && ($fixed_price != '') && ($fixed_price != null)){
                     $fixed_price = (float)$fixed_price;
                     if($fixed_price>0){
                         $price= (float) ($price - $fixed_price);
@@ -437,9 +465,9 @@ $price = array();
                     {
                         $cprice =Mage::getModel('catalog/product')->load($product->getId())->getData($custom_price_attr);
                     }
-                     
-                    
-                }catch (Exception $e){}
+                }catch (Exception $e){
+                }
+
                 $price = (($cprice != 0) && is_numeric($cprice))? $cprice : $price ;
                 return $price;
                 break;
@@ -447,10 +475,10 @@ $price = array();
 
             default:
                 return (float)$price;
-
         }
     }
-        public function getJetShipCarrier($shipstationCarrier){
+        public function getJetShipCarrier($shipstationCarrier)
+        {
                 $carrier = '';
                 $s_carriers = array("FedEx" , "FedEx SmartPost" , "FedEx Freight" , "UPS" , "UPS Freight" , "UPS Mail Innovations" , "UPS SurePost" , "OnTrac" , "OnTrac Direct Post" ,
                     "DHL" , "DHL Global Mail" , "USPS" , "CEVA" , "Laser Ship" , "Spee Dee" , "A Duie Pyle" , "A1" , "ABF" , "APEX" ,
@@ -459,13 +487,14 @@ $price = array();
                     "UDS" , "UES" , "YRC" , "GSO" , "A&M Trucking" , "SAIA Freight" , "Other" );
 
                 foreach($s_carriers as $s_carrier){
-                    if(!strcasecmp($s_carrier , $shipstationCarrier)){
+                    if(!strcasecmp($s_carrier, $shipstationCarrier)){
                         $carrier = $s_carrier;
                         break;
                     }
                 }
+
                 $carrier = ($carrier == '') ? 'Other' : $carrier ;
                 return $carrier;
-            }
+        }
 
 }

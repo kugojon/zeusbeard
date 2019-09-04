@@ -18,15 +18,15 @@
 
 class Ced_Jet_Block_Adminhtml_Jetcron extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
-	public function __construct()
-	{
-		
-		$this->_removeButton('add');
-		$this->_controller = 'adminhtml_jetcron';
-		$this->_blockGroup = 'jet';
-		$this->_headerText = Mage::helper('jet')->__('Jet Cron Status');
-		parent::__construct();
-		$this->removeButton('add');
-	}
+    public function __construct()
+    {
+        
+        $this->_removeButton('add');
+        $this->_controller = 'adminhtml_jetcron';
+        $this->_blockGroup = 'jet';
+        $this->_headerText = Mage::helper('jet')->__('Jet Cron Status');
+        parent::__construct();
+        $this->removeButton('add');
+    }
 }
 

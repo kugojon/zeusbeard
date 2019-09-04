@@ -19,17 +19,17 @@
 
 class Ced_Jet_Block_Adminhtml_Prod extends Mage_Adminhtml_Block_Widget_Grid_Container
 {
-	public function __construct()
-	{
-		$ur = Mage::helper('adminhtml')->getUrl('*/');
-		$zz = array();
-		$zz = explode('index/index',$ur);
+    public function __construct()
+    {
+        $ur = Mage::helper('adminhtml')->getUrl('*/');
+        $zz = array();
+        $zz = explode('index/index', $ur);
         $profileId = $this->getRequest()->getParam('profile_id');
 
         $this->_controller = 'adminhtml_prod';
-		$this->_blockGroup = 'jet';
-		$this->_headerText = Mage::helper('jet')->__('Product Manager');
-		$this->_addButtonLabel = 'Sync Jet Product Status';
+        $this->_blockGroup = 'jet';
+        $this->_headerText = Mage::helper('jet')->__('Product Manager');
+        $this->_addButtonLabel = 'Sync Jet Product Status';
 
         $profileId = $this->getRequest()->getParam('profile_id');
         $profile = Mage::getModel('jet/profile')->load($profileId);
@@ -38,7 +38,7 @@ class Ced_Jet_Block_Adminhtml_Prod extends Mage_Adminhtml_Block_Widget_Grid_Cont
             'onclick'   => 'setLocation(\'' . $this->getUrl('adminhtml/adminhtml_profile/edit', array('pcode'=>$profile->getProfileCode() )) . '\')',
             'class'     =>  'back'
         );
-        $this->addButton ('my_back', $data, 0, 0,  'header');
+        $this->addButton('my_back', $data, 0, 0, 'header');
 
 
 
@@ -53,11 +53,11 @@ class Ced_Jet_Block_Adminhtml_Prod extends Mage_Adminhtml_Block_Widget_Grid_Cont
             "class"     => "btn btn-danger",
         ));*/
 
-		
-	   	parent::__construct();
+        
+           parent::__construct();
         $this->_removeButton('add');
 
-	}
+    }
     public function getCreateUrl()
     {
         $profileId = $this->getRequest()->getParam('profile_id');

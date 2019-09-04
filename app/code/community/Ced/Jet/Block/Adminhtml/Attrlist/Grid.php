@@ -37,43 +37,54 @@ class Ced_Jet_Block_Adminhtml_Attrlist_Grid extends Mage_Adminhtml_Block_Widget_
  
     protected function _prepareColumns()
     {
-        $this->addColumn('id', array(
-          'header'    => Mage::helper('jet')->__('Attribute id on Jet'),
-          'align'     =>'left',
-          'width'     => '10px',
-          'index'     => 'id',
-           'filter'=>false,
-        ));
-        $this->addColumn('magento_attr_id', array(
-        		'header'    => Mage::helper('jet')->__('Attribute id on Magento'),
-        		'align'     =>'left',
-        		'width'     => '10px',
-        		'index'     => 'magentoid',
-        		'filter'=>false,
-        ));
+        $this->addColumn(
+            'id', array(
+            'header'    => Mage::helper('jet')->__('Attribute id on Jet'),
+            'align'     =>'left',
+            'width'     => '10px',
+            'index'     => 'id',
+            'filter'=>false,
+            )
+        );
+        $this->addColumn(
+            'magento_attr_id', array(
+                'header'    => Mage::helper('jet')->__('Attribute id on Magento'),
+                'align'     =>'left',
+                'width'     => '10px',
+                'index'     => 'magentoid',
+                'filter'=>false,
+            )
+        );
      
-        $this->addColumn('name', array(
+        $this->addColumn(
+            'name', array(
             'header'=> Mage::helper('jet')->__('Attribute Name'),
             'width' => '80px',
             'type'  => 'text',
             'index' => 'name',
             'filter'=>false,
-        ));
-        $this->addColumn('description', array(
+            )
+        );
+        $this->addColumn(
+            'description', array(
             'header'=> Mage::helper('jet')->__('Description'),
             'width' => '80px',
             'type'  => 'text',
             'index' => 'description',
             'filter'=>false,
-        ));
-        $this->addColumn('status', array(
-        		'header'=> Mage::helper('jet')->__('Status'),
-        		'width' => '80px',
-        		'type'  => 'text',
-        		'index' => 'status',
-        		'filter'=>false,
-        ));
-        $this->addColumn('freetext', array(
+            )
+        );
+        $this->addColumn(
+            'status', array(
+                'header'=> Mage::helper('jet')->__('Status'),
+                'width' => '80px',
+                'type'  => 'text',
+                'index' => 'status',
+                'filter'=>false,
+            )
+        );
+        $this->addColumn(
+            'freetext', array(
             'header'=> Mage::helper('jet')->__('Freetext'),
             'width' => '80px',
             //'type'  => 'text',
@@ -81,27 +92,33 @@ class Ced_Jet_Block_Adminhtml_Attrlist_Grid extends Mage_Adminhtml_Block_Widget_
             //'type'    => 'options',
             //'options' => $this->getFreetextOptions(),
             'filter'=>false,
-        ));
-          $this->addColumn('units', array(
-          'header'    => Mage::helper('jet')->__('Attribute Units'),
-          'align'     =>'left',
-          'index'     => 'units',
-          'width'     => '50px',
-           'filter'=>false,
-        ));
-         $this->addColumn('attrvalue', array(
-          'header'    => Mage::helper('jet')->__('Attribute Value'),
-          'align'     =>'left',
-          'index'     => 'attrvalue',
-          'width'     => '50px',
-          'filter'=>false,
-        ));
+            )
+        );
+          $this->addColumn(
+              'units', array(
+              'header'    => Mage::helper('jet')->__('Attribute Units'),
+              'align'     =>'left',
+              'index'     => 'units',
+              'width'     => '50px',
+              'filter'=>false,
+              )
+          );
+         $this->addColumn(
+             'attrvalue', array(
+             'header'    => Mage::helper('jet')->__('Attribute Value'),
+             'align'     =>'left',
+             'index'     => 'attrvalue',
+             'width'     => '50px',
+             'filter'=>false,
+             )
+         );
        
 
         
         return parent::_prepareColumns();
     }
-    public function getFreetextOptions(){
+    public function getFreetextOptions()
+    {
           $arr=array();
           $arr[0]='dropdown';
           $arr[1]='text';

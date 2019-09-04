@@ -17,8 +17,10 @@
   */
 
 class Ced_Jet_Model_Mysql4_Jetorder_Collection
-extends  Mage_Core_Model_Mysql4_Collection_Abstract{
-	protected function _constuct(){
-		$this->_init('jet/jetorder');
-	}
+extends  Mage_Core_Model_Mysql4_Collection_Abstract
+{
+    protected function _constuct()
+    {
+        $this->_init('jet/jetorder');
+    }
 }

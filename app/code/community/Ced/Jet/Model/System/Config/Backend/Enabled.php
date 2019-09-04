@@ -37,6 +37,7 @@ class Ced_Jet_Model_System_Config_Backend_Enabled extends Mage_Core_Model_Config
             $usr = $data['jet_user']['value'];
             $pswd = $data['jet_userpwd']['value'];
         }
+
         $token = Mage::helper('jet/data')->JrequestTokenCurlVerify($usr, $pswd);
         if($token){
             Mage::getModel('core/config')->saveConfig('jet_options/ced_jet/is_credentials_valid', 1);
@@ -47,7 +48,8 @@ class Ced_Jet_Model_System_Config_Backend_Enabled extends Mage_Core_Model_Config
         }
 
 
-        return parent::_afterSaveCommit();
+//        return parent::_afterSaveCommit();
+        return parent::afterCommitCallback();
     }
 
 

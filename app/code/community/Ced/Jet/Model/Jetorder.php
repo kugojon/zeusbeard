@@ -17,9 +17,9 @@
   */
 class Ced_Jet_Model_Jetorder extends Mage_Core_Model_Abstract
 {
-	public function _construct()
-	{
-		$this->_init('jet/jetorder');
-	}
+    public function _construct()
+    {
+        $this->_init('jet/jetorder');
+    }
 
 }

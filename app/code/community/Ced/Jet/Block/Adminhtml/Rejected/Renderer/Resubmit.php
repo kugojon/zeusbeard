@@ -19,19 +19,19 @@
 
 class Ced_Jet_Block_Adminhtml_Rejected_Renderer_Resubmit extends Mage_Adminhtml_Block_Widget_Grid_Column_Renderer_Abstract
 {
-	
-	 
-	public function render(Varien_Object $row)
-	{
-		$html='';
-		if(trim($row->status)=='Resubmit Requested'){
-			$html = "<span><strong>N/A</strong></span>";
-		}else{ 
-			$html = "<a href=". $this->getUrl('adminhtml/adminhtml_jetproduct/jerrorDetails/',array('id'=>$row->id)).">View Errors & Resubmit</a>";
-		}
-	 	return $html;
-	 
-	}	
- 		
+    
+     
+    public function render(Varien_Object $row)
+    {
+        $html='';
+        if(trim($row->status)=='Resubmit Requested'){
+            $html = "<span><strong>N/A</strong></span>";
+        }else{ 
+            $html = "<a href=". $this->getUrl('adminhtml/adminhtml_jetproduct/jerrorDetails/', array('id'=>$row->id)).">View Errors & Resubmit</a>";
+        }
+
+         return $html;
+     
+    }    
+         
 }
-?>

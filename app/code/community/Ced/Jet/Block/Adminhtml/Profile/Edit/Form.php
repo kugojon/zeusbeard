@@ -18,18 +18,19 @@
   */
 class Ced_Jet_Block_Adminhtml_Profile_Edit_Form extends Mage_Adminhtml_Block_Widget_Form
 {
-	/**
-	 * preparing form 
-	 * @return Ced_CsGroup_Block_Adminhtml_Vendor_Group_Edit_Form
-	 * 
-	 * */
+    /**
+     * preparing form 
+     * @return Ced_CsGroup_Block_Adminhtml_Vendor_Group_Edit_Form
+     * 
+     * */
   protected function _prepareForm()
   {
-      $form = new Varien_Data_Form(array(
+      $form = new Varien_Data_Form(
+          array(
                                       'id' => 'edit_form',
-                                      'action' => $this->getUrl('*/*/save', array('pcode' => $this->getRequest()->getParam('pcode',false),'section'=>'jet_configuration')),
+                                      'action' => $this->getUrl('*/*/save', array('pcode' => $this->getRequest()->getParam('pcode', false),'section'=>'jet_configuration')),
                                       'method' => 'post',
-        							  'enctype' => 'multipart/form-data'
+                                      'enctype' => 'multipart/form-data'
                                    )
       );
 

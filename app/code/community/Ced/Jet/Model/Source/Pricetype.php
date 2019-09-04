@@ -18,29 +18,29 @@
 
 class Ced_Jet_Model_Source_Pricetype
 {
-	public function toOptionArray()
+    public function toOptionArray()
     {
-			
+            
         
             $_options = array(
                 array(
                     'label' => 'Default Magento Price',
                     'value' => 'final_price'
                 ),
-             	array(
+                 array(
                     'label' =>'Add % Percent on Magento Price',
                     'value' =>'plus_percent'
                 ),
-				array(
+                array(
                     'label' => 'Off % Percent on Magento Price',
                     'value' =>'off_percent'
                 ),
-				array(
+                array(
                     'label' => 'Custom Fixed Price',
                     'value' =>'fixed'
                 ),
-			);
+            );
         return $_options;
     }
-	
+    
 }

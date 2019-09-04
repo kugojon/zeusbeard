@@ -47,20 +47,24 @@ class Ced_Jet_Block_Adminhtml_Categorylist_Grid extends Mage_Adminhtml_Block_Wid
             'index' => 'id',
         ));*/
 
-        $this->addColumn('csv_cat_id', array(
+        $this->addColumn(
+            'csv_cat_id', array(
             'header' => Mage::helper('jet')->__('Category Id'),
             'align' => 'left',
             'index' => 'csv_cat_id',
             'width' => '10px',
             'type' => 'text',
-        ));
+            )
+        );
 
-        $this->addColumn('csv_parent_id', array(
+        $this->addColumn(
+            'csv_parent_id', array(
             'header' => Mage::helper('jet')->__('Parent Id'),
             'align' => 'left',
             'index' => 'csv_parent_id',
             'width' => '10px',
-        ));
+            )
+        );
 
         /*$this->addColumn('magento_id', array(
             'header' => Mage::helper('jet')->__('Magento Category Id'),
@@ -71,46 +75,57 @@ class Ced_Jet_Block_Adminhtml_Categorylist_Grid extends Mage_Adminhtml_Block_Wid
             'filter' => false,
         ));*/
 
-        $this->addColumn('name', array(
+        $this->addColumn(
+            'name', array(
             'header' => Mage::helper('jet')->__('Name'),
             'width' => '80px',
             'type' => 'text',
             'index' => 'name',
 
-        ));
+            )
+        );
 
 
-        $this->addColumn('path', array(
+        $this->addColumn(
+            'path', array(
             'header' => Mage::helper('jet')->__('Path'),
             'align' => 'left',
             'index' => 'path',
             'width' => '350px',
-        ));
+            )
+        );
 
-        $this->addColumn('jet_tax_code', array(
+        $this->addColumn(
+            'jet_tax_code', array(
             'header' => Mage::helper('jet')->__('Suggested Tax Code'),
             'align' => 'left',
             'index' => 'jet_tax_code',
             'width' => '20px',
-        ));
+            )
+        );
 
-        $this->addColumn('level', array(
+        $this->addColumn(
+            'level', array(
             'header' => Mage::helper('jet')->__('Level'),
             'align' => 'left',
             'index' => 'level',
             'width' => '20px',
-        ));
+            )
+        );
 
-        $this->addColumn('status', array(
+        $this->addColumn(
+            'status', array(
             'header' => Mage::helper('jet')->__('Status'),
             'align' => 'left',
             'index' => 'status',
             'renderer' => 'Ced_Jet_Block_Adminhtml_Categorylist_Renderer_Status',
             'width' => '10px',
-        ));
+            )
+        );
 
 
-        $this->addColumn('action',
+        $this->addColumn(
+            'action',
             array(
                 'header' => Mage::helper('jet')->__('Action'),
                 'width' => '20',
@@ -158,6 +173,7 @@ class Ced_Jet_Block_Adminhtml_Categorylist_Grid extends Mage_Adminhtml_Block_Wid
         if (!$value = $column->getFilter()->getValue()) {
             return $this;
         }
+
         $arr = array();
         $value = trim($value);
         if ($value == "Created") {
@@ -183,6 +199,7 @@ class Ced_Jet_Block_Adminhtml_Categorylist_Grid extends Mage_Adminhtml_Block_Wid
                     $arr1[] = $val;
                 }
             }
+
             $collection1 = Mage::getModel('jet/catlist')->getCollection();
             foreach ($collection1 as $coll1) {
                 if ($coll1->getData('csv_cat_id') != "") {
@@ -192,9 +209,10 @@ class Ced_Jet_Block_Adminhtml_Categorylist_Grid extends Mage_Adminhtml_Block_Wid
                     $arr2[] = $val;
                 }
             }
-            $arr = array_diff($arr2, $arr1);
 
+            $arr = array_diff($arr2, $arr1);
         }
+
         $this->getCollection()->addFieldToFilter('csv_cat_id', array('in' => $arr));
         return $this;
     }

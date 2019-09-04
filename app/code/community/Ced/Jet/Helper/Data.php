@@ -17,7 +17,8 @@
   */
 
 
-class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
+class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract
+{
     
     protected $_apiHost='';
     protected $user='';
@@ -76,7 +77,8 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
 
 
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->_apiHost = Mage::getStoreConfig('jet_options/ced_jet/jet_apiurl');
         $this->getCredentials();
         $this->prepareConfiguration();
@@ -93,15 +95,16 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
             if($product->getTypeId()=="configurable"){
                 $configValidation = true;
                 $validateResult = array();
-                $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null,$product);
+                $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $product);
                 foreach($childProducts as $chp){
                     $chp = Mage::getModel('catalog/product')->load($chp->getId());
-                    $result = $this->validateProduct($chp->getId(), $chp,$parent_image,$parent_prod_id,$parent_name,$parent_desc);
+                    $result = $this->validateProduct($chp->getId(), $chp, $parent_image, $parent_prod_id, $parent_name, $parent_desc);
                     if(isset($result['error'])){
                         $validateResult = array_merge_recursive($validateResult, $result);
                         $configValidation = false;
                     }
                 }
+
                 if (isset($validateResult['error']) > 0 && !$configValidation) {
                     // $attributesEmpty = implode(',', $attributesEmpty);
                     $error = $validateResult['error'];
@@ -109,13 +112,13 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                     $validateResult['error'] = $error;
                     $product->setData('jet_product_validation_error', json_encode($error));
                     $product->setData('jet_product_validation', 'invalid');
-
                 } else {
                     $product->setData('jet_product_validation', 'valid');
                     $product->setData('jet_product_validation_error', json_encode('valid'));
                     $validateResult['id'] = $id;
                 }
-                $product->getResource()->saveAttribute($product,'jet_product_validation_error')->saveAttribute($product,'jet_product_validation');
+
+                $product->getResource()->saveAttribute($product, 'jet_product_validation_error')->saveAttribute($product, 'jet_product_validation');
                 return $validateResult;
             }
 
@@ -137,7 +140,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
             foreach ($identifier as $value){
                 $barcode  = Mage::helper('jet/barcodevalidator');
                 $localValidate = true;
-                if(isset($value['identifier']) && $value['identifier'] == 'ASIN' ) {
+                if(isset($value['identifier']) && $value['identifier'] == 'ASIN') {
                     if (!$barcode->isAsin($value['value'])) {
                         $validate = false;
                         //$attributesEmpty[] = "Error in Product: " . $product->getName() . " ASIN must be of 10 digits <br />";
@@ -163,6 +166,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                         $localValidate = false;
                     }
                 }
+
                 if($localValidate){
                     $standardCodes[] = array('standard_product_code_type' => $value['identifier'],
                         'standard_product_code' => $value['value']);
@@ -179,7 +183,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                     continue;
                 $barcode  = Mage::helper('jet/barcodevalidator');
                 $localValid = true;
-                if($code == 'ASIN' ) {
+                if($code == 'ASIN') {
                     if (!$barcode->isAsin($value)) {
                         $validate = false;
                         //$attributesEmpty[]  = "Error in Product: " . $product->getName() . " ASIN must be of 10 digits";
@@ -189,7 +193,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                         $asin = $value;
                     }
                 }
-                else if( $code == 'ISBN-10' || $code == 'ISBN-13'){
+                else if($code == 'ISBN-10' || $code == 'ISBN-13'){
                     if(!$barcode->findIsbn($value)){
                         $validate = false;
                         //$attributesEmpty[]  = "Error in Product Sku: ".$product->getSku()." <b>".$code."</b> is not valid";
@@ -231,28 +235,26 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                 $validate =false;
                 //$attributesEmpty[] = "Error in Product Sku: <b>'".$product->getSku()."'</b> Brand information is missing <br>";
                 $attributesEmpty[] = "Brand information is missing <br>";
-               
-                }
+            }
 
             if(count($standardCodes)==0){
                 $validate =false;
                 //$attributesEmpty[] = "Error in Product Sku: <b>'".$product->getSku()."'</b> Standard Identifier is required please set Identifier values(UPC, EAN,GTIN-14,ISBN-13,ISBN-10) OR ASIN <br>";
                 $attributesEmpty[] = "Standard Identifier is required please set Identifier values(UPC, EAN,GTIN-14,ISBN-13,ISBN-10) OR ASIN <br>";
-
             }
 
 
 
 
                 $sku = $product->getSku();
-                $SKU_Array['product_title'] = $this->getProductTitle($product,$parent_name);
+                $SKU_Array['product_title'] = $this->getProductTitle($product, $parent_name);
                 if (strlen($SKU_Array['product_title']) < 5) {
                     $validate =false;
                     //$attributesEmpty[] = "Error in Product Sku: <b>'".$product->getSku()."'</b> product title length must be equal or greater than 5 <br>";
                     $attributesEmpty[] = " product title length must be equal or greater than 5 <br>";
-                  }
+                }
 
-                $description = $this->getProductDescription($product,$parent_desc);
+                $description = $this->getProductDescription($product, $parent_desc);
                 //$description = strip_tags($description);
 
                 if (strlen($description) == 0) {
@@ -270,10 +272,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                         $validate =false;
                         $attributesEmpty[] = " product image not found <br>";
                     }
-                    
-                    
                 }else{
-
                     try {
                         $width = Mage::helper('catalog/image')->init($product, 'image')->getOriginalHeight();
                         $height = Mage::helper('catalog/image')->init($product, 'image')->getOriginalWidth();
@@ -282,13 +281,12 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                             //$attributesEmpty[] = "Error in Product Sku: <b>'".$product->getSku()."'</b> product image must be more than 500x500 Px  <br>";
                             $attributesEmpty[] = " product image must be more than 500x500 Px  <br>";
                         }
-                        }
+                    }
                     catch (Exception $e) {
                         $validate = false;
                         //$attributesEmpty[] = "Error in Product Sku: <b>'".$product->getSku()."'</b> ".$e->getMessage()."  <br>";
                         $attributesEmpty[] = $e->getMessage()."  <br>";
                     }
-
                 }
 
 
@@ -310,19 +308,20 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                 $validatedProduct['error'][$product->getSku()] = $attributesEmpty;
                 $product->setData('jet_product_validation_error', json_encode($attributesEmpty));
                  $product->setData('jet_product_validation', 'invalid');
-
-            } else {
+             } else {
                 $product->setData('jet_product_validation', 'valid');
                 $product->setData('jet_product_validation_error', json_encode('valid'));
                 $validatedProduct['id'] = $id;
-            }
+             }
+
           //  echo "<pre>";print_r($validatedProduct);
-        $product->getResource()->saveAttribute($product,'jet_product_validation_error')->saveAttribute($product,'jet_product_validation');
+        $product->getResource()->saveAttribute($product, 'jet_product_validation_error')->saveAttribute($product, 'jet_product_validation');
         return $validatedProduct;
     }
 
 
-    public function prepareConfiguration(){
+    public function prepareConfiguration()
+    {
 
         $this->_jetApiUrl = Mage::getStoreConfig('jet_options/ced_jet/jet_apiurl');
         $this->_jetFulfillmentNode = Mage::getStoreConfig('jet_options/ced_jet/jet_fullfillmentnode');
@@ -369,7 +368,8 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
 
     }
 
-    public function isEnabled(){
+    public function isEnabled()
+    {
         /*$flag=false;
         if(Mage::getStoreConfig('jet_options/ced_jet/active')){
             $flag=true;
@@ -377,17 +377,19 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
         return $flag;*/
         return $this->_jetIsActive;
     }
-    public function isDebugMode(){
+    public function isDebugMode()
+    {
         return $this->_jetDebugMode;
     }
-    public function JrequestTokenCurl(){
+    public function JrequestTokenCurl()
+    {
     
         $ch = curl_init();
         $url= $this->_apiHost.'/Token';
         $postFields='{"user":"'.$this->user.'","pass":"'.$this->pass.'"}';
         
-        curl_setopt($ch, CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,$postFields);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json;"));
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -395,11 +397,11 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
     
-        $server_output = curl_exec ($ch);
+        $server_output = curl_exec($ch);
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         $header = substr($server_output, 0, $header_size);
         $body = substr($server_output, $header_size);
-        curl_close ($ch);
+        curl_close($ch);
         $token_data =json_decode($body, true);
         
         if(is_array($token_data) && isset($token_data['id_token'])){
@@ -416,7 +418,8 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
      * Post Request on Jetcom
      */
     
-    public function CPostRequest($method,$postFields){
+    public function CPostRequest($method,$postFields)
+    {
         
         $url= $this->_apiHost.$method;
     
@@ -428,9 +431,9 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
     
             
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL,$url);
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-        curl_setopt($ch, CURLOPT_POSTFIELDS,$postFields);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($ch, CURLOPT_HEADER, 1);
             //curl_setopt($ch, CURLOPT_POST, 1);
@@ -439,11 +442,11 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
     
     
     
-            $server_output = curl_exec ($ch);
+            $server_output = curl_exec($ch);
             $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
             $header = substr($server_output, 0, $header_size);
             $body = substr($server_output, $header_size);
-            curl_close ($ch);
+            curl_close($ch);
     
             return $body;
     }
@@ -451,11 +454,10 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
     /*
     * PUT Request on Jetcom
     */
-    public function CPutRequest($method, $post_field){
+    public function CPutRequest($method, $post_field)
+    {
 
-        
-
-        $url= $this->_apiHost.$method;
+      $url= $this->_apiHost.$method;
         $ch = curl_init($url);
         $tObject =$this->Authorise_token();
 
@@ -464,7 +466,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
         $headers[] = "Authorization: Bearer ".$tObject['id_token'];
                 
     
-            curl_setopt($ch, CURLOPT_POSTFIELDS,$post_field);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_field);
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
             curl_setopt($ch, CURLOPT_HEADER, 1);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
@@ -473,17 +475,49 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
     
-            $server_output = curl_exec ($ch);
+            $server_output = curl_exec($ch);
             $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
             $header = substr($server_output, 0, $header_size);
             $body = substr($server_output, $header_size);
-            curl_close ($ch);
+            curl_close($ch);
     
             return $body;
     
-        }
+    }
     
-        public function CGetRequest($method){
+     public function CPatchRequest($method, $post_field)
+    {
+
+      $url= $this->_apiHost.$method;
+        $ch = curl_init($url);
+        $tObject =$this->Authorise_token();
+
+        $headers = array();
+        $headers[] = "Content-Type: application/json";
+        $headers[] = "Authorization: Bearer ".$tObject['id_token'];
+                
+    
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_field);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            curl_setopt($ch, CURLOPT_HEADER, 1);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PATCH");
+            //curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    
+    
+            $server_output = curl_exec($ch);
+            $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            $header = substr($server_output, 0, $header_size);
+            $body = substr($server_output, $header_size);
+            curl_close($ch);
+    
+            return $body;
+    
+    }
+    
+        public function CGetRequest($method)
+        {
             $tObject =$this->Authorise_token();
             $ch = curl_init();
             $url= $this->_apiHost.$method;
@@ -499,15 +533,16 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
-            $server_output = curl_exec ($ch);
+            $server_output = curl_exec($ch);
             $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
             $header = substr($server_output, 0, $header_size);
             $body = substr($server_output, $header_size);
-            curl_close ($ch);
+            curl_close($ch);
     
             return $body;
         }
-        public function directfile($method){
+        public function directfile($method)
+        {
             //$tObject =$this->Authorise_token();
             $ch = curl_init();
             $url= $method;
@@ -523,18 +558,19 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     
-            $server_output = curl_exec ($ch);
+            $server_output = curl_exec($ch);
             //$header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
             //$header = substr($server_output, 0, $header_size);
             //$body = substr($server_output, $header_size);
-            curl_close ($ch);
+            curl_close($ch);
     
             return $server_output;
         }
     
     
     
-        public function Authorise_token(){
+        public function Authorise_token()
+        {
 
             $Jtoken = json_decode(Mage::getStoreConfig('jetcom/token'), true);
 
@@ -555,11 +591,11 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
                 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         
-                $server_output = curl_exec ($ch);
+                $server_output = curl_exec($ch);
                 $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
                 $header = substr($server_output, 0, $header_size);
                 $body = substr($server_output, $header_size);
-                curl_close ($ch);
+                curl_close($ch);
                 
                 $bjson = json_decode($body);
                 
@@ -568,8 +604,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                  $bjson->Message=='Authorization has been denied for this request.')
                  {
                     $refresh_token =true;   
-                 }      
-                
+            }      
             }else{
                 $refresh_token =true;   
             }
@@ -586,12 +621,11 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                         foreach ($session->getMessages()->getItems() as $item){
                     if($item->getText() == $message)
                         return $this;
-                     
-                }
+                        }
+
                 $session
                     ->addError($message);
                     }
-                   
                 }       
             }else{
                 return $Jtoken;
@@ -606,22 +640,25 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
         * @param integer $level GZIP compression level (default: 9)
         * @return string New filename (with .gz appended) if success, or false if operation fails
         */
-        function gzCompressFile($source, $level = 9){
+        function gzCompressFile($source, $level = 9)
+        {
             $dest = $source . '.gz';
             $mode = 'wb' . $level;
             $error = false;
             if ($fp_out = gzopen($dest, $mode)) {
-            if ($fp_in = fopen($source,'rb')) {
+            if ($fp_in = fopen($source, 'rb')) {
             while (!feof($fp_in))
                 gzwrite($fp_out, fread($fp_in, 1024 * 512));
                     fclose($fp_in);
-                } else {
+            } else {
                     $error = true;
-                }
+            }
+
                     gzclose($fp_out);
-                } else {
+            } else {
                     $error = true;
-                }
+            }
+
             if ($error)
                 return false;
             else
@@ -632,7 +669,8 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
         /*
         * New function to upload file
         */
-        public function uploadFile($localfile ,$url){
+        public function uploadFile($localfile ,$url)
+        {
 
              $headers = array();
              $headers[] = "x-ms-blob-type:BlockBlob";
@@ -641,7 +679,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
              curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
              curl_setopt($ch, CURLOPT_HEADER, 1);
              curl_setopt($ch, CURLOPT_PUT, 1);
-             $fp = fopen ($localfile, 'r');
+             $fp = fopen($localfile, 'r');
              curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
              curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
              curl_setopt($ch, CURLOPT_INFILE, $fp);
@@ -650,7 +688,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
     
              $http_result = curl_exec($ch);
              $error = curl_error($ch);
-             $http_code = curl_getinfo($ch ,CURLINFO_HTTP_CODE);
+             $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
     
              curl_close($ch);
              fclose($fp);
@@ -661,19 +699,42 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
     * jet return feed backoptions
     */
     
-    public function feedbackOptArray(){
+    public function feedbackOptArray()
+    {
     
                 return array(
                         array('value' => '', 'label' => Mage::helper('adminhtml')->__('Please Select a Option')),
-                             array('value' => 'item damaged', 'label' => Mage::helper('adminhtml')->__('item damaged')),
-                             array('value' => 'not shipped in original packaging', 'label' => Mage::helper('adminhtml')->__('not shipped in original packaging')),
-                             array('value' => 'customer opened item', 'label' => Mage::helper('adminhtml')->__('customer opened item')),
+                             array('value' => 'Wrong item', 'label' => Mage::helper('adminhtml')->__('Wrong item')),
+                            
+                             array('value' => 'Item damaged', 'label' => Mage::helper('adminhtml')->__('Item damaged')),
+                             array('value' => 'Returned outside window', 'label' => Mage::helper('adminhtml')->__('Returned outside window')),
+                             array('value' => 'Restocking fee', 'label' => Mage::helper('adminhtml')->__('Restocking fee')),
+                             array('value' => 'Not shipped in original packaging', 'label' => Mage::helper('adminhtml')->__('Not shipped in original packaging')),
+                             array('value' => 'Rerouting fee', 'label' => Mage::helper('adminhtml')->__('Rerouting fee')),
+                            
+                      );
+            
+    }
+    public function returnchargefeedbackOptArray()
+    {
+    
+                return array(
+                        array('value' => '', 'label' => Mage::helper('adminhtml')->__('Please Select a Option')),
+                             
+                             array('value' => 'outsideMerchantPolicy', 'label' => Mage::helper('adminhtml')->__('OutsideMerchantPolicy')),
+                             array('value' => 'notMerchantError', 'label' => Mage::helper('adminhtml')->__('NotMerchantError')),
+                             array('value' => 'wrongItem', 'label' => Mage::helper('adminhtml')->__('WrongItem')),
+                             array('value' => 'fraud', 'label' => Mage::helper('adminhtml')->__('Fraud')),
+                             array('value' => 'returnedOutsideWindow', 'label' => Mage::helper('adminhtml')->__('ReturnedOutsideWindow')),
+                             array('value' => 'other', 'label' => Mage::helper('adminhtml')->__('Other')),
+                             
                             
                       );
             
     }
     
-    public function wanttoreturn(){
+    public function wanttoreturn()
+    {
         return array(
                         array('value' => '0', 'label' => Mage::helper('adminhtml')->__('No')),
                              array('value' => '1', 'label' => Mage::helper('adminhtml')->__('Yes')),
@@ -682,7 +743,8 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
     /*
     * jet refund reason 
     */
-    public function refundreasonOptionArr(){
+    public function refundreasonOptionArr()
+    {
     
                 return array(
                         array('value' => '', 'label' => Mage::helper('adminhtml')->__('Please Select a Option')),
@@ -710,7 +772,8 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
             
     }
     
-    public function shippingCarrier(){
+    public function shippingCarrier()
+    {
         return array(
                         array('value' => '', 'label' => Mage::helper('adminhtml')->__('Please Select an Option')),
                         array('value' => 'SecondDay', 'label' => Mage::helper('adminhtml')->__('SecondDay')),
@@ -722,7 +785,8 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                       );
     }
     
-    public function shippingMethod(){
+    public function shippingMethod()
+    {
         return array(
                         array('value' => '', 'label' => Mage::helper('adminhtml')->__('Please Select an Option')),
                         array('value' => 'UPS', 'label' => Mage::helper('adminhtml')->__('UPS')),
@@ -732,7 +796,8 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                     );
     }
     
-    public function shippingOverride(){
+    public function shippingOverride()
+    {
         return array(
                         array('value' => '', 'label' => Mage::helper('adminhtml')->__('Please Select an Option')),
                         array('value' => 'Override charge', 'label' => Mage::helper('adminhtml')->__('Override charge')),
@@ -741,7 +806,8 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                     );
     }
     
-    public function shippingExcep(){
+    public function shippingExcep()
+    {
         return array(
                         array('value' => '', 'label' => Mage::helper('adminhtml')->__('Please Select an Option')),
                         array('value' => 'exclusive', 'label' => Mage::helper('adminhtml')->__('exclusive')),
@@ -749,7 +815,8 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                     );
     }
     
-    public function getFulfillmentNode(){
+    public function getFulfillmentNode()
+    {
         /*$fullfillmentnodeid = Mage::getStoreConfig('jet_options/ced_jet/jet_fullfillmentnode');*/
         return $this->_jetFulfillmentNode;
         
@@ -779,15 +846,17 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
         }
     }
 
-    public function Varitionfix($json, $count){
+    public function Varitionfix($json, $count)
+    {
     
         $patt='';$replacement='';
         for($i=1; $i<=$count;$i++){
             $patt=$patt.'"(\d+)",';
             $replacement=$replacement.'$'.$i.',';
         }
-        $patt=rtrim($patt,',');
-        $replacement=rtrim($replacement,',');
+
+        $patt=rtrim($patt, ',');
+        $replacement=rtrim($replacement, ',');
         
         $pattern = '/"variation_refinements":\['.$patt.'\]/i';
         
@@ -797,7 +866,8 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
     
     }
     
-    public function ConvertNodeInt($json){
+    public function ConvertNodeInt($json)
+    {
         
         $pattern = '/"jet_browse_node_id":"(\d+)"/i';
 
@@ -819,11 +889,12 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
     }
     
 
-    public function createJsonFile($type, $data){
+    public function createJsonFile($type, $data)
+    {
         //if debug mode then track file
         $t = '';
         if($this->isDebugMode())
-            $t=time()+rand(2,5);
+            $t=time()+rand(2, 5);
         
         $finalskujson= json_encode($data);
         if($type=='MerchantSKUs'){
@@ -835,18 +906,20 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
         $file_path = Mage::getBaseDir("var").DS."jetupload".DS.$type.$t.".json";
         $file_type = $type;
         $file_name=$type.$t.".json";
-        $myfile = fopen($file_path, "w") ;
+        $myfile = fopen($file_path, "w");
         fwrite($myfile, $newJsondata);
         fclose($myfile);
         if(!file_exists($file_path.".gz")){
-            Mage::helper('jet')->gzCompressFile($file_path,9);
+            Mage::helper('jet')->gzCompressFile($file_path, 9);
         }
+
         return $file_path;
     }
 
 //for ajax upload start
-    public function prepareJsonFile($type, $data){
-        $t=time()+rand(2,5);
+    public function prepareJsonFile($type, $data)
+    {
+        $t=time()+rand(2, 5);
         
         $finalskujson= json_encode($data);
         if($type=='MerchantSKUs'){
@@ -860,8 +933,9 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
     }
     //for ajax upload end
 
-        public function generateJsonFile($type, $data){
-            $t=time()+rand(2,5);
+        public function generateJsonFile($type, $data)
+        {
+            $t=time()+rand(2, 5);
 
             $finalskujson= json_encode($data);
             if($type=='MerchantSKUs'){
@@ -869,38 +943,44 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
             }else{
                 $newJsondata = $finalskujson;
             }
+
             return $newJsondata;
         }
     
-    public function getAssociatedJetCategoryId($product){
+    public function getAssociatedJetCategoryId($product)
+    {
         $cats = $product->getCategoryIds();
         if(!$cats || (is_array($cats) && count($cats)<=0)){
                 return false;
         }
+
         $Jet_cat_result = Mage::getModel('jet/jetcategory')
                     ->getCollection()
-                    ->addFieldToFilter('magento_cat_id',array('in',$cats));
+                    ->addFieldToFilter('magento_cat_id', array('in',$cats));
         if(count($Jet_cat_result)>0)            
             return $Jet_cat_result->getFirstItem();
         return false;
     }
     
-    public function getAssociatedJetAttributeIds($product){
+    public function getAssociatedJetAttributeIds($product)
+    {
         if($jetCategory = $this->getAssociatedJetCategoryId($product)){
             $attribute = $jetCategory->getJetAttributes();
             //return array_map(function($val) { return "mjattr".$val."mjattr";} , explode(',', $attribute));
         }
+
         return false;
     }
     
-    public function getMainProductSku($product){
+    public function getMainProductSku($product)
+    {
         $sku = false;
         if($product->getTypeId()=="bundle"){
             return $sku;
         }else if($product->getTypeId()=="grouped"){
             return $sku;
         }else if($product->getTypeId()=="configurable"){
-             $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null,$product);
+             $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $product);
                  /*If only one product in child no need to make relation */
                  foreach($childProducts as $chp){
                      $detail = $this->getProductDetail($chp->getSku());
@@ -909,21 +989,24 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                          $sku =  $chp->getSku();
                          break; 
                     }
+
                         $sku =  $chp->getSku();
                     break;  
-                }               
+                 }               
         }
             
         return $sku;
     }
     
-    public function getProductDetail($sku){
+    public function getProductDetail($sku)
+    {
         $response =$this->CGetRequest('/merchant-skus/'.rawurlencode($sku).'');
         $result=json_decode($response, true);
         return $result;
     }
 
-    public function getBatchIdFromProductId($pid=""){
+    public function getBatchIdFromProductId($pid="")
+    {
         $batch_id=0;
         if($pid){
                 $batchcoll="";
@@ -936,13 +1019,16 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                             }
                 }
         }
+
         return $batch_id;
     }
-    public function initBatcherror(){
+    public function initBatcherror()
+    {
             $batcherror=array();
             Mage::getSingleton('adminhtml/session')->setBatcherror($batcherror);
     }
-    public function initBatchErrorForProduct($pid='',$index=0){
+    public function initBatchErrorForProduct($pid='',$index=0)
+    {
             $batcherror=array();
             $batcherror=Mage::getSingleton('adminhtml/session')->getBatcherror();
             $batch_id=0;
@@ -952,39 +1038,43 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
             if($batch_id){
                 $batchmod='';
                 $batchmod=Mage::getModel('jet/batcherror')->load($batch_id);
-                $batchmod->setData("batch_num",$index);
-                $batchmod->setData("is_write_mode",'1');
-                $batchmod->setData("error",'');
+                $batchmod->setData("batch_num", $index);
+                $batchmod->setData("is_write_mode", '1');
+                $batchmod->setData("error", '');
                 $batchmod->save();
             }else{
                 $batchmod='';
                 $batchmod=Mage::getModel('jet/batcherror');
-                $batchmod->setData('product_id',$pid);
-                $batchmod->setData('product_sku',$model->getSku());
-                $batchmod->setData("is_write_mode",'1');
-                $batchmod->setData("error",'');
-                $batchmod->setData("batch_num",$index);
+                $batchmod->setData('product_id', $pid);
+                $batchmod->setData('product_sku', $model->getSku());
+                $batchmod->setData("is_write_mode", '1');
+                $batchmod->setData("error", '');
+                $batchmod->setData("batch_num", $index);
                 $batchmod->save();
             }
+
             $batcherror[$pid]['error']="";
             $batcherror[$pid]['sku']=$model->getSku();
             $batcherror[$pid]['batch_num']=$index;
             Mage::getSingleton('adminhtml/session')->setBatcherror($batcherror);
     }
     /* load Attribute details */
-    public function getattributeType($attrcode){
+    public function getattributeType($attrcode)
+    {
         try{
             $load_attr = Mage::getModel('catalog/resource_eav_attribute')
-                ->loadByCode('catalog_product',$attrcode);
+                ->loadByCode('catalog_product', $attrcode);
             if(!$load_attr->getId()){
                 return false;
             }else{
                 return $load_attr->getFrontendInput();
             }
-        }catch(Exception $e){}
+        }catch(Exception $e){
+        }
     }
     
-    public function moreProductAttributesData($product){
+    public function moreProductAttributesData($product)
+    {
         //$config_amtype = Mage::getStoreConfig('jet_options/productextra_infomap/amazon_item_type_keyword');
         //$config_num_unit = Mage::getStoreConfig('jet_options/productextra_infomap/number_units_for_ppu');
         //$config_type_unit = Mage::getStoreConfig('jet_options/productextra_infomap/type_of_unit_for_ppu');
@@ -1013,10 +1103,11 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
         
         $more=array();
         
-        if(trim($this->_jetExtraAmazontype)!="" && $amazonType = $this->getProductGeneralAttribute($product,$this->_jetExtraAmazontype)){
+        if(trim($this->_jetExtraAmazontype)!="" && $amazonType = $this->getProductGeneralAttribute($product, $this->_jetExtraAmazontype)){
             if($amazonType != null && $amazonType !='')
                 $more['amazon_item_type_keyword']= trim($amazonType);
         }
+
         if($product->getData('category_path')!=""){
             $more['category_path']=$product->getData('category_path');
         }
@@ -1034,19 +1125,19 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                             $bullet_data[$j]=$string;
                             $j++;
                     }
+
                     if($j>4){
                         break;
                     }
-                    
             }
+
             if(count($bullet_data)>0){
                 $more['bullets']=$bullet_data;  
             }
-        
         }else if($this->_jetBullets !=''){
                 $buldata= $this->getProductGeneralAttribute($product, $this->_jetBullets);
                 if($buldata!=""){
-                    $explode_data = explode(",",$buldata);
+                    $explode_data = explode(",", $buldata);
                     if(count($explode_data)>0){
                             $more['bullets']=$explode_data; 
                     }
@@ -1058,42 +1149,42 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
             $more['number_units_for_price_per_unit']=(float)$ppu;
         }
         
-        if(trim($this->_jetExtraTypeUnitPPU)!="" && $typeUnitPPU = $this->getProductGeneralAttribute($product,$this->_jetExtraTypeUnitPPU)){
+        if(trim($this->_jetExtraTypeUnitPPU)!="" && $typeUnitPPU = $this->getProductGeneralAttribute($product, $this->_jetExtraTypeUnitPPU)){
             if($typeUnitPPU != "")
                 $more['type_of_unit_for_price_per_unit']=$product->getData($this->_jetExtraTypeUnitPPU);
         }
         
-        $ship_weight = (trim($this->_jetShippingWeight)!="") ? $this->getProductGeneralAttribute($product,$this->_jetShippingWeight): "";
+        $ship_weight = (trim($this->_jetShippingWeight)!="") ? $this->getProductGeneralAttribute($product, $this->_jetShippingWeight): "";
         if($ship_weight!="" && is_numeric($ship_weight)){
             $more['shipping_weight_pounds']=(float)$ship_weight;
         }
 
-        $pli = (trim($this->_jetExtraPackageLength)!="") ? $this->getProductGeneralAttribute($product,$this->_jetExtraPackageLength) : "";
+        $pli = (trim($this->_jetExtraPackageLength)!="") ? $this->getProductGeneralAttribute($product, $this->_jetExtraPackageLength) : "";
         if($pli!=""  && is_numeric($pli)){
             $more['package_length_inches']=(float)$pli;
         }
 
-        $plw = (trim($this->_jetExtraPackageWidth)!="") ? $this->getProductGeneralAttribute($product,$this->_jetExtraPackageWidth) : "";
+        $plw = (trim($this->_jetExtraPackageWidth)!="") ? $this->getProductGeneralAttribute($product, $this->_jetExtraPackageWidth) : "";
         if($plw!=""  && is_numeric($plw)){
             $more['package_width_inches']=(float)$plw;
         }
 
-        $plh = (trim($this->_jetExtraPackageHeight)!="") ?  $this->getProductGeneralAttribute($product,$this->_jetExtraPackageHeight) : "";
+        $plh = (trim($this->_jetExtraPackageHeight)!="") ?  $this->getProductGeneralAttribute($product, $this->_jetExtraPackageHeight) : "";
         if($plh !=""  && is_numeric($plh)){
             $more['package_height_inches']=(float)$plh;
         }
 
-        $dli = (trim($this->_jetExtraDisplayLength)!="") ? $this->getProductGeneralAttribute($product,$this->_jetExtraDisplayLength) : "";
+        $dli = (trim($this->_jetExtraDisplayLength)!="") ? $this->getProductGeneralAttribute($product, $this->_jetExtraDisplayLength) : "";
         if($dli!=""  && is_numeric($dli)){
             $more['display_length_inches']=(float)$dli;
         }
 
-        $dlw = (trim($this->_jetExtraDisplayWidth)!="") ? $this->getProductGeneralAttribute($product,$this->_jetExtraDisplayWidth) : "";
+        $dlw = (trim($this->_jetExtraDisplayWidth)!="") ? $this->getProductGeneralAttribute($product, $this->_jetExtraDisplayWidth) : "";
         if($dlw!=""  && is_numeric($dlw)){
             $more['display_width_inches']=(float)$dlw;
         }
 
-        $dlh = (trim($this->_jetExtraDisplayHeight)!="") ? $this->getProductGeneralAttribute($product,$this->_jetExtraDisplayHeight) : "";
+        $dlh = (trim($this->_jetExtraDisplayHeight)!="") ? $this->getProductGeneralAttribute($product, $this->_jetExtraDisplayHeight) : "";
         if($dlh!=""  && is_numeric($dlh)){
             $more['display_height_inches']=(float)$dlh;
         }
@@ -1105,6 +1196,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                     $more['prop_65']=false;
             }
         }
+
         $lgl_desclaim = (trim($this->_jetExtraLegalDesclaim)!="") ? $this->getProductGeneralAttribute($product, $this->_jetExtraLegalDesclaim) : "";
         if($lgl_desclaim!=""){
             $string=trim($lgl_desclaim);
@@ -1112,10 +1204,11 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                     $more['legal_disclaimer_description']=$string;
             }
         }
+
         if($product->getData('cpsia_cautionary_statements')!=""){
             $string="";
             $string=$product->getData('cpsia_cautionary_statements');
-            $arr=explode(',',$string);
+            $arr=explode(',', $string);
             if(count($arr)>0){
                 if($arr[0]=='no warning applicable')
                     array_shift($arr);  
@@ -1124,7 +1217,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
             }
         }
         
-        if(trim($this->_jetExtraSafetyWarning)!="" && $safetyWarning = $this->getProductGeneralAttribute($product,$this->_jetExtraSafetyWarning)){
+        if(trim($this->_jetExtraSafetyWarning)!="" && $safetyWarning = $this->getProductGeneralAttribute($product, $this->_jetExtraSafetyWarning)){
             if($safetyWarning != null && $safetyWarning!='') {
                 $string = trim($safetyWarning);
                 if (strlen($string) > 0) {
@@ -1132,6 +1225,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                 }
             }
         }
+
         if($product->getData('start_selling_date')!=""){
             $string=$product->getData('start_selling_date');
             $offset_end = $this->getStandardOffsetUTC(); 
@@ -1140,23 +1234,25 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
             }else{
                 $offset = '.0000000'.trim($offset_end);
             }
+
             $shipTodatetime="";
             $shipTodatetime=strtotime($string);
             $Ship_todate ="";
             $Ship_todate = date("Y-m-d", $shipTodatetime) . 'T' . date("H:i:s", $shipTodatetime).$offset;
             $more['start_selling_date']= $Ship_todate;
-            
         }
         
-        $fill_time = (trim($this->_jetExtraFulfillmentTime)!="") ? $this->getProductGeneralAttribute($product,$this->_jetExtraFulfillmentTime) : "";
+        $fill_time = (trim($this->_jetExtraFulfillmentTime)!="") ? $this->getProductGeneralAttribute($product, $this->_jetExtraFulfillmentTime) : "";
         if($fill_time!=""  && is_numeric($fill_time)){
             $more['fulfillment_time']=(int)$fill_time;
         }
-        $jmap_price = (trim($this->_jetMapPrice)!="") ? $this->getProductGeneralAttribute($product,$this->_jetMapPrice) : "";
+
+        $jmap_price = (trim($this->_jetMapPrice)!="") ? $this->getProductGeneralAttribute($product, $this->_jetMapPrice) : "";
         if($jmap_price!="" && is_numeric($jmap_price)){
             $more['map_price']=(float)$jmap_price;
         }
-        $dmsrp = (trim($this->_jetExtraMsrp)!="") ? $this->getProductGeneralAttribute($product,$this->_jetExtraMsrp) : "";
+
+        $dmsrp = (trim($this->_jetExtraMsrp)!="") ? $this->getProductGeneralAttribute($product, $this->_jetExtraMsrp) : "";
         if($dmsrp!="" && is_numeric($dmsrp)){
             $more['msrp']=(float)$dmsrp;
         }
@@ -1164,14 +1260,17 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
         if($product->getData('map_implementation')!=""){
                 $more['map_implementation']=$product->getData('map_implementation');
         }
+
         if($product->getData('product_tax_code')!=""){
                 $more['product_tax_code']=$product->getData('product_tax_code');
         }
+
         //no_return_fee_adjustment
-        $dretun_fee = (trim($this->_jetExtraNoReturnFeeAdjustment)!="") ? $this->getProductGeneralAttribute($product,$this->_jetExtraNoReturnFeeAdjustment) : "";
+        $dretun_fee = (trim($this->_jetExtraNoReturnFeeAdjustment)!="") ? $this->getProductGeneralAttribute($product, $this->_jetExtraNoReturnFeeAdjustment) : "";
         if($dretun_fee!="" && is_numeric($dretun_fee)){
                 $more['no_return_fee_adjustment']=(float)$dretun_fee;
         }
+
         if($product->getData('exclude_from_fee_adjust')!=""){
             if($product->getData('exclude_from_fee_adjust')){
                     $more['exclude_from_fee_adjustments']=true;
@@ -1179,6 +1278,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                     $more['exclude_from_fee_adjustments']=false;
             }
         }
+
         if($product->getData('ships_alone')!=""){
             if($product->getData('ships_alone')){
                     $more['ships_alone']=true;
@@ -1186,27 +1286,28 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                     $more['ships_alone']=false;
             }
         }
+
         $this->_jetRequiredManufacturer = 'country_of_manufacture';
         if($this->_jetRequiredManufacturer =='country_of_manufacture' &&  $product->getData('country_of_manufacture')!=""){
                 $country_name = Mage::getModel('directory/country')->loadByCode($product->getData('country_of_manufacture'))->getName();
                 $country_name=trim($country_name);
                 if(strlen($country_name)<=50 && strlen($country_name)>0){
-                        $more['country_of_origin']= substr($country_name, 0,50);
+                        $more['country_of_origin']= substr($country_name, 0, 50);
                 }
-
         }else{
-                $country_manufact = $this->getProductGeneralAttribute($product,$this->_jetExtraCountryOfOrigin);
+                $country_manufact = $this->getProductGeneralAttribute($product, $this->_jetExtraCountryOfOrigin);
                     
                 if($country_manufact!=''){  
-                    $country_manufact = substr($country_manufact,0,50);
+                    $country_manufact = substr($country_manufact, 0, 50);
                     $SKU_Array['country_of_origin']="$country_manufact";
                 }   
-
         }
+
         return $more;
     }
 
-    public function getProductBrand($product){
+    public function getProductBrand($product)
+    {
         $par_brand_name = '';
         $brand_attr_type = $this->getattributeType($this->_jetRequiredBrand);
         if($brand_attr_type!=false){
@@ -1218,49 +1319,53 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
         }else{
             $par_brand_name = $product->getData('jet_brand');
         }
+
         return $par_brand_name;
     }
 
 
-    public function getProductTitle($product,$parent_name){
+    public function getProductTitle($product,$parent_name)
+    {
         $productTitle = '';
         if($parent_name!='' && $parent_name!=null)
         {
-            $productTitle = substr($parent_name,0,500);
+            $productTitle = substr($parent_name, 0, 500);
         }
         else
         {
             if(trim($this->_jetRequiredTitle)!="" && $product->getData($this->_jetRequiredTitle)!="")
-            $productTitle = substr($product->getData($this->_jetRequiredTitle), 0,500);
+            $productTitle = substr($product->getData($this->_jetRequiredTitle), 0, 500);
             else
-            $productTitle = substr($product->getName(),0,500);  
+            $productTitle = substr($product->getName(), 0, 500);  
         }
         
 
         return $productTitle;
     }
 
-    public  function getProductDescription($product,$parent_desc){
+    public  function getProductDescription($product,$parent_desc)
+    {
         $description="";
          if($parent_desc!='' && $parent_desc!='')
         {
             $description = $parent_desc;
-        }
+         }
         else
         {   
             if(trim($this->_jetRequiredDescription) && $product->getData($this->_jetRequiredDescription)!=""){
             $description = $product->getData($this->_jetRequiredDescription);
             }else{
             $description = $product->getDescription();
-                }
+            }
         }
         
-        $description = (strlen($description) > 1999) ? substr($description,0,1999) : $description;
+        $description = (strlen($description) > 1999) ? substr($description, 0, 1999) : $description;
 
         return $description;
     }
 
-    public function getProductMFPN($product){
+    public function getProductMFPN($product)
+    {
         $manu_part_number = '';
         $val_mfpn = $this->getattributeType($this->_jetRequiredMFPN);
         if($val_mfpn!=false){
@@ -1270,35 +1375,45 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                 $manu_part_number = $product->getData($this->_jetRequiredMFPN);
             }
         }
+
         return $manu_part_number;
     }
 
-    public function getProductGeneralAttribute($product, $attributeCode){
+    public function getProductGeneralAttribute($product, $attributeCode)
+    {
         $attribute_value = '';
         $attribute = $product->getResource()->getAttribute($attributeCode);
         if ($attribute && $product->getData($attributeCode))
         {
             $attribute_value = $attribute ->getFrontend()->getValue($product);
         }
+
         return $attribute_value;
     }
 
-    public  function getGlobalVariantAttributeMapping(){
+    public  function getGlobalVariantAttributeMapping()
+    {
         $data =  Mage::getStoreConfig('jet_options/productinfo_map/variant_attributes');
 
         if($data!=''){
             $data = unserialize($data);
             unset($data['__empty']);
 
-            $data = array_filter(array_map(function ($n) {
-                if (isset($n['jet_attribute_id']) && $n['jet_attribute_id'] != '-') return $n;
-            }, $data));
+            $data = array_filter(
+                array_map(
+                    function ($n) {
+                    if (isset($n['jet_attribute_id']) && $n['jet_attribute_id'] != '-') return $n;
+                    }, $data
+                )
+            );
             return $data;
         }
+
         return array();
     }
 
-    public  function getGlobalIdentifierAttributeMapping(){
+    public  function getGlobalIdentifierAttributeMapping()
+    {
         $data =  Mage::getStoreConfig('jet_options/productinfo_map/identifiers');
 
         if($data!=''){
@@ -1310,13 +1425,16 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                     $mappedData[$val['identifier']]= $val['magento_attribute_code'];
                 }
             }
+
             return $mappedData;
         }
+
         return array();
     }
 
 
-    public function getProductProfile($product){
+    public function getProductProfile($product)
+    {
         $productId = false;
         $currentProfile = false;
 
@@ -1332,6 +1450,7 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                 $profile =  Mage::getModel('jet/profile')->load($profileId);
                 $this->_profile[$profileId] = $profile;
             }
+
             $currentProfile = $this->_profile[$profileId];
         }else{//second check if the product is found in the same product it exist in parent product
             $parentIds = Mage::getResourceSingleton('catalog/product_type_configurable')
@@ -1343,12 +1462,14 @@ class Ced_Jet_Helper_Data extends Mage_Core_Helper_Abstract{
                 }
             }
         }
+
         return $currentProfile;
     }
 
 
 
-    public function prepareProductJetAttribute($product, $profile,$parent_prod_id){
+    public function prepareProductJetAttribute($product, $profile,$parent_prod_id)
+    {
 
         if(!$product || !$profile)
             return false;
@@ -1365,8 +1486,6 @@ $Attribute_array = array();
                 //check if attribute is mapped
                 if(isset($jetAt['attribute_id']) && isset($mappedAttribute[$jetAt['attribute_id']])
                     && isset($mappedAttribute[$jetAt['attribute_id']]['magento_attribute_code'])){
-
-
                     $magentoAttribute = $mappedAttribute[$jetAt['attribute_id']]['magento_attribute_code'];
                     $setAttributeId = $jetAt['attribute_id'];
 
@@ -1376,26 +1495,25 @@ $Attribute_array = array();
                         continue;
                     //if Attributes of Units type
                     if(isset($jetAt['units'])){
-                        $code_before_space = explode(" ",$attribute_value);
+                        $code_before_space = explode(" ", $attribute_value);
                         array_pop($code_before_space);
                         $first_half = trim($code_before_space[0]);
 
-                        $getUnit_value = end(explode(" ",$attribute_value));
+                        $getUnit_value = end(explode(" ", $attribute_value));
                         $getUnit_value = trim($getUnit_value);
 
                         if(isset($first_half) && $first_half!=''){
                             $units = $jetAt['units'];
                             if(count($units)>0){
                                 if(!empty($getUnit_value) || $getUnit_value!=''){
-
-                                    if(in_array($getUnit_value,$units)){
+                                    if(in_array($getUnit_value, $units)){
                                         $Attribute_array[] = array(
                                             'attribute_id'=> $setAttributeId,
                                             'attribute_value'=>$first_half,
                                             'attribute_value_unit'=>$getUnit_value);
                                     }else{
                                         //if no unit is available
-                                        $emsg= 'Unit value is required for this attribute '.$magentoAttribute.' from one of these comma seperated values: '.implode(',',$units).' for example : '.$code_before_space[0].'{space}'.$units[0].' ie. '.$code_before_space[0].' '.$units[0];
+                                        $emsg= 'Unit value is required for this attribute '.$magentoAttribute.' from one of these comma seperated values: '.implode(',', $units).' for example : '.$code_before_space[0].'{space}'.$units[0].' ie. '.$code_before_space[0].' '.$units[0];
 
                                         $batcherror=array();
                                         $batcherror=Mage::getSingleton('adminhtml/session')->getBatcherror();
@@ -1411,12 +1529,10 @@ $Attribute_array = array();
                                 }
                             }
                         }
-
                     }else{
                         $Attribute_array[] = array(
                             'attribute_id'=> $setAttributeId,
                             'attribute_value'=>$attribute_value);
-
                     }
                 }
             }
@@ -1432,9 +1548,13 @@ $Attribute_array = array();
 
             $mapping = json_decode($profile->getProfileAttributeMapping(), true);
             $mappedA = (isset($mapping['mapped_attribute']))?$mapping['mapped_attribute']:array();
-            $mappedAttribute = array_filter(array_map(function ($n) {
-                if (isset($n['magento_attribute_code']) && $n['magento_attribute_code'] != '') return $n;
-            }, $mappedA));
+            $mappedAttribute = array_filter(
+                array_map(
+                    function ($n) {
+                    if (isset($n['magento_attribute_code']) && $n['magento_attribute_code'] != '') return $n;
+                    }, $mappedA
+                )
+            );
 
 
             $childjetAttributeMapping = array();
@@ -1453,7 +1573,6 @@ $Attribute_array = array();
                 if (!$found)
                     foreach ($globalVariantAttribute as $map) {
                         if ($productAttribute['attribute_code'] == $map['magento_attribute_code']) {
-
                             $setAttributeId = $map['jet_attribute_id'];
                             $magentoAttribute = $map['magento_attribute_code'];
                             $attribute_value = $this->getProductGeneralAttribute($product, $magentoAttribute);
@@ -1474,7 +1593,8 @@ $Attribute_array = array();
         return $Attribute_array;
     }
 
-    public function createProduct($product , $childPrice , $parent_image,$parent_prod_id,$parent_name,$parent_desc){
+    public function createProduct($product , $childPrice , $parent_image,$parent_prod_id,$parent_name,$parent_desc)
+    {
 
         $globalVariantAttribute = $this->getGlobalVariantAttributeMapping();
         $fullfillmentnodeid = $this->_jetFulfillmentNode;
@@ -1496,9 +1616,13 @@ $Attribute_array = array();
         if($product instanceof Mage_Catalog_Model_Product) {
             $profile = $this->getProductProfile($product);
             $mapping = json_decode($profile->getProfileAttributeMapping(), true);
-            $mappedAttribute = array_filter(array_map(function ($n) {
-                if (isset($n['magento_attribute_code']) && $n['magento_attribute_code'] != '') return $n;
-            }, $mapping['mapped_attribute']));
+            $mappedAttribute = array_filter(
+                array_map(
+                    function ($n) {
+                    if (isset($n['magento_attribute_code']) && $n['magento_attribute_code'] != '') return $n;
+                    }, $mapping['mapped_attribute']
+                )
+            );
 
 
             if ($product->getTypeId() == "configurable") {
@@ -1523,7 +1647,6 @@ $Attribute_array = array();
                     $msg['type'] = 'error';
                     $msg['data'] = 'Does not contain Brand Name in Child Product  main product ' . $par_pro->getName() . ' of Parent product ' . $product->getName() . ' So this is skipped from upload.';
                     return $msg;
-
                 }
 
 
@@ -1538,19 +1661,20 @@ $Attribute_array = array();
                         return $msg;
                     }
                 }
+
                 foreach ($childProducts as $chp) {
-                    if ($resultData = $this->createProduct($chp->getId(), $childPrice, $parent_image,$parent_prod_id,$parent_name,$parent_desc)) {
+                    if ($resultData = $this->createProduct($chp->getId(), $childPrice, $parent_image, $parent_prod_id, $parent_name, $parent_desc)) {
                         $result = Mage::helper('jet/jet')->Jarray_merge($result, $resultData['merchantsku']);
                         $price = Mage::helper('jet/jet')->Jarray_merge($price, $resultData['price']);
                         $inventory = Mage::helper('jet/jet')->Jarray_merge($inventory, $resultData['inventory']);
                         $sProductSku[] = $chp->getSku();
                     }
                 }
+
                 $sku = current($sProductSku);
                 $sProductSku = array_values(array_diff($sProductSku, array($sku)));
 
                 if (count($sProductSku) > 0) {
-
                     $productAttributeOptions = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
                     $jetAttributeMapping = array();
 
@@ -1564,6 +1688,7 @@ $Attribute_array = array();
                                 break;
                             }
                         }
+
                         if (!$found)
                             foreach ($globalVariantAttribute as $map) {
                                 if ($productAttribute['attribute_code'] == $map['magento_attribute_code']) {
@@ -1573,21 +1698,21 @@ $Attribute_array = array();
                                     break;
                                 }
                             }
+
                         if (!$found) {
                             //not found any attribute map
                             $msg['type'] = 'error';
                             $msg['data'] = 'Magento Attribute ' . $productAttribute['attribute_code'] . ' does not mapped with Jet Attribute ' . $productAttribute['attribute_code'] . ' Kindly map attribute from Jet->Configuration->Variant Attribute ->' . $productAttribute['attribute_code'] . ' Note : Product ' . $product->getName() . ' .variation is skipped from upload.';
                             return $msg;
                         }
-
                     }
 
 
                     $relationship[$sku]['relationship'] = "Variation";
                     $relationship[$sku]['variation_refinements'] = $jetAttrId;
                     $relationship[$sku]['children_skus'] = $sProductSku;
-
                 }
+
                 $prodData = array();
                 $prodData['merchantsku'] = $result;
                 $prodData['price'] = $price;
@@ -1597,12 +1722,10 @@ $Attribute_array = array();
                     $prodData['relationship'] = $relationship;
 
                 return $prodData;
-
             } else if ($product->getTypeId() == "grouped") {
                 $msg['type'] = 'error';
                 $msg['data'] = 'product type not supported on Jet .';
                 return $msg;
-
             } else if ($product->getTypeId() == "bundle") {
                 $msg['type'] = 'error';
                 $msg['data'] = 'product type not supported on Jet .';
@@ -1624,8 +1747,7 @@ $Attribute_array = array();
                 foreach ($identifier as $value){
                     $barcode  = Mage::helper('jet/barcodevalidator');
                     $localValid = true;
-                    if(isset($value['identifier']) && $value['identifier'] == 'ASIN' ) {
-
+                    if(isset($value['identifier']) && $value['identifier'] == 'ASIN') {
                         if (!$barcode->isAsin($value['value'])) {
                             $validate = false;
                             $err_msg = "Error in Product: " . $product->getName() . " ASIN should be correct and 10 digit alphanumeric";
@@ -1652,7 +1774,6 @@ $Attribute_array = array();
                     if($localValid){ 
                         $standardCodes[] = array('standard_product_code_type' => $value['identifier'],
                             'standard_product_code' => $value['value']);
-
                     }
                 }
             }
@@ -1666,7 +1787,7 @@ $Attribute_array = array();
                         continue;
                     $barcode  = Mage::helper('jet/barcodevalidator');
                     $localValid = true;
-                    if($code == 'ASIN' ) { 
+                    if($code == 'ASIN') { 
                         if (!$barcode->isAsin($value)) { 
                             $validate = false;
                             $err_msg = "Error in Product: " . $product->getName() . " ASIN should be correct and 10 digit alphanumeric";
@@ -1675,7 +1796,7 @@ $Attribute_array = array();
                             $asin = $value;
                         }
                     }
-                    else if( $code == 'ISBN-10' || $code == 'ISBN-13'){
+                    else if($code == 'ISBN-10' || $code == 'ISBN-13'){
                         if(!$barcode->findIsbn($value)){
                             $validate = false;
                             $err_msg = "Error in Product Sku: ".$product->getSku()." <b>".$code."</b> is not valid";
@@ -1711,7 +1832,6 @@ $Attribute_array = array();
             if ($brand == NULL || trim($brand) == '') {
                 $validate = false;
                 $err_msg = "Error in Product: " . $product->getName() . " Brand information Required & One of these values(UPC, EAN,GTIN-14,ISBN-13,ISBN-10) OR ASIN OR Manufacturer Part Number are Required.";
-
             }
 
 
@@ -1739,7 +1859,6 @@ $Attribute_array = array();
                     Mage::getSingleton('adminhtml/session')->setBatcherror($batcherror);
                 }
                 Mage::getSingleton('core/session')->addError($err_msg);*/
-
             } else {  
                 $more = array();
                 $more = $this->moreProductAttributesData($product);
@@ -1747,7 +1866,7 @@ $Attribute_array = array();
 
                 $sku = $product->getSku();
 
-                $SKU_Array['product_title'] = $this->getProductTitle($product,$parent_name);
+                $SKU_Array['product_title'] = $this->getProductTitle($product, $parent_name);
 
                 if (strlen($SKU_Array['product_title']) < 5) {
                     $msg['type'] = 'error';
@@ -1756,7 +1875,7 @@ $Attribute_array = array();
                 }
 
                 //set description
-                $description = $this->getProductDescription($product,$parent_desc);
+                $description = $this->getProductDescription($product, $parent_desc);
                 if (strlen($description) == 0) {
                     $msg['type'] = 'error';
                     $msg['data'] = 'product description not found';
@@ -1769,16 +1888,16 @@ $Attribute_array = array();
                 if ($asin != null && $asin!='') {
                     $SKU_Array['ASIN'] = $asin;
                 }
+
                 if (is_array($standardCodes) && count($standardCodes)>0) {
                     if (is_array($standardCodes) && count($standardCodes)>0) {
                         foreach ($standardCodes as $key => $value) {
                            if($value['standard_product_code_type']!='ASIN')
                                 {
                                  $SKU_Array['standard_product_codes'] = $standardCodes;
-                                }
+                           }
                         }
-                    
-                }
+                    }
                 }
                 
                 if ($mfrp_exist) {
@@ -1816,7 +1935,7 @@ $Attribute_array = array();
               
                 if ($parent_image != '') {
                         $SKU_Array['main_image_url'] = $parent_image;
-                    } 
+                } 
                     else
                     {
                         if (end($image1) != 'no_selection') 
@@ -1842,7 +1961,6 @@ $Attribute_array = array();
                         $jet_image_slot++;
                         if ($jet_image_slot > 7)
                             break;
-
                     }
                 }
 
@@ -1851,7 +1969,7 @@ $Attribute_array = array();
 
                 $compt_price_config = $this->_jetRePriceActive;
 
-                $Attribute_array = $this->prepareProductJetAttribute($product, $profile,$parent_prod_id);
+                $Attribute_array = $this->prepareProductJetAttribute($product, $profile, $parent_prod_id);
 
                 if (!empty($SKU_Array)) {
                     $SKU_Array['attributes_node_specific'] = $Attribute_array;
@@ -1864,33 +1982,26 @@ $Attribute_array = array();
                         //code start for compt price
 
                         if ($compt_price_config) {
-
                             $compt_price = Mage::helper('jet/jet')->getComptPrice($childPrice[$sku], $sku, $product);
                             $node['fulfillment_node_price'] = $compt_price;
                             $price[$sku]['price'] = $compt_price;
-
                         } else {
                             $node['fulfillment_node_price'] = $childPrice[$sku];
                             $price[$sku]['price'] = $childPrice[$sku];
                         }
-
                     } else {
-
                         //code start for compt price
 
                         if ($compt_price_config) {
-
                             $compt_price = Mage::helper('jet/jet')->getComptPrice($product_price, $sku, $product);
                             $node['fulfillment_node_price'] = $compt_price;
                             $price[$sku]['price'] = $compt_price;
-
                         } else {
                             $node['fulfillment_node_price'] = $product_price;
                             $price[$sku]['price'] = $product_price;
                         }
-
-
                     }
+
                     $price[$sku]['fulfillment_nodes'][] = $node;
 
                     $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
@@ -1908,6 +2019,7 @@ $Attribute_array = array();
                     } else {
                         $node1['quantity'] = $qty;
                     }
+
                     $inventory[$sku]['fulfillment_nodes'][] = $node1;
 
                     $prodData = array();
@@ -1925,7 +2037,8 @@ $Attribute_array = array();
         }
     }
 
-    public function createProductOnJet($product , $childPrice , $parent_image,$parent_prod_id,$parent_name,$parent_desc){
+    public function createProductOnJet($product , $childPrice , $parent_image,$parent_prod_id,$parent_name,$parent_desc)
+    {
 
         $globalVariantAttribute = $this->getGlobalVariantAttributeMapping();
 
@@ -1958,15 +2071,17 @@ $Attribute_array = array();
                     $batcherror=Mage::getSingleton('adminhtml/session')->getBatcherror();
                     $err_msg="Does not contain the main product ".$product->getName().". So this is skipped from upload.";
                     if(count($batcherror)>0){
-                        if(array_key_exists($product->getId(),$batcherror)){
+                        if(array_key_exists($product->getId(), $batcherror)){
                             $batcherror[$product->getId()]['error']=$batcherror[$product->getId()]['error'].'<br/>'.$err_msg;
                             $batcherror[$product->getId()]['sku']=$product->getSku();
                         }else{
                             $batcherror[$product->getId()]['error']=$err_msg;
                             $batcherror[$product->getId()]['sku']=$product->getSku();
                         }
+
                         Mage::getSingleton('adminhtml/session')->setBatcherror($batcherror);
                     }
+
                     Mage::getSingleton('core/session')->addError('Does not contain the main product '.$product->getName().' So this is skipped from upload');
 
                     return;
@@ -1984,13 +2099,14 @@ $Attribute_array = array();
                     $err_msg="";
                     $err_msg='Does not contain Brand Name in Child Product  main product '.$par_pro->getName().' of Parent product '.$product->getName().' .So this is skipped from upload.';
                     if(count($batcherror)>0){
-                        if(array_key_exists($product->getId(),$batcherror)){
+                        if(array_key_exists($product->getId(), $batcherror)){
                             $batcherror[$product->getId()]['error']=$batcherror[$product->getId()]['error'].'<br/>'.$err_msg;
                             $batcherror[$product->getId()]['sku']=$product->getSku();
                         }else{
                             $batcherror[$product->getId()]['error']=$err_msg;
                             $batcherror[$product->getId()]['sku']=$product->getSku();
                         }
+
                         Mage::getSingleton('adminhtml/session')->setBatcherror($batcherror);
                     }
 
@@ -1999,27 +2115,29 @@ $Attribute_array = array();
                 }
 
 
-                $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null,$product);
+                $childProducts = Mage::getModel('catalog/product_type_configurable')->getUsedProducts(null, $product);
                 //If only one product in child no need to make relation variation
                 foreach($childProducts as $chp){
                     $chd_pro=Mage::getModel('catalog/product')->load($chp->getId());
                     $chd_brand_name =  $this->getProductBrand($chd_pro);
 
-                    if($par_brand_name != trim($chd_brand_name) ){
+                    if($par_brand_name != trim($chd_brand_name)){
                         $batcherror=array();
                         $batcherror=Mage::getSingleton('adminhtml/session')->getBatcherror();
                         $err_msg="";
                         $err_msg='Does not matching Brand Name in Child Product "'.$chd_pro->getName().'" with Product "'.$par_pro->getName().'" of Parent product "'.$product->getName().'" .So this is skipped from upload.';
                         if(count($batcherror)>0){
-                            if(array_key_exists($product->getId(),$batcherror)){
+                            if(array_key_exists($product->getId(), $batcherror)){
                                 $batcherror[$product->getId()]['error']=$batcherror[$product->getId()]['error'].'<br/>'.$err_msg;
                                 $batcherror[$product->getId()]['sku']=$product->getSku();
                             }else{
                                 $batcherror[$product->getId()]['error']=$err_msg;
                                 $batcherror[$product->getId()]['sku']=$product->getSku();
                             }
+
                             Mage::getSingleton('adminhtml/session')->setBatcherror($batcherror);
                         }
+
                         Mage::getSingleton('core/session')->addError('Does not matching Brand Name in Child Product "'.$chd_pro->getName().'" with Product "'.$par_pro->getName().'" of Parent product "'.$product->getName().'" .So this is skipped from upload.');
 
                         return;
@@ -2027,14 +2145,14 @@ $Attribute_array = array();
                 }
 
                 foreach($childProducts as $chp){
-                    if($resultData = $this->createProductOnJet($chp->getId() , $childPrice ,$parent_image,$parent_prod_id,$parent_name,$parent_desc)){
+                    if($resultData = $this->createProductOnJet($chp->getId(), $childPrice, $parent_image, $parent_prod_id, $parent_name, $parent_desc)){
                         if($resultData['type']=='error')
                         {
                             Mage::getSingleton('core/session')->addError($resultData['data']);
                         }
                         else
                         {
-                            $result = Mage::helper('jet/jet')->Jarray_merge ($result, $resultData['merchantsku']);
+                            $result = Mage::helper('jet/jet')->Jarray_merge($result, $resultData['merchantsku']);
                             $price = Mage::helper('jet/jet')->Jarray_merge($price, $resultData['price']);
                             $inventory =  Mage::helper('jet/jet')->Jarray_merge($inventory, $resultData['inventory']);
                             $sProductSku[] = $chp->getSku();
@@ -2042,17 +2160,22 @@ $Attribute_array = array();
                     }
                 }
 
-                $sProductSku = array_values(array_diff( $sProductSku, array($sku))) ;
+                $sProductSku = array_values(array_diff($sProductSku, array($sku)));
                 
                 
                 
 
                 if(count($sProductSku)>0){
-
                     $productAttributeOptions = $product->getTypeInstance(true)->getConfigurableAttributesAsArray($product);
                     $mapping = json_decode($profile->getProfileAttributeMapping(), true);
                     $mappedA = (isset($mapping['mapped_attribute']))?$mapping['mapped_attribute']:array();
-                    $mappedAttribute = array_filter(array_map(function($n) { if(isset($n['magento_attribute_code']) && $n['magento_attribute_code']!='') return $n; }, $mappedA));
+                    $mappedAttribute = array_filter(
+                        array_map(
+                            function ($n) {
+                            if(isset($n['magento_attribute_code']) && $n['magento_attribute_code']!='') return $n; 
+                            }, $mappedA
+                        )
+                    );
 
 
                     $jetAttributeMapping = array();
@@ -2065,6 +2188,7 @@ $Attribute_array = array();
                                 break;
                             }
                         }
+
                         if(!$found)
                             foreach ($globalVariantAttribute as $map){
                                 if($productAttribute['attribute_code'] == $map['magento_attribute_code']){
@@ -2073,18 +2197,20 @@ $Attribute_array = array();
                                     break;
                                 }
                             }
+
                     if(!$found) {
                         //not found any attribute map
                         $msg['type'] = 'error';
                         $msg['data'] = 'Magento Attribute ' . $productAttribute['attribute_code'] . ' does not mapped with Jet Attribute ' . $productAttribute['attribute_code'] . ' Kindly map attribute from Jet->Configuration->Variant Attribute ->' . $productAttribute['attribute_code'] . ' Note : Product ' . $product->getName() . ' .variation is skipped from upload.';
                         return $msg;
                     }
-                }
+                    }
+
                     $relationship[$sku]['relationship']= "Variation";
                     $relationship[$sku]['variation_refinements']= $jetAttrId;
                     $relationship[$sku]['children_skus']= $sProductSku;
-
                 }
+
                 $prodData = array();
                 $prodData['merchantsku'] = $result;
                 $prodData['price'] = $price;
@@ -2094,13 +2220,11 @@ $Attribute_array = array();
                     $prodData['relationship'] = $relationship;
                 
                 return $prodData;
-
             }
             else if($product->getTypeId() == "grouped"){
                 $msg['type'] = 'error';
                 $msg['data'] = 'product type not supported on Jet .' ;
                 return $msg;
-
             }
             else if($product->getTypeId() == "bundle"){
                 $jetAttrId = array();
@@ -2120,13 +2244,14 @@ $Attribute_array = array();
                     $err_msg="";
                     $err_msg='Does not contain Brand Name in Child Product  main product '.$par_pro->getName().' of Parent product '.$product->getName().' .So this is skipped from upload.';
                     if(count($batcherror)>0){
-                        if(array_key_exists($product->getId(),$batcherror)){
+                        if(array_key_exists($product->getId(), $batcherror)){
                             $batcherror[$product->getId()]['error']=$batcherror[$product->getId()]['error'].'<br/>'.$err_msg;
                             $batcherror[$product->getId()]['sku']=$product->getSku();
                         }else{
                             $batcherror[$product->getId()]['error']=$err_msg;
                             $batcherror[$product->getId()]['sku']=$product->getSku();
                         }
+
                         Mage::getSingleton('adminhtml/session')->setBatcherror($batcherror);
                     }
 
@@ -2135,13 +2260,15 @@ $Attribute_array = array();
                 }
 
                 $selectionCollection = $product->getTypeInstance(true)->getSelectionsCollection(
-                $product->getTypeInstance(true)->getOptionsIds($product), $product);
+                    $product->getTypeInstance(true)->getOptionsIds($product), $product
+                );
  
                 $bundled_items = array();
                 foreach($selectionCollection as $option) 
                 {
                     $bundled_items[] = $option->product_id;
                 }
+
                 $childProducts = $bundled_items;
     
                 
@@ -2151,21 +2278,23 @@ $Attribute_array = array();
 
                     $chd_brand_name =  $this->getProductBrand($chd_pro);
 
-                    if($par_brand_name != trim($chd_brand_name) ){
+                    if($par_brand_name != trim($chd_brand_name)){
                         $batcherror=array();
                         $batcherror=Mage::getSingleton('adminhtml/session')->getBatcherror();
                         $err_msg="";
                         $err_msg='Does not matching Brand Name in Child Product "'.$chd_pro->getName().'" with Product "'.$par_pro->getName().'" of Parent product "'.$product->getName().'" .So this is skipped from upload.';
                         if(count($batcherror)>0){
-                            if(array_key_exists($product->getId(),$batcherror)){
+                            if(array_key_exists($product->getId(), $batcherror)){
                                 $batcherror[$product->getId()]['error']=$batcherror[$product->getId()]['error'].'<br/>'.$err_msg;
                                 $batcherror[$product->getId()]['sku']=$product->getSku();
                             }else{
                                 $batcherror[$product->getId()]['error']=$err_msg;
                                 $batcherror[$product->getId()]['sku']=$product->getSku();
                             }
+
                             Mage::getSingleton('adminhtml/session')->setBatcherror($batcherror);
                         }
+
                         Mage::getSingleton('core/session')->addError('Does not matching Brand Name in Child Product "'.$chd_pro->getName().'" with Product "'.$par_pro->getName().'" of Parent product "'.$product->getName().'" .So this is skipped from upload.');
 
                         return;
@@ -2173,15 +2302,12 @@ $Attribute_array = array();
                 }
 
                 foreach($bundled_items as $chp){
-                    
                 $chd_pro=Mage::getModel('catalog/product')->load($chp);
-                    if($resultData = $this->createProductOnJet($chp , $childPrice ,$parent_image,$parent_prod_id,$parent_name,$parent_desc)){     
-
-                        $result = Mage::helper('jet/jet')->Jarray_merge ($result, $resultData['merchantsku']);
+                    if($resultData = $this->createProductOnJet($chp, $childPrice, $parent_image, $parent_prod_id, $parent_name, $parent_desc)){
+                        $result = Mage::helper('jet/jet')->Jarray_merge($result, $resultData['merchantsku']);
                         $price = Mage::helper('jet/jet')->Jarray_merge($price, $resultData['price']);
                         $inventory =  Mage::helper('jet/jet')->Jarray_merge($inventory, $resultData['inventory']);
                         $sProductSku[] = $chd_pro->getSku();
-                        
                     }
                 }
 
@@ -2206,7 +2332,7 @@ $Attribute_array = array();
                 foreach ($identifier as $value){
                     $barcode  = Mage::helper('jet/barcodevalidator');
                     $localValid = true;
-                    if(isset($value['identifier']) && $value['identifier'] == 'ASIN' ) {
+                    if(isset($value['identifier']) && $value['identifier'] == 'ASIN') {
                             if (!$barcode->isAsin($value['value'])) {
                                 $validate = false;
                                 $err_msg .= "Error in Product: " . $product->getName() . " ASIN must be of 10 digits <br />";
@@ -2214,7 +2340,7 @@ $Attribute_array = array();
                             } else {
                                 $asin = $value['value'];
                             }
-                        }
+                    }
                     else if(isset($value['identifier']) && ($value['identifier'] == 'ISBN-10' || $value['identifier'] == 'ISBN-13')){
                         if(!$barcode->findIsbn($value['value'])){
                             $validate = false;
@@ -2246,7 +2372,7 @@ $Attribute_array = array();
                         continue;
                     $barcode  = Mage::helper('jet/barcodevalidator');
                     $localValid = true;
-                    if($code == 'ASIN' ) {
+                    if($code == 'ASIN') {
                         if (!$barcode->isAsin($value)) {
                             $validate = false;
                             $err_msg .= "Error in Product: " . $product->getName() . " ASIN must be of 10 digits";
@@ -2255,7 +2381,7 @@ $Attribute_array = array();
                             $asin = $value;
                         }
                     }
-                    else if( $code == 'ISBN-10' || $code == 'ISBN-13'){
+                    else if($code == 'ISBN-10' || $code == 'ISBN-13'){
                         if(!$barcode->findIsbn($value)){
                             $validate = false;
                             $err_msg .= "Error in Product Sku: ".$product->getSku()." <b>".$code."</b> is not valid";
@@ -2293,13 +2419,11 @@ $Attribute_array = array();
             if($brand==NULL || trim($brand)==''){
                 $validate =false;
                 $err_msg .= "Error in Product: ".$product->getName()." Brand information Required & One of these values(UPC, EAN,GTIN-14,ISBN-13,ISBN-10) OR ASIN OR Manufacturer Part Number are Required. <br />";
-
             }
 
             if(count($standardCodes)==0){
                 $validate =false;
                 $err_msg .= "Error in Product Sku: <b>'".$product->getSku()."'</b> Standard Identifier is required please set Identifier values(UPC, EAN,GTIN-14,ISBN-13,ISBN-10) OR ASIN <br>";
-
             }
 
             $cat_error ='';
@@ -2311,14 +2435,12 @@ $Attribute_array = array();
                 $cate_validate =false;
                 $cat_error = 'SKU: <b>'.$product->getSku().'</b></br> Rejected : Product is not Assigned to Any Profile ';
             }
+
             $batcherror=array();
             if($validate==false){
-
                 $msg['type'] = 'error';
                 $msg['data'] = $err_msg ;
                 return $msg;
-
-
             } else {
                 $more = $this->moreProductAttributesData($product);
                 $SKU_Array = Mage::helper('jet/jet')->Jarray_merge($SKU_Array, $more);
@@ -2326,14 +2448,14 @@ $Attribute_array = array();
                 $sku = $product->getSku();
 
 
-                $SKU_Array['product_title'] = $this->getProductTitle($product,$parent_name);
+                $SKU_Array['product_title'] = $this->getProductTitle($product, $parent_name);
                 if (strlen($SKU_Array['product_title']) < 5) {
                     $msg['type'] = 'error';
                     $msg['data'] = 'product title length must be equal or greater than 5';
                     return $msg;
                 }
 
-                $description = $this->getProductDescription($product,$parent_desc);
+                $description = $this->getProductDescription($product, $parent_desc);
                 //$description = strip_tags($description);
 
                 if (strlen($description) == 0) {
@@ -2348,18 +2470,20 @@ $Attribute_array = array();
                 if ($asin != null && $asin!='') {
                     $SKU_Array['ASIN'] = $asin;
                 }
+
                 if (is_array($standardCodes) && count($standardCodes)>0) {
                     foreach ($standardCodes as $key => $value) {
                     if($value['standard_product_code_type']!='ASIN')
                     {
                         $SKU_Array['standard_product_codes'] = $standardCodes;
                     }
-                }
+                    }
                 }
 
                 if ($mfrp_exist) {
                     $SKU_Array['mfr_part_number'] = substr($manu_part_number, 0, 50);
                 }
+
                 //set category
                 $SKU_Array['jet_browse_node_id'] = $prd_browser_nodeid;
 
@@ -2392,7 +2516,7 @@ $Attribute_array = array();
 
                 if ($parent_image != '') {
                         $SKU_Array['main_image_url'] = $parent_image;
-                    } 
+                } 
                     else
                     {
                         if (end($image1) != 'no_selection') 
@@ -2424,7 +2548,7 @@ $Attribute_array = array();
 
 
                 //get all attributes
-                $Attribute_array = $this->prepareProductJetAttribute($product, $profile,$parent_prod_id);
+                $Attribute_array = $this->prepareProductJetAttribute($product, $profile, $parent_prod_id);
 
                 $compt_price_config = $this->_jetRePriceActive;
                 if (!empty($SKU_Array)) {
@@ -2451,15 +2575,11 @@ $Attribute_array = array();
                             $node['fulfillment_node_price'] = $compt_price;
                             $price[$sku]['price'] = $compt_price;
                         } else {
-                           
-                            
-                            
                             $node['fulfillment_node_price'] = $product_price;
                             $price[$sku]['price'] = $product_price;
-                            
-                           
                         }
                     }
+
                     $price[$sku]['fulfillment_nodes'][] = $node;
 
 
@@ -2480,6 +2600,7 @@ $Attribute_array = array();
                     } else {
                         $node1['quantity'] = $qty;
                     }
+
                     $inventory[$sku]['fulfillment_nodes'][] = $node1;
 
                     $prodData = array();
@@ -2499,7 +2620,8 @@ $Attribute_array = array();
     }
 
 
-    public function saveBatchData($index=""){
+    public function saveBatchData($index="")
+    {
                 $date="";
                 $date = date('Y-m-d H:i:s');
                 $batcherror=array();
@@ -2515,21 +2637,21 @@ $Attribute_array = array();
                                         $batchmod='';
 
                                         $batchmod=Mage::getModel('jet/batcherror')->load($batch_id);
-                                        $batchmod->setData("batch_num",$index);
-                                        $batchmod->setData("is_write_mode",'0');
-                                        $batchmod->setData("error",$val['error']);
-                                        $batchmod->setData('product_sku',$val['sku']);
-                                        $batchmod->setData("date_added",$date);
+                                        $batchmod->setData("batch_num", $index);
+                                        $batchmod->setData("is_write_mode", '0');
+                                        $batchmod->setData("error", $val['error']);
+                                        $batchmod->setData('product_sku', $val['sku']);
+                                        $batchmod->setData("date_added", $date);
                                         $batchmod->save();
                             }else{
                                         $batchmod='';
                                         $batchmod=Mage::getModel('jet/batcherror');
-                                        $batchmod->setData('product_id',$id);
-                                        $batchmod->setData('product_sku',$val['sku']);
-                                        $batchmod->setData("is_write_mode",'0');
-                                        $batchmod->setData("error",$val['error']);
-                                        $batchmod->setData("batch_num",$index);
-                                        $batchmod->setData("date_added",$date);
+                                        $batchmod->setData('product_id', $id);
+                                        $batchmod->setData('product_sku', $val['sku']);
+                                        $batchmod->setData("is_write_mode", '0');
+                                        $batchmod->setData("error", $val['error']);
+                                        $batchmod->setData("batch_num", $index);
+                                        $batchmod->setData("date_added", $date);
                                         $batchmod->save();
                             }
                         }else{
@@ -2539,19 +2661,21 @@ $Attribute_array = array();
                             if($batch_id){
                                         $batchmod='';
                                         $batchmod=Mage::getModel('jet/batcherror')->load($batch_id);
-                                        $batchmod->setData("batch_num",$index);
-                                        $batchmod->setData("is_write_mode",'0');
-                                        $batchmod->setData("error",$err);
-                                        $batchmod->setData('product_sku',$val['sku']);
-                                        $batchmod->setData("date_added",$date);
+                                        $batchmod->setData("batch_num", $index);
+                                        $batchmod->setData("is_write_mode", '0');
+                                        $batchmod->setData("error", $err);
+                                        $batchmod->setData('product_sku', $val['sku']);
+                                        $batchmod->setData("date_added", $date);
                                         $batchmod->save();
                             }
                         }
                 }
+
                 Mage::getSingleton('adminhtml/session')->unsBatcherror();
     }
     
-    public function generateCreditMemoForRefund($details_after_saved=''){
+    public function generateCreditMemoForRefund($details_after_saved='')
+    {
         if($details_after_saved && count($details_after_saved)>0){
             $sku_details="";
             $sku_details=$details_after_saved['sku_details'];
@@ -2566,29 +2690,34 @@ $Attribute_array = array();
                         $return_shipping_cost=0;
                         $return_shipping_tax=0;
                         $return_tax=0;
-                        if($detail['return_shipping_cost']!="" && is_numeric ($detail['return_shipping_cost'])){
+                        if($detail['return_shipping_cost']!="" && is_numeric($detail['return_shipping_cost'])){
                                 $return_shipping_cost=(float)trim($detail['return_shipping_cost']);
                         }
-                        if($detail['return_tax']!="" && is_numeric ($detail['return_tax'])){
+
+                        if($detail['return_tax']!="" && is_numeric($detail['return_tax'])){
                                 $return_tax=(float)trim($detail['return_tax']);
                         }
-                        if($detail['return_shipping_tax']!="" && is_numeric ($detail['return_shipping_tax'])){
+
+                        if($detail['return_shipping_tax']!="" && is_numeric($detail['return_shipping_tax'])){
                                 $return_shipping_tax=(float)trim($detail['return_shipping_tax']);
                         }
+
                         $shipping_amount=$shipping_amount+$return_shipping_cost+$return_shipping_tax;
                         $adjustment_positive=$adjustment_positive+$return_tax;
                     }
             }
+
             $collection="";
             $magento_order_id='';
             $collection=Mage::getModel('jet/jetorder')->getCollection();
-            $collection->addFieldToFilter( 'merchant_order_id', $merchant_order_id );
+            $collection->addFieldToFilter('merchant_order_id', $merchant_order_id);
             if($collection->count()>0){
                 foreach($collection as $coll){
                             $magento_order_id=$coll->getData('magento_order_id');
                             break;
                 }   
             }
+
             if($magento_order_id !=''){
                 try {
                         $order ="";
@@ -2596,17 +2725,19 @@ $Attribute_array = array();
                         if (!$order->getId()) {
                             Mage::getSingleton('adminhtml/session')->addError("Order not Exists.Can't generate Credit Memo.");
                             return false;
-                            
                         }
+
                         $data=array();
                         $data['shipping_amount']=0;
                         $data['adjustment_positive']=0;
                         if($shipping_amount>0){
                                 $data['shipping_amount']=$shipping_amount;
                         }
+
                         if($adjustment_positive>0){
                                 $data['adjustment_positive']=$adjustment_positive;
                         }
+
                         //$data['adjustment_positive']=1;
                         //$data['adjustment_negative']=2;
                         foreach ($item_details as $key => $value) {
@@ -2615,15 +2746,15 @@ $Attribute_array = array();
                             $data['qtys'][$orderItem->getId()]=$value['refund_qty'] ;
                         }
 
-                        if(!array_key_exists("qtys",$data)){
+                        if(!array_key_exists("qtys", $data)){
                             Mage::getSingleton('adminhtml/session')->addError("Problem in Credit Memo Data Preparation.Can't generate Credit Memo.");
                             return false;
                         }
+
                         if($data['shipping_amount']==0)
                                     {
                                         Mage::getSingleton('adminhtml/session')->addError("Amount is 0 .So Credit Memo Not Generated.");
-                                        
-                                    }
+                        }
                                     else
                                     {
                                         $creditmemo_api="";
@@ -2631,25 +2762,21 @@ $Attribute_array = array();
                                         $creditmemo_api=Mage::getModel('sales/order_creditmemo_api');
                                         $comment="";
                                         $comment="Credit memo generated from Jet.com refund functionality.";
-                                        $creditmemo_id=$creditmemo_api->create($magento_order_id,$data,$comment);
+                                        $creditmemo_id=$creditmemo_api->create($magento_order_id, $data, $comment);
                                         if($creditmemo_id !="")
                                         {
                                                 Mage::getSingleton('adminhtml/session')->addSuccess("Credit Memo ".$creditmemo_id." is Successfully generated for Order :".$magento_order_id.".");
                                                 return true;
                                         }
                                     }
-                        
                 }
                 catch (Mage_Core_Exception $e) {
                     Mage::getSingleton('adminhtml/session')->addError($e->getMessage().".Can't generate Credit Memo.");
                     return false;
-                    
                 }
-
             }else{
                 Mage::getSingleton('adminhtml/session')->addError("Order not found.Can't generate Credit Memo.");
                 return false;
-                
             }
         }else{
             Mage::getSingleton('adminhtml/session')->addError("Can't generate Credit Memo.");
@@ -2658,28 +2785,31 @@ $Attribute_array = array();
     }
     
 
-    public function getMagentoIncrementOrderId($merchant_order_id=""){
+    public function getMagentoIncrementOrderId($merchant_order_id="")
+    {
                 $merchant_order_id=trim($merchant_order_id);
                 if($merchant_order_id==""){
                         return 0;
                 }
+
                 try{
-                        
                         $collection=Mage::getModel('jet/jetorder')->getCollection();
-                        $collection->addFieldToFilter( 'merchant_order_id', $merchant_order_id );
+                        $collection->addFieldToFilter('merchant_order_id', $merchant_order_id);
                         if($collection->count()>0){
                             foreach($collection as $coll){
                                         $magento_order_id=$coll->getData('magento_order_id');
                                         return $magento_order_id;
                             }   
                         }
+
                         return 0;
                 }catch(Exception $e){
                         return 0;
                 }
                 
     }
-    public function getRefundedQtyInfo($order="",$item_sku=""){
+    public function getRefundedQtyInfo($order="",$item_sku="")
+    {
             $item_sku=trim($item_sku);
             $check=array();
             $check['error']=1;
@@ -2687,13 +2817,15 @@ $Attribute_array = array();
                     $check['error_msg']="Order not found for current item.";
                     return $check;
             }
+
             if($item_sku==""){
                     $check['error_msg']="Item Sku not found for current item.";
                     return $check;
             }
+
             if($order instanceof Mage_Sales_Model_Order){
                     $orderItem="";
-                    $orderItem = $order->getItemsCollection()->getItemByColumnValue('sku',$item_sku);
+                    $orderItem = $order->getItemsCollection()->getItemByColumnValue('sku', $item_sku);
                     if($orderItem instanceof Mage_Sales_Model_Order_Item){
                             $qty_ordered=0;
                             $qty_refunded=0;
@@ -2726,7 +2858,8 @@ $Attribute_array = array();
             }
     }
 
-    public function prepareDataAfterSubmitReturn($details_saved_after="",$id=""){
+    public function prepareDataAfterSubmitReturn($details_saved_after="",$id="")
+    {
                 $skus="";
                 $skus=$details_saved_after['sku_details'];
                 $returnModel ="";
@@ -2749,10 +2882,11 @@ $Attribute_array = array();
                 $i=0;
                 foreach($return_data->return_merchant_SKUs as $sku_detail){
                             $check=array();
-                            $check=$this->getRefundedQtyInfo($order,$sku_detail->merchant_sku);
+                            $check=$this->getRefundedQtyInfo($order, $sku_detail->merchant_sku);
                             if($check['error']=='1'){
                                     continue;
                             }
+
                             $flag=false;
                             foreach($skus as $key=>$detail){
                                         if($sku_detail->merchant_sku==$detail['merchant_sku'] && $detail['want_to_return'] =='1'){
@@ -2775,10 +2909,12 @@ $Attribute_array = array();
                                             break;
                                         }
                             }
+
                     if($flag){
                             $i++;
                             continue;
-                    }   
+                    }
+   
                     $result['sku_details']["sku$i"]['refund_quantity']=0;   
                     $result['sku_details']["sku$i"]['return_refundfeedback']="";
                     $result['sku_details']["sku$i"]['return_actual_principal']=$sku_detail->requested_refund_amount->principal;
@@ -2796,9 +2932,11 @@ $Attribute_array = array();
                     $result['sku_details']["sku$i"]['return_shipping_tax']=$sku_detail->requested_refund_amount->shipping_tax;
                     $i++;
                 }
+
                 return $result;
     }
-    public function saveChangesMadeValue($details_saved_after=""){
+    public function saveChangesMadeValue($details_saved_after="")
+    {
             $skus="";
             $skus=$details_saved_after['sku_details'];
             foreach($skus as $key=>$detail){
@@ -2806,22 +2944,26 @@ $Attribute_array = array();
                         $details_saved_after['sku_details'][$key]['changes_made']=1;
                     }
             }
+
             return $details_saved_after;
     }
-    public function checkOrderInRefund($merchant_order_id=""){
+    public function checkOrderInRefund($merchant_order_id="")
+    {
             $merchant_order_id=trim($merchant_order_id);
             try{
                         $collection="";
-                        $collection=Mage::getModel('jet/jetrefund')->getCollection()->addFieldToFilter('refund_orderid', $merchant_order_id );
+                        $collection=Mage::getModel('jet/jetrefund')->getCollection()->addFieldToFilter('refund_orderid', $merchant_order_id);
                         if($collection->count()>0){
                             return true;
                         }
+
                         return false;
-                }catch(Exception $e){
+            }catch(Exception $e){
                         return false;
-                }
+            }
     }
-    public function checkViewCaseForReturn($details_saved_after=""){
+    public function checkViewCaseForReturn($details_saved_after="")
+    {
             $skus="";
             $skus=$details_saved_after['sku_details'];
             $count=0;
@@ -2832,13 +2974,16 @@ $Attribute_array = array();
                         $i++;
                     }
             }
+
             if($count >0 && $count==$i){
                     return true;
             }
+
             return false;
     }
 
-    public function generateCreditMemoForReturn($return_id=''){
+    public function generateCreditMemoForReturn($return_id='')
+    {
         if($return_id !=""){
                 $model ="";
                 $orderId ="";
@@ -2854,6 +2999,7 @@ $Attribute_array = array();
                     Mage::getSingleton('adminhtml/session')->addError("Details of Return Submission are not saved.Can't generate Credit Memo.");
                     return false;
                 }
+
                 $sku_details="";
                 $sku_details=$details_after_saved_result['sku_details'];
                 $item_details=array();
@@ -2865,36 +3011,41 @@ $Attribute_array = array();
                             $return_shipping_cost=0;
                             $return_shipping_tax=0;
                             $return_tax=0;
-                            if($detail['return_shipping_cost']!="" && is_numeric ($detail['return_shipping_cost'])){
+                            if($detail['return_shipping_cost']!="" && is_numeric($detail['return_shipping_cost'])){
                                     $return_shipping_cost=(float)trim($detail['return_shipping_cost']);
                             }
-                            if($detail['return_tax']!="" && is_numeric ($detail['return_tax'])){
+
+                            if($detail['return_tax']!="" && is_numeric($detail['return_tax'])){
                                     $return_tax=(float)trim($detail['return_tax']);
                             }
-                            if($detail['return_shipping_tax']!="" && is_numeric ($detail['return_shipping_tax'])){
+
+                            if($detail['return_shipping_tax']!="" && is_numeric($detail['return_shipping_tax'])){
                                     $return_shipping_tax=(float)trim($detail['return_shipping_tax']);
                             }
+
                             $shipping_amount=$shipping_amount+$return_shipping_cost+$return_shipping_tax;
                             $adjustment_positive=$adjustment_positive+$return_tax;
                         }
                 }
+
                 $return_details=unserialize($return_details);
-                if( !is_object ($return_details)){
+                if(!is_object($return_details)){
                         Mage::getSingleton('adminhtml/session')->addError("Details of Return are not saved.Can't generate Credit Memo.");
                         return false;
-                        
                 }
+
                 $merchant_order_id="";
                 $merchant_order_id=$return_details->merchant_order_id;
                 $collection="";
                 $collection=Mage::getModel('jet/jetorder')->getCollection();
-                $collection->addFieldToFilter( 'merchant_order_id', $merchant_order_id );
+                $collection->addFieldToFilter('merchant_order_id', $merchant_order_id);
                 if($collection->count()>0){
                     foreach($collection as $coll){
                                 $magento_order_id=$coll->getData('magento_order_id');
                                 break;
                     }   
                 }
+
                 if($magento_order_id !=''){
                             try {
                                     $order ="";
@@ -2902,17 +3053,19 @@ $Attribute_array = array();
                                     if (!$order->getId()) {
                                         Mage::getSingleton('adminhtml/session')->addError("Order not Exists.Can't generate Credit Memo.");
                                         return false;
-                                        
                                     }
+
                                     $data=array();
                                     $data['shipping_amount']=0;
                                     $data['adjustment_positive']=0;
                                     if($shipping_amount>0){
                                             $data['shipping_amount']=$shipping_amount;
                                     }
+
                                     if($adjustment_positive>0){
                                             $data['adjustment_positive']=$adjustment_positive;
                                     }
+
                                     //$data['adjustment_positive']=1;
                                     //$data['adjustment_negative']=2;
                                     foreach ($item_details as $key => $value) {
@@ -2921,7 +3074,7 @@ $Attribute_array = array();
                                         $data['qtys'][$orderItem->getId()]=$value['refund_qty'] ;
                                     }
                                     
-                                    if(!array_key_exists("qtys",$data)){
+                                    if(!array_key_exists("qtys", $data)){
                                         Mage::getSingleton('adminhtml/session')->addError("Problem in Credit Memo Data Preparation.Can't generate Credit Memo.");
                                         return false;
                                     }
@@ -2929,7 +3082,6 @@ $Attribute_array = array();
                                     if($data['shipping_amount']==0)
                                     {
                                         Mage::getSingleton('adminhtml/session')->addError("Amount is 0 .So Credit Memo Not Generated.");
-                                        
                                     }
                                     else
                                     {
@@ -2938,49 +3090,46 @@ $Attribute_array = array();
                                     $creditmemo_api=Mage::getModel('sales/order_creditmemo_api');
                                     $comment="";
                                     $comment="Credit memo generated from Jet.com return functionality.";
-                                    $creditmemo_id=$creditmemo_api->create($magento_order_id,$data,$comment);
+                                    $creditmemo_id=$creditmemo_api->create($magento_order_id, $data, $comment);
                                     if($creditmemo_id !=""){
                                             Mage::getSingleton('adminhtml/session')->addSuccess("Credit Memo ".$creditmemo_id." is Successfully generated for Order :".$magento_order_id.".");
                                             return true;
-                                        }   
+                                    }   
                                     }
-                                    
                             }
                             catch (Mage_Core_Exception $e) {
                                 Mage::getSingleton('adminhtml/session')->addError($e->getMessage().".Can't generate Credit Memo.");
                                 return false;
-                                
                             }
-
                 }else{
                     Mage::getSingleton('adminhtml/session')->addError("Order not found.Can't generate Credit Memo.");
                     return false;
-                    
                 }
-                        
-            }else{
+        }else{
                 Mage::getSingleton('adminhtml/session')->addError("Can't generate Credit Memo.");
                 return false;
-                
-            }
+        }
     }
-    public function checkOrderForReturn($merchant_order_id=""){
+    public function checkOrderForReturn($merchant_order_id="")
+    {
         $merchant_order_id=trim($merchant_order_id);
         $collection=Mage::getModel('jet/jetreturn')->getCollection();
-        $collection->addFieldToFilter( 'merchant_order_id', $merchant_order_id );
+        $collection->addFieldToFilter('merchant_order_id', $merchant_order_id);
         if($collection->count()>0){
             foreach($collection as $coll){
                         $magento_order_id=$coll->getData('magento_order_id');
                         return true;
             }   
         }
+
         return false;
     }
 
     /** Check if Current mode is Sandbox Mode
      * @return mixed
      */
-    public function  isSandboxMode(){
+    public function isSandboxMode()
+    {
         return Mage::getStoreConfig('jet_options/ced_jet/sandbox');
     }
 
@@ -2988,7 +3137,8 @@ $Attribute_array = array();
      * Check Credentials as per state
      *
      */
-    public function  getCredentials(){
+    public function getCredentials()
+    {
         if($this->isSandboxMode()){
             $this->user = Mage::getStoreConfig('jet_options/ced_jet/jet_sandbox_user');
             $this->pass = Mage::getStoreConfig('jet_options/ced_jet/jet_sandbox_userpwd');
@@ -2996,22 +3146,25 @@ $Attribute_array = array();
           $this->user = Mage::getStoreConfig('jet_options/ced_jet/jet_user');
           $this->pass = Mage::getStoreConfig('jet_options/ced_jet/jet_userpwd');
         }
-        return ['user' => $this->user, 'pass' => $this->pass];
+
+        return array('user' => $this->user, 'pass' => $this->pass);
     }
 
-    public function checkIfCredentialsValid(){
+    public function checkIfCredentialsValid()
+    {
         return Mage::getStoreConfig('jet_options/ced_jet/is_credentials_valid');
     }
 
 
-    public function JrequestTokenCurlVerify($usr = "", $pass = ""){
+    public function JrequestTokenCurlVerify($usr = "", $pass = "")
+    {
 
         $ch = curl_init();
         $url= $this->_apiHost.'/Token';
         $postFields='{"user":"'.$usr.'","pass":"'.$pass.'"}';
 
-        curl_setopt($ch, CURLOPT_URL,$url);
-        curl_setopt($ch, CURLOPT_POSTFIELDS,$postFields);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $postFields);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type:application/json;"));
         curl_setopt($ch, CURLOPT_HEADER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
@@ -3019,11 +3172,11 @@ $Attribute_array = array();
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
 
-        $server_output = curl_exec ($ch);
+        $server_output = curl_exec($ch);
         $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
         $header = substr($server_output, 0, $header_size);
         $body = substr($server_output, $header_size);
-        curl_close ($ch);
+        curl_close($ch);
         $token_data =json_decode($body, true);
         if(is_array($token_data) && isset($token_data['id_token'])){
             $data = new Mage_Core_Model_Config();
@@ -3035,7 +3188,8 @@ $Attribute_array = array();
 
     }
 
-    public function getNodeAttributes($nodeId){
+    public function getNodeAttributes($nodeId)
+    {
         $result = "{}";
         //$response =$this->CGetRequest('/taxonomy/nodes/'.$nodeId.'/attributes');
         if (!empty($nodeId)) {
@@ -3046,14 +3200,14 @@ $Attribute_array = array();
 
                         {
                             $response =$this->CGetRequest('/taxonomy/nodes/'.$nodeId.'/attributes');
-                            $result = json_decode($response,true);
+                            $result = json_decode($response, true);
                         }
                         else
                         {
-                             $result = json_decode($response['attributes'],true);
+                             $result = json_decode($response['attributes'], true);
                         }
-           
         }
+
         return $result;
     }
 
@@ -3101,11 +3255,11 @@ $Attribute_array = array();
                 $arr['is_archived'] = false;
                  $this->CPutRequest('/merchant-skus/' . $sku . '/status/archive', json_encode($arr));
             }
-            if ($product->getStatus()) {
 
+            if ($product->getStatus()) {
                 /*-----all data update code starts----*/
                 $update_image = true;
-                    $alldataupdate = $this->createProductOnJet($product,false,'');
+                    $alldataupdate = $this->createProductOnJet($product, false, '');
 
                     if (isset($alldataupdate['merchantsku']) && $alldataupdate['merchantsku'][$product->getSku()]) {
                         $updatedata = $alldataupdate['merchantsku'][$product->getSku()];
@@ -3114,6 +3268,7 @@ $Attribute_array = array();
                         $this->CPutRequest('/merchant-skus/' . $sku, $newJsondata);
                         $update_image = false;
                     }
+
                 /*-----all data update code ends----*/
                 /*-----price update code starts----*/
                     $data_var = array();
@@ -3145,8 +3300,9 @@ $Attribute_array = array();
                     if (!$is_in_stock) {
                         $fulfillment_arr[0]['quantity'] = 0;
                     }
+
                     $data_var['fulfillment_nodes'] = $fulfillment_arr;
-                    $this->CPutRequest('/merchant-skus/' . $sku . '/inventory', json_encode($data_var));
+                    $this->CPatchRequest('/merchant-skus/' . $sku . '/inventory', json_encode($data_var));
 
                 /*-----inventory update code ends----*/
                 /*-----images update code starts----*/
@@ -3155,14 +3311,17 @@ $Attribute_array = array();
                     if ($product->getImage() == "no_selection") {
                         $no_image = true;
                     }
+
                     $main_image_url = "";
                     $alt_images = array();
                     if (!$no_image) {
                         $main_image_url = $product->getImageUrl();
                     }
+
                     if ($main_image_url != "") {
                         $alt_images["main_image_url"] = $main_image_url;
                     }
+
                     $all_images = $product->getMediaGalleryImages();
                     $jet_image_slot = 1;
                     $slot = 1;
@@ -3171,6 +3330,7 @@ $Attribute_array = array();
                             if (count($alt_images) == 0) {
                                 $alt_images["main_image_url"] = $alternat_image->getUrl();
                             }
+
                             $alt_images['alternate_images'][] = array('image_slot_id' => $slot,
                                 'image_url' => $alternat_image->getUrl()
                             );
@@ -3178,9 +3338,11 @@ $Attribute_array = array();
                             if ($jet_image_slot > 7) {
                                 break;
                             }
+
                             $jet_image_slot++;
                         }
                     }
+
                     $this->CPutRequest('/merchant-skus/' . $sku . '/image', json_encode($alt_images));
 
                 /*-----images update code ends----*/
@@ -3188,7 +3350,8 @@ $Attribute_array = array();
         }
     }
 
-    public function updateLogFileStatus($jFile){
+    public function updateLogFileStatus($jFile)
+    {
         $response = Mage::helper('jet')->CGetRequest('/files/' . $jFile->getJetFileId());
         $resvalue = json_decode($response);
         if (trim($resvalue->status) == 'Processed with errors') {
@@ -3209,8 +3372,8 @@ $Attribute_array = array();
             $update = array('status' => trim($resvalue->status), 'error' => trim($resvalue->status));
             $jFile->addData($update);
             $jFile->save();
-
         }
+
         return $jFile;
     }
 }   

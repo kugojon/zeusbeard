@@ -25,7 +25,7 @@ class Ced_Jet_Block_Adminhtml_Ajaxarchieve extends Mage_Adminhtml_Block_Widget_C
 
     public function totalcount()
     {
-        $api_dat = Mage::getSingleton( 'adminhtml/session' )->getProductArcChunks();
+        $api_dat = Mage::getSingleton('adminhtml/session')->getProductArcChunks();
         return count($api_dat);
     }
 }

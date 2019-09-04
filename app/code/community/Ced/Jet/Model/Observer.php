@@ -24,6 +24,153 @@ class Ced_Jet_Model_Observer
      *
      * @param Varien_Event_Observer $observer
      */
+
+    public function getTrackingNumber(Varien_Event_Observer $observer)
+    {
+        $event = $observer->getEvent();
+        $track = $event->getTrack();
+        $trackingNumber = $track->getNumber();
+        $shipment = $track->getShipment();
+        $orderid = $shipment->getOrder()->getIncrementId();
+        $shipStationcarrier = (string)$track->getCarrierCode();
+        $order = Mage::getModel('sales/order')->loadByIncrementId($orderid);
+        $jetorder = Mage::getModel('jet/jetorder')->getCollection()->addFieldToFilter('magento_order_id',$orderid)->getFirstItem();
+        $jetorderid = $jetorder->getData('merchant_order_id');
+        $jet_order_primary_key =  $jetorder->getData('id');               
+
+        if($jetorderid){           
+            $error_reporting = array();                        
+            $flag = true;
+            $offset_end = Mage::helper('jet/jet')->getStandardOffsetUTC();
+            if (empty($offset_end) || trim($offset_end) == '') {
+                $offset = '.0000000-00:00';
+            } else {
+                $offset = '.0000000' . trim($offset_end);
+            }
+
+            $otaltime = (string)date("m/d/Y").' '.date("H:i:s");
+            $date = DateTime::createFromFormat('m/d/Y H:i:s', $otaltime);
+
+            $shipTodatetime = $date->getTimestamp();
+            $Carr_pickdate = $shipTodatetime;
+            $Exp_delivery = strtotime('+5 day', $shipTodatetime);
+
+            $Ship_todate = date("Y-m-d", $shipTodatetime) . 'T' . date("H:i:s", $shipTodatetime) . $offset;
+            $Exp_delivery = date("Y-m-d",$Exp_delivery ) . 'T' . date("H:i:s", $Exp_delivery) . $offset;
+            $Carr_pickdate = date("Y-m-d", $Carr_pickdate) . 'T' . date("H:i:s", $Carr_pickdate) . $offset;
+
+            $id = $orderid;
+                 
+                  
+
+            $address1 = Mage::getStoreConfig('jet_options/ced_jetaddress/jet_address1');
+            $address2 = Mage::getStoreConfig('jet_options/ced_jetaddress/jet_address2');
+            $city = trim(Mage::getStoreConfig('jet_options/ced_jetaddress/jet_city'));
+            $state = trim(Mage::getStoreConfig('jet_options/ced_jetaddress/jet_state'));
+            $zip = trim(Mage::getStoreConfig('jet_options/ced_jetaddress/jet_zip'));
+
+            if (trim($zip) == "") {
+                $flag=false;
+            }
+            if (trim($state) == "") {
+                $flag=false;
+            }
+            if (trim($city) == "") {
+                $flag=false;
+            }
+            if (trim($address1) == "") {
+                $flag=false;
+            }  
+
+            if($flag){
+                $Arry_returnLoc = array('address1' => $address1,
+                    'address2' => $address2,
+                    'city' => $city,
+                    'state' => $state,
+                    'zip_code' => $zip
+                );
+
+                $shipment_arr = array();
+                $rma = '';
+
+                $jetHelper = Mage::helper('jet/jet');
+
+                /* start loop for item data received */
+                foreach ($order->getAllVisibleItems() as $item) {
+                    $time = time() + ($item->getId() + 1);
+                    $shp_id = implode("-", str_split($time, 3));
+
+
+                    $ship_sku = $item->getSku();
+                    $shipment_arr[] = array(
+                        'merchant_sku' => $ship_sku,
+                        'response_shipment_sku_quantity' => (int)$item->getQtyOrdered(),
+                        'response_shipment_cancel_qty' => 0,
+                        'RMA_number' => "$rma" ,
+                        'days_to_return' => 30 ,
+                        'return_location' => $Arry_returnLoc
+                    );
+                }                 
+
+                $carrier = Mage::helper('jet/jet')->getJetShipCarrier($shipStationcarrier);
+                $unique_random_number = $id.mt_rand(10,10000);                
+                $data_ship = array();
+                $checkShipdata = false;
+               
+                foreach ($shipment_arr as $value) {
+                    if (isset($value['response_shipment_sku_quantity']) && $value['response_shipment_sku_quantity']!=0) {
+                       $checkShipdata = true;
+                    }
+                }
+                
+                 if ($checkShipdata) {
+                    $data_ship['shipments'][] = array(
+                    'alt_shipment_id' => $unique_random_number,
+                    'shipment_tracking_number' => "$tracking",
+                    'response_shipment_date' => $Ship_todate,
+                    'response_shipment_method' => '',
+                    'expected_delivery_date' => $Exp_delivery,
+                    'ship_from_zip_code' => "$zip",
+                    'carrier_pick_up_date' => $Carr_pickdate,
+                    'carrier' => $carrier,
+                    'shipment_items' => $shipment_arr
+                );
+                 }
+                else
+                {
+                    $data_ship['shipments'][] = array(
+                        'alt_shipment_id' => $unique_random_number,
+                        'shipment_items' => $shipment_arr
+                    );
+                }
+
+                
+                if ($data_ship) {                    
+                    $data = Mage::helper('jet')->CPutRequest('/orders/' . $jetorderid . '/shipped', json_encode($data_ship));
+                    $responsedata = json_decode($data);
+                    $jetmodel = Mage::getModel('jet/jetorder')->load($jet_order_primary_key);
+
+                    if (($responsedata == NULL) || ($responsedata == "") ) {
+                        $jetmodel->setStatus('complete');
+                        $jetmodel->setShipmentData(serialize($data_ship));
+                        $jetmodel->save();
+                    }
+                    else{
+                        $data = array('order_id'=> $orderid ,'jet_reference_id'=> $jetorderid ,'error'=>$responsedata->errors[0],'jet_shipment_status' => 'unshipped');
+                        $jetAutoshipError = Mage::getSingleton('jet/autoship');
+                        $jetAutoshipError->setData($data)->save();
+                    }
+                }
+            }else{
+                $data = array('order_id'=> $orderid ,'jet_reference_id'=> $jetorderid ,'error'=>'kindly set zip code , state , city and address from system configuration' , 'jet_shipment_status' => 'unshipped');
+                $jetAutoshipError = Mage::getSingleton('jet/autoship');
+                $jetAutoshipError->setData($data)->save();
+            }
+
+        }
+
+    }
+
     public function preDispatch(Varien_Event_Observer $observer)
     {
         if (Mage::getSingleton('admin/session')->isLoggedIn()) {
@@ -32,50 +179,26 @@ class Ced_Jet_Model_Observer
         }
     }
 
-        public function adminhtmlWidgetContainerHtmlBefore($event) {
+        public function adminhtmlWidgetContainerHtmlBefore($event) 
+        {
             $block = $event->getBlock();
 
             if ($block instanceof Mage_Adminhtml_Block_Sales_Order_View) {
-				$id=Mage::app()->getRequest()->getParam('order_id');
-				$increment_id = Mage::getModel('sales/order')->load($id)->getIncrementId();
+                $id=Mage::app()->getRequest()->getParam('order_id');
+                $increment_id = Mage::getModel('sales/order')->load($id)->getIncrementId();
 
-				$ifexist=count(Mage::getModel('jet/jetorder')->getCollection()->addFieldToFilter('magento_order_id',$increment_id));
+                $ifexist=count(Mage::getModel('jet/jetorder')->getCollection()->addFieldToFilter('magento_order_id', $increment_id));
 
-				if($ifexist){
-					$block->removeButton('order_ship');   // Remove tab by id
-					$block->removeButton('order_invoice');
-					$block->removeButton('order_creditmemo');
-				}
+                if($ifexist){
+                    $block->removeButton('order_ship');   // Remove tab by id
+                    $block->removeButton('order_invoice');
+                    $block->removeButton('order_creditmemo');
+                }
             }
         }
 
-        public function shipbyjet($observer)
-        {
-
-        $conName = Mage::app()->getRequest()->getControllerName();       
-
-         if(( $conName != 'auctane' ) && ($conName != '') ) {
-             $shipment = $observer->getEvent()->getShipment();
-             $flag = false;
-             $magento_order_id = $shipment->getOrder()->getIncrementId();
-             $magento_order_data = Mage::getModel('jet/jetorder')->getCollection()->getData(); 
-             $ses_var = Mage::getSingleton('core/session')->getShip_by_jet();
-
-             foreach ($magento_order_data as $key => $value) {
-                    if($value['magento_order_id'] == $magento_order_id)$flag = true;
-                }
-                if($flag == true && $ses_var == true)Mage::getSingleton('core/session')->unsShip_by_jet();                
-                elseif($flag == true && !$ses_var)
-                {
-                     Mage::getSingleton('core/session')->unsShip_by_jet();
-                     Mage::getSingleton('core/session')->addError('This Order is Jet Order create shipment by jet');
-                    Mage::app()->getResponse()->setRedirect($_SERVER['HTTP_REFERER']);
-                    Mage::app()->getResponse()->sendResponse();
-                     exit;
-                }
-            }            
-        }
-	public function checkEnabled()
+        
+    public function checkEnabled()
     {
         $helper = Mage::helper('jet');
         if (!$helper->isEnabled()) {
@@ -90,17 +213,18 @@ class Ced_Jet_Model_Observer
             return;
         }
     }
-	/*
+    /*
 	*   this observer created for getting listing direct cancel orders
 	*/
-	public function directCancel(){
+    public function directCancel()
+    {
         $orderdata = Mage::helper('jet')->CGetRequest('/orders/directedCancel');
         //$response = json_decode($orderdata, true);
 
-		$this->createOrder();
+        $this->createOrder();
 
 
-		/*
+        /*
         //Mage::log($response, null, 'mylogfile.log');
 
         $autoReject=false;
@@ -198,7 +322,7 @@ class Ced_Jet_Model_Observer
                 }
             }
         } */
-	}
+    }
 
     public function cancelJetorder($observer)
     {
@@ -215,6 +339,7 @@ class Ced_Jet_Model_Observer
             } else {
                 $offset = '.0000000' . trim($offset_end);
             }
+
             $shipTodate = date("Y-m-d");
             $shipTotime = date("h:i:s");
             $storeId = Mage::getStoreConfig('jet_options/ced_jet/jet_storeid');
@@ -231,12 +356,12 @@ class Ced_Jet_Model_Observer
 
             $temp_carrier = unserialize($reject->getData('order_data'));
             $carrier = $temp_carrier->order_detail->request_shipping_carrier;
-            if(($carrier == '') || ($carrier == null)){$carrier = 'Fedex';}
+            if(($carrier == '') || ($carrier == null)){$carrier = 'Fedex';
+            }
 
             $shipment_arr = array();
             $items = $order->getAllItems();
             foreach ($items as $i) {
-
                 $uniqui_id = mt_rand(10, 10000124);
                 $shipment_arr[] = array(
                     'merchant_sku' => $i->getSku(),
@@ -269,8 +394,7 @@ class Ced_Jet_Model_Observer
                     $saveJetorder->setData('status','rejected');
                     $saveJetorder->save();*/
                 }
-
-             }
+            }
         }
     }
 
@@ -284,6 +408,7 @@ class Ced_Jet_Model_Observer
                 Mage::helper('jet')->updateLogFileStatus($jFile);
             }
         }
+
         if(count($collection)>0){
             Mage::getSingleton('adminhtml/session')->addSuccess('Rejected files list has been updated.');
         }else{
@@ -313,22 +438,21 @@ class Ced_Jet_Model_Observer
             $count = 0;
 
             foreach ($response['order_urls'] as $jetorderurl) {
-				$result = Mage::helper('jet')->CGetRequest($jetorderurl);
+                $result = Mage::helper('jet')->CGetRequest($jetorderurl);
                 $resultObject = json_decode($result);
                 $result = json_decode($result, true);
 
-				$email=$resultObject->hash_email;
+                $email=$resultObject->hash_email;
 
-				if($email=='' && $email ==NULL){
-					$email ='customer@jet.com';
-				}
+                if($email=='' && $email ==NULL){
+                    $email ='customer@jet.com';
+                }
 
-				$customer = Mage::getModel('customer/customer')
-							->setWebsiteId($websiteId)
-							->loadByEmail($email);
+                $customer = Mage::getModel('customer/customer')
+                            ->setWebsiteId($websiteId)
+                            ->loadByEmail($email);
 
                 if (sizeof($result) > 0 && isset($result['merchant_order_id'])) {
-
                     $merchantOrderid = $result['merchant_order_id'];
                     $resultdata = Mage::getModel('jet/jetorder')->getCollection()->addFieldToFilter('merchant_order_id', $merchantOrderid);
 
@@ -341,13 +465,13 @@ class Ced_Jet_Model_Observer
                         }
                     }
                 }
+
                 Mage::unregister('attributeClear');
             }
-
         }
     }
 public function jetfilesDelete()
-    {
+{
 
         $url = Mage::getBaseDir();
         $path = $url.'/var/jetupload/';
@@ -362,11 +486,11 @@ public function jetfilesDelete()
                  //{
                     unlink($path . $file);
                 //}
+            }
 
-             }
             closedir($handle); 
-        }
-    }
+         }
+}
 
 
     public function _assignCustomer($result, $customer, $websiteId, $store, $email)
@@ -377,6 +501,7 @@ public function jetfilesDelete()
                 if (trim($Cname) == '' || $Cname == null) {
                     $Cname = $result['shipping_to']['recipient']['name'];
                 }
+
                 $Cname = preg_replace('/\s+/', ' ', $Cname);
                 $customer_name = explode(' ', $Cname);
 
@@ -395,13 +520,12 @@ public function jetfilesDelete()
 
 
                 return $customer;
-
             } catch (Exception $e) {
                 //$message = "please check the customer Email Id either email format or enter email properly into jet setting!";
                 $message = $e->getMessage();
                 $jetOrderError = Mage::getModel('jet/orderimport');
                 $jetOrderError->setMerchantOrderId($result['merchant_order_id']);
-				$jetOrderError->setReferenceNumber($result['reference_order_id']);
+                $jetOrderError->setReferenceNumber($result['reference_order_id']);
                 $jetOrderError->setReason($message);
                 $jetOrderError->save();
                 return false;
@@ -410,7 +534,7 @@ public function jetfilesDelete()
             return $customer;
         }
 
-     }
+    }
 
     public function prepareQuote($result, $customer, $websiteId, $store, $email, $resultObject)
     {
@@ -426,6 +550,7 @@ public function jetfilesDelete()
         if($paymentMethod== NULL || $paymentMethod==""){
             $paymentMethod = 'payjetcom';
         }
+
         $productArray = array();
         $baseCurrency = $store->getBaseCurrencyCode();
         $items_array = $result['order_items'];
@@ -442,6 +567,7 @@ public function jetfilesDelete()
          {
             $order_prefix = 'JET-';
          }
+
         $order = Mage::getModel('sales/order')
             ->setIncrementId($order_prefix.$reservedOrderId)
             ->setStoreId($storeId)
@@ -459,13 +585,11 @@ public function jetfilesDelete()
                 if ($product->getStatus() == '1') {
                     $stock = Mage::getModel('cataloginventory/stock_item')->loadByProduct($product);
                     if (($stock->getQty() > 0) && ($stock->getIsInStock() == '1') && ($stock->getQty() >= $item['request_order_quantity']) && ($item['request_order_quantity'] != $item['request_order_cancel_qty'])) {
-
                         /*
                         for inventory mail code start
                         */
                         if($stock->getQty() < 3)
                         {
-
                             $order_items_qty_arr[$item['merchant_sku']] = $stock->getQty();
                         }
 
@@ -505,9 +629,7 @@ public function jetfilesDelete()
                         $Quote_execute = True;
                          $reject_items_arr[] = array('order_item_acknowledgement_status' => 'fulfillable',
                                 'order_item_id' => $item['order_item_id']);
-
                     } else {
-
                         /*if ($productoutofstock_config) {*/
                             $autoReject = true;
                             $reject_items_arr[] = array('order_item_acknowledgement_status' => 'nonfulfillable - invalid merchant SKU',
@@ -516,16 +638,13 @@ public function jetfilesDelete()
                         $message = "Product " . $item['merchant_sku'] . " is Out Of Stock";
                         $jetOrderError = Mage::getModel('jet/orderimport');
                         $jetOrderError->setMerchantOrderId($result['merchant_order_id']);
-						$jetOrderError->setReferenceNumber($result['reference_order_id']);
+                        $jetOrderError->setReferenceNumber($result['reference_order_id']);
                         $jetOrderError->setReason($message);
                         $jetOrderError->setOrderItemId($item['order_item_id']);
                         $jetOrderError->save();
                         $Quote_execute = False;
-                       
                     }
                 } else {
-
-
                     /*if ($productdisabled_config) {*/
                         $autoReject = true;
                         $reject_items_arr[] = array('order_item_acknowledgement_status' => 'nonfulfillable - invalid merchant SKU',
@@ -534,16 +653,13 @@ public function jetfilesDelete()
                     $message = "Product " . $item['merchant_sku'] . " is Not Enabled!";
                     $jetOrderError = Mage::getModel('jet/orderimport');
                     $jetOrderError->setMerchantOrderId($result['merchant_order_id']);
-					$jetOrderError->setReferenceNumber($result['reference_order_id']);
+                    $jetOrderError->setReferenceNumber($result['reference_order_id']);
                     $jetOrderError->setReason($message);
                     $jetOrderError->setOrderItemId($item['order_item_id']);
                     $jetOrderError->save();
                     $Quote_execute = False;
-                    
                 }
             }else{
-
-
                 /*if ($productexist_config) {*/
                     $autoReject = true;
                     $reject_items_arr[] = array('order_item_acknowledgement_status' => 'nonfulfillable - invalid merchant SKU',
@@ -552,7 +668,7 @@ public function jetfilesDelete()
                 $message = "Product SKU " . $item['merchant_sku'] . " Not Found on the site!";
                 $jetOrderError = Mage::getModel('jet/orderimport');
                 $jetOrderError->setMerchantOrderId($result['merchant_order_id']);
-				$jetOrderError->setReferenceNumber($result['reference_order_id']);
+                $jetOrderError->setReferenceNumber($result['reference_order_id']);
                 $jetOrderError->setReason($message);
                 $jetOrderError->setOrderItemId($item['order_item_id']);
                 $jetOrderError->save();
@@ -591,6 +707,7 @@ public function jetfilesDelete()
             if (!isset($customer_shippingInfo[1]) || $customer_shippingInfo[1] == '') {
                 $customer_shippingInfo[1] = $customer_shippingInfo[0];
             }
+
             // set Billing Address
             try {
                 $billing = $customer->getDefaultBillingAddress();
@@ -600,6 +717,7 @@ public function jetfilesDelete()
                 if ($complete_address2 != null && trim($complete_address2) != '') {
                     $complete_address1 = $complete_address1 . ' ' . $complete_address2;
                 }
+
                 $billingAddress = Mage::getModel('sales/order_address')
                     ->setStoreId($storeId)
                     ->setAddressType(Mage_Sales_Model_Quote_Address::TYPE_BILLING)
@@ -684,9 +802,9 @@ public function jetfilesDelete()
                     $model->save();
 
                     //if (Mage::getStoreConfig('jet_options/jet_order/active') == 1) {
-                     	 $this->autoOrderacknowledge($order->getIncrementId());
+                          $this->autoOrderacknowledge($order->getIncrementId());
                     //}
-                    $this->sendmailtoadmin($order->getIncrementId(),$result['order_detail']['request_ship_by'],$order_items_qty_arr,$result['order_items'][0]['merchant_sku']);
+                    $this->sendmailtoadmin($order->getIncrementId(), $result['order_detail']['request_ship_by'], $order_items_qty_arr, $result['order_items'][0]['merchant_sku']);
 
                     if($order->canInvoice()) {
                         /*$invoiceId = Mage::getModel('sales/order_invoice_api')
@@ -708,16 +826,14 @@ public function jetfilesDelete()
                         $transactionSave->save();
                     }
                 }
-
             } catch (Exception $e) {
                 $message = "Fail To Create Order Due to Error " . $e->getMessage();
                 $jetOrderError = Mage::getModel('jet/orderimport');
                 $jetOrderError->setMerchantOrderId($result['merchant_order_id']);
-				        $jetOrderError->setReferenceNumber($result['reference_order_id']);
+                        $jetOrderError->setReferenceNumber($result['reference_order_id']);
                 $jetOrderError->setOrderItemId($item['order_item_id']);
                 $jetOrderError->setReason($message);
                 $jetOrderError->save();
-
             }
         }
     }
@@ -725,7 +841,7 @@ public function jetfilesDelete()
      * @Auto Order Notification Mail To Store Admin
      */
      public function sendmailtoadmin($order_id,$ship_date,$lesinvetory,$sku)
-        {
+     {
             $current_date =  new DateTime(date('Y-m-d'));
           
            $from_email = Mage::getStoreConfig('jet_options/ced_jet/jet_admin_email_id');
@@ -735,18 +851,14 @@ public function jetfilesDelete()
             {
                     if($ship_date)
                     {
-                        
                         $date_array = array();
-                        $date_array = explode('T',$ship_date);
+                        $date_array = explode('T', $ship_date);
                         $time = new DateTime($date_array[0]);
                         $interval = $current_date->diff($time)->days;
                       if($interval<=2)
                       {
-                        
-
                           if(count($lesinvetory)>0)
                          {
-
                             // $msg = "Hello! \n  Congratulations. You have a New Jet Order ".$order_id." imported to your Magento admin panel. The Shipment date of this order is near and the inventory of the products existing in this order is also getting low. Please review your admin panel instantly.\n Thanks";
                     $msg ='<table cellpadding="0" cellspacing="0" border="0">
                         <tr>
@@ -771,8 +883,8 @@ public function jetfilesDelete()
                     </table>';
 
                           //$msg = wordwrap($msg,70);
-                          $this->directmail($from_email,$msg);
-                         }
+                          $this->directmail($from_email, $msg);
+                          }
                          else
                          {
                             // $msg = "Hello ! \n  Congratulations. You have a New Jet Order ".$order_id." imported to your Magento admin panel. The Shipment Date of this order is near. Please review your admin panel instantly. \n Thanks";
@@ -800,12 +912,11 @@ public function jetfilesDelete()
                     </table>';
 
                           //$msg = wordwrap($msg,70);
-                         $this->directmail($from_email,$msg);
+                         $this->directmail($from_email, $msg);
                          }
                       }
                       else
                       {
-                        
                          if(count($lesinvetory)>0)
                          {
                              //$msg = "Hello !\n  Congratulations. You have a New Jet Order ".$order_id." imported to your Magento admin panel. The inventory of the products existing in this order is getting low. Therefore, please review your admin panel and update it.\n Thanks";
@@ -832,7 +943,7 @@ public function jetfilesDelete()
                         </tr>  
                     </table>';
                           //$msg = wordwrap($msg,70);
-                         $this->directmail($from_email,$msg);
+                         $this->directmail($from_email, $msg);
                          }
                          else
                          {
@@ -861,10 +972,9 @@ public function jetfilesDelete()
                     </table>';
 
                           //$msg = wordwrap($msg,70);
-                         $this->directmail($from_email,$msg);
+                         $this->directmail($from_email, $msg);
                          }
                       }
-                       
                     }
                         else
                         {
@@ -893,13 +1003,12 @@ public function jetfilesDelete()
                         </tr>  
                     </table>';
                          // $msg = wordwrap($msg,70);
-                        $this->directmail($from_email,$msg);
+                        $this->directmail($from_email, $msg);
                         }
-                 
             }
 
            return;
-        }
+     }
         public function directmail($from_email,$msg)
         {
             $to_email = $from_email;
@@ -918,12 +1027,10 @@ public function jetfilesDelete()
             $mail->setSubject($subject);
            try{
                  $mail->send();
-
-            }catch(\Exception $e)
+           }catch(\Exception $e)
             {
                 print_r($e->getMessage());
-               
-            }
+           }
         }
 
     /*
@@ -946,14 +1053,12 @@ public function jetfilesDelete()
         $serialize_data = unserialize($resultdata[0]['order_data']);
 
         if (empty($serialize_data) || count($serialize_data) == 0) {
-
             $result = Mage::helper('jet')->CGetRequest('/orders/withoutShipmentDetail/' . $resultdata[0]['merchant_order_id']);
             $Ord_result = json_decode($result);
 
             if (empty($result) || count($result) == 0) {
                 return 0;
             } else {
-
                 $jobj = Mage::getModel('jet/jetorder')->load($resultdata[0]['id']);
                 $jobj->setOrderData(serialize($Ord_result));
                 $jobj->save();
@@ -998,6 +1103,7 @@ public function jetfilesDelete()
                 $model->save();
             }
         }
+
         return 0;
     }
 
@@ -1024,25 +1130,30 @@ public function jetfilesDelete()
                 //->addFieldToSelect('status')
                 ->getData();
         }
+
         $status = '';
         if(isset($resultdata[0]['status']))
             $status = $resultdata[0]['status'];
         if ($status == 'ready') {
-            $block->addButton('delete', array(
+            $block->addButton(
+                'delete', array(
                 'label' => 'Acknowledge',
                 'class' => 'Acknowledge',
                 'onclick' => 'deleteConfirm(\'' . Mage::helper('adminhtml')->__('Are you sure you want to send acknowledge for this order?')
                     . '\', \'' . $block->getUrl('adminhtml/adminhtml_jetorder/acknowledge', array('increment_id' => $Incrementid)) . '\')',
-            ));
-            $block->addButton('delete1', array(
+                )
+            );
+            $block->addButton(
+                'delete1', array(
                 'label' => 'Reject',
                 'class' => 'Reject',
                 'onclick' => 'deleteConfirm(\'' . Mage::helper('adminhtml')->__('Are you sure you want to send rejection for this order?')
                     . '\', \'' . $block->getUrl('adminhtml/adminhtml_jetorder/rejectreason', array('increment_id' => $Incrementid)) . '\')',
-            ));
+                )
+            );
         } else if ($status == 'acknowledged') {
-
-            $block->addButton('delete', array(
+            $block->addButton(
+                'delete', array(
                 'label' => 'Acknowledge',
                 'class' => 'Acknowledge',
                 'disabled' => true,
@@ -1050,9 +1161,11 @@ public function jetfilesDelete()
                     . '\', \'' . $block->getUrl('adminhtml/adminhtml_jetorder/acknowledge', array('increment_id' => $Incrementid)) . '\')',
 
 
-            ));
+                )
+            );
 
-            $block->addButton('delete1', array(
+            $block->addButton(
+                'delete1', array(
                 'label' => 'Reject',
                 'class' => 'Reject',
                 'disabled' => true,
@@ -1060,7 +1173,8 @@ public function jetfilesDelete()
                     . '\', \'' . $block->getUrl('adminhtml/adminhtml_jetorder/reject', array('increment_id' => $Incrementid)) . '\')',
 
 
-            ));
+                )
+            );
         }
     }
 
@@ -1079,7 +1193,6 @@ public function jetfilesDelete()
 
 
         if (!empty($response) && count($response) > 0) {
-
             foreach ($response as $res) {
                 $arr = explode("/", $res);
                 $returnid = "";
@@ -1087,25 +1200,23 @@ public function jetfilesDelete()
                 $resultdata = Mage::getModel('jet/jetreturn')->getCollection()->addFieldToFilter('returnid', $returnid)->getData();
                
                 if (empty($resultdata)) {
-
                     $returndetails = Mage::helper('jet')->CGetRequest($res);
                     
                     if ($returndetails) {
                         $return = json_decode($returndetails);
                         $serialized_details = serialize($return);
 
-						try{
-							$text = array(
-								 'merchant_order_id' => $return->merchant_order_id,
-								 'status' => 'created',
-								 'returnid' => "$returnid",
-								 'return_details' => $serialized_details);
+                        try{
+                            $text = array(
+                                 'merchant_order_id' => $return->merchant_order_id,
+                                 'status' => 'created',
+                                 'returnid' => "$returnid",
+                                 'return_details' => $serialized_details);
 
-							$model = Mage::getModel('jet/jetreturn')->addData($text);
-							$model->save();
-						}catch(Exception $e){
-							
-						}
+                            $model = Mage::getModel('jet/jetreturn')->addData($text);
+                            $model->save();
+                        }catch(Exception $e){
+                        }
 
                         if ($success_return == "") {
                             $success_return = $returnid;
@@ -1123,10 +1234,7 @@ public function jetfilesDelete()
                             $false_count++;
                         }
                     }
-
-
                 }
-
             }
         }
     }
@@ -1140,9 +1248,7 @@ public function jetfilesDelete()
         $success_ids = "";
 
         if ($count > 0) {
-
             foreach ($result as $res) {
-
                 $refundid = "";
                 $refundid = $res['refund_id'];
                 $data = Mage::helper('jet')->CGetRequest('/refunds/state/' . $refundid . '');
@@ -1167,7 +1273,6 @@ public function jetfilesDelete()
                                 $flag = false;
                                 $flag = Mage::helper('jet')->generateCreditMemoForRefund($saved_data);
                             }
-
                         }
                     }
                 }
@@ -1180,15 +1285,15 @@ public function jetfilesDelete()
 
     public function updatePassive_status()
     {
-		$this->getProductByStatus('Archived', 'archived');
-		$this->getProductByStatus('Excluded', 'excluded');
+        $this->getProductByStatus('Archived', 'archived');
+        $this->getProductByStatus('Excluded', 'excluded');
         $this->getProductByStatus('Unauthorized', 'unauthorized');
     }
 
     public function updateReview_status()
     {
         $this->getProductByStatus('Under Jet Review', 'under_jet_review');
-		$this->getProductByStatus('Missing Listing Data', 'missing_listing_data');
+        $this->getProductByStatus('Missing Listing Data', 'missing_listing_data');
     }
 
     public function updateActive_status()
@@ -1204,7 +1309,7 @@ public function jetfilesDelete()
 
         $raw_encode = rawurlencode($status);
         $response = Mage::helper('jet')->CGetRequest('/portal/merchantskus?from=0&size=5000&statuses='.$raw_encode);
-        $result = json_decode($response,true);
+        $result = json_decode($response, true);
 
         $SKU = array();
 
@@ -1223,8 +1328,8 @@ public function jetfilesDelete()
         $parent_idss = array();
         foreach ($allIds as $key => $value) {
            $parent_idss[] = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($value);
-
         }
+
         if(count($parent_idss)>1)
         {
             $allIds = array();
@@ -1233,7 +1338,6 @@ public function jetfilesDelete()
                 {
                     $allIds[] = $value[0];
                 }
-           
             }
         }
         
@@ -1244,7 +1348,6 @@ public function jetfilesDelete()
         $entityTypeId = Mage::getModel('eav/entity')->setType('catalog_product')->getTypeId();
 
         if (sizeof($allIds) > 0) {
-
             //$chunk_data = array_chunk($allIds, 500);
             
             $resource = Mage::getSingleton('core/resource');
@@ -1252,7 +1355,6 @@ public function jetfilesDelete()
             $readconnection = $resource->getConnection('core_read');
            
             foreach ($allIds as $k => $chunk) {
-
                 //$read = Mage::getSingleton('core/resource')->getConnection('core_read');
                 $result=$readconnection->query('SELECT * FROM '.$resource->getTableName('catalog_product_entity_varchar').' where entity_id = '.$chunk.' and attribute_id = '. $att_id.'');
                 $row = $result->fetch();
@@ -1269,8 +1371,8 @@ public function jetfilesDelete()
                     $query =  "Update " . $resource->getTableName('catalog_product_entity_varchar') . " Set value = '" . $status_code . "' where entity_id = ".$chunk. " and attribute_id = ".$att_id;
                     $writeConnection->query($query);
                 }
-                
-            } 
+            }
+ 
             /*foreach ($chunk_data as $k => $chunk) {
                 for($i=0;count($chunk)>$i;$i++){
                     if(trim($chunk[$i])!=""){
@@ -1282,7 +1384,6 @@ public function jetfilesDelete()
                 }
                 
             }*/
-
         }
 
     }
@@ -1290,20 +1391,20 @@ public function jetfilesDelete()
     public function getupdatedStatus($profileId = false)
     {
 
-		$this->getProductByStatus('Under Jet Review', 'under_jet_review', $profileId);
+        $this->getProductByStatus('Under Jet Review', 'under_jet_review', $profileId);
         $this->getProductByStatus('Missing Listing Data', 'missing_listing_data', $profileId);
         $this->getProductByStatus('Unauthorized', 'unauthorized', $profileId);
         $this->getProductByStatus('Excluded', 'excluded', $profileId);
         $this->getProductByStatus('Available for Purchase', 'available_for_purchase', $profileId);
         $this->getProductByStatus('Archived', 'archived', $profileId);
 
-	}
+    }
 
 
     /**
      * @save Jet Category information validation
      */
-	/*
+    /*
     public function jetCatInfocheck($observer)
     {
        $observer = $observer->getEvent()->getCategory();
@@ -1353,6 +1454,7 @@ public function jetfilesDelete()
             if($profileProduct && $profileProduct->getId()) {
                 $product_available = true;
             }
+
             if ($product_available) {
                 $data = "";
                 $response = '';
@@ -1362,6 +1464,7 @@ public function jetfilesDelete()
                 $response = json_decode($data);
             }
         }
+
         if ($product->isConfigurable()) {
                 $simple_collection = Mage::getModel('catalog/product_type_configurable')->setProduct($product)
                     ->getUsedProductCollection()
@@ -1385,21 +1488,23 @@ public function jetfilesDelete()
        
     }
 
-    function array_diff_assoc_recursive($array1, $array2) {
+    function array_diff_assoc_recursive($array1, $array2) 
+    {
         $difference=array();
         foreach($array1 as $key => $value) {
-            if( is_array($value) ) {
-                if( !isset($array2[$key]) || !is_array($array2[$key]) ) {
+            if(is_array($value)) {
+                if(!isset($array2[$key]) || !is_array($array2[$key])) {
                     $difference[$key] = $value;
                 } else {
                     $new_diff = $this->array_diff_assoc_recursive($value, $array2[$key]);
-                    if( !empty($new_diff) )
+                    if(!empty($new_diff))
                         $difference[$key] = $new_diff;
                 }
-            } else if( !array_key_exists($key,$array2) || $array2[$key] !== $value ) {
+            } else if(!array_key_exists($key, $array2) || $array2[$key] !== $value) {
                 $difference[$key] = $value;
             }
         }
+
         return $difference;
     }
 
@@ -1416,12 +1521,10 @@ public function jetfilesDelete()
 
         $product = $observer->getProduct();
         if ($product->hasDataChanges()) {
-
        $auto_sync_enable = Mage::getStoreConfig('jet_options/ced_jetproductedit/jet_product_auto_sync');
         $product = $observer->getProduct();
         if($auto_sync_enable == 1)
         {
-
             if ($product->getTypeId() == 'simple')
              {
                 $product_available = true;
@@ -1444,18 +1547,18 @@ public function jetfilesDelete()
                         $arr['is_archived'] = true;
                         $data = Mage::helper('jet')->CPutRequest('/merchant-skus/' . $previous_sku . '/status/archive', json_encode($arr));
                         $response = json_decode($data);
-                        }
+                     }
                 }
             }
-
         }
+
         $product->setData('jet_product_validation', 'not_validated');
         if($product->getTypeId() == "simple"){
             $parentIds = Mage::getModel('catalog/product_type_configurable')->getParentIdsByChild($product->getId());
             foreach ($parentIds as $id){
                 $product =  Mage::getModel('catalog/product')->load($id);
-                $product->setData('jet_product_validation','not_validated');
-                $product->getResource()->saveAttribute($product,'jet_product_validation');
+                $product->setData('jet_product_validation', 'not_validated');
+                $product->getResource()->saveAttribute($product, 'jet_product_validation');
             }
         }
 
@@ -1466,21 +1569,23 @@ public function jetfilesDelete()
 
 
 
-    public function saveJetOrder($jetId){
+    public function saveJetOrder($jetId)
+    {
         $saveJetorder=Mage::getModel('jet/jetorder')->load($jetId);
-        $saveJetorder->setData('status','cancelled');
+        $saveJetorder->setData('status', 'cancelled');
         $saveJetorder->save();
     }
 
 
-	public function updateInvcron(){
+    public function updateInvcron()
+    {
       
         $batch_data = Mage::getModel('jet/jetcron');
         $batch_count = $batch_data->getCollection()->getData();
         if(count($batch_count) == 0)
             {
                 $response = Mage::helper('jet')->CGetRequest('/merchant-skus?offset=0&limit=10000');
-                $result = json_decode($response,true);
+                $result = json_decode($response, true);
 
                 $SKU = array();
 
@@ -1488,17 +1593,19 @@ public function jetfilesDelete()
                 {
                     foreach ($result['sku_urls'] as $sku) 
                     {
-                        $temp_skus = explode('merchant-skus/',$sku);
+                        $temp_skus = explode('merchant-skus/', $sku);
                         $SKU[] = $temp_skus[1];
                     }
                 }
+
                 if(count($SKU)>1)
                 {
                     $chunk_size = Mage::getStoreConfig('jet_options/ced_cron/jet_cronsize');
                     if($chunk_size == ''){
                         $chunk_size = 1000;
                     }
-                $sku_chunks = array_chunk($SKU,$chunk_size);
+
+                $sku_chunks = array_chunk($SKU, $chunk_size);
 
                 foreach ($sku_chunks as $key => $value) 
                 {
@@ -1509,10 +1616,7 @@ public function jetfilesDelete()
                     $batch_data->save();
                 }
                 }
-                
-                
-                
-            }
+        }
         else
         { 
           foreach ($batch_count as $key => $value) {
@@ -1523,19 +1627,24 @@ public function jetfilesDelete()
             
         $collection->addFieldToFilter('sku', array('in'=>$SKU));
         if (Mage::helper('catalog')->isModuleEnabled('Mage_CatalogInventory')){
-            $collection->joinField('qty',
+            $collection->joinField(
+                'qty',
                 'cataloginventory/stock_item',
                 'qty',
                 'product_id=entity_id',
                 '{{table}}.stock_id=1',
-                'left');
-             $collection->joinField('is_in_stock',
-                'cataloginventory/stock_item',
-                'is_in_stock',
-                'product_id=entity_id',
-                '{{table}}.stock_id=1',
-                'left');
+                'left'
+            );
+             $collection->joinField(
+                 'is_in_stock',
+                 'cataloginventory/stock_item',
+                 'is_in_stock',
+                 'product_id=entity_id',
+                 '{{table}}.stock_id=1',
+                 'left'
+             );
         }
+
         $website = Mage::app()->getWebsite();
        
         Mage::Helper('jet/jet')->createuploadDir();
@@ -1559,6 +1668,7 @@ public function jetfilesDelete()
             {   
                 $merchantNode[$change->getSku()]=array('is_archived'=>false);
             }
+
             //custom code end
 
             $temp_inv[$change->getSku()]['fulfillment_nodes'][]=$node;
@@ -1574,11 +1684,12 @@ public function jetfilesDelete()
             $arr = explode(DS, $inventoryPath);
             $sku_file_name =  end($arr);
             $inventoryPath=$inventoryPath.'.gz';
-            $reponse = Mage::helper('jet')->uploadFile($inventoryPath,$tokendata->url);
+            $reponse = Mage::helper('jet')->uploadFile($inventoryPath, $tokendata->url);
             $postFields='{"url":"'.$tokendata->url.'","file_type":"Inventory","file_name":"'.$sku_file_name.'"}';
-            $responseinventry = Mage::helper('jet')->CPostRequest('/files/uploaded',$postFields);
+            $responseinventry = Mage::helper('jet')->CPostRequest('/files/uploaded', $postFields);print_r($responseinventry);die();
         }
-        if(count($merchantNode)>0)
+
+        /*if(count($merchantNode)>0)
         {
             $tokenresponse = Mage::helper('jet')->CGetRequest('/files/uploadToken');
             $tokendata = json_decode($tokenresponse);
@@ -1587,11 +1698,12 @@ public function jetfilesDelete()
             $sku_file_name = explode(DS, $merchantSkuPath);
             $sku_file_name = end($sku_file_name);
             $merchantSkuPath=$merchantSkuPath.'.gz';
-            $reponse = Mage::helper('jet')->uploadFile($merchantSkuPath,$tokenurl);
+            $reponse = Mage::helper('jet')->uploadFile($merchantSkuPath, $tokenurl);
             $postFields='{"url":"'.$tokenurl.'","file_type":"Archive","file_name":"'.$sku_file_name.'"}';
-            $response = Mage::helper('jet')->CPostRequest('/files/uploaded',$postFields);
+            $response = Mage::helper('jet')->CPostRequest('/files/uploaded', $postFields);
             $data2  = json_decode($response);
         }
+
         if(count($merchantNode1)>0)
         {
             $tokenresponse = Mage::helper('jet')->CGetRequest('/files/uploadToken');
@@ -1601,21 +1713,23 @@ public function jetfilesDelete()
             $sku_file_name = explode(DS, $merchantSkuPath);
             $sku_file_name = end($sku_file_name);
             $merchantSkuPath=$merchantSkuPath.'.gz';
-            $reponse = Mage::helper('jet')->uploadFile($merchantSkuPath,$tokenurl);
+            $reponse = Mage::helper('jet')->uploadFile($merchantSkuPath, $tokenurl);
             $postFields='{"url":"'.$tokenurl.'","file_type":"Archive","file_name":"'.$sku_file_name.'"}';
-            $response = Mage::helper('jet')->CPostRequest('/files/uploaded',$postFields);
+            $response = Mage::helper('jet')->CPostRequest('/files/uploaded', $postFields);
             $data2  = json_decode($response);
-        }
+        }*/
+
                 $batch_id = $value['id'];
                 Mage::getModel('jet/jetcron')->load($batch_id)->delete();
                 break;
-
-            }  
+          }  
         }
+
         return $this;
     }
 
-    public function updatePricecron(){
+    public function updatePricecron()
+    {
         Mage::Helper('jet/jet')->createuploadDir();
 
         $fullfillmentnodeid = Mage::getStoreConfig('jet_options/ced_jet/jet_fullfillmentnode');
@@ -1634,13 +1748,11 @@ public function jetfilesDelete()
 
         $data = array();
         if($goupload){
-
             $data = $collection->getData();
 
             $batch_data = (array_chunk($ids, 5000));
 
             foreach($batch_data as $data){
-
                 $collection = Mage::getModel('catalog/product')->getCollection()
                     ->addAttributeToSelect('*')
                     ->addFieldToFilter('entity_id', array('in'=>$data))
@@ -1649,12 +1761,7 @@ public function jetfilesDelete()
 
                 $Price  =array();
                 foreach($collection as $product){
-                   
-                    
                     if($product->getTypeId()=='configurable'){
-                         
-
-
                          $send_parent_price = Mage::getStoreConfig('jet_options/ced_jetproductedit/jet_config_product_price');
                          $childPrice = '';
                          
@@ -1676,7 +1783,6 @@ public function jetfilesDelete()
                                    if($childPrice!='')
                                    {
                                         $node['price']=$childPrice[$sku];
-
                                    }
                                    else
                                    {
@@ -1686,13 +1792,8 @@ public function jetfilesDelete()
                                    
                                     $temp_inv[$sku]['fulfillment_nodes'][]=$node;
 
-                                    $Price = Mage::Helper('jet/jet')->Jarray_merge($temp_inv,$Price);
-                                    
-                                }
-                            
-                               
-                         
-
+                                    $Price = Mage::Helper('jet/jet')->Jarray_merge($temp_inv, $Price);
+                               }
                     }else{
                         $temp_inv = array();
                         $node =array();
@@ -1701,7 +1802,7 @@ public function jetfilesDelete()
                         $node['price']=$product_price;
                         $temp_inv[$product['sku']]['fulfillment_nodes'][]=$node;
 
-                        $Price = Mage::Helper('jet/jet')->Jarray_merge($temp_inv,$Price);
+                        $Price = Mage::Helper('jet/jet')->Jarray_merge($temp_inv, $Price);
                     }
                 }
                 
@@ -1717,24 +1818,23 @@ public function jetfilesDelete()
                     $pricePath=$pricePath.'.gz';
                     
 
-                    $reponse = Mage::helper('jet')->uploadFile($pricePath,$tokendata->url);
+                    $reponse = Mage::helper('jet')->uploadFile($pricePath, $tokendata->url);
                     $postFields='{"url":"'.$tokendata->url.'","file_type":"Price","file_name":"'.$sku_file_name.'"}';
 
-                    $responseinventry = Mage::helper('jet')->CPostRequest('/files/uploaded',$postFields);
+                    $responseinventry = Mage::helper('jet')->CPostRequest('/files/uploaded', $postFields);
                     //$invetrydata = json_decode($responseinventry);
                     //if($invetrydata->status == 'Acknowledged'){echo $invetrydata->status;}
                     $Price = array();
                 }
-
             }
-
         }
 
     }
 
 
 
-    public function  catalogInventoryStockItemSaveAfter($observer){
+    public function catalogInventoryStockItemSaveAfter($observer)
+    {
 
         $oldValue = (int)$observer->getData('item')->getOrigData('qty');
         $newValue = (int)$observer->getData('item')->getData('qty');
@@ -1752,7 +1852,8 @@ public function jetfilesDelete()
         return $this;
     }
 
-    public function  catalogInventoryStockItemSaveAfterOrder($observer){
+    public function catalogInventoryStockItemSaveAfterOrder($observer)
+    {
         $items = $observer->getQuote()->getAllItems();
         foreach ($items as $item){
            $productId =  $item->getData('product_id');
@@ -1767,7 +1868,8 @@ public function jetfilesDelete()
         }
     }
 
-    public function  catalogInventoryStockItemSaveAfterCreditmemo($observer){
+    public function catalogInventoryStockItemSaveAfterCreditmemo($observer)
+    {
 
         $creditmemo = $observer->getEvent()->getCreditmemo();
         $items = array();
@@ -1781,6 +1883,7 @@ public function jetfilesDelete()
             } elseif (Mage::helper('cataloginventory')->isAutoReturnEnabled()) {
                 $return = true;
             }
+
             if ($return) {
                 $parentOrderId = $item->getOrderItem()->getParentItemId();
                 /* @var $parentItem Mage_Sales_Model_Order_Creditmemo_Item */
@@ -1808,11 +1911,13 @@ public function jetfilesDelete()
 
             $this->setProductChange($productId, $oldValue, $newValue);
         }
+
         Mage::getSingleton('cataloginventory/stock')->revertProductsSale($items);
 
     }
 
-    public function setProductChange($productId, $oldValue='', $newValue=''){
+    public function setProductChange($productId, $oldValue='', $newValue='')
+    {
         if ($productId <= 0) {
             return $this;
         }
@@ -1834,11 +1939,13 @@ public function jetfilesDelete()
             $model->setCronType(Ced_Jet_Model_Productchange::CRON_TYPE_INVENTORY);
             $model->save();
         }
+
         return $this;
     }
 
 
-    public function  setStandardIdentifireElement($observer){
+    public function setStandardIdentifireElement($observer)
+    {
 
         $form = $observer->getEvent()->getForm();
 

@@ -16,22 +16,27 @@
   * @license      http://cedcommerce.com/license-agreement.txt
   */
 
-class Ced_Jet_Model_Jetshipping extends Mage_Shipping_Model_Shipping {
-    public function collectCarrierRates($carrierCode, $request) {
+class Ced_Jet_Model_Jetshipping extends Mage_Shipping_Model_Shipping
+{
+    public function collectCarrierRates($carrierCode, $request) 
+    {
         if (!$this -> _checkCarrierAvailability($carrierCode, $request)) {
             return $this;
         }
+
         return
         parent::collectCarrierRates($carrierCode, $request);
     }
-    protected function _checkCarrierAvailability($carrierCode, $request = null) {
-		if ($carrierCode == 'shipjetcom') {
-			if(Mage::getDesign()->getArea() == Mage_Core_Model_App_Area::AREA_ADMINHTML){
-				return true;
-			}else{
-				return false;
-			}
+    protected function _checkCarrierAvailability($carrierCode, $request = null) 
+    {
+        if ($carrierCode == 'shipjetcom') {
+            if(Mage::getDesign()->getArea() == Mage_Core_Model_App_Area::AREA_ADMINHTML){
+                return true;
+            }else{
+                return false;
+            }
         }
+
         return true;
     }
 }

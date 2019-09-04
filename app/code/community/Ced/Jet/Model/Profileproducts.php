@@ -132,6 +132,7 @@ class Ced_Jet_Model_Profileproducts extends Mage_Core_Model_Abstract
             $this->load($object->getId());
             return $this;
         }
+
         return $this;
     }
 

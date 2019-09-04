@@ -21,35 +21,39 @@ class Ced_Jet_Block_Adminhtml_Refund_Edit extends Mage_Adminhtml_Block_Widget_Fo
     {
         parent::__construct();
         $this->_removeButton('back');
-        $this->addButton('back', array(
+        $this->addButton(
+            'back', array(
             'label'   => $this->__('Back'),
             'onclick' => "setLocation('{$this->getUrl('*/*/refund')}')",
             'class'   => 'back'
-        ));         
+            )
+        );         
         $this->_objectId = 'id';
         $this->_blockGroup = 'jet';
         $this->_controller = 'adminhtml_refund';
         $this->_removeButton('delete'); 
         $this->_removeButton('reset');
         $this->_updateButton('save', 'label', Mage::helper('jet')->__('Submit Refund'));
-		
-		if(Mage::registry('refund_data')->getId()){
-			$this->_removeButton('save');
-		}
-		
+        
+        if(Mage::registry('refund_data')->getId()){
+            $this->_removeButton('save');
+        }
+        
     }
  
     public function getHeaderText()
     {
-        if( Mage::registry('refund_data')&&Mage::registry('refund_data')->getId())
+        if(Mage::registry('refund_data')&&Mage::registry('refund_data')->getId())
         {
-            return 'Refund Fields'.$this->htmlEscape(
-            Mage::registry('refund_data')->getTitle()).'<br />';
+            return 'Refund Fields'.$this->escapeHtml(
+                Mage::registry('refund_data')->getTitle()
+            ).'<br />';
         }
-		  $header = Mage::helper('jet')->__('Create New Refund');
+
+          $header = Mage::helper('jet')->__('Create New Refund');
 
         return $header;
     }
-	
-	
+    
+    
 }

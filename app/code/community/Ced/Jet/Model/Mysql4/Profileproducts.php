@@ -26,7 +26,8 @@ class Ced_Jet_Model_Mysql4_Profileproducts extends Mage_Core_Model_Mysql4_Abstra
      * Initializing Resource Model
      * @see Mage_Core_Model_Resource_Abstract::_construct()
      */
-    protected function _construct() {
+    protected function _construct() 
+    {
         $this->_init('jet/profileproducts', 'id');
 
         $this->_productsTable = $this->getTable('catalog/product');
@@ -61,8 +62,10 @@ class Ced_Jet_Model_Mysql4_Profileproducts extends Mage_Core_Model_Mysql4_Abstra
     protected function _afterSave(Mage_Core_Model_Abstract $profile)
     {
         //$this->_updateGroupVendorsAcl($group);
-        Mage::app()->getCache()->clean(Zend_Cache::CLEANING_MODE_MATCHING_TAG,
-            array(Mage_Adminhtml_Block_Page_Menu::CACHE_TAGS));
+        Mage::app()->getCache()->clean(
+            Zend_Cache::CLEANING_MODE_MATCHING_TAG,
+            array(Mage_Adminhtml_Block_Page_Menu::CACHE_TAGS)
+        );
         return $this;
     }
 
@@ -76,7 +79,7 @@ class Ced_Jet_Model_Mysql4_Profileproducts extends Mage_Core_Model_Mysql4_Abstra
      */
     public function getProfileProducts($profileId)
     {
-        $read 	= $this->_getReadAdapter();
+        $read     = $this->_getReadAdapter();
         $select = $read->select()->from($this->getMainTable(), array('product_id'))->where("(profile_id = '{$profileId}' ) AND product_id > 0");
         return $read->fetchCol($select);
     }
@@ -85,7 +88,7 @@ class Ced_Jet_Model_Mysql4_Profileproducts extends Mage_Core_Model_Mysql4_Abstra
     public function deleteFromProfile($productId)
     {
 
-        if ( $productId <= 0) {
+        if ($productId <= 0) {
             return $this;
         }
 
@@ -105,6 +108,7 @@ class Ced_Jet_Model_Mysql4_Profileproducts extends Mage_Core_Model_Mysql4_Abstra
         if (empty($productIds) or !is_array($productIds) or count($productIds) == 0) {
             return $this;
         }
+
         $productIds = array_unique($productIds);
         $dbh = $this->_getWriteAdapter();
         $condition =
@@ -122,9 +126,10 @@ class Ced_Jet_Model_Mysql4_Profileproducts extends Mage_Core_Model_Mysql4_Abstra
     public function addProductsToProfile($productIds, $profileId)
     {
 
-        if ( empty($productIds) or !is_array($productIds) or empty($profileId) or count($productIds) == 0) {
+        if (empty($productIds) or !is_array($productIds) or empty($profileId) or count($productIds) == 0) {
             return $this;
         }
+
         $productIds = array_unique($productIds);
         $adapter = $this->_getWriteAdapter();
         $data = array();
@@ -134,16 +139,17 @@ class Ced_Jet_Model_Mysql4_Profileproducts extends Mage_Core_Model_Mysql4_Abstra
                 'product_id' => (int)$productId
             );
         }
+
         $adapter->insertMultiple($this->_profileProductsTable, $data);
         return $this;
     }
 
     public function profileProductExists($productId, $profileId)
     {
-        if ( $productId > 0 ) {
+        if ($productId > 0) {
             $profileTable = $this->getTable('jet/profileproducts');
 
-            $productProfile = Mage::getModel('jet/profileproducts')->loadByField('profile_id',$profileId);
+            $productProfile = Mage::getModel('jet/profileproducts')->loadByField('profile_id', $profileId);
             if($productProfile && $productProfile->getId())
             {
                 $dbh    = $this->_getReadAdapter();

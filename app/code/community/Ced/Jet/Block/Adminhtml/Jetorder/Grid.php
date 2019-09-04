@@ -20,7 +20,7 @@
 class Ced_Jet_Block_Adminhtml_Jetorder_Grid extends Mage_Adminhtml_Block_Widget_Grid
 {
 
-	public function __construct()
+    public function __construct()
     {
         parent::__construct();
         $this->setId('jet_order_grid');
@@ -42,73 +42,89 @@ class Ced_Jet_Block_Adminhtml_Jetorder_Grid extends Mage_Adminhtml_Block_Widget_
     protected function _prepareCollection()
     {
         $collection = Mage::getModel($this->_getCollectionClass())->getCollection();
-		$salesFlatOrder = (string)Mage::getConfig()->getTablePrefix() .'sales_flat_order_grid';
-		$jetOrderDetail = (string)Mage::getConfig()->getTablePrefix().'jet_order_detail';
-		$collection->getSelect()->joinLeft(array('sales'=>$salesFlatOrder),'main_table.magento_order_id = sales.increment_id',array('sales.billing_name','sales.shipping_name','sales.billing_name','sales.grand_total'));
-       	$this->setCollection($collection);
+        $salesFlatOrder = (string)Mage::getConfig()->getTablePrefix() .'sales_flat_order_grid';
+        $jetOrderDetail = (string)Mage::getConfig()->getTablePrefix().'jet_order_detail';
+        $collection->getSelect()->joinLeft(array('sales'=>$salesFlatOrder), 'main_table.magento_order_id = sales.increment_id', array('sales.billing_name','sales.shipping_name','sales.billing_name','sales.grand_total'));
+           $this->setCollection($collection);
 
         return parent::_prepareCollection();
     }
 
     protected function _prepareColumns()
     {
-		$this->addColumn('magento_order_id', array(
+        $this->addColumn(
+            'magento_order_id', array(
             'header'=> Mage::helper('jet')->__('Magento Order #'),
             'width' => '80px',
             'type'  => 'text',
             'index' => 'magento_order_id',
-			'renderer'  => 'Ced_Jet_Block_Adminhtml_Jetorder_Renderer_Vieworder'
-        ));
-		$this->addColumn('reference_order_id', array(
-				'header'    => Mage::helper('jet')->__('Jet Referece Order #'),
-				'align'     =>'left',
-				'index'     => 'reference_order_id',
-		));
-		$this->addColumn('merchant_order_id', array(
-				'header'    => Mage::helper('jet')->__('Jet Merchant Order Id #'),
-				'align'     =>'left',
-				'index'     => 'merchant_order_id',
-		));
-		$this->addColumn('billing_name', array(
-				'header'    => Mage::helper('jet')->__('Bill to Name'),
-				'align'     =>'left',
-				'index'     => 'billing_name',
-				'filter_index'=>'sales.billing_name'
-		));
-		$this->addColumn('shipping_name', array(
-				'header'    => Mage::helper('jet')->__('Ship to Name'),
-				'align'     =>'left',
-				'index'     => 'shipping_name',
-				'filter_index'=>'sales.shipping_name'
-		));
-		$this->addColumn('delivery_by', array(
+            'renderer'  => 'Ced_Jet_Block_Adminhtml_Jetorder_Renderer_Vieworder'
+            )
+        );
+        $this->addColumn(
+            'reference_order_id', array(
+                'header'    => Mage::helper('jet')->__('Jet Referece Order #'),
+                'align'     =>'left',
+                'index'     => 'reference_order_id',
+            )
+        );
+        $this->addColumn(
+            'merchant_order_id', array(
+                'header'    => Mage::helper('jet')->__('Jet Merchant Order Id #'),
+                'align'     =>'left',
+                'index'     => 'merchant_order_id',
+            )
+        );
+        $this->addColumn(
+            'billing_name', array(
+                'header'    => Mage::helper('jet')->__('Bill to Name'),
+                'align'     =>'left',
+                'index'     => 'billing_name',
+                'filter_index'=>'sales.billing_name'
+            )
+        );
+        $this->addColumn(
+            'shipping_name', array(
+                'header'    => Mage::helper('jet')->__('Ship to Name'),
+                'align'     =>'left',
+                'index'     => 'shipping_name',
+                'filter_index'=>'sales.shipping_name'
+            )
+        );
+        $this->addColumn(
+            'delivery_by', array(
             'header' => Mage::helper('jet')->__('Delivery By'),
             'index' => 'deliver_by',
             'type' => 'datetime',
             'width' => '100px',
-			'filter_index'=>'deliver_by'
-        ));
-		
-		$this->addColumn('status', array(
-			'header'    => Mage::helper('jet')->__('Status'),
-			'width' 	=> '200px',
-			'align'     => 'left',
-			'index'     => 'status',
-			'type' => 'options',
-			 'options' => array('ready'=>'Ready','acknowledged'=>'Acknowledged',
-			 					'rejected'=>'Rejected','inprogress'=>'In Progress','complete'=>'Completed','cancelled'=>'Cancelled'), 
-			'filter_index'=>'main_table.status',
-			'filter_condition_callback' => array($this, '_statusFilter'),					
-			
-		));
-		$this->addColumn('grand_total', array(
+            'filter_index'=>'deliver_by'
+            )
+        );
+        
+        $this->addColumn(
+            'status', array(
+            'header'    => Mage::helper('jet')->__('Status'),
+            'width'     => '200px',
+            'align'     => 'left',
+            'index'     => 'status',
+            'type' => 'options',
+             'options' => array('ready'=>'Ready','acknowledged'=>'Acknowledged',
+                                 'rejected'=>'Rejected','inprogress'=>'In Progress','complete'=>'Completed','cancelled'=>'Cancelled'), 
+            'filter_index'=>'main_table.status',
+            'filter_condition_callback' => array($this, '_statusFilter'),                    
+            
+            )
+        );
+        $this->addColumn(
+            'grand_total', array(
             'header' => Mage::helper('jet')->__('G.T. (Purchased)'),
             'index' => 'grand_total',
             'type'  => 'currency',
             'currency' => 'order_currency_code',
-			'filter_index'=>'sales.grand_total'
-        ));
-		/*
+            'filter_index'=>'sales.grand_total'
+            )
+        );
+        /*
         $this->addColumn('customer_cancelled', array(
             'header'    => Mage::helper('jet')->__('Order quantity cancelled by customer'),
             'align'     =>'left',
@@ -117,8 +133,8 @@ class Ced_Jet_Block_Adminhtml_Jetorder_Grid extends Mage_Adminhtml_Block_Widget_
             'renderer'  => 'Ced_Jet_Block_Adminhtml_Jetorder_Renderer_Customercancel'
         ));
        */
-	   
-		$this->addExportType('*/*/exportCsv', Mage::helper('jet')->__('CSV'));
+       
+        $this->addExportType('*/*/exportCsv', Mage::helper('jet')->__('CSV'));
         
         return parent::_prepareColumns();
     }
@@ -130,11 +146,13 @@ class Ced_Jet_Block_Adminhtml_Jetorder_Grid extends Mage_Adminhtml_Block_Widget_
         $this->getMassactionBlock()->setUseSelectAll(false);
 
         
-            $this->getMassactionBlock()->addItem('delete', array(
+            $this->getMassactionBlock()->addItem(
+                'delete', array(
                  'label'=> Mage::helper('jet')->__('Delete Order'),
                  'url'  => $this->getUrl('adminhtml/adminhtml_jetorder/massdeleteorder'),
                   'confirm'  => Mage::helper('jet')->__('Are you sure? Deleted order can not be undone.Order will delete from this panel only.Sales->Order will remain same.You can not process shipment/return/refund for these orders in future')
-            ));
+                )
+            );
         
 
         return $this;
@@ -146,13 +164,15 @@ class Ced_Jet_Block_Adminhtml_Jetorder_Grid extends Mage_Adminhtml_Block_Widget_
     {
         //return $this->getUrl('*/*/grid', array('_current'=>true));
     }
-	
-	protected function _statusFilter($collection, $column) {
-		$filterroleid = $column->getFilter()->getValue();        
-		if (!$value = $column->getFilter()->getValue()) {
-			return $this;
-		}        
-		$this->getCollection()->addFieldToFilter('main_table.status', array('eq' => $filterroleid));
-		return ;
-	}
+    
+    protected function _statusFilter($collection, $column) 
+    {
+        $filterroleid = $column->getFilter()->getValue();        
+        if (!$value = $column->getFilter()->getValue()) {
+            return $this;
+        }
+        
+        $this->getCollection()->addFieldToFilter('main_table.status', array('eq' => $filterroleid));
+        return ;
+    }
 }

@@ -60,11 +60,13 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Attributes
     protected function _prepareLayout()
     {
         $button = $this->getLayout()->createBlock('adminhtml/widget_button')
-            ->setData(array(
+            ->setData(
+                array(
                 'label' => Mage::helper('catalog')->__('Add Attribute'),
                 'onclick' => 'return tierPriceControl.addItem()',
                 'class' => 'add'
-            ));
+                )
+            );
         $button->setName('add_tier_price_item_button');
 
         $this->setChild('add_button', $button);
@@ -147,14 +149,14 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Attributes
 
         $systemAttribute = array('exclude_from_fee_adjust', 'jet_product_status', 'manufacturer',
             'map_implementation', 'product_tax_code', 'prop_65', 'ships_alone', 'newegg_condition', 'newegg_shipping', 'walmart_productid_type',
-            'walmart_product_status');
+            'jet_product_status');
 
         $attributes = Mage::getResourceModel('catalog/product_attribute_collection')
             ->addFieldToFilter('attribute_code', array('nin' => $systemAttribute))
             ->addFieldToFilter('is_configurable', 1)
             ->addFieldToFilter('is_global', 1)
 
-            ->addFieldToFilter('frontend_input', ['in' => ['select', 'boolean']]);
+            ->addFieldToFilter('frontend_input', array('in' => array('select', 'boolean')));
         $variantMagentoattributeCodeArray = array();
         foreach ($attributes as $attribute) {
             $variantMagentoattributeCodeArray[$attribute->getAttributecode()] = $attribute->getAttributecode();
@@ -162,7 +164,7 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Attributes
 
 
 
-        $magentoattributeCodeArray = [];
+        $magentoattributeCodeArray = array();
 
         $magentoattributeCodeArray[] = array(
             'label' => Mage::helper('widget')->__('Simple Attributes'),
@@ -178,17 +180,18 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Attributes
     }
 
 
-    public function getJetAttributeValuesMapping(){
+    public function getJetAttributeValuesMapping()
+    {
         $data = array();
-        if($this->_profile && $this->_profile->getId()>0){
+        if ($this->_profile && $this->_profile->getId()>0) {
             $data = json_decode($this->_profile->getProfileAttributeMapping(), true);
-              $data = $data;
-        }else{
+        } else {
             if(!$this->_jetAttribute)
                 $this->_jetAttribute = $this->getJetAttributes();
 
                 $data = $this->_jetAttribute;
         }
+
         return $data;
     }
 

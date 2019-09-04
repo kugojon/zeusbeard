@@ -19,12 +19,14 @@
 
 class Ced_Jet_Block_Adminhtml_Rejected_Product_List extends Mage_Adminhtml_Block_Template
 {
-	public function getErrorProductDetails(){
-		$collection = array();
-		if(Mage::registry('errorfile_collection')){
-			$collection =Mage::registry('errorfile_collection');
-		}
-		return $collection;	
-	}
-	
+    public function getErrorProductDetails()
+    {
+        $collection = array();
+        if(Mage::registry('errorfile_collection')){
+            $collection =Mage::registry('errorfile_collection');
+        }
+
+        return $collection;    
+    }
+    
 }

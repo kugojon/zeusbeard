@@ -18,7 +18,8 @@
 
 $installer = $this;
 $installer->startSetup();
-$installer->run("CREATE TABLE IF NOT EXISTS {$this->getTable('jet/jetattribute')} (
+$installer->run(
+    "CREATE TABLE IF NOT EXISTS {$this->getTable('jet/jetattribute')} (
   `id` int(11) NOT NULL  auto_increment,
   `jet_attr_id` int(11) NOT NULL,
   `magento_attr_id` int(11) NOT NULL,
@@ -65,5 +66,6 @@ CREATE TABLE IF NOT EXISTS {$this->getTable('jet/jetorder')} (
   `status` varchar(100) NOT NULL,
 	PRIMARY KEY (`id`)
 )CHARACTER SET utf8 COLLATE utf8_general_ci;
-");
+"
+);
 $installer->endSetup();

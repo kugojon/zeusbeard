@@ -19,15 +19,19 @@
 $installer = $this;
 $installer->startSetup();
 $this->getConnection()->addColumn($this->getTable('jet/jetcategory'), 'is_csv_category', 'BOOLEAN NOT NULL DEFAULT 1');
-$installer->run("
+$installer->run(
+    "
 ALTER TABLE {$this->getTable('jet/jetcategory')} change `jet_cate_id` `jet_cate_id` bigint(20) unsigned NOT NULL default '0';	
 ALTER TABLE {$this->getTable('jet/jetattribute')} change  `jet_attr_id` `jet_attr_id`  bigint(20) unsigned NOT NULL default '0';	
-"); 
-			
-$installer->endSetup();		
+"
+); 
+            
+$installer->endSetup();        
 $installer->startSetup();
-$installer->run("
+$installer->run(
+    "
   ALTER TABLE {$this->getTable('jet/jetorder')} CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
   ALTER TABLE {$this->getTable('jet/jetorder')} CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
-");
+"
+);
 $installer->endSetup();

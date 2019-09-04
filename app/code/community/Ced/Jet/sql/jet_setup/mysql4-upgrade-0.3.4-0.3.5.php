@@ -27,10 +27,13 @@ $this->getConnection()->dropColumn($this->getTable('jet/jetcron'), 'timestamp');
 $this->getConnection()->addColumn($this->getTable('jet/jetcron'), 'skus', 'TEXT DEFAULT NULL AFTER `event`');
 $this->getConnection()->addColumn($this->getTable('jet/jetcron'), 'status', 'TEXT DEFAULT NULL AFTER `skus`');
 $installer->run("ALTER TABLE {$this->getTable('jet/catlist')} CHANGE `jetattr_names` `attributes` MEDIUMTEXT NULL COMMENT 'Jet attributes';");
-$installer->run("
+$installer->run(
+    "
 TRUNCATE TABLE {$this->getTable('jet/catlist')};
-"); 
-$installer->run("
+"
+); 
+$installer->run(
+    "
 INSERT INTO {$this->getTable('jet/catlist')}  (`id`, `csv_cat_id`, `name`, `csv_parent_id`, `level`, `jet_tax_code`, `attribute_ids`, `attributes`, `created_category`) VALUES
 (1, 1000002, 'Architecture', 1000001, '2', '', '19,30,50', 'Format,Language,Size', 0),
 (2, 1000003, 'Business of Art', 1000001, '2', '', '19,30,50', 'Format,Language,Size', 0),
@@ -4049,7 +4052,8 @@ INSERT INTO {$this->getTable('jet/catlist')}  (`id`, `csv_cat_id`, `name`, `csv_
 (4007, 21000000, 'Household Supplies', 0, '0', '', '50,118,119', 'Size,Fragrance,Color', 0),
 (4008, 37000000, 'Kids & Baby Clothing, Shoes & Accessories', 0, '0', '', '', '', 0),
 (4009, 38000000, 'The Adult Shop', 0, '0', '', '', '', 0);
-");
+"
+);
 $this->getConnection()->addColumn($this->getTable('jet/catlist'), 'status', 'TEXT DEFAULT NULL AFTER `created_category`');
 $this->getConnection()->addColumn($this->getTable('jet/catlist'), 'path', 'TEXT DEFAULT NULL AFTER `name`');
 

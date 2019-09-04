@@ -23,17 +23,17 @@ class Ced_Jet_Block_Adminhtml_Prod_Edit_Tab_Shippingform extends Mage_Adminhtml_
         $form = new Varien_Data_Form();
         $this->setForm($form);
 
-        $fieldset = $form->addFieldset('jet_shipping',array('legend'=>Mage::helper('jet')->__('Shipping Exception')));
+        $fieldset = $form->addFieldset('jet_shipping', array('legend'=>Mage::helper('jet')->__('Shipping Exception')));
 
         $current_product = Mage::registry('current_product');
 
-    $loadData=Mage::getModel('jet/jetshippingexcep')->load($current_product->getSku(),'sku');
+    $loadData=Mage::getModel('jet/jetshippingexcep')->load($current_product->getSku(), 'sku');
 
         if(count($loadData->getData())>0)
         {
-
         }else{
-                 $fieldset->setHeaderBar('<script type="text/javascript">function showshippingdiv(f){
+                 $fieldset->setHeaderBar(
+                     '<script type="text/javascript">function showshippingdiv(f){
                         container=document.getElementById(f);
                         container.style.display = "block";
                         var tagNames = ["INPUT", "SELECT", "TEXTAREA"];
@@ -54,7 +54,8 @@ class Ced_Jet_Block_Adminhtml_Prod_Edit_Tab_Shippingform extends Mage_Adminhtml_
                                             elems[j].disabled = true;
                                           }
                                         }
-            });</script><button type="button" onclick="showshippingdiv(\'jet_shipping\');">Add Exception</button>');
+            });</script><button type="button" onclick="showshippingdiv(\'jet_shipping\');">Add Exception</button>'
+                 );
         }
 
        
@@ -66,54 +67,65 @@ class Ced_Jet_Block_Adminhtml_Prod_Edit_Tab_Shippingform extends Mage_Adminhtml_
           'name'      => 'sku',
         ));*/
 
-        $fieldset->addField('shipping_carrier', 'select', array(
-          'label'     => Mage::helper('jet')->__('Shipping Level'),
-          'name'      => 'shipping_carrier',
-          'values'    => Mage::helper('jet')->shippingCarrier(),
-          'note'    => 'For removing shipping exception for this product do not select any option in this and save product', 
-        ));
-		
-		/*
+        $fieldset->addField(
+            'shipping_carrier', 'select', array(
+            'label'     => Mage::helper('jet')->__('Shipping Level'),
+            'name'      => 'shipping_carrier',
+            'values'    => Mage::helper('jet')->shippingCarrier(),
+            'note'    => 'For removing shipping exception for this product do not select any option in this and save product', 
+            )
+        );
+        
+        /*
         $fieldset->addField('shipping_method', 'select', array(
           'label'     => Mage::helper('jet')->__('Shipping Method'),
           'name'      => 'shipping_method',
           'values'    => Mage::getSingleton('jet/shippingexception')->shippingMethod(),
         ));
 		*/
-		
-		$fieldset->addField('shipping_method', 'text', array(
-          'label'     => Mage::helper('jet')->__('Shipping Method'),
-          'name'      => 'shipping_method',
-		      'note'    => 'A specific shipping method e.g. UPS Ground, UPS Next Day Air, FedEx Home, Freight',			 
-        ));
+        
+        $fieldset->addField(
+            'shipping_method', 'text', array(
+            'label'     => Mage::helper('jet')->__('Shipping Method'),
+            'name'      => 'shipping_method',
+              'note'    => 'A specific shipping method e.g. UPS Ground, UPS Next Day Air, FedEx Home, Freight',             
+            )
+        );
 
-        $fieldset->addField('shipping_override', 'select', array(
-          'label'     => Mage::helper('jet')->__('Override Type'),
+        $fieldset->addField(
+            'shipping_override', 'select', array(
+            'label'     => Mage::helper('jet')->__('Override Type'),
           
-          'note'      =>'This is a required field.',
-          'name'      => 'shipping_override',
-          'values'    => Mage::helper('jet')->shippingOverride(),
-        ));
+            'note'      =>'This is a required field.',
+            'name'      => 'shipping_override',
+            'values'    => Mage::helper('jet')->shippingOverride(),
+            )
+        );
 
-        $fieldset->addField('shipping_charge', 'text', array(
-          'label'     => Mage::helper('jet')->__('Shipping Charge Amount'),
-          'note'      =>'This is a required field.',
-          'name'      => 'shipping_charge',
-        ));
+        $fieldset->addField(
+            'shipping_charge', 'text', array(
+            'label'     => Mage::helper('jet')->__('Shipping Charge Amount'),
+            'note'      =>'This is a required field.',
+            'name'      => 'shipping_charge',
+            )
+        );
 
-        $fieldset->addField('shipping_excep', 'select', array(
-          'label'     => Mage::helper('jet')->__('Shipping Exception'),
-          'name'      => 'shipping_excep',
+        $fieldset->addField(
+            'shipping_excep', 'select', array(
+            'label'     => Mage::helper('jet')->__('Shipping Exception'),
+            'name'      => 'shipping_excep',
           
-          'note'      =>'This is a required field.',
-          'values'    => Mage::helper('jet')->shippingExcep(),
-        ));
+            'note'      =>'This is a required field.',
+            'values'    => Mage::helper('jet')->shippingExcep(),
+            )
+        );
 
  
         if($loadData)
         {
           $form->setValues($loadData->getData());
         }
+
         return parent::_prepareForm();
     }
 }

@@ -18,11 +18,11 @@
   */
 class Ced_Jet_Block_Adminhtml_Profile_Edit_Tabs extends Mage_Adminhtml_Block_Widget_Tabs
 {
-	/**
-	 * setting title information
-	 * @return void
-	 * 
-	 */
+    /**
+     * setting title information
+     * @return void
+     * 
+     */
   public function __construct()
   {
       parent::__construct();
@@ -35,27 +35,33 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tabs extends Mage_Adminhtml_Block_Wid
    * Preparing Html befor rendering
    * @see Mage_Adminhtml_Block_Widget_Tabs::_beforeToHtml()
    */
-	protected function _beforeToHtml() {
-		$this->addTab('profile_info', array(
-			'label'     => Mage::helper('jet')->__('Profile Info'),
-			'content'   => $this->getLayout()->createBlock('jet/adminhtml_profile_edit_tab_info')->toHtml(),
-		));
-		
-		/*$this->addTab('profile_configurations', array(
+    protected function _beforeToHtml() 
+    {
+        $this->addTab(
+            'profile_info', array(
+            'label'     => Mage::helper('jet')->__('Profile Info'),
+            'content'   => $this->getLayout()->createBlock('jet/adminhtml_profile_edit_tab_info')->toHtml(),
+            )
+        );
+        
+        /*$this->addTab('profile_configurations', array(
 			'label'     => Mage::helper('jet')->__('Profile Configurations'),
 			'content'   => $this->getLayout()->createBlock('jet/adminhtml_profile_edit_tab_configurations')->toHtml(),
 		));*/
 
 
 
-        $this->addTab('profile_categorymapping', array(
+        $this->addTab(
+            'profile_categorymapping', array(
             'label' => Mage::helper('jet')->__('Jet Category Mapping '),
             'content' =>  $this->getLayout()->createBlock(
-                'jet/adminhtml_profile_edit_tab_categorymapping')
+                'jet/adminhtml_profile_edit_tab_categorymapping'
+            )
                 ->append($this->getLayout()->createBlock('jet/adminhtml_profile_edit_tab_attributes', 'required_attributes'))
             //->append($this->getLayout()->createBlock('jet/adminhtml_profile_edit_tab_configattributes', 'config_required_attributes'))
             ->toHtml()
-        ));
+            )
+        );
 
 
 
@@ -75,13 +81,15 @@ class Ced_Jet_Block_Adminhtml_Profile_Edit_Tabs extends Mage_Adminhtml_Block_Wid
         $serializer->initSerializerBlock($chooser, '_getProducts', 'in_profile_product', 'in_profile_product');
 
 
-        $this->addTab('profile_products', array(
+        $this->addTab(
+            'profile_products', array(
             'label'     => Mage::helper('jet')->__('Profile Products'),
             'content'   =>  $chooser->toHtml().$serializer->toHtml(),
-        ));
+            )
+        );
 
-		return parent::_beforeToHtml();
-	}
+        return parent::_beforeToHtml();
+    }
   
   /**
      * Getting attribute block name for tabs

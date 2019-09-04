@@ -38,7 +38,7 @@ class Ced_Jet_Block_Adminhtml_Exception_Edit_Renderer_Locations
      */
     public function render(Varien_Data_Form_Element_Abstract $element)
     {
-    	$this->setElement($element);
+        $this->setElement($element);
         return $this->toHtml();
     }
 

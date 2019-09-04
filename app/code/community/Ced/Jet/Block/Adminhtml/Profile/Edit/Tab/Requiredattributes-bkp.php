@@ -31,7 +31,7 @@
  * @package    Mage_Adminhtml
  * @author     Magento Core Team <core@magentocommerce.com>
  */
-class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattributes
+class Ced_Jet_Block_Adminhtml_Profile_Edit_Tab_Requiredattributes
     extends Mage_Adminhtml_Block_System_Config_Form_Field_Array_Abstract
 {
     protected $magentoAttributes;
@@ -39,19 +39,23 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattributes
     public function __construct()
     {
         $this->elementName = 'required_attributes';
-        $this->addColumn('animal', array(
+        $this->addColumn(
+            'animal', array(
             'label' => Mage::helper('adminhtml')->__('Animal'),
             'size'  => 28,
-        ));
-        $this->addColumn('colour', array(
+            )
+        );
+        $this->addColumn(
+            'colour', array(
             'label' => Mage::helper('adminhtml')->__('Colour'),
             'size'  => 28
-        ));
+            )
+        );
         $this->_addAfter = false;
         $this->_addButtonLabel = Mage::helper('adminhtml')->__('Add new coloured animal');
 
         parent::__construct();
-        $this->setTemplate('ced/walmart/profile/requiredattributes.phtml');
+        $this->setTemplate('ced/jet/profile/requiredattributes.phtml');
     }
 
     protected function _renderCellTemplate($columnName)
@@ -59,6 +63,7 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattributes
         if (empty($this->_columns[$columnName])) {
             throw new Exception('Wrong column name specified.');
         }
+
         $column     = $this->_columns[$columnName];
         $inputName  = $this->elementName . '[#{_id}][' . $columnName . ']';
 
@@ -74,6 +79,7 @@ class Ced_Walmart_Block_Adminhtml_Profile_Edit_Tab_Requiredattributes
             $rendered .= '<option value="yellow">Yellow</option>';
             $rendered .= '<option value="green">Green</option>';
         }
+
         $rendered .= '</select>';
 
         return $rendered;

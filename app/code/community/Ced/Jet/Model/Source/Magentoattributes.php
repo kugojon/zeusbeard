@@ -18,7 +18,7 @@
 
 class Ced_Jet_Model_Source_Magentoattributes
 {
-	public function toOptionArray()
+    public function toOptionArray()
     {
 
             $attributes = Mage::getResourceModel('catalog/product_attribute_collection')
@@ -30,7 +30,8 @@ class Ced_Jet_Model_Source_Magentoattributes
                                     'value' => $attribute->getAttributeCode()
                                 ) ;
             }
+
         return $_options;
     }
-	
+    
 }

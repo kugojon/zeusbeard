@@ -18,7 +18,8 @@
  
 $installer = $this;
 $installer->startSetup();
-$installer->run("
+$installer->run(
+    "
 CREATE TABLE IF NOT EXISTS {$this->getTable('jet/jetrefund')} (
   `id` int(100) NOT NULL AUTO_INCREMENT,
   `refundid` varchar(100) NOT NULL,
@@ -58,7 +59,8 @@ ALTER TABLE {$this->getTable('jet/jetrefund')} CHANGE `refundid` `refund_id` var
   ALTER TABLE {$this->getTable('jet/jetrefund')} CHANGE `status` `refund_status` varchar(100) NOT NULL;
 
        
-");
+"
+);
 $this->getConnection()->addColumn($this->getTable('jet/errorfile'), 'date', 'DATETIME  NOT NULL AFTER `error`');
 $this->getConnection()->addColumn($this->getTable('jet/errorfile'), 'jetinfofile_id', 'INT(11)  NOT NULL AFTER `date`');
 $this->getConnection()->addColumn($this->getTable('jet/jetrefund'), 'order_item_id', 'TEXT AFTER `id`');
@@ -75,8 +77,10 @@ $this->getConnection()->addColumn($this->getTable('jet/jetrefund'), 'refund_merc
 
 $installer->endSetup();
 $installer->startSetup();
-$installer->run("
+$installer->run(
+    "
   ALTER TABLE {$this->getTable('jet/errorfile')} CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
   ALTER TABLE {$this->getTable('jet/jetrefund')} CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
-");
+"
+);
 $installer->endSetup();

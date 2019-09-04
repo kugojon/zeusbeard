@@ -24,12 +24,12 @@ class Ced_Jet_Block_Adminhtml_Prod_Edit_Tab_Returnform extends Mage_Adminhtml_Bl
         $form = new Varien_Data_Form();
         $this->setForm($form);
 
-        $fieldset = $form->addFieldset('jet_return',array('legend'=>Mage::helper('jet')->__('Return Exception')));
+        $fieldset = $form->addFieldset('jet_return', array('legend'=>Mage::helper('jet')->__('Return Exception')));
         if(Mage::registry('return_data'))
         {
-          
         }else{
-                $fieldset->setHeaderBar('<script type="text/javascript">function showreturndiv(f){
+                $fieldset->setHeaderBar(
+                    '<script type="text/javascript">function showreturndiv(f){
                           container=document.getElementById(f);
                          container.style.display = "block";
                           var tagNames = ["INPUT", "SELECT", "TEXTAREA" ,"BUTTON"];
@@ -50,32 +50,39 @@ class Ced_Jet_Block_Adminhtml_Prod_Edit_Tab_Returnform extends Mage_Adminhtml_Bl
                                               elems[j].disabled = true;
                                             }
                                           }
-            });</script><button type="button" onclick="showreturndiv(\'jet_return\');">Add Exception</button>');
+            });</script><button type="button" onclick="showreturndiv(\'jet_return\');">Add Exception</button>'
+                );
         }
         
-      $fieldset->addField('time_to_return', 'text', array(
+      $fieldset->addField(
+          'time_to_return', 'text', array(
           'label'     => Mage::helper('jet')->__('Time to return'),
          
           'name'      => 'time_to_return',
           'note'      =>'The number of days after purchase a customer can return the item (Maximum value is 30).',
-        ));
-        $fieldset->addField('locations', 'text', array(
-          'label'     => Mage::helper('jet')->__('Return Location Ids'),
+          )
+      );
+        $fieldset->addField(
+            'locations', 'text', array(
+            'label'     => Mage::helper('jet')->__('Return Location Ids'),
           
-          'name'      => 'locations',
-          'note'      =>'This is a required field.',
-        ));
+            'name'      => 'locations',
+            'note'      =>'This is a required field.',
+            )
+        );
         $locations = $form->getElement('locations');
 
         $locations->setRenderer(
             $this->getLayout()->createBlock('jet/adminhtml_exception_edit_renderer_locations')
         );
 
-        $fieldset->addField('ship_methods', 'text', array(
-          'label'     => Mage::helper('jet')->__('Return Shipping Methods'),
-          'note'      =>'This is a required field.',
-          'name'      => 'ship_methods',
-        ));
+        $fieldset->addField(
+            'ship_methods', 'text', array(
+            'label'     => Mage::helper('jet')->__('Return Shipping Methods'),
+            'note'      =>'This is a required field.',
+            'name'      => 'ship_methods',
+            )
+        );
         $ship_methods = $form->getElement('ship_methods');
 
         $ship_methods->setRenderer(
@@ -83,11 +90,12 @@ class Ced_Jet_Block_Adminhtml_Prod_Edit_Tab_Returnform extends Mage_Adminhtml_Bl
         );
 
         
-		
+        
         if(Mage::registry('return_data'))
         {
           $form->setValues(Mage::registry('return_data'));
         }
+
         return parent::_prepareForm();
     }
 }

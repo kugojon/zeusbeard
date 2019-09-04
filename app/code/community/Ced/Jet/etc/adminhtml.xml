@@ -30,10 +30,18 @@
 					<action>adminhtml/adminhtml_profile/index</action>
 				</profile>
 			</children>
+			
 			<children>
 				<manageproduct translate="title" module="jet">
 					<title>Manage Feeds</title>
-					<sort_order>4</sort_order>
+					<sort_order>5</sort_order>
+					<children>
+						<magproduct translate="title" module="jet">
+							<title>Manage Products</title>
+							<sort_order>5</sort_order>
+							<action>adminhtml/adminhtml_jetrequest/uploadproduct</action>
+						</magproduct>
+					</children>
 					<children>
 						<rejectedfiles translate="title" module="jet">
 							<title>View Jet Feeds Status</title>
@@ -48,6 +56,7 @@
 							<action>adminhtml/adminhtml_jetproduct/mfeeds</action>
 						</magefiles>
 					</children>
+					
 					<!-- <children>
 						<liveproducts translate="title" module="jet">
 							<title>View Live Products</title>
@@ -60,7 +69,7 @@
 			<children>
 				<jetorders translate="title" module="jet">
 					<title>Manage Orders</title>
-					<sort_order>5</sort_order>
+					<sort_order>6</sort_order>
 					<children>
 						<jetorder translate="title" module="jet">
 							<title>View Jet Orders</title>

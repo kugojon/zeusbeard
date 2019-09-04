@@ -41,16 +41,20 @@ class Ced_Jet_Block_Adminhtml_Catalog_Product_Edit extends Mage_Adminhtml_Block_
         $showProductEdit = Mage::getStoreConfig('jet_options/ced_jetproductedit/show_jetupload_on_productedit');
         if($profileProduct && $profileProduct->getId()>0 && $showProductEdit){
             $this->_product = $this->getProduct();
-            $this->setChild('view_on_front',
+            $this->setChild(
+                'view_on_front',
                 $this->getLayout()->createBlock('adminhtml/widget_button')
-                    ->setData(array(
-                    'label'     => Mage::helper('catalog')->__('Validate and Upload to Jet'),
-                    'onclick'   =>  "setLocation('{$this->getUrl('adminhtml/adminhtml_jetedit/jetProductEdit/id/'.$product->getId().'')}')",
+                    ->setData(
+                        array(
+                        'label'     => Mage::helper('catalog')->__('Validate and Upload to Jet'),
+                        'onclick'   =>  "setLocation('{$this->getUrl('adminhtml/adminhtml_jetedit/jetProductEdit/id/'.$product->getId().'')}')",
 
-                    'title' => Mage::helper('catalog')->__('Validate and Upload to Jet')
-                ))
+                        'title' => Mage::helper('catalog')->__('Validate and Upload to Jet')
+                        )
+                    )
             );
         }
+
         return $this;
     }
  
@@ -75,4 +79,3 @@ class Ced_Jet_Block_Adminhtml_Catalog_Product_Edit extends Mage_Adminhtml_Block_
     }
  
 }
-?>

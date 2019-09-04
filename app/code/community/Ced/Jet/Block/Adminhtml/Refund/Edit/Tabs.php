@@ -28,11 +28,13 @@ class Ced_Jet_Block_Adminhtml_Refund_Edit_Tabs extends Mage_Adminhtml_Block_Widg
  
   protected function _beforeToHtml()
   {
-      $this->addTab('form_section', array(
+      $this->addTab(
+          'form_section', array(
           'label'     => Mage::helper('jet')->__('Refund Information'),
           'title'     => Mage::helper('jet')->__('Refund Information'),
           'content'   => $this->getLayout()->createBlock('jet/adminhtml_Refund_edit_tab_form')->toHtml(),
-      ));
+          )
+      );
       
       return parent::_beforeToHtml();
   }

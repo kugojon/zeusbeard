@@ -16,6 +16,7 @@ class Ced_Jet_Block_Adminhtml_Profile_Grid_Column_Renderer_Inactiveitem extends 
         }else{
             $value = 0;
         }
+
         return '<span style="color: red;">' . $value . '</span>';
 
     }

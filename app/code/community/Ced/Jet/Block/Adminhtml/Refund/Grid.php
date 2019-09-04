@@ -38,34 +38,42 @@ class Ced_Jet_Block_Adminhtml_Refund_Grid extends Mage_Adminhtml_Block_Widget_Gr
  
     protected function _prepareColumns()
     {
-        $this->addColumn('id', array(
-          'header'    => Mage::helper('jet')->__('ID'),
-          'align'     =>'right',
-          'width'     => '10px',
-          'index'     => 'id',
-        ));
+        $this->addColumn(
+            'id', array(
+            'header'    => Mage::helper('jet')->__('ID'),
+            'align'     =>'right',
+            'width'     => '10px',
+            'index'     => 'id',
+            )
+        );
 
-        $this->addColumn('refund_id', array(
-          'header'    => Mage::helper('jet')->__('Refund Id'),
-          'align'     =>'left',
-          'index'     => 'refund_id',
-          'width'     => '50px',
-        ));
+        $this->addColumn(
+            'refund_id', array(
+            'header'    => Mage::helper('jet')->__('Refund Id'),
+            'align'     =>'left',
+            'index'     => 'refund_id',
+            'width'     => '50px',
+            )
+        );
 
-        $this->addColumn('real_order_id', array(
+        $this->addColumn(
+            'real_order_id', array(
             'header'=> Mage::helper('jet')->__('Magento Order #'),
             'width' => '80px',
             'type'  => 'text',
             'index' => 'id',
             'renderer'  => 'Ced_Jet_Block_Adminhtml_Refund_Renderer_Vieworder'
-        ));
+            )
+        );
 
-         $this->addColumn('refund_orderid', array(
-          'header'    => Mage::helper('jet')->__('Refund Order Id'),
-          'align'     =>'left',
-          'index'     => 'refund_orderid',
-          'width'     => '50px',
-        ));
+         $this->addColumn(
+             'refund_orderid', array(
+             'header'    => Mage::helper('jet')->__('Refund Order Id'),
+             'align'     =>'left',
+             'index'     => 'refund_orderid',
+             'width'     => '50px',
+             )
+         );
 
         /* $this->addColumn('refund_merchantid', array(
           'header'    => Mage::helper('jet')->__('Refund Merchant Id'),
@@ -116,32 +124,36 @@ class Ced_Jet_Block_Adminhtml_Refund_Grid extends Mage_Adminhtml_Block_Widget_Gr
           'index'     => 'refund_reason',
           'width'     => '50px',
         ));*/
-        $this->addColumn('refund_status', array(
-          'header'    => Mage::helper('jet')->__('Refund Status'),
-          'align'     =>'left',
-          'index'     => 'refund_status',
-          'width'     => '50px',
-        ));
-		
-		$this->addColumn('action',
-  			array(
-  					'header'    =>  Mage::helper('jet')->__('Action'),
-  					'width'     => '150',
-  					'type'      => 'action',
-  					'getter'    => 'getId',
-  					'actions'   => array(
-  							array(
-  									'caption'   => Mage::helper('jet')->__('View Details'),
-  									'url'       => array('base'=> '*/*/edit'),
-  									'field'     => 'id'
-  							)
-  					),
-  					'filter'    => false,
-  					'sortable'  => false,
-  					'index'     => 'action',
-  					'is_system' => true,
-  			));
-		    $this->addExportType('*/*/exportRefundCsv', Mage::helper('jet')->__('CSV'));
+        $this->addColumn(
+            'refund_status', array(
+            'header'    => Mage::helper('jet')->__('Refund Status'),
+            'align'     =>'left',
+            'index'     => 'refund_status',
+            'width'     => '50px',
+            )
+        );
+        
+        $this->addColumn(
+            'action',
+            array(
+                      'header'    =>  Mage::helper('jet')->__('Action'),
+                      'width'     => '150',
+                      'type'      => 'action',
+                      'getter'    => 'getId',
+                      'actions'   => array(
+                              array(
+                                      'caption'   => Mage::helper('jet')->__('View Details'),
+                                      'url'       => array('base'=> '*/*/edit'),
+                                      'field'     => 'id'
+                              )
+                      ),
+                      'filter'    => false,
+                      'sortable'  => false,
+                      'index'     => 'action',
+                      'is_system' => true,
+              )
+        );
+            $this->addExportType('*/*/exportRefundCsv', Mage::helper('jet')->__('CSV'));
         return parent::_prepareColumns();
     }
 }

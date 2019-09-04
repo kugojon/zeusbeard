@@ -38,14 +38,14 @@ class Ced_Jet_Model_System_Config_Adminhtml_Serialized_Variantattribute extends 
         }*/
 
         $systemAttribute = array('exclude_from_fee_adjust', 'jet_product_status', 'manufacturer', 'map_implementation',
-            'product_tax_code', 'prop_65', 'ships_alone', 'newegg_condition', 'newegg_shipping', 'walmart_productid_type',
-            'walmart_product_status');
+            'product_tax_code', 'prop_65', 'ships_alone', 'newegg_condition', 'newegg_shipping', 'jet_productid_type',
+            'jet_product_status');
 
         $attributes = Mage::getResourceModel('catalog/product_attribute_collection')
             ->addFieldToFilter('is_configurable', 1)
             ->addFieldToFilter('is_global', 1)
             ->addFieldToFilter('attribute_code', array('nin' => $systemAttribute))
-            ->addFieldToFilter('frontend_input', ['in' => ['select', 'boolean']]);
+            ->addFieldToFilter('frontend_input', array('in' => array('select', 'boolean')));
 
         $values =array();
         foreach ($attributes as $attribute) {

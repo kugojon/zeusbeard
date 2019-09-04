@@ -44,7 +44,8 @@ $this->getConnection()->dropColumn($this->getTable('jet/jetreturn'), 'is_mapped_
 $this->getConnection()->addColumn($this->getTable('jet/jetorder'), 'customer_cancelled', 'TINYINT(1) NOT NULL DEFAULT 0 AFTER `reference_order_id`');
 $this->getConnection()->addColumn($this->getTable('jet/orderimport'), 'reference_number', 'TEXT DEFAULT NULL AFTER `merchant_order_id`');
 
-$installer->run("
+$installer->run(
+    "
 	CREATE TABLE IF NOT EXISTS {$this->getTable('jet/jetcron')} (
 	  `id` int(10) NOT NULL  auto_increment,
 	  `event` varchar(50) CHARACTER SET utf8 NOT NULL,
@@ -53,13 +54,16 @@ $installer->run("
 	  PRIMARY KEY (`id`)
 	) CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-");
+"
+);
 
 $installer->endSetup();
 $installer->startSetup();
-$installer->run("
+$installer->run(
+    "
 ALTER TABLE {$this->getTable('jet/jetreturn')} CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
   ALTER TABLE {$this->getTable('jet/orderimport')} CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
   ALTER TABLE {$this->getTable('jet/jetorder')} CONVERT TO CHARACTER SET utf8 COLLATE utf8_general_ci;
-");
+"
+);
 $installer->endSetup();

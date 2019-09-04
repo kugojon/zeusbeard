@@ -18,9 +18,9 @@
 
 class Ced_Jet_Model_Orderimport extends Mage_Core_Model_Abstract
 {
-	public function _construct()
-	{
-		$this->_init('jet/orderimport');
-	}
+    public function _construct()
+    {
+        $this->_init('jet/orderimport');
+    }
 
 }

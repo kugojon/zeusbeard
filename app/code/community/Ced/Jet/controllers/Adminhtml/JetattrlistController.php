@@ -39,7 +39,7 @@ class Ced_Jet_Adminhtml_JetattrlistController extends Mage_Adminhtml_Controller_
               $this->getResponse()->setBody(
                   $this->getLayout()->createBlock('jet/adminhtml_jetcron_grid')->toHtml()
               );
-     }
+    }
 
     /*
     * All below function Not necessary becuase Only Category Mapping allowed
