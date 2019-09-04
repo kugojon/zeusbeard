@@ -171,40 +171,48 @@ class Magestore_Affiliateplus_Block_Referrer extends Mage_Core_Block_Template
         if($session->isLoggedIn()){
             $account = $session->getAccount();
             $dateCollection = Mage::getModel('affiliateplus/transaction')->getCollection()
-                            ->addFieldToFilter('account_id',$account->getId())
-                            ->addFieldToFilter('date(created_time)',$date)
+                            // ->addFieldToFilter('account_id',$account->getId())
+                            // ->addFieldToFilter('date(created_time)',$date)
                     ;
             $dateCollection ->getSelect()
+                            ->where("account_id = ?", $account->getId())
+                            ->where("date(created_time) = ? ", $date)
                             ->group('date(created_time)')
                             ->columns(array('commission_total'=>'SUM(commission)'));
             $first = $dateCollection->getFirstItem();
             $info['today'] = Mage::helper('core')->currency($first->getCommissionTotal());
             /*----------------------------------------------------------------*/
             $weekCollection = Mage::getModel('affiliateplus/transaction')->getCollection()
-                            ->addFieldToFilter('account_id',$account->getId())
-                            ->addFieldToFilter('week(created_time, 1)',$week)
+                            // ->addFieldToFilter('account_id',$account->getId())
+                            // ->addFieldToFilter('week(created_time, 1)',$week)
                     ;
             $weekCollection ->getSelect()
+                            ->where("account_id = ?", $account->getId())
+                            ->where("week(created_time) = ? ", $week)
                             ->group('week(created_time, 1)')
                             ->columns(array('commission_total'=>'SUM(commission)'));
             $first = $weekCollection->getFirstItem();
             $info['week'] = Mage::helper('core')->currency($first->getCommissionTotal());
             /*----------------------------------------------------------------*/
             $monthCollection = Mage::getModel('affiliateplus/transaction')->getCollection()
-                            ->addFieldToFilter('account_id',$account->getId())
-                            ->addFieldToFilter('month(created_time)',$month)
+                            // ->addFieldToFilter('account_id',$account->getId())
+                            // ->addFieldToFilter('month(created_time)',$month)
                     ;
             $monthCollection ->getSelect()
+                            ->where("account_id = ?", $account->getId())
+                            ->where("month(created_time) = ? ", $month)
                             ->group('month(created_time)')
                             ->columns(array('commission_total'=>'SUM(commission)'));
             $first = $monthCollection->getFirstItem();
             $info['month'] = Mage::helper('core')->currency($first->getCommissionTotal());
             /*----------------------------------------------------------------*/
             $yearCollection = Mage::getModel('affiliateplus/transaction')->getCollection()
-                            ->addFieldToFilter('account_id',$account->getId())
-                            ->addFieldToFilter('year(created_time)',$year)
+                            // ->addFieldToFilter('account_id',$account->getId())
+                            // ->addFieldToFilter('year(created_time)',$year)
                     ;
             $yearCollection ->getSelect()
+                            ->where("account_id = ?", $account->getId())
+                            ->where("year(created_time) = ? ", $year)
                             ->group('year(created_time)')
                             ->columns(array('commission_total'=>'SUM(commission)'));
             $first = $yearCollection->getFirstItem();
