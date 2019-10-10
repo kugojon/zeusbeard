@@ -52,6 +52,9 @@ along with AwesomeCheckout.  If not, see <http://www.gnu.org/licenses/>.
 			<action method="addCss">
 				<stylesheet>css/anattadesign/awesomecheckout/styles.css</stylesheet>
 			</action>
+			<action method="addCss">
+				<stylesheet>aw_giftwrap/css/style.css</stylesheet>
+			</action>
 			<action method="removeItem">
 				<type>skin_css</type>
 				<name>css/styles.css</name>
@@ -127,6 +130,8 @@ along with AwesomeCheckout.  If not, see <http://www.gnu.org/licenses/>.
 				</block>
 				<block type="checkout/onepage_review" name="checkout.onepage.review" as="review" template="anattadesign/awesomecheckout/onepage/review.phtml" />
 			</block>
+			<block type="aw_giftwrap/checkout_onepage_shippingmethod_form" name="awgiftwrap.onepagecheckout.shippingmethod.form"
+				   template="aw_giftwrap/checkout/onepage/shipping_method/form.phtml" after="-"/>
 		</reference>
         <reference name="stripejs">
             <action method="setTemplate">

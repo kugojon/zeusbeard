@@ -13,7 +13,9 @@
 .product-view .add-to-box{border-bottom:none!important}
 .opc .form-list .input-box select{color:#000!important;}
 .header-text-banners .item .text p{color:#222;}
-
+.no-display {
+    display: none;
+}
 .window-overlay {
     display: none;
 }
