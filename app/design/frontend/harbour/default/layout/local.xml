@@ -119,7 +119,11 @@
 		<!--Adding "Fancybox-->
 		<action method="addCss" ifconfig="meigee_harbour_bgslider/fancybox/fancybox_footer"><stylesheet helper="ThemeOptionsHarbour/fancySwitcher" /></action>
 		<action method="addItem" ifconfig="meigee_harbour_bgslider/fancybox/fancybox_footer"><type>skin_js</type><name helper="ThemeOptionsHarbour/fancySwitcherJS" /></action>
-		
+
+		<!--Adding "Carousel Slider-->
+		<action method="addItem"><type>skin_js</type><name>js/owl-carousel.min.js</name><params/></action>
+		<action method="addCss"><stylesheet>css/owl-carousel.css</stylesheet><params/></action>
+
 	</reference>
 	
 	<reference name="header">
@@ -300,6 +304,7 @@
 		<!--Adding "Fancybox-->
 		<action method="addCss"><stylesheet helper="ThemeOptionsHarbour/fancySwitcher" /></action>
 		<action method="addItem"><type>skin_js</type><name helper="ThemeOptionsHarbour/fancySwitcherJS" /></action>
+		<action method="addCss"><stylesheet>css/cms-static.css</stylesheet><params/></action>
 	</reference>
 </cms_page>
 

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Bss_CategoryFeatured>
+            <version>1.0.0</version>
+        </Bss_CategoryFeatured>
+    </modules>
+    <global>
+        <helpers>
+            <categoryfeatured>
+                <class>Bss_CategoryFeatured_Helper</class>
+            </categoryfeatured>
+        </helpers>
+        <blocks>
+            <categoryfeatured>
+                <class>Bss_CategoryFeatured_Block</class>
+            </categoryfeatured>
+        </blocks>
+        <resources>
+            <categoryfeatured_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </categoryfeatured_write>
+            <categoryfeatured_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </categoryfeatured_read>
+        </resources>
+    </global>
+</config>

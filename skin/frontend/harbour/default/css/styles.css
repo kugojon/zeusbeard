@@ -1546,7 +1546,24 @@ header.header .top-cart button.button span { display:block; float:none;}
 /* Revolution Slider */
 .top-container .rev_slider_wrapper{
 	margin-bottom: 0!important;
+	max-width: 1252px;;
 }
+.content-img {
+	display: table;
+	width: 100%;
+}
+.content-img .col-3 {
+	float: left;
+	width: 22%;
+	margin: 0 2%;
+}
+.content-img .alpha {
+	margin-left: 0;
+}
+.content-img .omega {
+	margin-right: 0;
+}
+
 .rev_slider_wrapper .tp-leftarrow.default,
 .rev_slider_wrapper .tp-rightarrow.default{
 	background-image: none!important;
@@ -2018,7 +2035,7 @@ ul li ul li ul .category-label:after { display: none;}
 .menu-wrapper.default-menu ul li .category-label {top: -5px; left: 18px;}
 .menu-wrapper.default-menu ul li .category-label:after {right: auto; left: 4px;}
 
-.top-container {position: relative;}
+.top-container {position: relative;background: #fff;}
 
 /* Product tabs widget =============================================================================== */
 .product-tabs-wrapper {position: relative; padding: 5em 0 6em;}

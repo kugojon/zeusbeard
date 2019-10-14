@@ -1,0 +1,127 @@
+<?php
+$_helper 		=	$this->helper('catalog/output');
+$_products		=	$this->_getAllProducts();
+?>
+<?php if(count($_products)>0):
+    $meigee_harbour_general = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('meigee_harbour_general');
+    $meigee_harbour_appearance = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('meigee_harbour_appearance');
+    $fancybox = $meigee_harbour_general['fancybox'];
+    $categoryComplete = Mage::getModel('catalog/category')->load(Mage::getModel('catalog/layer')->getCurrentCategory()->getId());
+    $random = rand(5,1500);
+    if($categoryComplete->getMeigeeGridLayout()) {
+    $grid = $categoryComplete->getMeigeeGridLayout();
+    } else {
+    $grid = $meigee_harbour_appearance['productlisting']['grid'];
+    }
+    $helpImg = $this->helper('ThemeOptionsHarbour/images');
+    if($categoryComplete->getProductname()) {
+    $productname = $categoryComplete->getProductname();
+    if($productname == 2){$productname = 0;}
+    } else {
+    $productname = $meigee_harbour_appearance['productlisting']['productname'];
+    }
+    if($categoryComplete->getCompareproducts()) {
+    $compareproducts = $categoryComplete->getCompareproducts();
+    if($compareproducts == 2){$compareproducts = 0;}
+    } else {
+    $compareproducts = $meigee_harbour_appearance['productlisting']['compareproducts'];
+    }
+    if($categoryComplete->getWishlist()) {
+    $wishlist = $categoryComplete->getWishlist();
+    if($wishlist == 2){$wishlist = 0;}
+    } else {
+    $wishlist = $meigee_harbour_appearance['productlisting']['wishlist'];
+    }
+
+    $labelsoptions = $meigee_harbour_general['productlabels'];
+    $labelsType = $meigee_harbour_general['productlabels']['labelview'];
+    $labelsPosition = $meigee_harbour_general['productlabels']['labelsposition'];
+    $productOnlyXleft = $meigee_harbour_general['productlabels']['labelonlyxleft'];
+    ?>
+    <ul class="products-grid">
+        <?php $i=1; foreach ($_products as $_product):  ?>
+            <?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
+            <li class="grid_4 item<?php if($labelsoptions['labelsorder'] == 'new_sale'):?> labels-new-sale<?php endif; ?><?php if($i == 1): ?> alpha<?php endif; ?> <?php if($i == 3): ?> omega<?php endif; ?>">
+                <div class="product-container">
+                    <div class="product-img-box">
+                        <?php echo MAGE::helper('ThemeOptionsHarbour')->getProductLabels($_product, 'new');  ?>
+                        <?php if($productOnlyXleft and MAGE::helper('ThemeOptionsHarbour')->getProductOnlyXleft($_product)):  ?>
+                            <?php echo MAGE::helper('ThemeOptionsHarbour')->getProductOnlyXleft($_product); ?>
+                        <?php else: ?>
+                            <?php echo MAGE::helper('ThemeOptionsHarbour')->getProductLabels($_product, 'sale'); ?>
+                        <?php endif; ?>
+                        <?php if (Mage::getBlockSingleton('affiliateplusreferfriend/product_list')->displayProductStockStatus()):  ?>
+                            <?php if (!$_product->isAvailable()): ?>
+                                <p class="availability out-of-stock listing"><span><?php echo $this->__('Out of stock') ?></span></p>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        <a href="<?php echo $_product->getProductUrl();  ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image"><?php /* Hover Image */ echo $helpImg->getHoverImage($_product, 'small_image', 420, null); ?>
+                            <img id="product-collection-image-<?php echo $_product->getId(); ?>" <?php echo $helpImg->getImgSources($_product, 'small_image', 420, null); ?> alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+                        </a>
+                        <?php  // Fancybox
+                        if (Mage::getBlockSingleton('affiliateplusreferfriend/product_list')->displayProductStockStatus()):
+                            if ($_product->isAvailable()):
+                                if ($fancybox['fancybox_status'] && $fancybox['fancybox_listing'] == 1): ?>
+                                    <a class="fancybox category-gallery" title="<?php echo $_productNameStripped; ?>" href="<?php echo $this->helper('catalog/image')->init($_product, 'small_image'); ?>"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('fancybox'); ?></a>
+                                <?php 	endif;
+                            endif;
+                        endif; // End Fancybox ?>
+                    </div><?php $this->helper('yotpo')->showBottomline($this, $_product); ?>
+                    <div class="product-info">
+                        <?php if($productname): ?>
+                            <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></a></h2>
+                        <?php endif; ?>
+
+                        <?php
+                        // Provides extra blocks on which to hang some features for products in the list
+                        // Features providing UI elements targeting this block will display directly below the product name
+                        if(Mage::getBlockSingleton('affiliateplusreferfriend/product_list')->getChild('name.after')){
+                            $_nameAfterChildren = Mage::getBlockSingleton('affiliateplusreferfriend/product_list')->getChild('name.after')->getSortedChildren();
+                            foreach ($_nameAfterChildren as $_nameAfterChildName) {
+                                $_nameAfterChild = Mage::getBlockSingleton('affiliateplusreferfriend/product_list')->getChild('name.after')->getChild($_nameAfterChildName);
+                                $_nameAfterChild->setProduct($_product);
+                                echo $_nameAfterChild->toHtml();
+                            }
+                        }
+                        ?>
+                        <?php if($_product->getRatingSummary()): ?>
+                            <?php echo $this->getReviewsSummaryHtml($_product) ?>
+                        <?php endif; ?>
+                        <?php echo Mage::getBlockSingleton('affiliateplusreferfriend/product_list')->getPriceHtml($_product, true) ?>
+                    </div>
+                    <form action="<?php echo Mage::getBlockSingleton('affiliateplusreferfriend/product_list')->getSubmitUrl($_product) ?>" method="post" class="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+                        <div class="no-display">
+                            <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+                            <input type="hidden" name="related_product" id="related-products-field" value="" />
+                        </div>
+                        <div class="product-type-block">
+                            <div class="add-to-cart">
+                                <label for="qty">Qty:</label>
+                                <input type="text" name="qty" maxlength="12" value="1" title="Qty" class="input-text qty">
+                                <div class="quantity-buttons">
+                                    <div class="quantity-increase"><i class="fa fa-caret-up"></i></div>
+                                    <div class="quantity-decrease""><i class="fa fa-caret-down"></i></div>
+                            </div>
+                            <button type="submit" title="Add to Cart" id="product-addtocart-button" class="button btn-cart"><span><span>Add to Cart</span></span></button>
+                        </div>
+                </div>
+                </form>
+                <?php if ($wishlist || $compareproducts) { ?>
+                    <div class="product-buttons">
+                        <ul class="add-to-links">
+                            <?php if ($this->helper('wishlist')->isAllow() and $wishlist) : ?>
+                                <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('wishlist'); ?></a></li>
+                            <?php endif; ?>
+                            <?php if($_compareUrl=$this->getAddToCompareUrl($_product) and $compareproducts): ?>
+                                <li><a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('compare'); ?></a></li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                <?php } ?>
+                </div>
+            </li>
+            <?php $i++; endforeach ?>
+    </ul>
+<?php else: ?>
+    <p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php endif; ?>

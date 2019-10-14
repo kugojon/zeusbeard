@@ -1603,7 +1603,25 @@ jQuery(document).ready(function(){
 			});
 		}
 	}
-	
+
+	//Increase && Decrease Qty
+	if(jQuery(".quantity-increase").length > 0 && jQuery(".quantity-decrease").length > 0) {
+        jQuery(".quantity-increase").click(function() {
+            var currentVal = parseInt(jQuery(this).parents('.add-to-cart').find(".qty").val());
+            if (!currentVal || currentVal=="" || currentVal == "NaN") currentVal = 0;
+            jQuery(this).parents('.add-to-cart').find(".qty").val(currentVal + 1);
+        });
+
+        jQuery(".quantity-decrease").click(function() {
+            var currentVal = parseInt(jQuery(this).parents('.add-to-cart').find(".qty").val());
+            if (currentVal == "NaN") currentVal = 0;
+            if (currentVal > 0)
+            {
+                jQuery(this).parents('.add-to-cart').find(".qty").val(currentVal - 1);
+            }
+        });
+	}
+
 	if(jQuery('.toolbar-bottom .pager .pages').length == 0){
 		jQuery('.toolbar-bottom').addClass('no-border');
 	}

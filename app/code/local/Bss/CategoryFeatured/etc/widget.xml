@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<widgets>
+    <categoryfeatured_list type="categoryfeatured/list" translate="name description" module="categoryfeatured">
+        <name>Categories Products Widget</name>
+        <description>Widget Beard Care - Widget Grooming Tools - Widget Beard Care Sets </description>
+        <parameters>
+            <categoryid>
+                <visible>1</visible>
+                <label>Products Category</label>
+                <required>1</required>
+                <type>label</type>
+                <helper_block>
+                    <type>adminhtml/catalog_category_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Category...</open>
+                        </button>
+                    </data>
+                </helper_block>
+            </categoryid>
+            <num_products>
+                <label>Number of Products</label>
+                <description>Per category for "Categorised" Frontend Template (Default 6 products)</description>
+                <visible>1</visible>
+                <required>0</required>
+                <type>text</type>
+                <default>6</default>
+            </num_products>
+        </parameters>
+    </categoryfeatured_list>
+</widgets>
