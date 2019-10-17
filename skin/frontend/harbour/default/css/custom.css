@@ -1043,8 +1043,6 @@ body .cart .alpha button.button span span, body .cart .couponandgifcart button.b
     }
 
     .block__bestseller .block__title * {font-size: 20px;}
-    .block__bestseller .owl-nav .owl-prev, .block__product-slider .owl-nav .owl-prev {left: -30px;}
-    .block__bestseller .owl-nav .owl-next, .block__product-slider .owl-nav .owl-next {right: -30px;}
 }
 
 /*Product page*/
@@ -1174,6 +1172,7 @@ div#confirmBox, .am-upsell-title > .am-title {background-color: #ffffff}
 .block__product-slider .owl-nav .owl-prev span,
 .block__product-slider .owl-nav .owl-next span{
     font-size: 50px;
+    color: lightgray;
 }
 
 .block__bestseller .owl-nav .owl-prev:not(.disabled) span,
