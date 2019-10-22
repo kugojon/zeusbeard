@@ -7,40 +7,41 @@ $product1 = Mage::getModel('catalog/product')->load($id_product1[1]);
 $product2 = Mage::getModel('catalog/product')->load($id_product2[1]);
 $product3 = Mage::getModel('catalog/product')->load($id_product3[1]);
 $_productCollection = array($product1, $product2, $product3);
-$meigee_harbour_general = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('meigee_harbour_general');
-$meigee_harbour_appearance = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('meigee_harbour_appearance');
-$fancybox = $meigee_harbour_general['fancybox'];
-$categoryComplete = Mage::getModel('catalog/category')->load(Mage::getModel('catalog/layer')->getCurrentCategory()->getId());
-$random = rand(5,1500);
-if($categoryComplete->getMeigeeGridLayout()) {
-    $grid = $categoryComplete->getMeigeeGridLayout();
-} else {
-    $grid = $meigee_harbour_appearance['productlisting']['grid'];
-}
-$helpImg = $this->helper('ThemeOptionsHarbour/images');
-if($categoryComplete->getProductname()) {
-    $productname = $categoryComplete->getProductname();
-    if($productname == 2){$productname = 0;}
-} else {
-    $productname = $meigee_harbour_appearance['productlisting']['productname'];
-}
-if($categoryComplete->getCompareproducts()) {
-    $compareproducts = $categoryComplete->getCompareproducts();
-    if($compareproducts == 2){$compareproducts = 0;}
-} else {
-    $compareproducts = $meigee_harbour_appearance['productlisting']['compareproducts'];
-}
-if($categoryComplete->getWishlist()) {
-    $wishlist = $categoryComplete->getWishlist();
-    if($wishlist == 2){$wishlist = 0;}
-} else {
-    $wishlist = $meigee_harbour_appearance['productlisting']['wishlist'];
-}
+if(count($_productCollection) > 0):
+    $meigee_harbour_general = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('meigee_harbour_general');
+    $meigee_harbour_appearance = MAGE::helper('ThemeOptionsHarbour')->getThemeOptionsHarbour('meigee_harbour_appearance');
+    $fancybox = $meigee_harbour_general['fancybox'];
+    $categoryComplete = Mage::getModel('catalog/category')->load(Mage::getModel('catalog/layer')->getCurrentCategory()->getId());
+    $random = rand(5,1500);
+    if($categoryComplete->getMeigeeGridLayout()) {
+        $grid = $categoryComplete->getMeigeeGridLayout();
+    } else {
+        $grid = $meigee_harbour_appearance['productlisting']['grid'];
+    }
+    $helpImg = $this->helper('ThemeOptionsHarbour/images');
+    if($categoryComplete->getProductname()) {
+        $productname = $categoryComplete->getProductname();
+        if($productname == 2){$productname = 0;}
+    } else {
+        $productname = $meigee_harbour_appearance['productlisting']['productname'];
+    }
+    if($categoryComplete->getCompareproducts()) {
+        $compareproducts = $categoryComplete->getCompareproducts();
+        if($compareproducts == 2){$compareproducts = 0;}
+    } else {
+        $compareproducts = $meigee_harbour_appearance['productlisting']['compareproducts'];
+    }
+    if($categoryComplete->getWishlist()) {
+        $wishlist = $categoryComplete->getWishlist();
+        if($wishlist == 2){$wishlist = 0;}
+    } else {
+        $wishlist = $meigee_harbour_appearance['productlisting']['wishlist'];
+    }
 
-$labelsoptions = $meigee_harbour_general['productlabels'];
-$labelsType = $meigee_harbour_general['productlabels']['labelview'];
-$labelsPosition = $meigee_harbour_general['productlabels']['labelsposition'];
-$productOnlyXleft = $meigee_harbour_general['productlabels']['labelonlyxleft'];
+    $labelsoptions = $meigee_harbour_general['productlabels'];
+    $labelsType = $meigee_harbour_general['productlabels']['labelview'];
+    $labelsPosition = $meigee_harbour_general['productlabels']['labelsposition'];
+    $productOnlyXleft = $meigee_harbour_general['productlabels']['labelonlyxleft'];
 ?>
 	<ul class="products-grid">
     <?php $i=1; foreach ($_productCollection as $_product):  ?>
@@ -126,3 +127,6 @@ $productOnlyXleft = $meigee_harbour_general['productlabels']['labelonlyxleft'];
             </li>
             <?php $i++; endforeach ?>
     </ul>
+<?php else: ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php endif; ?>
