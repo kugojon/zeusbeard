@@ -1785,7 +1785,7 @@ header#header .topline .grid_9 {position: static;}
 .nav-container {float: left; margin-top: .88em; margin-right: 10px;}
 .nav-container > ul {text-align: left;}
 .nav-container a.level-top {
-	padding: .4em 18px;
+	padding: 8px 18px;
 	float: left;
 	transition: none;
 	-webkit-transition: none;
@@ -1859,12 +1859,12 @@ header#header .topline .grid_9 {position: static;}
 	z-index: 999;
     padding: 0;
 	background-color: #fff;
-	box-shadow: 0 -1px 4px rgba(0,0,0,.1);
+	border: 1px solid #DDD;
 }
 .nav-wide .menu-wrapper ul.level0{margin-left: 8px; margin-right: 8px;}
 .nav-wide .menu-wrapper .alpha > ul.level0{margin-right: 0;}
-.nav-wide ul.level0 li.level1 { display: inline-block; float: none; padding: 1.5em 0;}
-.nav-wide ul.level0 li.level1 > a { margin-bottom: 5px; display: block;}
+.nav-wide ul.level0 li.level1 { display: inline-block; float: none; padding: 15px;}
+.nav-wide ul.level0 li.level1 > a { margin-bottom: 5px; display: block; padding: 0 10px;}
 .nav-wide ul.level0 li.level1 > a:hover {color: inherit;}
 .nav-wide ul.level0 li.level1 span.subtitle {
 	color: #222;
@@ -1877,16 +1877,14 @@ header#header .topline .grid_9 {position: static;}
 	padding-bottom: .75em;
 }
 .nav-wide ul.level0 li.level1{margin-left: 0; margin-right: 0;}
-.nav-wide ul.level0 li.level1 > a,
-.nav-wide ul.level0 li.level1 > ul{margin-left: 10px; margin-right: 10px;}
-.nav-wide ul.level1 a {text-transform: none; font-size: 1em; color: #666; line-height: 1.5em; display: block; padding: .91em 0;}
+.nav-wide ul.level1 a {text-transform: none; font-size: 1em; color: #666; line-height: 25px; display: block; padding: 0 10px;}
 .nav-wide ul.level1 a:hover {background-color: #eee;}
 .nav-wide ul li,
-.nav-wide ul.level1 ul {border-top: solid 1px #eee; position: relative;}
+.nav-wide ul.level1 ul {position: relative;}
 .nav-wide ul.level0 li.level1{border-top: 0;}
 .nav-wide ul.level1 li:first-child {border-top: none;}
-.nav-wide ul.level1 a span:before {content: "\00B7"; font-size: 2em; margin: 0 7px 0 3px; line-height: 0; vertical-align: middle;}
 .nav-wide ul.level1 ul li a {padding-left: 20px;}
+.nav-wide ul.level0 li.level1 span.subtitle {padding-bottom: 0;}
 .nav-wide ul .top-content,
 .nav-wide ul .bottom-content {padding:0;}
 .nav-wide .bottom-content {line-height: 1.5em; background-color: #eee; color: #666; font-size: 1.16em; padding: 1.5em;}
@@ -2011,7 +2009,7 @@ header.header .nav-container.mobile li.level0 > a {padding: 1em 30px 1em 20px!im
 	display: inline-block;
 	position: relative;
 }
-.nav-container li.level-top.over > a {z-index: 999;}
+.nav-container li.level-top.has-child > a {z-index: 1000; border-bottom: 0;}
 .category-label{
    display: inline-block;
 	position: absolute;

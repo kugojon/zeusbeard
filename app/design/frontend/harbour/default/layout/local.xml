@@ -112,6 +112,7 @@
         <action method="addCss"><stylesheet>css/skin.css</stylesheet><params/></action>
 		<action method="addItem"><type>skin_css</type><name>css/styles-ie-8.css</name><params/><if>IE 8</if></action>
         <action method="addCss"><stylesheet>css/custom.css</stylesheet><params/></action>
+		<action method="addCss"><stylesheet>css/cms-static.css</stylesheet><params/></action>
 
         <block type="core/template" name="bgslider" template="meigee/bgslider.phtml" />
 		<block type="core/template" name="subheader" template="meigee/subheader.phtml" />
@@ -304,7 +305,6 @@
 		<!--Adding "Fancybox-->
 		<action method="addCss"><stylesheet helper="ThemeOptionsHarbour/fancySwitcher" /></action>
 		<action method="addItem"><type>skin_js</type><name helper="ThemeOptionsHarbour/fancySwitcherJS" /></action>
-		<action method="addCss"><stylesheet>css/cms-static.css</stylesheet><params/></action>
 	</reference>
 </cms_page>
 
