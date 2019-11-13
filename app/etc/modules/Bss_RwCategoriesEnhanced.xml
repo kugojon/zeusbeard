@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Bss_RwCategoriesEnhanced>
+            <active>true</active>
+            <codePool>local</codePool>
+            <version>1.0.1</version>
+            <depends>
+                <Meigee_CategoriesEnhanced />
+            </depends>
+        </Bss_RwCategoriesEnhanced>
+    </modules>
+</config>

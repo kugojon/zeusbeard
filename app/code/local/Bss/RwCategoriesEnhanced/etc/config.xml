@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Bss_RwCategoriesEnhanced>
+            <version>1.0.1</version>
+        </Bss_RwCategoriesEnhanced>
+    </modules>
+    <global>
+        <helpers>
+            <rwcategoriesenhanced>
+                <class>Bss_RwCategoriesEnhanced_Helper</class>
+            </rwcategoriesenhanced>
+        </helpers>
+        <blocks>
+            <page>
+                <rewrite>
+                    <html_topmenu>Bss_RwCategoriesEnhanced_Block_Html_Topmenu</html_topmenu>
+                </rewrite>
+            </page>
+        </blocks>
+    </global>
+</config> 

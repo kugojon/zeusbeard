@@ -1854,6 +1854,7 @@ header#header .topline .grid_9 {position: static;}
     left:0;
     top: 99%;
     width: 100%;
+	max-width: 820px;
     text-align: left;
     border-top: none;
 	z-index: 999;
@@ -1965,7 +1966,7 @@ header.header .nav-container.mobile .menu-wrapper {position: static; padding: 0;
 header.header .nav-container.mobile ul  {
     border: none;
     box-shadow: none;
-    padding: 9px 18px !important;
+    padding: 0;
     position: static;
     width: auto !important;
 	display: none;
@@ -1988,12 +1989,12 @@ header.header .nav-container.mobile ul.level2 span.menu-item-button {right: -15p
 .nav-container.mobile .nav-wide ul.level0 li.level1 > a span {text-transform: none; color: #888; border: none;}
 body .nav-container.mobile .nav-wide ul.level0 li.level1 a{padding: 0; background: none;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 a > span {
-	font-size: 0.91em;
+	font-size: 14px;
 	font-family: Arial, sans-serif;
 	line-height: 40px;
 	color:#888;
 }
-.nav-container.mobile .nav-wide ul.level0 li.level1 > a > span{font-size: 1em;}
+.nav-container.mobile .nav-wide ul.level0 li.level1 > a > span{font-size: 14px;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 a > span:before{display: none;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 a > i {display: none;}
 .nav-container.mobile .nav-wide ul.level0 li {position: relative; margin: 0; border: none;}

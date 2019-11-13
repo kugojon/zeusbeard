@@ -2104,7 +2104,7 @@
 	.nav-wide .menu-item-button.active > .fa-minus {display: inline-block;}
 	.nav .menu-item-button.active > .fa-plus,
 	.nav-wide .menu-item-button.active > .fa-plus {display:none;}
-	header.header .nav-container > ul li.level0 > .menu-item-button {top: 8px; z-index:999;}
+	header.header .nav-container > ul li.level0 > .menu-item-button {top: 8px; z-index:9999;}
     header.header .nav-container > ul li li .menu-item-button{top: 6px;}
     header.header .nav-container .nav-static-block{display:none;}
 	.nav-wide{text-align: left;}
@@ -2129,6 +2129,11 @@
 		padding-top:0;
 		top: 0;
 		box-shadow: none;
+		border: none;
+	}
+	.nav-wide li .menu-wrapper > div,
+	.nav-wide li.over .menu-wrapper > div {
+		margin: 0;
 	}
 	.nav-wide .top-content,
 	.nav-wide .bottom-content,
@@ -2544,7 +2549,7 @@
 	body .parallax-banners-wrapper .text-banner .banner-content {font-size: .75em; top: 37%;}
 	.parallax-banners-wrapper .text-banner .banner-content p {width: 96%;}
 	
-	.nav-container.mobile .nav-wide ul.level0 {top: 0!important;}
+	.nav-container.mobile .nav-wide ul.level0 {top: 0!important; padding: 0 !important;}
 	.block-subscribe .input-box {width: 84%;}
 	
 	#footer .left,
