@@ -578,11 +578,11 @@ jQuery(window).load(function () {
 
                     jQuery('.nav-container > ul a').each(function () {
                         if (jQuery(this).next('ul').length || jQuery(this).next('div.menu-wrapper').length) {
-                            jQuery(this).before('<span class="menu-item-button"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></span>')
+                            jQuery(this).after('<span class="menu-item-button"><i class="fa fa-plus"></i><i class="fa fa-minus"></i></span>')
                             jQuery(this).next('ul').slideUp('fast');
-                            jQuery(this).prev('.menu-item-button').on('click', function () {
+                            jQuery(this).next('.menu-item-button').on('click', function () {
                                 jQuery(this).toggleClass('active');
-                                jQuery(this).nextAll('ul, div.menu-wrapper').slideToggle('medium');
+                                jQuery(this).parent().find('ul').toggleClass('open');
                             });
                         }
                     });

@@ -1864,7 +1864,7 @@ header#header .topline .grid_9 {position: static;}
 }
 .nav-wide .menu-wrapper ul.level0{margin-left: 8px; margin-right: 8px;}
 .nav-wide .menu-wrapper .alpha > ul.level0{margin-right: 0;}
-.nav-wide ul.level0 li.level1 { display: inline-block; float: none; padding: 15px;}
+.nav-wide ul.level0 li.level1 { display: inline-block; float: left; padding: 15px 0;}
 .nav-wide ul.level0 li.level1 > a { margin-bottom: 5px; display: block; padding: 0 10px;}
 .nav-wide ul.level0 li.level1 > a:hover {color: inherit;}
 .nav-wide ul.level0 li.level1 span.subtitle {
@@ -1873,7 +1873,6 @@ header#header .topline .grid_9 {position: static;}
 	line-height: 1.583em;
 	display: block;
 	font-weight: bold;
-	text-transform: uppercase;
 	border-bottom: solid 1px #ddd;
 	padding-bottom: .75em;
 }
@@ -1888,7 +1887,7 @@ header#header .topline .grid_9 {position: static;}
 .nav-wide ul.level0 li.level1 span.subtitle {padding-bottom: 0;}
 .nav-wide ul .top-content,
 .nav-wide ul .bottom-content {padding:0;}
-.nav-wide .bottom-content {line-height: 1.5em; background-color: #eee; color: #666; font-size: 1.16em; padding: 1.5em;}
+.nav-wide .bottom-content {line-height: 1.5em; color: #666; font-size: 1.16em; padding: 1.5em;}
 .nav-wide .bottom-content .quick-links {display: inline-block; margin-right: 40px;}
 .nav-wide .bottom-content .quick-links a {color: #222;}
 .nav-wide .bottom-content .sale {display: inline-block; font-weight: bold;}
@@ -1943,11 +1942,8 @@ header#header .topline .grid_9 {position: static;}
 .nav-container.mobile {position: absolute; top: 100%; width: 300px; margin-top: 0; box-shadow: 0 0px 4px rgba(0,0,0,.1);}
 .nav-container.mobile > ul {background-color: #fff; box-shadow: 0 3px 5px rgba(0,0,0,.08);}
 .nav-container.mobile > ul > li {float: none; display: block!important; position: relative!important;}
-.nav-container.mobile li.level-top > a {display: block!important; float: none!important; color: #444!important;}
-.nav-container.mobile li.level-top > a  span {border: none!important; padding: 0!important; color: #444!important;}
 .nav-container.mobile li.level-top > a  span em {display: none!important;}
-.nav-container.mobile .menu-item-button {position: absolute; top: 8px; right: 0; z-index:9999;}
-.nav-container.mobile ul ul .menu-item-button {top: 8px;} 
+.nav-container.mobile .menu-item-button {z-index:9999;}
 .nav-container.mobile .menu-item-button i {font-size: 1.16em; color: #888; cursor: pointer; padding: 5px;}
 .nav-container.mobile .menu-item-button i.fa-minus,
 .nav-container.mobile .menu-item-button.active i.fa-plus {display: none;}
@@ -1955,13 +1951,12 @@ header#header .topline .grid_9 {position: static;}
 .nav-container.mobile li.level-top.active > a,
 .nav-container.mobile li.level-top > a:hover {background: none!important;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 > a {font-size: .91em; background: none; margin: 0;}
-.nav-container.mobile .nav-wide ul.level0 li.level1 > a span {text-transform: none; color: #888;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 a > span {font-size: .91em; background: none; padding: 0;}
 .nav-container.mobile .nav-wide ul.level0 li {float: none; display: block;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 a > i {display: none;}
 .nav-container.mobile .nav-wide ul.level0 li {position: relative; margin: 0;}
 .nav-container.mobile .nav-wide ul.level0 ul {margin: 0;}
-header.header .nav-container.mobile .menu-wrapper {position: static; padding: 0; margin: 0; box-shadow: none;}
+header.header .nav-container.mobile .menu-wrapper {position: static; margin: 0; box-shadow: none;}
 .nav-container.mobile .nav-wide .menu-wrapper > div.first {padding: 0; width: auto; float: none;}
 header.header .nav-container.mobile ul  {
     border: none;
@@ -1976,32 +1971,30 @@ header.header .nav-container.mobile .menu-wrapper .grid_2 {min-height: 0; width:
 header.header .nav-container.mobile ul.level2 span.menu-item-button {right: -15px; top: 5px;}
 
 .nav-container.mobile .nav-wide ul.level0{margin:0;}
-.nav-container.mobile .nav-wide ul.level0 li.level1{padding:0 19px;}
+.nav-container.mobile .nav-wide ul.level0 li.level1{padding:0 20px;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 > a{
 	font-size: .91em;
 	background: none;
 	margin: 0;
 	font-weight: normal;
 	padding: 0;
-	color: #888888 !important;
-	display: block;
+	display: inline-block;
 }
-.nav-container.mobile .nav-wide ul.level0 li.level1 > a span {text-transform: none; color: #888; border: none;}
-body .nav-container.mobile .nav-wide ul.level0 li.level1 a{padding: 0; background: none;}
+.nav-container.mobile .nav-wide ul.level0 li.level1 > a span {text-transform: none; border: none;}
+body .nav-container.mobile .nav-wide ul.level0 li.level1 a{background: none; padding: 0 20px;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 a > span {
-	font-size: 14px;
+	font-size: 13px;
 	font-family: Arial, sans-serif;
 	line-height: 40px;
-	color:#888;
 }
 .nav-container.mobile .nav-wide ul.level0 li.level1 > a > span{font-size: 14px;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 a > span:before{display: none;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 a > i {display: none;}
 .nav-container.mobile .nav-wide ul.level0 li {position: relative; margin: 0; border: none;}
 .nav-container.mobile .nav-wide ul.level0 ul {margin: 0;}
+header.header .nav-container.mobile ul.open {display: block}
 .nav-container.mobile .nav li.level1 ul{padding-left: 0!important; padding-right: 0 !important;}
 .nav-container.mobile li.level-top > a span {line-height: 1.5em;}
-header.header .nav-container.mobile li.level0 > a {padding: 1em 30px 1em 20px!important;}
 .nav-container.mobile ul li.parent:after {content: none!important;}
 /* ======================================================================================= */
 

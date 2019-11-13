@@ -2104,32 +2104,33 @@
 	.nav-wide .menu-item-button.active > .fa-minus {display: inline-block;}
 	.nav .menu-item-button.active > .fa-plus,
 	.nav-wide .menu-item-button.active > .fa-plus {display:none;}
-	header.header .nav-container > ul li.level0 > .menu-item-button {top: 8px; z-index:9999;}
-    header.header .nav-container > ul li li .menu-item-button{top: 6px;}
+	header.header .nav-container > ul li.level0 > .menu-item-button {top: 8px; z-index:9999; display: none}
+    header.header .nav-container > ul li li .menu-item-button{top: 6px; left: -10px; position: relative;}
     header.header .nav-container .nav-static-block{display:none;}
 	.nav-wide{text-align: left;}
 	.nav-wide li.level-top {display: block;}
 	.nav-wide li.level-top > a{
-		background: none!important;
+		border-radius: 0;
 		color: #515151;
 		display: block;
 		float: none;
 		line-height: 1.5em;
-		padding: 0 0 6px;
-		text-transform: uppercase;
-		border: none!important;
+		padding: 5px 20px;
+		border: none;
 	}
-	.nav-wide li.level-top > a > span {color:#444!important;}
+	.nav-container.mobile li.level-top.has-child > a,
+	.nav-container.mobile > ul > li.level-top > a {background-color: rgba(205, 205, 205, 0.48);}
+	.nav-container.mobile a.level-top > span {color: #000; font-weight: 600;}
 	.nav-container a.level-top:hover, .nav-container .active a.level-top {border: none; margin: 0;}
 	.nav-wide li.level-top:hover,
 	.nav-wide li.level-top.active{background: none!important;}
 	.nav-wide li .menu-wrapper,
 	.nav-wide li.over .menu-wrapper{
-		display: none;
-		padding-top:0;
+		display: block;
 		top: 0;
 		box-shadow: none;
 		border: none;
+		width: auto;
 	}
 	.nav-wide li .menu-wrapper > div,
 	.nav-wide li.over .menu-wrapper > div {
