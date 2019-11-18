@@ -1878,7 +1878,7 @@ header#header .topline .grid_9 {position: static;}
 }
 .nav-wide ul.level0 li.level1{margin-left: 0; margin-right: 0;}
 .nav-wide ul.level1 a {text-transform: none; font-size: 1em; color: #666; line-height: 25px; display: block; padding: 0 10px;}
-.nav-wide ul.level1 a:hover {background-color: #eee;}
+.nav-wide li ul.level1 a:hover {color: #25a6f7; background-color: transparent}
 .nav-wide ul li,
 .nav-wide ul.level1 ul {position: relative;}
 .nav-wide ul.level0 li.level1{border-top: 0;}
@@ -1948,15 +1948,16 @@ header#header .topline .grid_9 {position: static;}
 .nav-container.mobile .menu-item-button i.fa-minus,
 .nav-container.mobile .menu-item-button.active i.fa-plus {display: none;}
 .nav-container.mobile .menu-item-button.active i.fa-minus {display: inline-block;}
-.nav-container.mobile li.level-top.active > a,
-.nav-container.mobile li.level-top > a:hover {background: none!important;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 > a {font-size: .91em; background: none; margin: 0;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 a > span {font-size: .91em; background: none; padding: 0;}
 .nav-container.mobile .nav-wide ul.level0 li {float: none; display: block;}
 .nav-container.mobile .nav-wide ul.level0 li.level1 a > i {display: none;}
 .nav-container.mobile .nav-wide ul.level0 li {position: relative; margin: 0;}
 .nav-container.mobile .nav-wide ul.level0 ul {margin: 0;}
-header.header .nav-container.mobile .menu-wrapper {position: static; margin: 0; box-shadow: none;}
+header.header .nav-container.mobile .menu-wrapper {position: static; margin: 0; box-shadow: none; display: block; border: none;}
+header.header .nav-container.mobile .menu-wrapper .sub-content {display: none;}
+header.header .nav-container.mobile .nav-wide ul.level0 li.level1 span.subtitle {font-weight: normal;}
+.nav-container.mobile .nav-wide ul.level0 li.level1.active a > span {font-weight: bold !important;}
 .nav-container.mobile .nav-wide .menu-wrapper > div.first {padding: 0; width: auto; float: none;}
 header.header .nav-container.mobile ul  {
     border: none;
@@ -1994,7 +1995,7 @@ body .nav-container.mobile .nav-wide ul.level0 li.level1 a{background: none; pad
 .nav-container.mobile .nav-wide ul.level0 ul {margin: 0;}
 header.header .nav-container.mobile ul.open {display: block}
 .nav-container.mobile .nav li.level1 ul{padding-left: 0!important; padding-right: 0 !important;}
-.nav-container.mobile li.level-top > a span {line-height: 1.5em;}
+.nav-container.mobile li.level-top > a span {line-height: 1.5em; font-weight: 600;}
 .nav-container.mobile ul li.parent:after {content: none!important;}
 /* ======================================================================================= */
 

@@ -582,7 +582,8 @@ jQuery(window).load(function () {
                             jQuery(this).next('ul').slideUp('fast');
                             jQuery(this).next('.menu-item-button').on('click', function () {
                                 jQuery(this).toggleClass('active');
-                                jQuery(this).parent().find('ul').toggleClass('open');
+                                jQuery(this).parent().toggleClass('active');
+                                jQuery(this).parent().find('ul, div.menu-wrapper').toggleClass('open');
                             });
                         }
                     });

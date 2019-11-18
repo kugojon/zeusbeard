@@ -1502,7 +1502,7 @@
     .nav-container{background:none;}
 	header.header.floating .grid_12 .small-logo {z-index: 9999; margin-top: .5em;}
 	.nav-container.mobile .nav-wide ul.level0 li.level1{width: auto!important;}	
-	.nav-container.mobile .nav-wide .menu-wrapper > .alpha{width: 100%;}
+	.nav-container.mobile .nav-wide .menu-wrapper > .alpha{width: 100%; margin: 0;}
 	.nav-wide ul.level0 li.level1{padding-bottom: 0;}
 	.nav-container.mobile .nav ul.level0 li:hover{background: none;}	
 	.related-wrapper-bottom .block-related .no-slider li.item:nth-of-type(2n+1){clear: none;}
@@ -1861,7 +1861,9 @@
 	.map-container .map-block.right-bottom{bottom:20px; right: 20px;}
 	.map-container .map-block .indent {padding-top: 1.417em;}
 	
-	header.header .nav-container a.level-top {background: none;}
+	header.header .nav-container a.level-top {background: none; float: none;}
+	.nav-container.mobile .menu-item-button {position: relative; top: 11px}
+	header.header .nav-container > ul li.level0 > .menu-item-button {display: none;}
 	header.header .nav-container a.level-top:hover span {color: inherit;}
 	.text-banner .text-banner-content {font-size: .75em;}
 	.text-banner .text-banner-content h2 {font-size: 3em;}
@@ -1942,7 +1944,7 @@
 	header#header.header-3 .welcome-msg,
 	header#header.header-4 .welcome-msg {font-size: .75em;}
 	
-	#header .nav-container.mobile {width: 300px!important;}
+	#header .nav-container.mobile {width: 300px!important; position: absolute; z-index: 11;}
 	.page-not-found {padding: 4em 0 5em;}
 	.page-not-found .search {margin-top: 6em;}
 	#not-found-footer {text-align: center;}
@@ -2138,7 +2140,8 @@
 	}
 	.nav-wide .top-content,
 	.nav-wide .bottom-content,
-	.nav-wide .right-content{display: none;}
+	.nav-wide .right-content,
+	.nav-wide .sub-content {display: none;}
 	.nav-wide ul.level0 li.level1 {display: block; float: none; padding: 0 5px;}
 	.nav-wide ul.level0 a{padding-left: 0; padding-top: 0;}
 	.nav-wide ul.level0 li.level1 a > span{font-size: 0.64em; font-weight: normal!important;}
@@ -2151,7 +2154,8 @@
 	.nav li.level-top > a{background: none !important;}
 	header.header .nav-container > ul {right: 0; left: auto; display: none;}
 	.nav-container.mobile .nav-wide ul.level0 li.level1{width: auto!important;}
-	header.header .nav-wide .menu-wrapper.default-menu{left: auto !important; top: auto !important;}	
+	header.header .nav-wide .menu-wrapper.default-menu{left: auto !important; top: auto !important;}
+	.nav-container.mobile .nav-wide ul.level0 li.level1.active a span {font-weight: bold !important;}
 	.nav-container.mobile .nav ul.level0 li:hover{background: none;}
 	.home-slider-conainer .products-grid li.item .indent {padding:0 5px;}
 	body .slider-container .prev,
