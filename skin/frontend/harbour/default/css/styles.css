@@ -1864,7 +1864,7 @@ header#header .topline .grid_9 {position: static;}
 }
 .nav-wide .menu-wrapper ul.level0{margin-left: 8px; margin-right: 8px;}
 .nav-wide .menu-wrapper .alpha > ul.level0{margin-right: 0;}
-.nav-wide ul.level0 li.level1 { display: inline-block; float: left; padding: 15px 0;}
+.nav-wide ul.level0 li.level1 { display: inline-block; float: left; padding-bottom: 15px;}
 .nav-wide ul.level0 li.level1 > a { margin-bottom: 5px; display: block; padding: 0 10px;}
 .nav-wide ul.level0 li.level1 > a:hover {color: inherit;}
 .nav-wide ul.level0 li.level1 span.subtitle {
@@ -1891,7 +1891,7 @@ header#header .topline .grid_9 {position: static;}
 .nav-wide .bottom-content .quick-links {display: inline-block; margin-right: 40px;}
 .nav-wide .bottom-content .quick-links a {color: #222;}
 .nav-wide .bottom-content .sale {display: inline-block; font-weight: bold;}
-.nav-wide .right-content { display: inline-block; float: none; font-size: 1em; position: static; padding-top: 1.5em;}
+.nav-wide .right-content { display: inline-block; float: none; font-size: 1em; position: static;}
 .nav-wide .right-content .right-menu-bg {text-align: center; position: absolute; right: 40px; bottom: 0;}
 .nav-wide .inline-links {margin-bottom: 9px;}
 .nav-wide .inline-links li {display: inline; padding: 0 10px 0 0;}

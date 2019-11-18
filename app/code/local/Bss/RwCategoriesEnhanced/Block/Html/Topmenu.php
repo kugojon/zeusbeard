@@ -89,7 +89,7 @@ class Bss_RwCategoriesEnhanced_Block_Html_Topmenu extends Mage_Page_Block_Html_T
                         $html .= '<div class="' . $childrenWrapClass . '"'.$columnsCount.'>';
                     }
                     if ($categoryComplete->getMeigeeCatSubcontent()) {
-                        $html .= '<div class="sub-content">' . $this->helper('cms')->getBlockTemplateProcessor()->filter($categoryComplete->getMeigeeCatSubcontent()) . '</div>';
+                        $html .= '<div class="col-12 sub-content">' . $this->helper('cms')->getBlockTemplateProcessor()->filter($categoryComplete->getMeigeeCatSubcontent()) . '</div>';
                     }
                     else {
                         if ($categoryComplete->getMeigeeCatBlockTop() && $childLevel == 0) {
