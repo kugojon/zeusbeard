@@ -260,9 +260,8 @@ body.boxed-layout header.header .menu-line .container_12 {border-bottom: solid 0
 .harbour {background:url(../images/paterns/harbour.png) center top repeat;}
 .clear-container{width:100%; overflow:hidden;}
 .ie-fix{position:relative; width:100%;}
-a, i {  
+a, i {
     text-decoration:none;
-    -moz-transition: all 500ms ease; -webkit-transition: all 500ms ease; -o-transition: all 500ms ease; transition: all 500ms ease;
 }
 a:hover {text-decoration:none;}
 :focus        { outline:0; }
@@ -1854,7 +1853,7 @@ header#header .topline .grid_9 {position: static;}
     left:0;
     top: 99%;
     width: 100%;
-	max-width: 820px;
+	max-width: 660px;
     text-align: left;
     border-top: none;
 	z-index: 999;
@@ -1956,8 +1955,7 @@ header#header .topline .grid_9 {position: static;}
 .nav-container.mobile .nav-wide ul.level0 ul {margin: 0;}
 header.header .nav-container.mobile .menu-wrapper {position: static; margin: 0; box-shadow: none; display: block; border: none;}
 header.header .nav-container.mobile .menu-wrapper .sub-content {display: none;}
-header.header .nav-container.mobile .nav-wide ul.level0 li.level1 span.subtitle {font-weight: normal;}
-.nav-container.mobile .nav-wide ul.level0 li.level1.active a > span {font-weight: bold !important;}
+header.header .nav-container.mobile .nav-wide ul.level0 li.level1.active > a > span.subtitle {font-weight: bold !important;}
 .nav-container.mobile .nav-wide .menu-wrapper > div.first {padding: 0; width: auto; float: none;}
 header.header .nav-container.mobile ul  {
     border: none;
@@ -1994,6 +1992,7 @@ body .nav-container.mobile .nav-wide ul.level0 li.level1 a{background: none; pad
 .nav-container.mobile .nav-wide ul.level0 li {position: relative; margin: 0; border: none;}
 .nav-container.mobile .nav-wide ul.level0 ul {margin: 0;}
 header.header .nav-container.mobile ul.open {display: block}
+header.header .nav-container.mobile ul.open > li > a > span {font-weight: bold}
 .nav-container.mobile .nav li.level1 ul{padding-left: 0!important; padding-right: 0 !important;}
 .nav-container.mobile li.level-top > a span {line-height: 1.5em; font-weight: 600;}
 .nav-container.mobile ul li.parent:after {content: none!important;}

@@ -2107,7 +2107,7 @@
 	.nav .menu-item-button.active > .fa-plus,
 	.nav-wide .menu-item-button.active > .fa-plus {display:none;}
 	header.header .nav-container > ul li.level0 > .menu-item-button {top: 8px; z-index:9999; display: none}
-    header.header .nav-container > ul li li .menu-item-button{top: 6px; left: -10px; position: relative;}
+    header.header .nav-container > ul li li .menu-item-button{top: 6px; left: -10px; position: relative; vertical-align: middle;}
     header.header .nav-container .nav-static-block{display:none;}
 	.nav-wide{text-align: left;}
 	.nav-wide li.level-top {display: block;}
@@ -2155,7 +2155,6 @@
 	header.header .nav-container > ul {right: 0; left: auto; display: none;}
 	.nav-container.mobile .nav-wide ul.level0 li.level1{width: auto!important;}
 	header.header .nav-wide .menu-wrapper.default-menu{left: auto !important; top: auto !important;}
-	.nav-container.mobile .nav-wide ul.level0 li.level1.active a span {font-weight: bold !important;}
 	.nav-container.mobile .nav ul.level0 li:hover{background: none;}
 	.home-slider-conainer .products-grid li.item .indent {padding:0 5px;}
 	body .slider-container .prev,
