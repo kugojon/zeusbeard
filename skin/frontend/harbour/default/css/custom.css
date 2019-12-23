@@ -1193,3 +1193,16 @@ div#confirmBox, .am-upsell-title > .am-title {background-color: #ffffff}
     float: none;
     display: inline-block;
 }
+
+.only-mobile {
+    display: none;
+}
+
+.nav-container.mobile {
+    height: 550px;
+    overflow: scroll;
+}
+
+.nav-container.mobile .only-mobile {
+    display: block;
+}
