@@ -2002,6 +2002,7 @@ header.header .nav-container.mobile ul.open > li > a > span {font-weight: bold}
 .nav-container li.level-top > a{
 	display: inline-block;
 	position: relative;
+	cursor: default;
 }
 .nav-container li.level-top.has-child > a {z-index: 1000; border-bottom: 0;}
 .category-label{

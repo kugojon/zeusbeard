@@ -39,24 +39,6 @@
     } else {
         $productprice = $meigee_harbour_appearance['productlisting']['productprice'];
     }
-	if($categoryComplete->getAddtocart()) {
-        $addtocart = $categoryComplete->getAddtocart();
-        if($addtocart == 2){$addtocart = 0;}
-    } else {
-        $addtocart = $meigee_harbour_appearance['productlisting']['addtocart'];
-    }
-	if($categoryComplete->getCompareproducts()) {
-        $compareproducts = $categoryComplete->getCompareproducts();
-        if($compareproducts == 2){$compareproducts = 0;}
-    } else {
-        $compareproducts = $meigee_harbour_appearance['productlisting']['compareproducts'];
-    }
-	if($categoryComplete->getWishlist()) {
-        $wishlist = $categoryComplete->getWishlist();
-        if($wishlist == 2){$wishlist = 0;}
-    } else {
-        $wishlist = $meigee_harbour_appearance['productlisting']['wishlist'];
-    }
 
 	$labelsoptions = $meigee_harbour_general['productlabels'];
 	$labelsType = $meigee_harbour_general['productlabels']['labelview'];
@@ -124,27 +106,6 @@
                         }
                         ?>
                         <?php echo $this->getPriceHtml($_product, true) ?>
-                        <form action="<?php echo $this->getAddToCartUrl($_product) ?>" method="post" id="product_addtocart_form_<?php echo $_product->getId()?>"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
-                            <div class="actions">
-                                <?php if(!$_product->isGrouped()): ?>
-                                    <input type="text" name="qty" id="qty-<?php echo $_product->getId() ?>" maxlength="12" value="1" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
-                                    <div class="quantity-buttons">
-                                        <div class="quantity-increase" onclick="qtyUp(<?php echo $_product->getId() ?>)"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('increaseqty'); ?></div>
-                                        <div class="quantity-decrease" onclick="qtyDown(<?php echo $_product->getId() ?>)"><?php echo MAGE::helper('ThemeOptionsHarbour')->getIcon('descreaseqty'); ?></div>
-                                    </div>
-                                <?php endif; ?>
-                                <?php if(!$_product->canConfigure() && $_product->isSaleable()): ?>
-                                    <button type="button" title="<?php echo $this->quoteEscape($this->__('Add to Cart')) ?>"
-                                            onclick="this.form.submit()" class="button btn-cart">
-                                        <span><span><?php echo $this->__('Add to Cart') ?></span></span>
-                                    </button>
-                                <?php elseif($_product->getStockItem() && $_product->getStockItem()->getIsInStock()): ?>
-                                    <a title="<?php echo $this->quoteEscape($this->__('View Details')) ?>" class="button" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a>
-                                <?php else: ?>
-                                    <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
-                                <?php endif; ?>
-                            </div>
-                        </form>
                     </div>
                 </div>
             </li>
@@ -163,8 +124,12 @@
                     margin: 0
                 },
                 600:{
-                    items:3,
+                    items:2,
                     margin: 10
+                },
+                992:{
+                    items:3,
+                    margin: 30
                 },
                 1000:{
                     items:3,
@@ -172,31 +137,5 @@
                 }
             }
         })
-        function qtyDown(id){
-            var qty_el = document.getElementById('qty-'+id);
-            var qty = qty_el.value;
-            if( qty == 2) {
-                jQuery('.quantity_box_button_down').css({
-                    'visibility' : 'hidden'
-                });
-            }
-            if( !isNaN( qty ) && qty > 0 ){
-                qty_el.value--;
-            }
-            return false;
-        }
-
-        function qtyUp(id){
-            var qty_el = document.getElementById('qty-'+id);
-            var qty = qty_el.value;
-            if( !isNaN( qty )) {
-                qty_el.value++;
-            }
-            jQuery('.quantity_box_button_down').css({
-                'visibility' : 'visible'
-            });
-            return false;
-        }
-
     </script>
 <?php endif; ?>
