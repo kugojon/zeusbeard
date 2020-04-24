@@ -11,13 +11,13 @@
 <div class="block block-subscribe">
 	<div class="block-title">
 		<strong>
-			<span><?php echo $this->__('Subscribe to our Newsletter!') ?></span>
+			<span><?php echo $this->__('Join Zeus Brotherhood ⚡️') ?></span>
 		</strong>
 	</div>
     <form action="<?php echo $this->getFormActionUrl() ?>" method="post" id="newsletter-validate-detail_<?php echo $random; ?>">
         <div class="block-content">
             <div class="form-subscribe-header">
-                <label for="newsletter_<?php echo $random; ?>"><?php echo $this->__('Sign up for our Zeus newsletter to get the jump on new products and exclusive promotions!') ?></label>
+                <label for="newsletter_<?php echo $random; ?>"><?php echo $this->__('Sign up for the Zeus Newsletter for a chance to win $100 Zeus gift card!') ?></br><?php echo $this->__('We select 3 email subscribers and announce in newsletter at the end of each month.') ?></label>
             </div>
             <div class="input-box">
                <input type="text" name="email" id="newsletter_<?php echo $random; ?>" title="<?php echo $this->__('Sign up for our newsletter') ?>" value="<?php echo $this->__('Enter your email'); ?>" onfocus="if (this.value=='<?php echo $this->__('Enter your email'); ?>') this.value = ''" onblur="if (this.value=='') this.value = '<?php echo $this->__('Enter your email'); ?>'" class="input-text required-entry validate-email" />
