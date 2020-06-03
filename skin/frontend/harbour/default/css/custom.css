@@ -298,6 +298,9 @@ header#header {
     line-height: 40px;
 }
 
+.category-description .sub-content {
+    text-align: center;
+}
 
 
 @media screen and (max-width: 1281px) {
