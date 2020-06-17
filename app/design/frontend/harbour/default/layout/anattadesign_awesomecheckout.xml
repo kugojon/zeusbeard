@@ -19,6 +19,13 @@ along with AwesomeCheckout.  If not, see <http://www.gnu.org/licenses/>.
 <layout version="1.6.1.0">
     <checkout_onepage_index>
         <update handle="anattadesign_awesomecheckout_onepage_index"/>
+        <reference name="after_body_start">
+            <block type="cms/block" name="category_promotion" before="-">
+                <action method="setBlockId">
+                    <block_id>category_promotion</block_id>
+                </action>
+            </block>
+        </reference>
     </checkout_onepage_index>
 
     <anattadesign_awesomecheckout_onepage_index>
