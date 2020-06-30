@@ -1201,7 +1201,7 @@ div#confirmBox, .am-upsell-title > .am-title {background-color: #ffffff}
     display: none;
 }
 
-.nav-container.mobile {
+header.header .nav-container.mobile > ul.nav-wide {
     height: 550px;
     overflow: scroll;
 }
